@@ -1,0 +1,117 @@
+.jumbotron {
+    background: url('../images/jumbotron.jpg') no-repeat center center;
+    height: 350px;
+    color: white;
+    text-shadow: #444 0 1px 1px;
+    background-size: cover;
+    text-align: center;
+
+}
+
+body {
+    background-size: cover;
+    background-image: linear-gradient(to right bottom,
+    #141E30, #2980b9);
+    color: lightslategrey;
+    text-align: center;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.42857;
+}
+
+.row {
+    margin-left: -15px;
+    margin-right: -15px;
+}
+
+*::before, *::after {
+    box-sizing: border-box;
+}
+
+*::before, *::after {
+    box-sizing: border-box;
+}
+
+.view-directory .movies-listing {
+    background-color: rgba(255, 255, 255, 0.7);
+}
+
+.movies-listing {
+    background-color: #f7f7f7;
+    border: 1px solid #f1f3f0;
+    border-radius: 9px;
+    box-shadow: 0 1px #f1f3f0;
+    cursor: pointer;
+    height: 350px;
+    margin-bottom: 50px;
+    padding: 0;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.movies-listing .movies-box-image-container {
+    max-height: 208px;
+    overflow: hidden;
+}
+
+.movies-listing .movies-box-image-container .movies-box-image {
+    border-bottom: 1px solid #ededed;
+    border-top-left-radius: 9px;
+    border-top-right-radius: 9px;
+    display: block;
+    margin: auto;
+    width: 100%;
+}
+
+img {
+    vertical-align: middle;
+}
+
+img {
+    border: 0 none;
+}
+
+.movies-listing .movies-listing-title {
+    color: #4169E1;
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 25px;
+    max-height: 70px;
+    overflow: hidden;
+    padding: 16px 16px 4px;
+}
+
+.movies-listing .movies-listing-subtitle {
+    color: #586f6f;
+    font-size: 14px;
+    font-weight: 200;
+    max-height: 145px;
+    overflow: hidden;
+    padding: 5px 15px;
+}
+
+.movies-listing .movies-listing-extra-info .movie-price {
+    color: #6eae50 !important;
+    font-size: 15px;
+    font-weight: bold;
+    line-height: 34px;
+    padding-right: 10px;
+    text-align: left;
+}
+
+.movies-listing .movies-listing-extra-info .movie-author-name {
+    font-size: 15px;
+    font-weight: 200;
+    line-height: 30px;
+    max-height: 30px;
+    overflow: hidden;
+    padding-left: 5px;
+}
+
+.movies-listing .movies-listing-extra-info .movies-bundle {
+    font-size: 15px;
+    font-weight: 200;
+    line-height: 30px;
+}
