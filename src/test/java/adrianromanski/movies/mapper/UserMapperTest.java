@@ -3,6 +3,7 @@ package adrianromanski.movies.mapper;
 import adrianromanski.movies.domain.User;
 import adrianromanski.movies.model.UserDTO;
 import org.junit.jupiter.api.Test;
+import sun.nio.cs.US_ASCII;
 
 import java.time.LocalDate;
 
@@ -14,11 +15,13 @@ class UserMapperTest {
     public static final String LAST_NAME = "Romanski";
     public static final LocalDate DATE_OF_BIRTH = LocalDate.of(1992, 11, 3);
     public static final String GENDER = "Men";
+    public static final long ID = 1L;
     UserMapper userMapper = UserMapper.INSTANCE;
 
     @Test
     void userToUserDTO() {
         User user = User.builder().firstName(FIRST_NAME).lastName(LAST_NAME).dateOfBirth(DATE_OF_BIRTH).gender(GENDER).build();
+        user.setId(ID);
 
         UserDTO userDTO = userMapper.userToUserDTO(user);
 
@@ -26,6 +29,7 @@ class UserMapperTest {
         assertEquals(userDTO.getLastName(), LAST_NAME);
         assertEquals(userDTO.getDateOfBirth(), DATE_OF_BIRTH);
         assertEquals(userDTO.getGender(), GENDER);
+        assertEquals(userDTO.getId(), ID);
     }
 
     @Test

@@ -6,20 +6,20 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.time.LocalDate;
 
-
-@EqualsAndHashCode(callSuper = false)
-@Entity
 @Data
+@Entity
 @NoArgsConstructor
-public class User extends Person {
+public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String name;
+    private String description;
 
     @Builder
-    public User(String firstName, String lastName, String gender, LocalDate dateOfBirth) {
-        super(firstName, lastName, gender, dateOfBirth);
+    public Category(String name, String description) {
+        this.name = name;
+        this.description = description;
     }
 }
