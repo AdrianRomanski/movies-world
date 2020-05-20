@@ -1,7 +1,10 @@
 package adrianromanski.movies.controllers;
 
+import adrianromanski.movies.services.CategoryService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -14,15 +17,17 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 class HomeControllerTest {
 
+    @InjectMocks
     HomeController homeController;
+
+    @Mock
+    CategoryService categoryService;
 
     MockMvc mockMvc;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
-
-        homeController = new HomeController();
 
         mockMvc = MockMvcBuilders.standaloneSetup(homeController).build();
     }

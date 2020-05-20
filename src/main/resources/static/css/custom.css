@@ -86,7 +86,7 @@ img {
     padding: 16px 16px 4px;
 }
 
-.movies-listing .movies-listing-subtitle {
+.movies-listing .movies-listing-description {
     color: #586f6f;
     font-size: 14px;
     font-weight: 200;
@@ -96,12 +96,13 @@ img {
 }
 
 .movies-listing .movies-listing-extra-info .movie-price {
-    color: #6eae50 !important;
+    color: #4169E1 !important;
     font-size: 15px;
     font-weight: bold;
     line-height: 34px;
-    padding-right: 10px;
-    text-align: left;
+    margin-right: 70px;
+    margin-top: -18px;
+    text-align: right;
 }
 
 .movies-listing .movies-listing-extra-info .movie-author-name {
@@ -109,12 +110,9 @@ img {
     font-weight: 200;
     line-height: 30px;
     max-height: 30px;
-    overflow: hidden;
-    padding-left: 5px;
-}
+    margin-top: 4px;
+    margin-right: 40px;
+    margin-bottom: 5px;
+    text-align: right;
 
-.movies-listing .movies-listing-extra-info .movies-bundle {
-    font-size: 15px;
-    font-weight: 200;
-    line-height: 30px;
 }

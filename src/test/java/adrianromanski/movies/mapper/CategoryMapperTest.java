@@ -12,18 +12,16 @@ class CategoryMapperTest {
     public static final String DESCRIPTION = "Fantasy movies rocks!";
     public static final long ID = 1L;
 
-    CategoryMapper categoryMapper = CategoryMapper.INSTANCE;
+    CategoryMapper categoryMapper = new CategoryMapperImpl();
 
     @Test
     void categoryToCategoryDTO() {
         Category category = Category.builder().name(NAME).description(DESCRIPTION).build();
-        category.setId(ID);
 
         CategoryDTO categoryDTO = categoryMapper.categoryToCategoryDTO(category);
 
         assertEquals(categoryDTO.getName(), NAME);
         assertEquals(categoryDTO.getDescription(), DESCRIPTION);
-        assertEquals(categoryDTO.getId(), ID);
     }
 
     @Test

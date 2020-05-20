@@ -16,12 +16,11 @@ class UserMapperTest {
     public static final LocalDate DATE_OF_BIRTH = LocalDate.of(1992, 11, 3);
     public static final String GENDER = "Men";
     public static final long ID = 1L;
-    UserMapper userMapper = UserMapper.INSTANCE;
+    UserMapper userMapper = new UserMapperImpl();
 
     @Test
     void userToUserDTO() {
         User user = User.builder().firstName(FIRST_NAME).lastName(LAST_NAME).dateOfBirth(DATE_OF_BIRTH).gender(GENDER).build();
-        user.setId(ID);
 
         UserDTO userDTO = userMapper.userToUserDTO(user);
 
@@ -29,7 +28,6 @@ class UserMapperTest {
         assertEquals(userDTO.getLastName(), LAST_NAME);
         assertEquals(userDTO.getDateOfBirth(), DATE_OF_BIRTH);
         assertEquals(userDTO.getGender(), GENDER);
-        assertEquals(userDTO.getId(), ID);
     }
 
     @Test
