@@ -3,9 +3,7 @@ package adrianromanski.movies.mapper;
 import adrianromanski.movies.domain.User;
 import adrianromanski.movies.model.UserDTO;
 import org.junit.jupiter.api.Test;
-import sun.nio.cs.US_ASCII;
 
-import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -15,7 +13,6 @@ class UserMapperTest {
     public static final String LAST_NAME = "Romanski";
 
     public static final String GENDER = "Men";
-    public static final long ID = 1L;
     UserMapper userMapper = new UserMapperImpl();
 
     @Test
@@ -31,7 +28,7 @@ class UserMapperTest {
 
     @Test
     void userDTOToUser() {
-        UserDTO userDTO = UserDTO.builder().firstName(FIRST_NAME).lastName(LAST_NAME).id(ID).gender(GENDER).build();
+        UserDTO userDTO = UserDTO.builder().firstName(FIRST_NAME).lastName(LAST_NAME).gender(GENDER).build();
 
         User user = userMapper.userDTOToUser(userDTO);
 

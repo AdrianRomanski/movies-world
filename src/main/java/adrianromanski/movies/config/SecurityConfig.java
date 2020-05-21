@@ -1,0 +1,38 @@
+package adrianromanski.movies.config;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
+@Configuration
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Bean
+    public UserDetailsService userDetailsService() {
+        User.UserBuilder users = User.withDefaultPasswordEncoder();
+        InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
+        manager.createUser(users.username("user").password("password").roles("USER").build());
+        manager.createUser(users.username("admin").password("password").roles("USER", "ADMIN").build());
+        return manager;
+    }
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.authorizeRequests().antMatchers("/", "/index/**", "/category/**", "/registration", "/checkRegistration").permitAll()
+                .and().authorizeRequests().antMatchers("/login","logout").permitAll()
+                .and().authorizeRequests().antMatchers("/static/css/**","/js/**", "/images/**", "/**/favicon.ico").permitAll()
+                .and().formLogin().loginPage("/login").defaultSuccessUrl("/").permitAll()
+                .and().logout()
+                .deleteCookies("remove")
+                .invalidateHttpSession(true)
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/logout-success")
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+        ;
+    }
+}

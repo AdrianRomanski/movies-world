@@ -9,6 +9,7 @@ import javax.persistence.Id;
 
 
 @Entity
+@Getter
 @NoArgsConstructor
 public class User extends Person {
     @Id
@@ -16,7 +17,7 @@ public class User extends Person {
     private Long id;
 
     @Builder
-    public User(String firstName, String lastName, String gender) {
-        super(firstName, lastName, gender);
+    public User(String firstName, String lastName, String username, String password, String gender) {
+        super(firstName, lastName, username, password, gender);
     }
 }

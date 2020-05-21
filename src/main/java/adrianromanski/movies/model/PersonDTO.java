@@ -3,16 +3,16 @@ package adrianromanski.movies.model;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
+
 @MappedSuperclass
 @Getter
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 public class PersonDTO {
 
     @NotEmpty
@@ -24,4 +24,8 @@ public class PersonDTO {
     @NotEmpty
     @Size(min = 3, max = 10)
     private String gender;
+    @NotEmpty
+    private String username;
+    @NotEmpty
+    private String password;
 }

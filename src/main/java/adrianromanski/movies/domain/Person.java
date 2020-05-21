@@ -7,12 +7,14 @@ import javax.persistence.MappedSuperclass;
 
 @MappedSuperclass
 @Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Person{
 
     private String firstName;
     private String lastName;
+    private String username;
+    private String password;
     private String gender;
+
 }
