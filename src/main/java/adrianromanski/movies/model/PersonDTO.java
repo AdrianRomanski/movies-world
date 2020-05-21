@@ -26,6 +26,5 @@ public class PersonDTO {
     @NotNull
     @Size(min = 3, max = 5)
     private String gender;
-    @NotNull
     private LocalDate dateOfBirth;
 }
