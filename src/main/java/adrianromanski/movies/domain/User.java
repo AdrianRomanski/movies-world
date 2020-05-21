@@ -17,7 +17,7 @@ public class User extends Person {
     private Long id;
 
     @Builder
-    public User(String firstName, String lastName, String username, String password, String gender) {
-        super(firstName, lastName, username, password, gender);
+    public User(String firstName, String lastName, String gender, String username, String password) {
+        super(firstName, lastName, gender, username, password);
     }
 }

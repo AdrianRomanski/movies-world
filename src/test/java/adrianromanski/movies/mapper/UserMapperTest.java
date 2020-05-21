@@ -12,7 +12,7 @@ class UserMapperTest {
     public static final String FIRST_NAME = "Adrian";
     public static final String LAST_NAME = "Romanski";
 
-    public static final String GENDER = "Men";
+    public static final String GENDER = "Male";
     UserMapper userMapper = new UserMapperImpl();
 
     @Test
