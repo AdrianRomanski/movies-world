@@ -8,9 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 
-@EqualsAndHashCode(callSuper = false)
 @Entity
-@Data
 @NoArgsConstructor
 public class User extends Person {
     @Id

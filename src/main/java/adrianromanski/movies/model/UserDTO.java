@@ -2,10 +2,10 @@ package adrianromanski.movies.model;
 
 
 import lombok.*;
+import org.springframework.stereotype.Service;
 
-
-
-@Data
+@Getter
+@Service
 @NoArgsConstructor
 public class UserDTO  extends  PersonDTO {
 

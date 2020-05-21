@@ -2,11 +2,7 @@ package adrianromanski.movies.model;
 
 import lombok.*;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-
 @Getter
-@Setter
 @NoArgsConstructor
 public class CategoryDTO {
 

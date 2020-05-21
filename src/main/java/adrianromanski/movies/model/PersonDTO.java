@@ -11,7 +11,6 @@ import javax.validation.constraints.Size;
 
 @MappedSuperclass
 @Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class PersonDTO {
