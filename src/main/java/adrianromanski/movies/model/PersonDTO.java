@@ -6,9 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.MappedSuperclass;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
-import java.time.LocalDate;
 
 @MappedSuperclass
 @Getter
@@ -17,14 +16,13 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class PersonDTO {
 
-    @NotNull
-    @Size(min = 3, max = 12)
+    @NotEmpty
+    @Size(min = 3, max = 20)
     private String firstName;
-    @NotNull
+    @NotEmpty
     @Size(min = 3, max = 20)
     private String lastName;
-    @NotNull
-    @Size(min = 3, max = 5)
+    @NotEmpty
+    @Size(min = 3, max = 10)
     private String gender;
-    private LocalDate dateOfBirth;
 }

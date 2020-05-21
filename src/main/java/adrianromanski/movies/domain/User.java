@@ -6,7 +6,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.time.LocalDate;
 
 
 @EqualsAndHashCode(callSuper = false)
@@ -19,7 +18,7 @@ public class User extends Person {
     private Long id;
 
     @Builder
-    public User(String firstName, String lastName, String gender, LocalDate dateOfBirth) {
-        super(firstName, lastName, gender, dateOfBirth);
+    public User(String firstName, String lastName, String gender) {
+        super(firstName, lastName, gender);
     }
 }
