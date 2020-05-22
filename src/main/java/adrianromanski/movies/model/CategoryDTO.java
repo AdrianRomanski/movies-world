@@ -2,20 +2,14 @@ package adrianromanski.movies.model;
 
 import lombok.*;
 
+
 @Getter
 @NoArgsConstructor
-public class CategoryDTO {
-
-    private Long id;
-    private String name;
-    private String description;
-
-    private String imageURl;
+@Setter
+public class CategoryDTO extends BaseEntityDTO{
 
     @Builder
-    public CategoryDTO(String name, String description, String imageURl) {
-        this.name = name;
-        this.description = description;
-        this.imageURl = imageURl;
+    public CategoryDTO(Long id,String name, String description, String imageURL) {
+        super(id, name, description, imageURL);
     }
 }

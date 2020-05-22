@@ -1,5 +1,6 @@
 package adrianromanski.movies.model;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,26 +10,20 @@ import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
-
 @MappedSuperclass
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
-public class PersonDTO {
+@AllArgsConstructor
+public class BaseEntityDTO {
     private Long id;
 
     @NotEmpty
-    @Size(min = 3, max = 20)
-    private String firstName;
+    @Size(min = 1, max = 25)
+    private String name;
     @NotEmpty
-    @Size(min = 3, max = 20)
-    private String lastName;
+    @Size(min = 160, max = 200)
+    private String description;
     @NotEmpty
-    @Size(min = 3, max = 10)
-    private String gender;
-    @NotEmpty
-    private String username;
-    @NotEmpty
-    private String password;
+    private String imageURL;
 }

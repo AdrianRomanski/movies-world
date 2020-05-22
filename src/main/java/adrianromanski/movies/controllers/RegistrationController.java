@@ -34,7 +34,7 @@ public class RegistrationController {
     public String checkRegistration(@Valid @ModelAttribute("userDTO") UserDTO userDTO, BindingResult bindingResult) {
         if(bindingResult.hasErrors()){
             bindingResult.getAllErrors().forEach(objectError -> {
-                log.debug(objectError.toString());
+                log.warn(objectError.getDefaultMessage());
             });
             return "registration";
         }
