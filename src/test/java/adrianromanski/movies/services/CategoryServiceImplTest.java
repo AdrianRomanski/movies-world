@@ -3,6 +3,8 @@ package adrianromanski.movies.services;
 import adrianromanski.movies.domain.Category;
 import adrianromanski.movies.mapper.CategoryMapper;
 import adrianromanski.movies.mapper.CategoryMapperImpl;
+import adrianromanski.movies.mapper.MovieMapper;
+import adrianromanski.movies.mapper.MovieMapperImpl;
 import adrianromanski.movies.model.CategoryDTO;
 import adrianromanski.movies.repositories.CategoryRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,7 +32,8 @@ class CategoryServiceImplTest {
         MockitoAnnotations.initMocks(this);
 
         CategoryMapper categoryMapper = new CategoryMapperImpl();
-        categoryService = new CategoryServiceImpl(categoryRepository, categoryMapper);
+        MovieMapper movieMapper = new MovieMapperImpl();
+        categoryService = new CategoryServiceImpl(categoryRepository, categoryMapper, movieMapper);
     }
 
     @DisplayName("Happy Path, method = getAllCategories")

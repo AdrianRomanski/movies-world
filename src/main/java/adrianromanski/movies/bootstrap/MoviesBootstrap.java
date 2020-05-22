@@ -1,26 +1,43 @@
 package adrianromanski.movies.bootstrap;
 
 import adrianromanski.movies.domain.Category;
+import adrianromanski.movies.domain.Movie;
 import adrianromanski.movies.repositories.CategoryRepository;
+import adrianromanski.movies.repositories.MovieRepository;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
+
+import java.util.Arrays;
 
 @Component
 public class MoviesBootstrap implements ApplicationListener<ContextRefreshedEvent> {
 
     private final CategoryRepository categoryRepository;
+    private final MovieRepository movieRepository;
 
-    public MoviesBootstrap(CategoryRepository categoryRepository) {
+
+    public MoviesBootstrap(CategoryRepository categoryRepository, MovieRepository movieRepository) {
         this.categoryRepository = categoryRepository;
+        this.movieRepository = movieRepository;
     }
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
 
+        Movie movie = Movie.builder().name("Lord of the Rings").description("Fantastic journey").imageURL("fantasy.jpg").build();
+
         Category fantasy = Category.builder().name("Fantasy").imageURL("fantasy.jpg")
                 .description("Fantasy films are films that belong to the fantasy genre with fantastic themes, usually magic," +
-                            "supernatural events, mythology, folklore, or exotic fantasy worlds").build();
+                            "supernatural events, mythology, folklore, or exotic fantasy worlds").movies(Arrays.asList(movie, movie)).build();
+
+        movie.setCategory(fantasy);
+
+
+
+
+
+
 
         Category horror = Category.builder().name("Horror").imageURL("horror.jpg")
                 .description("A horror film is a film that seeks to elicit fear for entertainment purposes " +
@@ -30,9 +47,11 @@ public class MoviesBootstrap implements ApplicationListener<ContextRefreshedEven
                 .description("A Sci-Fi film is science-based depictions of phenomena that are not fully accepted by mainstream science, " +
                                 "such as extraterrestrial lifeforms, alien worlds or time travel").build();
 
+
         categoryRepository.save(fantasy);
         categoryRepository.save(horror);
         categoryRepository.save(sciFi);
+        movieRepository.save(movie);
 
 
 

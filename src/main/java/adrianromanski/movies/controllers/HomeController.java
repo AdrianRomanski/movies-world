@@ -16,10 +16,7 @@ public class HomeController {
 
     @GetMapping("/")
     public String home(Model model) {
-        System.out.println(categoryService.getAllCategories());
         model.addAttribute("Categories", categoryService.getAllCategories());
-
-
         return "home";
     }
 }
