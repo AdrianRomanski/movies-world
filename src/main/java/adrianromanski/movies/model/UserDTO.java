@@ -4,6 +4,7 @@ import lombok.*;
 
 @Getter
 @NoArgsConstructor
+@Setter
 public class UserDTO  extends  PersonDTO {
 
     private Long id;

@@ -18,6 +18,7 @@ class UserMapperTest {
     @Test
     void userToUserDTO() {
         User user = User.builder().firstName(FIRST_NAME).lastName(LAST_NAME).gender(GENDER).build();
+        user.setId(1L);
 
         UserDTO userDTO = userMapper.userToUserDTO(user);
 
