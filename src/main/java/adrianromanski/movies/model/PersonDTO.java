@@ -27,8 +27,5 @@ public class PersonDTO {
     @NotEmpty
     @Size(min = 3, max = 10)
     private String gender;
-    @NotEmpty
-    private String username;
-    @NotEmpty
-    private String password;
+
 }

@@ -1,7 +1,9 @@
 package adrianromanski.movies.bootstrap;
 
+import adrianromanski.movies.domain.Actor;
 import adrianromanski.movies.domain.Category;
 import adrianromanski.movies.domain.Movie;
+import adrianromanski.movies.repositories.ActorRepository;
 import adrianromanski.movies.repositories.CategoryRepository;
 import adrianromanski.movies.repositories.MovieRepository;
 import org.springframework.context.ApplicationListener;
@@ -9,17 +11,20 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 @Component
 public class MoviesBootstrap implements ApplicationListener<ContextRefreshedEvent> {
 
     private final CategoryRepository categoryRepository;
     private final MovieRepository movieRepository;
+    private final ActorRepository actorRepository;
 
 
-    public MoviesBootstrap(CategoryRepository categoryRepository, MovieRepository movieRepository) {
+    public MoviesBootstrap(CategoryRepository categoryRepository, MovieRepository movieRepository, ActorRepository actorRepository) {
         this.categoryRepository = categoryRepository;
         this.movieRepository = movieRepository;
+        this.actorRepository = actorRepository;
     }
 
     @Override
@@ -32,6 +37,8 @@ public class MoviesBootstrap implements ApplicationListener<ContextRefreshedEven
                             "supernatural events, mythology, folklore, or exotic fantasy worlds").movies(Arrays.asList(movie, movie)).build();
 
         movie.setCategory(fantasy);
+
+        Actor actor = Actor.builder().firstName("Arnold").lastName("Schwarzenegger").gender("Male").movies(Collections.singletonList(movie)).build();
 
 
 
@@ -52,6 +59,7 @@ public class MoviesBootstrap implements ApplicationListener<ContextRefreshedEven
         categoryRepository.save(horror);
         categoryRepository.save(sciFi);
         movieRepository.save(movie);
+        actorRepository.save(actor);
 
 
 
