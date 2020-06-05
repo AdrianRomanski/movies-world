@@ -1,7 +1,7 @@
 package adrianromanski.movies.controllers;
 
 import adrianromanski.movies.model.UserDTO;
-import adrianromanski.movies.services.UserService;
+import adrianromanski.movies.services.user.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

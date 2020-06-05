@@ -3,6 +3,8 @@ package adrianromanski.movies.services;
 import adrianromanski.movies.domain.Category;
 import adrianromanski.movies.domain.Movie;
 import adrianromanski.movies.exceptions.ResourceNotFoundException;
+import adrianromanski.movies.jms.JmsTextMessageService;
+import adrianromanski.movies.jms.JmsTextMessageServiceImpl;
 import adrianromanski.movies.mapper.CategoryMapper;
 import adrianromanski.movies.mapper.CategoryMapperImpl;
 import adrianromanski.movies.mapper.MovieMapper;
@@ -33,6 +35,9 @@ class CategoryServiceImplTest {
     @Mock
     CategoryRepository categoryRepository;
 
+    @Mock
+    JmsTextMessageService jms;
+
     CategoryService categoryService;
 
 
@@ -42,7 +47,7 @@ class CategoryServiceImplTest {
 
         CategoryMapper categoryMapper = new CategoryMapperImpl();
         MovieMapper movieMapper = new MovieMapperImpl();
-        categoryService = new CategoryServiceImpl(categoryRepository, categoryMapper, movieMapper);
+        categoryService = new CategoryServiceImpl(categoryRepository, jms, categoryMapper, movieMapper);
     }
 
     @DisplayName("Happy Path, method = getAllCategories")

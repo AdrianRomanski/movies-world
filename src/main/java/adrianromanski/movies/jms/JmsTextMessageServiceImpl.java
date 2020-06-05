@@ -4,10 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
 
-import java.util.Queue;
+import javax.jms.Queue;
 
 @Service
-public class JmsTextMessageServiceImpl implements JmsTextMessageService{
+public class JmsTextMessageServiceImpl implements JmsTextMessageService {
 
     private Queue textMessageQueue;
     private JmsTemplate jmsTemplate;
@@ -24,6 +24,6 @@ public class JmsTextMessageServiceImpl implements JmsTextMessageService{
 
     @Override
     public void sendTextMessage(String msg) {
-        this.jmsTemplate.convertAndSend(String.valueOf(this.textMessageQueue), msg);
+        this.jmsTemplate.convertAndSend(this.textMessageQueue, msg);
     }
 }

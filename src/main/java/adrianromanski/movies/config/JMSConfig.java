@@ -12,7 +12,7 @@ public class JMSConfig {
     public static final String textMsgQueue = "text.messagequeue";
 
     @Bean
-    public Queue textMessageQueue() {
+    public Queue textMessageQueue(){
         return new ActiveMQQueue(textMsgQueue);
     }
 }

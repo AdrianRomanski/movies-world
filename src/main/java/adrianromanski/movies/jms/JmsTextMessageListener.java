@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 public class JmsTextMessageListener {
 
     @JmsListener(destination = "text.messagequeue")
-    public void onMessage(String msg) {
+    public void onMessage(String msg){
         System.out.println("#### " + msg + " ###" );
     }
- }
+}

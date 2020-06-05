@@ -2,6 +2,8 @@ package adrianromanski.movies.services;
 
 
 import adrianromanski.movies.domain.Movie;
+import adrianromanski.movies.jms.JmsTextMessageService;
+import adrianromanski.movies.jms.JmsTextMessageServiceImpl;
 import adrianromanski.movies.mapper.MovieMapper;
 import adrianromanski.movies.mapper.MovieMapperImpl;
 import adrianromanski.movies.model.MovieDTO;
@@ -24,14 +26,16 @@ class MovieServiceImplTest {
     @Mock
     MovieRepository movieRepository;
 
+    @Mock
+    JmsTextMessageService jms;
+
     MovieService movieService;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
-
-        MovieMapper movieMapper = new MovieMapperImpl(); // I have to do something with this ugly init
-        movieService = new MovieServiceImpl(movieRepository,movieMapper);
+        MovieMapper movieMapper = new MovieMapperImpl(); // I have to do something with this ugly init - That should be singleton!!!!!
+        movieService = new MovieServiceImpl(movieRepository, jms, movieMapper);
     }
 
     @Test
