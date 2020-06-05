@@ -6,6 +6,8 @@ import adrianromanski.movies.mapper.MovieMapper;
 import adrianromanski.movies.mapper.MovieMapperImpl;
 import adrianromanski.movies.model.MovieDTO;
 import adrianromanski.movies.repositories.MovieRepository;
+import adrianromanski.movies.services.movie.MovieService;
+import adrianromanski.movies.services.movie.MovieServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;

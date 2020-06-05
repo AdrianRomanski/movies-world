@@ -1,4 +1,4 @@
-package adrianromanski.movies.services;
+package adrianromanski.movies.services.category;
 
 
 import adrianromanski.movies.model.CategoryDTO;

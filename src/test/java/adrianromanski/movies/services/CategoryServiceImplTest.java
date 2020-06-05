@@ -10,6 +10,8 @@ import adrianromanski.movies.mapper.MovieMapperImpl;
 import adrianromanski.movies.model.CategoryDTO;
 import adrianromanski.movies.model.MovieDTO;
 import adrianromanski.movies.repositories.CategoryRepository;
+import adrianromanski.movies.services.category.CategoryService;
+import adrianromanski.movies.services.category.CategoryServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

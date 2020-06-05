@@ -1,6 +1,6 @@
 package adrianromanski.movies.controllers;
 
-import adrianromanski.movies.services.CategoryService;
+import adrianromanski.movies.services.category.CategoryService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;

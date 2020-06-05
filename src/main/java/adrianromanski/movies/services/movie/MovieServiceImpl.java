@@ -1,4 +1,4 @@
-package adrianromanski.movies.services;
+package adrianromanski.movies.services.movie;
 
 import adrianromanski.movies.mapper.MovieMapper;
 import adrianromanski.movies.model.MovieDTO;

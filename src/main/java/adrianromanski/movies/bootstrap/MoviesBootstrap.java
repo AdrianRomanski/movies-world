@@ -33,7 +33,7 @@ public class MoviesBootstrap implements ApplicationListener<ContextRefreshedEven
         Movie movie = Movie.builder().name("Lord of the Rings").description("Fantastic journey").imageURL("fantasy.jpg").build();
 
         Category fantasy = Category.builder().name("Fantasy").imageURL("fantasy.jpg")
-                .description("Fantasy films are films that belong to the fantasy genre with fantastic themes, usually magic," +
+                .description("Fantasy films are films that belong to the fantasy genre with fantastic themes, usually magic, " +
                             "supernatural events, mythology, folklore, or exotic fantasy worlds").movies(Arrays.asList(movie, movie)).build();
 
         movie.setCategory(fantasy);
