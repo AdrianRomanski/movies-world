@@ -16,10 +16,13 @@ import java.util.List;
 @NoArgsConstructor
 public class Movie extends BaseEntity {
 
+    private Long minutes;
+
     @Builder
-    public Movie(Long id, String name, String description, String imageURL,
+    public Movie(Long id, String name, String description, String imageURL, Long minutes,
                  Category category, List<Actor> actors) {
         super(id, name, description, imageURL);
+        this.minutes = minutes;
         this.category = category;
         this.actors = actors;
     }
