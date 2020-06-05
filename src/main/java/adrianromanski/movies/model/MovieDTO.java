@@ -13,10 +13,13 @@ import java.util.List;
 @Setter
 public class MovieDTO extends BaseEntityDTO{
 
+    private Long minutes;
+
     @Builder
-    public MovieDTO(Long id,  String name,  String description, String imageURL,
+    public MovieDTO(Long id,  String name,  String description, String imageURL, Long minutes,
                     CategoryDTO categoryDTO, List<ActorDTO> actorsDTO) {
         super(id, name, description, imageURL);
+        this.minutes = minutes;
         this.categoryDTO = categoryDTO;
         this.actorsDTO = actorsDTO;
     }
