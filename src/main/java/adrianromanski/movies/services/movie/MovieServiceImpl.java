@@ -1,6 +1,7 @@
 package adrianromanski.movies.services.movie;
 
 import adrianromanski.movies.domain.Actor;
+import adrianromanski.movies.domain.Movie;
 import adrianromanski.movies.exceptions.ResourceNotFoundException;
 import adrianromanski.movies.jms.JmsTextMessageService;
 import adrianromanski.movies.mapper.ActorMapper;
@@ -59,7 +60,7 @@ public class MovieServiceImpl implements MovieService {
         jmsTextMessageService.sendTextMessage("Finding movie with id: " + id);
         return movieRepository.findById(id)
                 .map(movieMapper::movieToMovieDTO)
-                .orElseThrow(() -> new ResourceNotFoundException("Movie with id:" + id + " not found"));
+                .orElseThrow(() -> new ResourceNotFoundException(id, Movie.class));
     }
 
 
@@ -73,7 +74,7 @@ public class MovieServiceImpl implements MovieService {
         jmsTextMessageService.sendTextMessage("Finding movie with name: " + name);
         return movieRepository.findByName(name)
                 .map(movieMapper::movieToMovieDTO)
-                .orElseThrow(() -> new ResourceNotFoundException("Movie with name:" + name + " not found"));
+                .orElseThrow(() -> new ResourceNotFoundException(name, Movie.class));
     }
 
 
@@ -87,7 +88,7 @@ public class MovieServiceImpl implements MovieService {
     public List<MovieDTO> findAllMoviesWithActor(String firstName, String lastName) {
         jmsTextMessageService.sendTextMessage("Finding movies for Actor:" + firstName + " " + lastName);
         Actor actor = actorRepository.findByFirstNameAndAndLastName(firstName, lastName)
-                .orElseThrow(() -> new ResourceNotFoundException("Actor " + firstName + " " + lastName + " not found"));
+                .orElseThrow(() -> new ResourceNotFoundException(firstName, lastName, Actor.class));
         jmsTextMessageService.sendTextMessage("Founded " + actor.getMovies().size()  + " movies");
         return actor.getMovies()
                 .stream()

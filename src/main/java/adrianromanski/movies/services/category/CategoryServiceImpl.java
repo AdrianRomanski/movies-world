@@ -31,6 +31,10 @@ public class CategoryServiceImpl implements CategoryService {
         this.movieMapper = movieMapper;
     }
 
+
+    /**
+     * @return All Categories from database
+     */
     @Override
     public List<CategoryDTO> getAllCategories() {
         jmsTextMessageService.sendTextMessage("Listing Categories");
@@ -40,10 +44,16 @@ public class CategoryServiceImpl implements CategoryService {
                 .collect(Collectors.toList());
     }
 
+
+    /**
+     * @param name of the Category looking for
+     * @return List of movies with that Category
+     * @throws ResourceNotFoundException if there is no Category with this name
+     */
     @Override
     public List<MovieDTO> getAllMoviesForCategory(String name) {
         Category category = categoryRepository.findByName(name)
-                .orElseThrow(() -> new ResourceNotFoundException("Movie with name: " + name + " not found"));
+                .orElseThrow(() -> new ResourceNotFoundException(name, Category.class));
         jmsTextMessageService.sendTextMessage("Listing all Movies for Category " + name);
         return category.getMovies()
                 .stream()
