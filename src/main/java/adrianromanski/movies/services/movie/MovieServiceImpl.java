@@ -95,4 +95,50 @@ public class MovieServiceImpl implements MovieService {
                 .map(movieMapper::movieToMovieDTO)
                 .collect(toList());
     }
+
+
+    /**
+     * @param movieDTO to save
+     * @return Movie if successfully saved
+     */
+    @Override
+    public MovieDTO createMovie(MovieDTO movieDTO) {
+        Movie movie = movieMapper.movieDTOToMovie(movieDTO);
+        movieRepository.save(movie);
+        jmsTextMessageService.sendTextMessage("Movie " + movie.getName() + " successfully saved");
+        return movieMapper.movieToMovieDTO(movie);
+    }
+
+
+     /**
+      * @param id of the Movie to update
+      * @param movieDTO object for updating
+      * @return Movie if successfully updated
+      * @throws ResourceNotFoundException if not found
+      */
+     @Override
+       public MovieDTO updateMovie(Long id, MovieDTO movieDTO) {
+       movieRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(id, Movie.class));
+       Movie updatedMovie = movieMapper.movieDTOToMovie(movieDTO);
+       updatedMovie.setId(id);
+       movieRepository.save(updatedMovie);
+       jmsTextMessageService.sendTextMessage("Movie " + updatedMovie.getName() + " successfully updated");
+       return movieMapper.movieToMovieDTO(updatedMovie);
+    }
+
+
+    /**
+     * @param id of the Movie to delete
+     * @throws ResourceNotFoundException if not found
+     */
+    @Override
+    public void deleteMovieByID(Long id) {
+      movieRepository.findById(id)
+               .orElseThrow(() -> new ResourceNotFoundException(id, Movie.class));
+      movieRepository.deleteById(id);
+      jmsTextMessageService.sendTextMessage("Movie with id: " + id + " successfully deleted");
+    }
+
+
 }

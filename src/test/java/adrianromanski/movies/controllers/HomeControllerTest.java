@@ -32,7 +32,6 @@ class HomeControllerTest {
 
     @Test
     void home() throws Exception {
-
         mockMvc.perform(get("/"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("home"));

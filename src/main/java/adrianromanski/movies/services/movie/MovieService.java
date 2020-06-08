@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface MovieService {
 
+    //GET
     List<MovieDTO> getAllMovies();
 
     MovieDTO getMovieByID(Long id);
@@ -15,8 +16,12 @@ public interface MovieService {
 
     List<MovieDTO> findAllMoviesWithActor(String firstName, String lastName);
 
+    //POST
+    MovieDTO createMovie(MovieDTO movieDTO);
 
-//    List<MovieDTO> getMoviesSortedByYear();
-//
-//    List<MovieDTO> getMoviesSortedByTime();
+    //PUT
+    MovieDTO updateMovie(Long id, MovieDTO movieDTO);
+
+    //DELETE
+    void deleteMovieByID(Long id);
 }

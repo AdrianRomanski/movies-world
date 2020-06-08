@@ -29,11 +29,12 @@ import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class MovieServiceImplTest {
 
     public static final String NAME = "Star Wars";
+    public static final String GOOD_MOVIE = "Good movie";
     @Mock
     MovieRepository movieRepository;
 
@@ -135,4 +136,69 @@ class MovieServiceImplTest {
 
         assertThat(ex).isInstanceOf(ResourceNotFoundException.class);
     }
+
+
+    @DisplayName("Happy Path, method = createMovie")
+    @Test
+    void createMovie() {
+        MovieDTO movieDTO = new MovieDTO();
+        movieDTO.setDescription(GOOD_MOVIE);
+
+        MovieDTO returnDTO = movieService.createMovie(movieDTO);
+
+        verify(movieRepository, times(1)).save(any(Movie.class));
+
+        assertEquals(returnDTO.getDescription(), GOOD_MOVIE);
+    }
+
+
+    @DisplayName("Happy Path, method = updateMovie")
+    @Test
+    void updateMovieHappyPath() {
+        MovieDTO movieDTO = new MovieDTO();
+        movieDTO.setDescription(GOOD_MOVIE);
+        Movie movie = getStarWars();
+
+        when(movieRepository.findById(anyLong())).thenReturn(Optional.of(movie));
+
+        MovieDTO returnDTO = movieService.updateMovie(1L, movieDTO);
+
+        verify(movieRepository, times(1)).save(any(Movie.class));
+
+        assertEquals(returnDTO.getDescription(), GOOD_MOVIE);
+    }
+
+
+    @DisplayName("UnHappy Path, method = updateMovie")
+    @Test
+    void updateMovieUnHappyPath() {
+        MovieDTO movieDTO = new MovieDTO();
+
+        Throwable ex = catchThrowable(() -> movieService.updateMovie(1L, movieDTO));
+
+        assertThat(ex).isInstanceOf(ResourceNotFoundException.class);
+    }
+
+
+    @DisplayName("Happy Path, method = deleteMovieByID")
+    @Test
+    void deleteMovieByIDHappyPath() {
+        Movie movie = new Movie();
+
+        when(movieRepository.findById(anyLong())).thenReturn(Optional.of(movie));
+
+        movieService.deleteMovieByID(1L);
+
+        verify(movieRepository, times(1)).deleteById(1L);
+    }
+
+
+    @DisplayName("UnHappy Path, method = deleteMovieByID")
+    @Test
+    void deleteMovieByIDUnHappyPath() {
+        Throwable ex = catchThrowable(() -> movieService.deleteMovieByID(1L));
+
+        assertThat(ex).isInstanceOf(ResourceNotFoundException.class);
+    }
+
 }
