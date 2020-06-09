@@ -47,7 +47,7 @@ public class RegistrationControllerTest {
     public void checkRegistrationHappyPath() throws Exception {
         UserDTO userDTO = new UserDTO();
 
-        when(userService.save(any())).thenReturn(userDTO);
+        when(userService.createUser(any())).thenReturn(userDTO);
 
         mockMvc.perform(post("/checkRegistration")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
@@ -65,7 +65,7 @@ public class RegistrationControllerTest {
     public void checkRegistrationUnHappyPath() throws Exception {
         UserDTO userDTO = new UserDTO();
 
-        when(userService.save(any())).thenReturn(userDTO);
+        when(userService.createUser(any())).thenReturn(userDTO);
 
         mockMvc.perform(post("/checkRegistration")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED))

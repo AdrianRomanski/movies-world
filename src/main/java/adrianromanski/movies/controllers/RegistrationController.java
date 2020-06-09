@@ -39,7 +39,7 @@ public class RegistrationController {
             return "registration";
         }
 
-        userService.save(userDTO);
+        userService.createUser(userDTO);
         return "successRegistration";
     }
 }
