@@ -13,6 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 public class Category extends BaseEntity {
 
+
     @Builder
     public Category(Long id, String name, String description, String imageURL, List<Movie> movies) {
         super(id, name, description, imageURL);

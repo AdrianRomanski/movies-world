@@ -11,6 +11,7 @@ public interface CategoryMapper {
 
     @Mapping(source = "movies", target = "moviesDTO")
     CategoryDTO categoryToCategoryDTO(Category category);
+
     @Mapping(source = "moviesDTO", target = "movies")
     Category categoryDTOToCategory(CategoryDTO categoryDTO);
 }

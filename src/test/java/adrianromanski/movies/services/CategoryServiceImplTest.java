@@ -28,10 +28,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class CategoryServiceImplTest {
 
+    public static final String NAME = "Fantasy";
     @Mock
     CategoryRepository categoryRepository;
 
@@ -50,6 +51,15 @@ class CategoryServiceImplTest {
         categoryService = new CategoryServiceImpl(categoryRepository, jms, categoryMapper, movieMapper);
     }
 
+    private Category getCategory() {
+        return Category.builder().name(NAME).build();
+    }
+
+    private CategoryDTO getCategoryDTO() {
+        return CategoryDTO.builder().name(NAME).build();
+    }
+
+
     @DisplayName("Happy Path, method = getAllCategories")
     @Test
     void getAllCategories() {
@@ -62,18 +72,20 @@ class CategoryServiceImplTest {
         assertEquals(returnDTO.size(), 3);
     }
 
+
     @DisplayName("Happy Path, method = getAllMoviesForCategory")
     @Test
     void getAllMoviesForCategoryHappyPath() {
         List<Movie> movies = Arrays.asList(new Movie(), new Movie(), new Movie());
-        Category category = Category.builder().movies(movies).build();
+        Category category = Category.builder().name("Fantasy").movies(movies).build();
 
         when(categoryRepository.findByName(anyString())).thenReturn(Optional.of(category));
 
-        List<MovieDTO> returnDTO = categoryService.getAllMoviesForCategory(anyString());
+        List<MovieDTO> returnDTO = categoryService.getAllMoviesForCategory("Fantasy");
 
         assertEquals(returnDTO.size(), 3);
     }
+
 
     @DisplayName("UnhappyPath, method = getAllMoviesForCategory")
     @Test
@@ -82,4 +94,88 @@ class CategoryServiceImplTest {
 
         assertThat(ex).isInstanceOf(ResourceNotFoundException.class);
     }
+
+
+    @DisplayName("Happy Path, method = getCategoryByName")
+    @Test
+    void getCategoryByName() {
+        Category category = getCategory();
+
+        when(categoryRepository.findByName(anyString())).thenReturn(Optional.of(category));
+
+        CategoryDTO returnDTO = categoryService.getCategoryByName(NAME);
+
+        assertEquals(returnDTO.getName(), NAME);
+    }
+
+
+    @DisplayName("UnhappyPath, method = getCategoryByName")
+    @Test
+    void getCategoryByNameUnhappyPath() {
+        Throwable ex = catchThrowable(() -> categoryService.getCategoryByName("24421"));
+
+        assertThat(ex).isInstanceOf(ResourceNotFoundException.class);
+    }
+
+
+    @DisplayName("Happy Path, method = createCategory")
+    @Test
+    void createCategory() {
+        CategoryDTO categoryDTO = getCategoryDTO();
+
+        CategoryDTO returnDTO = categoryService.createCategory(categoryDTO);
+
+        assertEquals(returnDTO.getName(), NAME);
+
+        verify(categoryRepository, times(1)).save(any(Category.class));
+    }
+
+
+    @DisplayName("Happy Path, method = updateCategory")
+    @Test
+    void updateCategoryHappyPath() {
+        CategoryDTO categoryDTO = getCategoryDTO();
+        categoryDTO.setName("Updated");
+        Category category = getCategory();
+
+        when(categoryRepository.findById(anyLong())).thenReturn(Optional.of(category));
+
+        CategoryDTO returnDTO = categoryService.updateCategory(1L, categoryDTO);
+
+        assertEquals(returnDTO.getName(), "Updated");
+
+        verify(categoryRepository, times(1)).save(any(Category.class));
+    }
+
+
+    @DisplayName("UnhappyPath, method = updateCategory")
+    @Test
+    void updateCategoryUnHappyPath() {
+        CategoryDTO categoryDTO = new CategoryDTO();
+        Throwable ex = catchThrowable(() -> categoryService.updateCategory(22L, categoryDTO));
+
+        assertThat(ex).isInstanceOf(ResourceNotFoundException.class);
+    }
+
+
+    @DisplayName("Happy Path, method = deleteCategoryByID")
+    @Test
+    void deleteCategoryByIDHappyPath() {
+        Category category = getCategory();
+
+        when(categoryRepository.findById(anyLong())).thenReturn(Optional.of(category));
+
+        categoryService.deleteCategoryByID(1L);
+
+        verify(categoryRepository, times(1)).deleteById(1L);
+    }
+
+
+    @DisplayName("UnhappyPath, method = deleteCategoryByID")
+    @Test
+    void deleteCategoryByIDUnhappyPath() {
+        Throwable ex = catchThrowable(() -> categoryService.deleteCategoryByID(22L));
+
+        assertThat(ex).isInstanceOf(ResourceNotFoundException.class);
+     }
 }
