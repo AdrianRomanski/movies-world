@@ -12,13 +12,15 @@ public interface MovieMapper {
 
     @Mappings({
             @Mapping(source = "actors", target = "actorsDTO"),
-            @Mapping(source = "category", target = "categoryDTO")
+            @Mapping(source = "category", target = "categoryDTO"),
+            @Mapping(source = "awards", target = "awardsDTO")
     })
     MovieDTO movieToMovieDTO(Movie movie);
 
     @Mappings({
             @Mapping(source = "actorsDTO", target = "actors"),
-            @Mapping(source = "categoryDTO", target = "category")
+            @Mapping(source = "categoryDTO", target = "category"),
+            @Mapping(source = "awardsDTO", target = "awards")
     })
     Movie movieDTOToMovie(MovieDTO movieDTO);
 }
