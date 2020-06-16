@@ -1,13 +1,23 @@
 package adrianromanski.movies.services;
 
 import adrianromanski.movies.domain.Actor;
+import adrianromanski.movies.domain.award.ActorAward;
+import adrianromanski.movies.domain.award.Award;
 import adrianromanski.movies.exceptions.ResourceNotFoundException;
+import adrianromanski.movies.jms.JmsTextMessageService;
+import adrianromanski.movies.mapper.ActorAwardMapper;
+import adrianromanski.movies.mapper.ActorAwardMapperImpl;
 import adrianromanski.movies.mapper.ActorMapper;
 import adrianromanski.movies.mapper.ActorMapperImpl;
 import adrianromanski.movies.model.ActorDTO;
+import adrianromanski.movies.model.award.ActorAwardDTO;
+import adrianromanski.movies.model.award.AwardDTO;
 import adrianromanski.movies.repositories.ActorRepository;
+import adrianromanski.movies.repositories.AwardRepository;
 import adrianromanski.movies.services.actor.ActorService;
 import adrianromanski.movies.services.actor.ActorServiceImpl;
+import org.checkerframework.checker.units.qual.A;
+import org.checkerframework.checker.units.qual.C;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,6 +26,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,20 +40,36 @@ class ActorServiceImplTest {
 
     public static final String FIRST_NAME = "Steven";
     public static final String LAST_NAME = "Spielberg";
+    public static final String COUNTRY = "Poland";
+    public static final String CATEGORY = "Best Actor";
+
     @Mock
     ActorRepository actorRepository;
+
+    @Mock
+    AwardRepository awardRepository;
+
+    @Mock
+    JmsTextMessageService jms;
 
     ActorService actorService;
 
     private ActorDTO getActorDTO() { return ActorDTO.builder().firstName(FIRST_NAME).lastName(LAST_NAME).build(); }
-    private Actor getActor() { return Actor.builder().firstName(FIRST_NAME).lastName(LAST_NAME).build(); }
+
+    private Actor getActor() {
+        ActorAward award = ActorAward.builder().country(COUNTRY).awardCategory(CATEGORY).build();
+        Actor actor = Actor.builder().firstName(FIRST_NAME).lastName(LAST_NAME).awards(Collections.singletonList(award)).build();
+        award.setActor(actor);
+        return actor;
+    }
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
         ActorMapper actorMapper = new ActorMapperImpl();
+        ActorAwardMapper awardMapper = new ActorAwardMapperImpl();
 
-        actorService = new ActorServiceImpl(actorRepository, actorMapper);
+        actorService = new ActorServiceImpl(actorRepository, awardRepository, actorMapper, awardMapper, jms);
     }
 
 
@@ -71,19 +98,47 @@ class ActorServiceImplTest {
     }
 
 
+    @DisplayName("Happy Path, method = addAward")
+    @Test
+    void addAwardHappyPath() {
+        Actor actor = new Actor();
+        ActorAwardDTO awardDTO = new ActorAwardDTO();
+        awardDTO.setCountry(COUNTRY);
+
+        when(actorRepository.findById(anyLong())).thenReturn(Optional.of(actor));
+
+        ActorAwardDTO returnDTO = actorService.addAward(1L, awardDTO);
+
+        assertEquals(returnDTO.getCountry(), COUNTRY);
+    }
+
+
+    @DisplayName("UnHappy Path, method = addAward")
+    @Test
+    void addAwardUnHappyPath() {
+        ActorAwardDTO awardDTO = new ActorAwardDTO();
+        Throwable ex = catchThrowable(() -> actorService.addAward(1L, awardDTO));
+
+        assertThat(ex).isInstanceOf(ResourceNotFoundException.class);
+    }
+
+
     @DisplayName("Happy Path, method = updateActor")
     @Test
     void updateActorHappyPath() {
-        ActorDTO actorDTO = getActorDTO();
+        ActorDTO actorDTO = new ActorDTO();
         actorDTO.setFirstName("Updating");
-        Actor actor = getActor();
+        Actor actor = new Actor();
+        ActorAward award = new ActorAward();
+        award.setId(1L);
+        actor.getAwards().add(award);
+        award.setActor(actor);
 
         when(actorRepository.findById(anyLong())).thenReturn(Optional.of(actor));
 
         ActorDTO returnDTO = actorService.updateActor(1L, actorDTO);
 
         assertEquals(returnDTO.getFirstName(), "Updating");
-        assertEquals(returnDTO.getLastName(), LAST_NAME);
     }
 
 
@@ -92,6 +147,34 @@ class ActorServiceImplTest {
     void updateActorUnHappyPath() {
         ActorDTO actorDTO = getActorDTO();
         Throwable ex = catchThrowable(() -> actorService.updateActor(1L, actorDTO));
+
+        assertThat(ex).isInstanceOf(ResourceNotFoundException.class);
+    }
+
+
+    @DisplayName("Happy Path, method = updateAward")
+    @Test
+    void updateAwardHappyPath() {
+        Actor actor = new Actor();
+        ActorAward award = new ActorAward();
+        award.setId(1L);
+        actor.getAwards().add(award);
+        award.setActor(actor);
+        ActorAwardDTO awardDTO = new ActorAwardDTO();
+        awardDTO.setCountry(COUNTRY);
+
+        when(actorRepository.findById(anyLong())).thenReturn(Optional.of(actor));
+
+        ActorAwardDTO returnDTO = actorService.updateAward(1L, 1L, awardDTO);
+
+        assertEquals(returnDTO.getCountry(), COUNTRY);
+    }
+
+    @DisplayName("UnHappy Path, method = updateAward")
+    @Test
+    void updateAwardUnHappyPath() {
+        ActorAwardDTO awardDTO = new ActorAwardDTO();
+        Throwable ex = catchThrowable(() -> actorService.updateAward(1L, 1L, awardDTO));
 
         assertThat(ex).isInstanceOf(ResourceNotFoundException.class);
     }
@@ -119,4 +202,33 @@ class ActorServiceImplTest {
 
         verify(actorRepository, times(0)).deleteById(anyLong());
     }
+
+
+    @DisplayName("Happy Path, method = deleteAward")
+    @Test
+    void deleteAwardHappyPath() {
+        Actor actor = new Actor();
+        ActorAward award = new ActorAward();
+        award.setId(1L);
+        actor.getAwards().add(award);
+        award.setActor(actor);
+
+        when(actorRepository.findById(anyLong())).thenReturn(Optional.of(actor));
+
+        actorService.deleteAward(1L, 1L);
+
+        verify(awardRepository, times(1)).deleteById(anyLong());
+    }
+
+
+    @DisplayName("UnHappy Path, method = deleteAward")
+    @Test
+    void deleteAwardUnHappyPath() {
+        Throwable ex = catchThrowable(() -> actorService.deleteAward(1L, 1L));
+
+        assertThat(ex).isInstanceOf(ResourceNotFoundException.class);
+
+        verify(awardRepository, times(0)).deleteById(anyLong());
+    }
+
 }

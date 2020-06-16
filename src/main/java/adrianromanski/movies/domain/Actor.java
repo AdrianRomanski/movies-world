@@ -11,6 +11,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Getter
 @Setter
@@ -28,6 +29,13 @@ public class Actor extends Person {
 
     @OneToMany(mappedBy = "actor")
     private List<ActorAward> awards = new ArrayList<>();
+
+
+    public Optional<ActorAward> getAwardOptional(Long awardID) {
+        return this.getAwards().stream()
+                .filter(award -> award.getId().equals(awardID))
+                .findAny();
+    }
 
     @ManyToMany
     @JoinTable(name = "actor_movies", joinColumns = @JoinColumn(name = "actor_id"),
