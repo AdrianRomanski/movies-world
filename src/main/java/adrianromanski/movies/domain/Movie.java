@@ -1,6 +1,5 @@
 package adrianromanski.movies.domain;
 
-import adrianromanski.movies.domain.award.Award;
 import adrianromanski.movies.domain.award.MovieAward;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,6 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Getter
 @Setter
@@ -34,6 +34,12 @@ public class Movie extends BaseEntity {
 
     @OneToMany(mappedBy = "movie")
     private List<MovieAward> awards = new ArrayList<>();
+
+    public Optional<MovieAward> getAwardOptional(Long id) {
+        return this.getAwards().stream()
+                .filter(a -> a.getId().equals(id))
+                .findAny();
+    }
 
     @ManyToOne
     private Category category;

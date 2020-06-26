@@ -2,13 +2,17 @@ package adrianromanski.movies.services.movie;
 
 import adrianromanski.movies.domain.Actor;
 import adrianromanski.movies.domain.Movie;
+import adrianromanski.movies.domain.award.MovieAward;
 import adrianromanski.movies.exceptions.ResourceNotFoundException;
 import adrianromanski.movies.jms.JmsTextMessageService;
 import adrianromanski.movies.mapper.ActorMapper;
+import adrianromanski.movies.mapper.MovieAwardMapper;
 import adrianromanski.movies.mapper.MovieMapper;
 import adrianromanski.movies.model.ActorDTO;
 import adrianromanski.movies.model.MovieDTO;
+import adrianromanski.movies.model.award.MovieAwardDTO;
 import adrianromanski.movies.repositories.ActorRepository;
+import adrianromanski.movies.repositories.AwardRepository;
 import adrianromanski.movies.repositories.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,17 +28,20 @@ public class MovieServiceImpl implements MovieService {
 
     private final MovieRepository movieRepository;
     private final ActorRepository actorRepository;
+    private final AwardRepository awardRepository;
     private final JmsTextMessageService jmsTextMessageService;
     private final MovieMapper movieMapper;
+    private final MovieAwardMapper awardMapper;
 
 
-    @Autowired
-    public MovieServiceImpl(MovieRepository movieRepository, ActorRepository actorRepository,
-                            JmsTextMessageService jmsTextMessageService, MovieMapper movieMapper) {
+    public MovieServiceImpl(MovieRepository movieRepository, ActorRepository actorRepository, AwardRepository awardRepository,
+                            JmsTextMessageService jmsTextMessageService, MovieMapper movieMapper, MovieAwardMapper awardMapper) {
         this.movieRepository = movieRepository;
         this.actorRepository = actorRepository;
+        this.awardRepository = awardRepository;
         this.jmsTextMessageService = jmsTextMessageService;
         this.movieMapper = movieMapper;
+        this.awardMapper = awardMapper;
     }
 
     /**
@@ -110,7 +117,28 @@ public class MovieServiceImpl implements MovieService {
     }
 
 
-     /**
+    /**
+     * @param id of the Movie to add Award
+     * @param awardDTO object for adding
+     * @return Award if successfully added Award to Movie
+     * @throws ResourceNotFoundException if Movie not found
+     */
+    @Override
+    public MovieAwardDTO addAward(Long id, MovieAwardDTO awardDTO) {
+        jmsTextMessageService.sendTextMessage("Adding award to Movie with id: " + id);
+        Movie movie = movieRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(id, Movie.class));
+        MovieAward award = awardMapper.awardDTOToAward(awardDTO);
+        movie.getAwards().add(award);
+        award.setMovie(movie);
+        movieRepository.save(movie);
+        awardRepository.save(award);
+        jmsTextMessageService.sendTextMessage("Award successfully added to Movie with id: " + id);
+        return awardMapper.awardToAwardDTO(award);
+    }
+
+
+    /**
       * @param id of the Movie to update
       * @param movieDTO object for updating
       * @return Movie if successfully updated
@@ -129,15 +157,58 @@ public class MovieServiceImpl implements MovieService {
 
 
     /**
+     * @param movieID of The Movie we want to update Award
+     * @param awardID of the Award we want to update
+     * @param awardDTO Object with updated fields
+     * @return Award if successfully updated
+     * @throws ResourceNotFoundException if Movie or Award not found
+     */
+    @Override
+    public MovieAwardDTO updateAward(Long movieID, Long awardID, MovieAwardDTO awardDTO) {
+        jmsTextMessageService.sendTextMessage("Updating Award with id: " + awardID + " of Movie with id: " + movieID);
+        Movie movie = movieRepository.findById(movieID)
+                .orElseThrow(() -> new ResourceNotFoundException(movieID, Movie.class));
+        movie.getAwardOptional(awardID)
+                .orElseThrow(() -> new ResourceNotFoundException(awardID, MovieAward.class));
+        MovieAward updatedAward = awardMapper.awardDTOToAward(awardDTO);
+        updatedAward.setId(awardID);
+        movie.getAwards().add(updatedAward);
+        updatedAward.setMovie(movie);
+        jmsTextMessageService.sendTextMessage("Award with id: " + awardID + " of Movie with id: " + movieID + " successfully updated");
+        return awardMapper.awardToAwardDTO(updatedAward);
+    }
+
+
+    /**
      * @param id of the Movie to delete
      * @throws ResourceNotFoundException if not found
      */
     @Override
     public void deleteMovieByID(Long id) {
-      movieRepository.findById(id)
-               .orElseThrow(() -> new ResourceNotFoundException(id, Movie.class));
-      movieRepository.deleteById(id);
-      jmsTextMessageService.sendTextMessage("Movie with id: " + id + " successfully deleted");
+        jmsTextMessageService.sendTextMessage("Deleting Movie with id: " + id);
+        movieRepository.findById(id)
+           .orElseThrow(() -> new ResourceNotFoundException(id, Movie.class));
+        movieRepository.deleteById(id);
+        jmsTextMessageService.sendTextMessage("Movie with id: " + id + " successfully deleted");
+    }
+
+
+    /**
+     * @param movieID of The movie we want to delete Award
+     * @param awardID of the Award we want to delete
+     * @throws ResourceNotFoundException if either Award or Movie not found
+     */
+    @Override
+    public void deleteAwardByID(Long movieID, Long awardID) {
+        jmsTextMessageService.sendTextMessage("Deleting Award with id: " + awardID + " of Movie with id: " + movieID);
+        Movie movie = movieRepository.findById(movieID)
+                .orElseThrow(() -> new ResourceNotFoundException(movieID, Movie.class));
+        MovieAward award = movie.getAwardOptional(awardID)
+                .orElseThrow(() -> new ResourceNotFoundException(awardID, MovieAward.class));
+        movie.getAwards().remove(award);
+        movieRepository.save(movie);
+        awardRepository.deleteById(awardID);
+        jmsTextMessageService.sendTextMessage("Award with id: " + awardID + " successfully deleted");
     }
 
 

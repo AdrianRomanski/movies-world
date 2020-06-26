@@ -9,7 +9,6 @@ import org.mapstruct.Mappings;
 @Mapper(componentModel="spring")
 public interface MovieMapper {
 
-
     @Mappings({
             @Mapping(source = "actors", target = "actorsDTO"),
             @Mapping(source = "category", target = "categoryDTO"),

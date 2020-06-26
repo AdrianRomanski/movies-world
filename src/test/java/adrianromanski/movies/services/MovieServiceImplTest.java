@@ -3,14 +3,16 @@ package adrianromanski.movies.services;
 
 import adrianromanski.movies.domain.Actor;
 import adrianromanski.movies.domain.Movie;
+import adrianromanski.movies.domain.award.ActorAward;
+import adrianromanski.movies.domain.award.MovieAward;
 import adrianromanski.movies.exceptions.ResourceNotFoundException;
 import adrianromanski.movies.jms.JmsTextMessageService;
-import adrianromanski.movies.mapper.ActorMapper;
-import adrianromanski.movies.mapper.ActorMapperImpl;
-import adrianromanski.movies.mapper.MovieMapper;
-import adrianromanski.movies.mapper.MovieMapperImpl;
+import adrianromanski.movies.mapper.*;
 import adrianromanski.movies.model.MovieDTO;
+import adrianromanski.movies.model.award.ActorAwardDTO;
+import adrianromanski.movies.model.award.MovieAwardDTO;
 import adrianromanski.movies.repositories.ActorRepository;
+import adrianromanski.movies.repositories.AwardRepository;
 import adrianromanski.movies.repositories.MovieRepository;
 import adrianromanski.movies.services.movie.MovieService;
 import adrianromanski.movies.services.movie.MovieServiceImpl;
@@ -20,7 +22,9 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,11 +39,18 @@ class MovieServiceImplTest {
 
     public static final String NAME = "Star Wars";
     public static final String GOOD_MOVIE = "Good movie";
+    public static final String CATEGORY = "Hottest movie";
+    public static final String COUNTRY = "Poland";
+    public static final LocalDate DATE = LocalDate.now();
+
     @Mock
     MovieRepository movieRepository;
 
     @Mock
     ActorRepository actorRepository;
+
+    @Mock
+    AwardRepository awardRepository;
 
     @Mock
     JmsTextMessageService jms;
@@ -49,13 +60,19 @@ class MovieServiceImplTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
+        MovieAwardMapper awardMapper = new MovieAwardMapperImpl();
         MovieMapper movieMapper = new MovieMapperImpl(); // I have to do something with this ugly init - That should be singleton!!!!!
-        movieService = new MovieServiceImpl(movieRepository, actorRepository, jms, movieMapper);
+        movieService = new MovieServiceImpl(movieRepository, actorRepository,awardRepository, jms,
+                                            movieMapper, awardMapper);
     }
 
     private List<Movie> getMovies() { return Arrays.asList(new Movie(), new Movie(), new Movie()); }
 
-    private Movie getStarWars() { return Movie.builder().name(NAME).build(); }
+    private Movie getStarWars() { return Movie.builder().name(NAME).awards(Arrays.asList(getAward(), getAward())).build(); }
+
+    private MovieAward getAward() { return MovieAward.builder().awardCategory(CATEGORY).country(COUNTRY).date(DATE).build(); }
+
+    private MovieAwardDTO getAwardDTO() { return MovieAwardDTO.builder().awardCategory(CATEGORY).country(COUNTRY).date(DATE).build(); }
 
 
     @DisplayName("Happy Path, method = getAllMovies")
@@ -152,6 +169,32 @@ class MovieServiceImplTest {
     }
 
 
+    @DisplayName("Happy Path, method = addAward")
+    @Test
+    void addAwardHappyPath() {
+       Movie movie = new Movie();
+       MovieAwardDTO awardDTO = getAwardDTO();
+
+       when(movieRepository.findById(anyLong())).thenReturn(Optional.of(movie));
+
+       MovieAwardDTO returnDTO = movieService.addAward(1L, awardDTO);
+
+       assertEquals(returnDTO.getAwardCategory(), CATEGORY);
+       assertEquals(returnDTO.getCountry(), COUNTRY);
+       assertEquals(returnDTO.getDate(), DATE);
+    }
+
+
+    @DisplayName("UnHappy Path, method = addAward")
+    @Test
+    void addAwardUnHappyPath() {
+        MovieAwardDTO awardDTO = new MovieAwardDTO();
+        Throwable ex = catchThrowable(() -> movieService.addAward(1L, awardDTO));
+
+        assertThat(ex).isInstanceOf(ResourceNotFoundException.class);
+    }
+
+
     @DisplayName("Happy Path, method = updateMovie")
     @Test
     void updateMovieHappyPath() {
@@ -179,6 +222,35 @@ class MovieServiceImplTest {
         assertThat(ex).isInstanceOf(ResourceNotFoundException.class);
     }
 
+    
+    @DisplayName("Happy Path, method = updateAward")
+    @Test
+    void updateAwardHappyPath() {
+        Movie movie = new Movie();
+        MovieAward award = new MovieAward();
+        award.setId(1L);
+        movie.getAwards().add(award);
+        award.setMovie(movie);
+        MovieAwardDTO awardDTO = new MovieAwardDTO();
+        awardDTO.setCountry(COUNTRY);
+
+        when(movieRepository.findById(anyLong())).thenReturn(Optional.of(movie));
+
+        MovieAwardDTO returnDTO = movieService.updateAward(1L, 1L, awardDTO);
+
+        assertEquals(returnDTO.getCountry(), COUNTRY);
+    }
+
+
+    @DisplayName("UnHappy Path, method = updateAward")
+    @Test
+    void updateAwardUnHappyPath() {
+        MovieAwardDTO awardDTO = new MovieAwardDTO();
+        Throwable ex = catchThrowable(() -> movieService.updateAward(1L, 1L, awardDTO));
+
+        assertThat(ex).isInstanceOf(ResourceNotFoundException.class);
+    }
+
 
     @DisplayName("Happy Path, method = deleteMovieByID")
     @Test
@@ -197,6 +269,32 @@ class MovieServiceImplTest {
     @Test
     void deleteMovieByIDUnHappyPath() {
         Throwable ex = catchThrowable(() -> movieService.deleteMovieByID(1L));
+
+        assertThat(ex).isInstanceOf(ResourceNotFoundException.class);
+    }
+
+
+    @DisplayName("Happy Path, method = deleteAwardByID")
+    @Test
+    void deleteAwardByIDHappyPath() {
+        Movie movie = new Movie();
+        MovieAward award = new MovieAward();
+        award.setId(1L);
+        movie.getAwards().add(award);
+        award.setMovie(movie);
+
+        when(movieRepository.findById(anyLong())).thenReturn(Optional.of(movie));
+
+        movieService.deleteAwardByID(1L, 1L);
+
+        verify(awardRepository, times(1)).deleteById(1L);
+    }
+
+
+    @DisplayName("UnHappy Path, method = deleteAwardByID")
+    @Test
+    void deleteAwardByIDUnHappyPath() {
+        Throwable ex = catchThrowable(() -> movieService.deleteAwardByID(1L, 1L));
 
         assertThat(ex).isInstanceOf(ResourceNotFoundException.class);
     }
