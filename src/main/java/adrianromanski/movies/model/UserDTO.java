@@ -22,8 +22,8 @@ public class UserDTO  extends  PersonDTO {
         super(id, firstName, lastName, gender);
         this.username = username;
         this.password = password;
-        if(favouriteMoviesDTO == null){this.favouriteMoviesDTO = new HashSet<>();}
-        this.favouriteMoviesDTO = favouriteMoviesDTO;
+        if(favouriteMoviesDTO == null){ this.favouriteMoviesDTO = new HashSet<>();}
+        else{ this.favouriteMoviesDTO = favouriteMoviesDTO; }
     }
 
     private Set<MovieDTO> favouriteMoviesDTO = new HashSet<>();

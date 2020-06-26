@@ -7,9 +7,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
-import java.util.SortedSet;
-import java.util.TreeSet;
 
 
 @Entity
@@ -27,14 +26,19 @@ public class User extends Person {
         super(id, firstName, lastName, gender);
         this.username = username;
         this.password = password;
-        if(favouriteMovies == null){this.favouriteMovies = new HashSet<>();}
-        this.favouriteMovies = favouriteMovies;
-
+        if (favouriteMovies == null) { this.favouriteMovies = new HashSet<>(); }
+        else { this.favouriteMovies = favouriteMovies; }
     }
-
 
     @ManyToMany
     @JoinTable(name = "user_movies", joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "movie_id"))
     private Set<Movie> favouriteMovies = new HashSet<>();
+
+
+    public Optional<Movie> getMovieOptional(Long movieID) {
+        return this.getFavouriteMovies().stream()
+                .filter(m -> m.getId().equals(movieID))
+                .findAny();
+    }
 }

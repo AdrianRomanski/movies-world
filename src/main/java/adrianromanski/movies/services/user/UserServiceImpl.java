@@ -1,10 +1,12 @@
 package adrianromanski.movies.services.user;
 
+import adrianromanski.movies.domain.Movie;
 import adrianromanski.movies.domain.User;
 import adrianromanski.movies.exceptions.ResourceNotFoundException;
 import adrianromanski.movies.jms.JmsTextMessageService;
 import adrianromanski.movies.mapper.UserMapper;
 import adrianromanski.movies.model.UserDTO;
+import adrianromanski.movies.repositories.MovieRepository;
 import adrianromanski.movies.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,21 +16,23 @@ import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.*;
 
+
 @Service
 public class UserServiceImpl implements UserService{
 
     private final UserRepository userRepository;
+    private final MovieRepository movieRepository;
     private final JmsTextMessageService jmsTextMessageService;
     private final UserMapper userMapper;
 
-    @Autowired
-    public UserServiceImpl(UserRepository userRepository, JmsTextMessageService jmsTextMessageService,
-                           UserMapper userMapper) {
+
+    public UserServiceImpl(UserRepository userRepository, MovieRepository movieRepository,
+                           JmsTextMessageService jmsTextMessageService, UserMapper userMapper) {
         this.userRepository = userRepository;
+        this.movieRepository = movieRepository;
         this.jmsTextMessageService = jmsTextMessageService;
         this.userMapper = userMapper;
     }
-
 
     /**
      * User, Admin, Moderator
@@ -53,6 +57,28 @@ public class UserServiceImpl implements UserService{
         User user = userMapper.userDTOToUser(userDTO);
         userRepository.save(user);
         jmsTextMessageService.sendTextMessage("User with id: " + user.getId() + " successfully saved");
+        return userMapper.userToUserDTO(user);
+    }
+
+
+    /**
+     * @param userID of the User we want to Add favourite movie
+     * @param movieID of the movie we want to Add
+     * @throws ResourceNotFoundException if User or Movie not found
+     * @return User if successfully added
+     */
+    @Override
+    public UserDTO addFavouriteMovie(Long userID, Long movieID) {
+        jmsTextMessageService.sendTextMessage("Adding movie with id: " + movieID + " to User with id: " + userID);
+        User user = userRepository.findById(userID)
+                .orElseThrow(() -> new ResourceNotFoundException(userID, User.class));
+        Movie movie = movieRepository.findById(movieID)
+                .orElseThrow(() -> new ResourceNotFoundException(movieID, Movie.class));
+        user.getFavouriteMovies().add(movie);
+        movie.getUsers().add(user);
+        userRepository.save(user);
+        movieRepository.save(movie);
+        jmsTextMessageService.sendTextMessage("Movie with id: " + movieID + " successfully added to User with id: " + userID);
         return userMapper.userToUserDTO(user);
     }
 
@@ -89,5 +115,25 @@ public class UserServiceImpl implements UserService{
                 .orElseThrow(() -> new ResourceNotFoundException(id, User.class));
         userRepository.deleteById(id);
         jmsTextMessageService.sendTextMessage("User with id:  " + id + " successfully deleted");
+    }
+
+
+    /**
+     * @param userID of the User we want to delete FavouriteMovie
+     * @param movieID of the Movie we want to delete from the Set
+     * @throws ResourceNotFoundException if either Move or User not found
+     */
+    @Override
+    public void deleteFavouriteMovie(Long userID, Long movieID) {
+        jmsTextMessageService.sendTextMessage("Deleting movie with id: " + movieID + " from User with id: " + userID);
+        User user = userRepository.findById(userID)
+                .orElseThrow(() -> new ResourceNotFoundException(userID, User.class));
+        Movie movie = user.getMovieOptional(movieID)
+                .orElseThrow(() -> new ResourceNotFoundException(movieID, Movie.class));
+        user.getFavouriteMovies().remove(movie);
+        movie.getUsers().remove(user);
+        userRepository.save(user);
+        movieRepository.save(movie);
+        jmsTextMessageService.sendTextMessage("Movie with id: " + movieID + " successfully deleted from the User with id: " + userID);
     }
 }

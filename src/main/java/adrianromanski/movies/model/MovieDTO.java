@@ -25,12 +25,12 @@ public class MovieDTO extends BaseEntityDTO{
         super(id, name, description, imageURL);
         this.minutes = minutes;
         this.categoryDTO = categoryDTO;
-        if(actorsDTO == null){this.actorsDTO = new ArrayList<>();}
-        this.actorsDTO = actorsDTO;
-        if(awardsDTO == null){this.awardsDTO = new ArrayList<>();}
-        this.awardsDTO = awardsDTO;
-        if(usersDTO == null){this.usersDTO = new HashSet<>();}
-        this.usersDTO = usersDTO;
+        if(actorsDTO == null){ this.actorsDTO = new ArrayList<>();}
+        else{ this.actorsDTO = actorsDTO;}
+        if(awardsDTO == null){ this.awardsDTO = new ArrayList<>();}
+        else{ this.awardsDTO = awardsDTO;}
+        if(usersDTO == null){ this.usersDTO = new HashSet<>();}
+        else{ this.usersDTO = usersDTO;}
     }
 
     private CategoryDTO categoryDTO;

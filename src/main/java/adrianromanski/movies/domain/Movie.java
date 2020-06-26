@@ -26,12 +26,12 @@ public class Movie extends BaseEntity {
         super(id, name, description, imageURL);
         this.minutes = minutes;
         this.category = category;
-        if(actors == null){this.actors = new ArrayList<>();}
-        this.actors = actors;
-        if(awards == null){this.actors = new ArrayList<>();}
-        this.awards = awards;
-        if(users == null){this.users = new HashSet<>();}
-        this.users = users;
+        if(actors == null){ this.actors = new ArrayList<>();}
+        else { this.actors = actors; }
+        if(awards == null){ this.actors = new ArrayList<>();}
+        else { this.awards = awards; }
+        if(users == null){ this.users = new HashSet<>();}
+        else { this.users = users; }
     }
 
     @OneToMany(mappedBy = "movie")
