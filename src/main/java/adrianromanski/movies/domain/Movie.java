@@ -10,9 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Getter
 @Setter
@@ -24,12 +22,16 @@ public class Movie extends BaseEntity {
 
     @Builder
     public Movie(Long id, String name, String description, String imageURL, Long minutes,
-                 Category category, List<Actor> actors, List<MovieAward> awards) {
+                 Category category, List<Actor> actors, List<MovieAward> awards, Set<User> users) {
         super(id, name, description, imageURL);
         this.minutes = minutes;
         this.category = category;
+        if(actors == null){this.actors = new ArrayList<>();}
         this.actors = actors;
+        if(awards == null){this.actors = new ArrayList<>();}
         this.awards = awards;
+        if(users == null){this.users = new HashSet<>();}
+        this.users = users;
     }
 
     @OneToMany(mappedBy = "movie")
@@ -45,5 +47,8 @@ public class Movie extends BaseEntity {
     private Category category;
 
     @ManyToMany(mappedBy = "movies")
-    private List<Actor> actors  = new ArrayList<>();
+    private List<Actor> actors = new ArrayList<>();
+
+    @ManyToMany(mappedBy = "favouriteMovies")
+    private Set<User> users = new HashSet<>();
 }

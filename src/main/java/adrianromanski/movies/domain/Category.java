@@ -17,6 +17,7 @@ public class Category extends BaseEntity {
     @Builder
     public Category(Long id, String name, String description, String imageURL, List<Movie> movies) {
         super(id, name, description, imageURL);
+        if(movies == null){this.movies = new ArrayList<>();}
         this.movies = movies;
     }
 

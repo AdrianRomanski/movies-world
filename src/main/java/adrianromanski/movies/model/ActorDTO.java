@@ -18,7 +18,9 @@ public class ActorDTO extends PersonDTO{
     public ActorDTO(Long id, String firstName,  String lastName,  String gender,
                     List<MovieDTO> moviesDTO, List<ActorAwardDTO> awardsDTO) {
         super(id, firstName, lastName, gender);
+        if(moviesDTO == null){this.moviesDTO = new ArrayList<>();}
         this.moviesDTO = moviesDTO;
+        if(awardsDTO == null){this.awardsDTO = new ArrayList<>();}
         this.awardsDTO = awardsDTO;
     }
 

@@ -23,13 +23,14 @@ public class Actor extends Person {
     public Actor(Long id, String firstName, String lastName, String gender,
                  List<Movie> movies, List<ActorAward> awards) {
         super(id, firstName, lastName, gender);
+        if(movies == null){this.movies = new ArrayList<>();}
         this.movies = movies;
+        if(awards == null){this.awards = new ArrayList<>();}
         this.awards = awards;
     }
 
     @OneToMany(mappedBy = "actor")
     private List<ActorAward> awards = new ArrayList<>();
-
 
     public Optional<ActorAward> getAwardOptional(Long awardID) {
         return this.getAwards().stream()
@@ -40,5 +41,5 @@ public class Actor extends Person {
     @ManyToMany
     @JoinTable(name = "actor_movies", joinColumns = @JoinColumn(name = "actor_id"),
     inverseJoinColumns = @JoinColumn(name = "movie_id"))
-    private List<Movie> movies = new ArrayList<>();
+    private List<Movie> movies;
 }

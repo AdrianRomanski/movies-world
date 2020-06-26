@@ -3,6 +3,8 @@ package adrianromanski.movies.model;
 import lombok.*;
 
 import javax.validation.constraints.NotEmpty;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @NoArgsConstructor
@@ -15,9 +17,14 @@ public class UserDTO  extends  PersonDTO {
     private String password;
 
     @Builder
-    public UserDTO(Long id, String firstName,  String lastName,  String gender, String username, String password) {
+    public UserDTO(Long id, String firstName,  String lastName,  String gender, String username, String password,
+                   Set<MovieDTO> favouriteMoviesDTO) {
         super(id, firstName, lastName, gender);
         this.username = username;
         this.password = password;
+        if(favouriteMoviesDTO == null){this.favouriteMoviesDTO = new HashSet<>();}
+        this.favouriteMoviesDTO = favouriteMoviesDTO;
     }
+
+    private Set<MovieDTO> favouriteMoviesDTO = new HashSet<>();
 }
