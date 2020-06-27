@@ -17,7 +17,7 @@ public class DirectorDTO extends PersonDTO {
     @Builder
     public DirectorDTO(Long id, String firstName, String lastName, String gender, List<MovieDTO> moviesDTO) {
         super(id, firstName, lastName, gender);
-        if(this.moviesDTO == null) { this.moviesDTO = new ArrayList<>(); }
+        if(moviesDTO == null) { this.moviesDTO = new ArrayList<>(); }
         else{ this.moviesDTO = moviesDTO; }
     }
 

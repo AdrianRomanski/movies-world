@@ -20,7 +20,7 @@ public class Director extends Person {
     @Builder
     public Director(Long id, String firstName, String lastName, String gender, List<Movie> movies) {
         super(id, firstName, lastName, gender);
-        if(this.movies == null) { this.movies = new ArrayList<>(); }
+        if(movies == null) { this.movies = new ArrayList<>(); }
         else{ this.movies = movies; }
     }
 
