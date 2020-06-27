@@ -1,6 +1,6 @@
 package adrianromanski.movies.domain.award;
 
-import adrianromanski.movies.domain.BaseEntity;
+import adrianromanski.movies.domain.base_entity.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

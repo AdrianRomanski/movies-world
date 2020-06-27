@@ -1,6 +1,6 @@
 package adrianromanski.movies.services.actor;
 
-import adrianromanski.movies.model.ActorDTO;
+import adrianromanski.movies.model.person.ActorDTO;
 import adrianromanski.movies.model.award.ActorAwardDTO;
 
 import java.util.List;

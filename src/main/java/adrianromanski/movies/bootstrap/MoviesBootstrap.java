@@ -1,8 +1,8 @@
 package adrianromanski.movies.bootstrap;
 
-import adrianromanski.movies.domain.Actor;
-import adrianromanski.movies.domain.Category;
-import adrianromanski.movies.domain.Movie;
+import adrianromanski.movies.domain.person.Actor;
+import adrianromanski.movies.domain.base_entity.Category;
+import adrianromanski.movies.domain.base_entity.Movie;
 import adrianromanski.movies.repositories.ActorRepository;
 import adrianromanski.movies.repositories.CategoryRepository;
 import adrianromanski.movies.repositories.MovieRepository;

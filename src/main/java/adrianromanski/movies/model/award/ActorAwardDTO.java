@@ -1,6 +1,6 @@
 package adrianromanski.movies.model.award;
 
-import adrianromanski.movies.model.ActorDTO;
+import adrianromanski.movies.model.person.ActorDTO;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -1,7 +1,6 @@
 package adrianromanski.movies.services.movie;
 
-import adrianromanski.movies.model.ActorDTO;
-import adrianromanski.movies.model.MovieDTO;
+import adrianromanski.movies.model.base_entity.MovieDTO;
 import adrianromanski.movies.model.award.MovieAwardDTO;
 
 import java.util.List;

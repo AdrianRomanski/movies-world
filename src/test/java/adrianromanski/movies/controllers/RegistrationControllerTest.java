@@ -1,6 +1,6 @@
 package adrianromanski.movies.controllers;
 
-import adrianromanski.movies.model.UserDTO;
+import adrianromanski.movies.model.person.UserDTO;
 import adrianromanski.movies.services.user.UserService;
 
 import org.junit.jupiter.api.BeforeEach;

@@ -1,13 +1,13 @@
 package adrianromanski.movies.services.actor;
 
-import adrianromanski.movies.domain.Actor;
+import adrianromanski.movies.domain.person.Actor;
 import adrianromanski.movies.domain.award.ActorAward;
 import adrianromanski.movies.domain.award.Award;
 import adrianromanski.movies.exceptions.ResourceNotFoundException;
 import adrianromanski.movies.jms.JmsTextMessageService;
-import adrianromanski.movies.mapper.ActorAwardMapper;
-import adrianromanski.movies.mapper.ActorMapper;
-import adrianromanski.movies.model.ActorDTO;
+import adrianromanski.movies.mapper.award.ActorAwardMapper;
+import adrianromanski.movies.mapper.person.ActorMapper;
+import adrianromanski.movies.model.person.ActorDTO;
 import adrianromanski.movies.model.award.ActorAwardDTO;
 import adrianromanski.movies.repositories.ActorRepository;
 import adrianromanski.movies.repositories.AwardRepository;

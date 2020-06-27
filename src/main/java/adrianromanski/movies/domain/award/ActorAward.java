@@ -1,6 +1,6 @@
 package adrianromanski.movies.domain.award;
 
-import adrianromanski.movies.domain.Actor;
+import adrianromanski.movies.domain.person.Actor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

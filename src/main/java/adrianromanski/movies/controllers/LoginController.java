@@ -1,6 +1,6 @@
 package adrianromanski.movies.controllers;
 
-import adrianromanski.movies.model.UserDTO;
+import adrianromanski.movies.model.person.UserDTO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;

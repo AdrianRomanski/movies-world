@@ -1,6 +1,6 @@
 package adrianromanski.movies.controllers;
 
-import adrianromanski.movies.model.MovieDTO;
+import adrianromanski.movies.model.base_entity.MovieDTO;
 import adrianromanski.movies.services.category.CategoryService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

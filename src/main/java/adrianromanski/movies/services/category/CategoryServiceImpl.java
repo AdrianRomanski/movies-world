@@ -1,13 +1,13 @@
 package adrianromanski.movies.services.category;
 
-import adrianromanski.movies.domain.Category;
-import adrianromanski.movies.domain.Movie;
+import adrianromanski.movies.domain.base_entity.Category;
+import adrianromanski.movies.domain.base_entity.Movie;
 import adrianromanski.movies.exceptions.ResourceNotFoundException;
 import adrianromanski.movies.jms.JmsTextMessageService;
-import adrianromanski.movies.mapper.CategoryMapper;
-import adrianromanski.movies.mapper.MovieMapper;
-import adrianromanski.movies.model.CategoryDTO;
-import adrianromanski.movies.model.MovieDTO;
+import adrianromanski.movies.mapper.base_entity.CategoryMapper;
+import adrianromanski.movies.mapper.base_entity.MovieMapper;
+import adrianromanski.movies.model.base_entity.CategoryDTO;
+import adrianromanski.movies.model.base_entity.MovieDTO;
 import adrianromanski.movies.repositories.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

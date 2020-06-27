@@ -1,18 +1,16 @@
 package adrianromanski.movies.services.user;
 
-import adrianromanski.movies.domain.Movie;
-import adrianromanski.movies.domain.User;
+import adrianromanski.movies.domain.base_entity.Movie;
+import adrianromanski.movies.domain.person.User;
 import adrianromanski.movies.exceptions.ResourceNotFoundException;
 import adrianromanski.movies.jms.JmsTextMessageService;
-import adrianromanski.movies.mapper.UserMapper;
-import adrianromanski.movies.model.UserDTO;
+import adrianromanski.movies.mapper.person.UserMapper;
+import adrianromanski.movies.model.person.UserDTO;
 import adrianromanski.movies.repositories.MovieRepository;
 import adrianromanski.movies.repositories.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.*;
 

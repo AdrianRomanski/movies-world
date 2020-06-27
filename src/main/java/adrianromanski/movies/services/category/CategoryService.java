@@ -1,8 +1,8 @@
 package adrianromanski.movies.services.category;
 
 
-import adrianromanski.movies.model.CategoryDTO;
-import adrianromanski.movies.model.MovieDTO;
+import adrianromanski.movies.model.base_entity.CategoryDTO;
+import adrianromanski.movies.model.base_entity.MovieDTO;
 
 import java.util.List;
 
