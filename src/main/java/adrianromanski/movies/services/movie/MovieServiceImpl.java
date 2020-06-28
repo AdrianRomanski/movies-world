@@ -163,8 +163,9 @@ public class MovieServiceImpl implements MovieService {
         jmsTextMessageService.sendTextMessage("Updating Award with id: " + awardID + " of Movie with id: " + movieID);
         Movie movie = movieRepository.findById(movieID)
                 .orElseThrow(() -> new ResourceNotFoundException(movieID, Movie.class));
-        movie.getAwardOptional(awardID)
+        MovieAward award = movie.getAwardOptional(awardID)
                 .orElseThrow(() -> new ResourceNotFoundException(awardID, MovieAward.class));
+        movie.getAwards().remove(award);
         MovieAward updatedAward = awardMapper.awardDTOToAward(awardDTO);
         updatedAward.setId(awardID);
         movie.getAwards().add(updatedAward);

@@ -9,10 +9,7 @@ import lombok.Setter;
 
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Getter
@@ -35,5 +32,12 @@ public class Director extends Person {
 
     @OneToMany(mappedBy = "director")
     private Set<DirectorAward> awards = new HashSet<>();
+
+    public Optional<DirectorAward> getAwardOptional(Long id) {
+        return this.awards
+                .stream()
+                .filter(a -> a.getId().equals(id))
+                .findAny();
+    }
 
 }

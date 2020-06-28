@@ -14,8 +14,9 @@ import java.time.LocalDate;
 public class MovieAwardDTO extends AwardDTO{
 
     @Builder
-    public MovieAwardDTO(LocalDate date, String country, String awardCategory, MovieDTO movieDTO) {
-        super(date, country, awardCategory);
+    public MovieAwardDTO(Long id, String name, String description, String imageURL, LocalDate date,
+                         String country, String awardCategory, MovieDTO movieDTO) {
+        super(id, name, description, imageURL, date, country, awardCategory);
         this.movieDTO = movieDTO;
     }
 

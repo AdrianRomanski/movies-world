@@ -17,8 +17,9 @@ import java.time.LocalDate;
 public class ActorAward extends Award {
 
     @Builder
-    public ActorAward(LocalDate date, String country, String awardCategory, Actor actor) {
-        super(date, country, awardCategory);
+    public ActorAward(Long id, String name, String description, String imageURL,
+                         LocalDate date, String country, String awardCategory, Actor actor) {
+        super(id, name, description, imageURL, date, country, awardCategory);
         this.actor = actor;
     }
 

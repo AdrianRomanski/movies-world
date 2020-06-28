@@ -17,8 +17,9 @@ import java.time.LocalDate;
 public class DirectorAward extends Award {
 
     @Builder
-    public DirectorAward(LocalDate date, String country, String awardCategory, Director director) {
-        super(date, country, awardCategory);
+    public DirectorAward(Long id, String name, String description, String imageURL,
+                      LocalDate date, String country, String awardCategory, Director director) {
+        super(id, name, description, imageURL, date, country, awardCategory);
         this.director = director;
     }
 
