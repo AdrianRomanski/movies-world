@@ -11,11 +11,14 @@ public interface DirectorMapper {
 
     @Mappings({
             @Mapping(source = "movies", target = "moviesDTO"),
+            @Mapping(source = "awards", target = "awardsDTO")
     })
     DirectorDTO directorToDirectorDTO(Director director);
 
+
     @Mappings({
             @Mapping(source = "moviesDTO", target = "movies"),
+            @Mapping(source = "awardsDTO", target = "awards")
     })
     Director directorDTOToDirector(DirectorDTO directorDTO);
 
