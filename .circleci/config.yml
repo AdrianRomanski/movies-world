@@ -38,6 +38,7 @@ jobs:
           key: v1-dependencies-{{ checksum "pom.xml" }}
 
       # run tests! and gen code coverage
+      # Checking circleCi, codeCov
       - run: mvn verify
 
 
