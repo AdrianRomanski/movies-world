@@ -92,7 +92,8 @@ class UserServiceImplTest {
         assertEquals(returnDTO.getFavouriteMoviesDTO().size(), 1);
     }
 
-    @DisplayName("UnHappy Path, method = updateUser, reason = user not found")
+
+    @DisplayName("UnHappy Path, method = addFavouriteMovie, reason = user not found")
     @Test
     void addFavouriteMovieUnHappyPathUserNotFound() {
         Throwable ex =  catchThrowable(() -> userService.addFavouriteMovie(1L, 1L));
@@ -101,7 +102,7 @@ class UserServiceImplTest {
     }
 
 
-    @DisplayName("UnHappy Path, method = updateUser, reason = movie not found")
+    @DisplayName("UnHappy Path, method = addFavouriteMovie, reason = movie not found")
     @Test
     void addFavouriteMovieUnHappyPathMovieNotFound() {
         User user = getUser();
@@ -112,6 +113,49 @@ class UserServiceImplTest {
 
         assertThat(ex).isInstanceOf(ResourceNotFoundException.class);
     }
+
+
+    @DisplayName("Happy Path, method = addWatched")
+    @Test
+    void addWatchedMovieHappyPath() {
+        User user = getUser();
+        Movie movie = getMovie();
+
+        when(userRepository.findById(anyLong())).thenReturn(Optional.of(user));
+        when(movieRepository.findById(anyLong())).thenReturn(Optional.of(movie));
+
+        UserDTO returnDTO = userService.addWatchedMovie(1L, 1L);
+
+        verify(userRepository, times(1)).save(any(User.class));
+        verify(movieRepository, times(1)).save(any(Movie.class));
+
+        assertEquals(returnDTO.getWatchedMoviesDTO().size(), 1);
+    }
+
+
+    @DisplayName("UnHappy Path, method = addWatchedMovie, reason = user not found")
+    @Test
+    void addWatchedMovieUnHappyPathUserNotFound() {
+        Throwable ex =  catchThrowable(() -> userService.addWatchedMovie(1L, 1L));
+
+        assertThat(ex).isInstanceOf(ResourceNotFoundException.class);
+    }
+
+
+    @DisplayName("UnHappy Path, method = addWatchedMovie, reason = movie not found")
+    @Test
+    void addWatchedMovieUnHappyPathMovieNotFound() {
+        User user = getUser();
+
+        when(userRepository.findById(anyLong())).thenReturn(Optional.of(user));
+
+        Throwable ex =  catchThrowable(() -> userService.addWatchedMovie(1L, 1L));
+
+        assertThat(ex).isInstanceOf(ResourceNotFoundException.class);
+    }
+
+
+
 
 
     @DisplayName("Happy Path, method = updateUser")
@@ -169,7 +213,7 @@ class UserServiceImplTest {
         Movie movie = getMovie();
         movie.setId(1L);
         user.getFavouriteMovies().add(movie);
-        movie.getUsers().add(user);
+        movie.getUserFavourites().add(user);
 
         when(userRepository.findById(anyLong())).thenReturn(Optional.of(user));
         when(movieRepository.findById(anyLong())).thenReturn(Optional.of(movie));
@@ -195,6 +239,44 @@ class UserServiceImplTest {
         when(userRepository.findById(anyLong())).thenReturn(Optional.of(user));
 
         Throwable ex =  catchThrowable(() -> userService.deleteFavouriteMovie(1L, 1L));
+
+        assertThat(ex).isInstanceOf(ResourceNotFoundException.class);
+    }
+
+
+    @DisplayName("Happy Path, method = deleteWatchedMovie")
+    @Test
+    void deleteWatchedMovieHappyPath() {
+        User user = getUser();
+        Movie movie = getMovie();
+        movie.setId(1L);
+        user.getWatchedMovies().add(movie);
+        movie.getUserWatched().add(user);
+
+        when(userRepository.findById(anyLong())).thenReturn(Optional.of(user));
+        when(movieRepository.findById(anyLong())).thenReturn(Optional.of(movie));
+
+        userService.deleteWatchedMovie(1L, 1L);
+    }
+
+
+    @DisplayName("UnHappy Path, method = deleteWatchedMovie, reason = user not found")
+    @Test
+    void deleteWatchedMovieUnHappyPathUserNotFound() {
+        Throwable ex =  catchThrowable(() -> userService.deleteWatchedMovie(1L, 1L));
+
+        assertThat(ex).isInstanceOf(ResourceNotFoundException.class);
+    }
+
+
+    @DisplayName("UnHappy Path, method = deleteWatchedMovie, reason = movie not found")
+    @Test
+    void deleteWatchedMovieUnHappyPathMovieNotFound() {
+        User user = getUser();
+
+        when(userRepository.findById(anyLong())).thenReturn(Optional.of(user));
+
+        Throwable ex =  catchThrowable(() -> userService.deleteWatchedMovie(1L, 1L));
 
         assertThat(ex).isInstanceOf(ResourceNotFoundException.class);
     }

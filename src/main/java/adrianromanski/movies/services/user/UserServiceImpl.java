@@ -73,7 +73,29 @@ public class UserServiceImpl implements UserService{
         Movie movie = movieRepository.findById(movieID)
                 .orElseThrow(() -> new ResourceNotFoundException(movieID, Movie.class));
         user.getFavouriteMovies().add(movie);
-        movie.getUsers().add(user);
+        movie.getUserFavourites().add(user);
+        userRepository.save(user);
+        movieRepository.save(movie);
+        jmsTextMessageService.sendTextMessage("Movie with id: " + movieID + " successfully added to User with id: " + userID);
+        return userMapper.userToUserDTO(user);
+    }
+
+
+    /**
+     * @param userID Of the User we want to add watched movie
+     * @param movieID of the movie we want to add
+     * @throws ResourceNotFoundException if not found
+     * @return UserDTO if successfully added
+     */
+    @Override
+    public UserDTO addWatchedMovie(Long userID, Long movieID) {
+        jmsTextMessageService.sendTextMessage("Adding movie with id: " + movieID + " to User with id: " + userID);
+        User user = userRepository.findById(userID)
+                .orElseThrow(() -> new ResourceNotFoundException(userID, User.class));
+        Movie movie = movieRepository.findById(movieID)
+                .orElseThrow(() ->  new ResourceNotFoundException(movieID, Movie.class));
+        user.getWatchedMovies().add(movie);
+        movie.getUserWatched().add(user);
         userRepository.save(user);
         movieRepository.save(movie);
         jmsTextMessageService.sendTextMessage("Movie with id: " + movieID + " successfully added to User with id: " + userID);
@@ -91,10 +113,12 @@ public class UserServiceImpl implements UserService{
     @Override
     public UserDTO updateUser(Long id, UserDTO userDTO) {
         jmsTextMessageService.sendTextMessage("Searching User with id:  " + id);
-        userRepository.findById(id)
+        User user = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(id, User.class));
         User updatedUser = userMapper.userDTOToUser(userDTO);
         updatedUser.setId(id);
+        user.getFavouriteMovies()
+                .forEach(m -> updatedUser.getFavouriteMovies().add(m));
         userRepository.save(updatedUser);
         jmsTextMessageService.sendTextMessage("User with id:  " + id + " successfully updated");
         return userMapper.userToUserDTO(updatedUser);
@@ -123,15 +147,38 @@ public class UserServiceImpl implements UserService{
      */
     @Override
     public void deleteFavouriteMovie(Long userID, Long movieID) {
-        jmsTextMessageService.sendTextMessage("Deleting movie with id: " + movieID + " from User with id: " + userID);
+        jmsTextMessageService.sendTextMessage("Deleting Favourite Movie with id: " + movieID + " from User with id: " + userID);
         User user = userRepository.findById(userID)
                 .orElseThrow(() -> new ResourceNotFoundException(userID, User.class));
-        Movie movie = user.getMovieOptional(movieID)
+        Movie movie = user.getFavMovieOptional(movieID)
                 .orElseThrow(() -> new ResourceNotFoundException(movieID, Movie.class));
         user.getFavouriteMovies().remove(movie);
-        movie.getUsers().remove(user);
+        movie.getUserFavourites().remove(user);
         userRepository.save(user);
         movieRepository.save(movie);
         jmsTextMessageService.sendTextMessage("Movie with id: " + movieID + " successfully deleted from the User with id: " + userID);
     }
+
+
+    /**
+     * @param userID of the User we want to delete Watched Movie
+     * @param movieID of the Movie we want to delete from the Set
+     * @throws ResourceNotFoundException if either Move or User not found
+     */
+    @Override
+    public void deleteWatchedMovie(Long userID, Long movieID) {
+        jmsTextMessageService.sendTextMessage("Deleting Watched Movie with id: " + movieID + " from User with id: " + userID);
+        User user = userRepository.findById(userID)
+                .orElseThrow(() -> new ResourceNotFoundException(userID, User.class));
+        Movie movie = user.getWatchedMovieOptional(movieID)
+                .orElseThrow(() -> new ResourceNotFoundException(movieID, Movie.class));
+        user.getFavouriteMovies().remove(movie);
+        movie.getUserFavourites().remove(user);
+        userRepository.save(user);
+        movieRepository.save(movie);
+        jmsTextMessageService.sendTextMessage("Movie with id: " + movieID + " successfully deleted from the User with id: " + userID);
+
+    }
+
+
 }

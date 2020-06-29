@@ -14,6 +14,8 @@ public interface UserService {
 
     UserDTO addFavouriteMovie(Long userID, Long movieID);
 
+    UserDTO addWatchedMovie(Long userID, Long movieID);
+
     // PUT
     UserDTO updateUser(Long id, UserDTO userDTO);
 
@@ -21,4 +23,7 @@ public interface UserService {
     void deleteUser(Long id);
 
     void deleteFavouriteMovie(Long userID, Long movieID);
+
+    void deleteWatchedMovie(Long userID, Long movieID);
+
 }
