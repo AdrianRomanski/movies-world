@@ -25,7 +25,7 @@ public class MovieDTO extends BaseEntityDTO{
     public MovieDTO(Long id,  String name,  String description, String imageURL, Long minutes,
                     CategoryDTO categoryDTO, DirectorDTO directorDTO,
                     List<ActorDTO> actorsDTO, List<MovieAwardDTO> awardsDTO,
-                    Set<UserDTO> usersDTO, Set<UserDTO> usersWatchedDTO) {
+                    Set<UserDTO> userFavouritesDTO, Set<UserDTO> userWatchedDTO) {
         super(id, name, description, imageURL);
         this.minutes = minutes;
         this.categoryDTO = categoryDTO;
@@ -34,10 +34,10 @@ public class MovieDTO extends BaseEntityDTO{
         else{ this.actorsDTO = actorsDTO;}
         if(awardsDTO == null){ this.awardsDTO = new ArrayList<>();}
         else{ this.awardsDTO = awardsDTO;}
-        if(usersDTO == null){ this.userFavouritesDTO = new HashSet<>();}
-        else{ this.userFavouritesDTO = usersDTO;}
-        if(usersDTO == null){ this.userWatchedDTO = new HashSet<>();}
-        else{ this.userWatchedDTO = usersDTO;}
+        if(userFavouritesDTO == null){ this.userFavouritesDTO = new HashSet<>();}
+        else{ this.userFavouritesDTO = userFavouritesDTO;}
+        if(userWatchedDTO == null){ this.userWatchedDTO = new HashSet<>();}
+        else{ this.userWatchedDTO = userWatchedDTO;}
     }
 
     private CategoryDTO categoryDTO;

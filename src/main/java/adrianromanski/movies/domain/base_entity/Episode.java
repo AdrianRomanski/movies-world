@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 
 @Getter
 @Setter
@@ -17,4 +18,7 @@ public class Episode extends BaseEntity {
     public Episode(Long id, String name, String description, String imageURL) {
         super(id, name, description, imageURL);
     }
+
+    @ManyToOne
+    private Series series;
 }

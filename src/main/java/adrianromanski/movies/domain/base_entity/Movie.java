@@ -27,7 +27,7 @@ public class Movie extends BaseEntity {
     public Movie(Long id, String name, String description, String imageURL, Long minutes,
                  Category category, Director director,
                  List<Actor> actors, List<MovieAward> awards,
-                 Set<User> users, Set<User> usersWatched) {
+                 Set<User> userFavourites, Set<User> userWatched) {
         super(id, name, description, imageURL);
         this.minutes = minutes;
         this.category = category;
@@ -36,10 +36,10 @@ public class Movie extends BaseEntity {
         else { this.actors = actors; }
         if(awards == null){ this.actors = new ArrayList<>();}
         else { this.awards = awards; }
-        if(users == null){ this.userFavourites = new HashSet<>();}
-        else { this.userFavourites = users; }
-        if(users == null){ this.userWatched = new HashSet<>();}
-        else { this.userWatched = users; }
+        if(userFavourites == null){ this.userFavourites = new HashSet<>();}
+        else { this.userFavourites = userFavourites; }
+        if(userFavourites == null){ this.userWatched = new HashSet<>();}
+        else { this.userWatched = userWatched; }
     }
 
     @OneToMany(mappedBy = "movie")
