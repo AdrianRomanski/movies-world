@@ -1,4 +1,4 @@
-package adrianromanski.movies.repositories;
+package adrianromanski.movies.repositories.base_entity;
 
 import adrianromanski.movies.domain.base_entity.Category;
 import org.springframework.data.jpa.repository.JpaRepository;

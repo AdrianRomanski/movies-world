@@ -1,4 +1,4 @@
-package adrianromanski.movies.repositories;
+package adrianromanski.movies.repositories.person;
 
 import adrianromanski.movies.domain.person.Actor;
 import org.springframework.data.jpa.repository.JpaRepository;

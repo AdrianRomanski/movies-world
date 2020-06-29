@@ -9,8 +9,8 @@ import adrianromanski.movies.mapper.award.ActorAwardMapper;
 import adrianromanski.movies.mapper.person.ActorMapper;
 import adrianromanski.movies.model.person.ActorDTO;
 import adrianromanski.movies.model.award.ActorAwardDTO;
-import adrianromanski.movies.repositories.ActorRepository;
-import adrianromanski.movies.repositories.AwardRepository;
+import adrianromanski.movies.repositories.person.ActorRepository;
+import adrianromanski.movies.repositories.award.AwardRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

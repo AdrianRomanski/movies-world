@@ -8,8 +8,8 @@ import adrianromanski.movies.mapper.award.DirectorAwardMapper;
 import adrianromanski.movies.mapper.person.DirectorMapper;
 import adrianromanski.movies.model.award.DirectorAwardDTO;
 import adrianromanski.movies.model.person.DirectorDTO;
-import adrianromanski.movies.repositories.AwardRepository;
-import adrianromanski.movies.repositories.DirectorRepository;
+import adrianromanski.movies.repositories.award.AwardRepository;
+import adrianromanski.movies.repositories.person.DirectorRepository;
 import org.springframework.stereotype.Service;
 
 @Service

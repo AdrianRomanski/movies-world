@@ -6,8 +6,8 @@ import adrianromanski.movies.exceptions.ResourceNotFoundException;
 import adrianromanski.movies.jms.JmsTextMessageService;
 import adrianromanski.movies.mapper.person.UserMapper;
 import adrianromanski.movies.model.person.UserDTO;
-import adrianromanski.movies.repositories.MovieRepository;
-import adrianromanski.movies.repositories.UserRepository;
+import adrianromanski.movies.repositories.base_entity.MovieRepository;
+import adrianromanski.movies.repositories.person.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package adrianromanski.movies.repositories;
+package adrianromanski.movies.repositories.award;
 
 import adrianromanski.movies.domain.award.Award;
 import org.springframework.data.jpa.repository.JpaRepository;
