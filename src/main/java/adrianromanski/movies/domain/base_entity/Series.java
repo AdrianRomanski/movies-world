@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import java.util.ArrayList;
@@ -25,6 +26,7 @@ public class Series extends BaseEntity {
         else { this.episodes = episodes; }
     }
 
-    @OneToMany
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "series", orphanRemoval = true)
     private List<Episode> episodes = new ArrayList<>();
 }
