@@ -1,20 +1,19 @@
 package adrianromanski.movies.domain.base_entity;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Getter
 @Setter
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
 public class Series extends BaseEntity {
 
 
@@ -29,4 +28,11 @@ public class Series extends BaseEntity {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "series", orphanRemoval = true)
     private List<Episode> episodes = new ArrayList<>();
+
+    public Optional<Episode> getEpisodeOptional(Long id) {
+        return this.getEpisodes()
+                .stream()
+                .filter(e -> e.getId().equals(id))
+                .findFirst();
+    }
 }

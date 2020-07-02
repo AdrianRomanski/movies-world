@@ -1,9 +1,6 @@
 package adrianromanski.movies.model.base_entity;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +8,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class SeriesDTO extends BaseEntityDTO {
 
 
@@ -20,7 +18,8 @@ public class SeriesDTO extends BaseEntityDTO {
         super(id, name, description, imageURL);
         if(episodesDTO == null){ this.episodesDTO = new ArrayList<>();}
         else { this.episodesDTO = episodesDTO; }
+
     }
 
-    private List<EpisodeDTO> episodesDTO;
+    private List<EpisodeDTO> episodesDTO = new ArrayList<>();
 }

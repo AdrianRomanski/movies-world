@@ -23,12 +23,16 @@ class SeriesMapperTest {
 
     @Test
     void seriesToSeriesDTO() {
-        Episode episode1 = new Episode();
-        episode1.setName(NAME1);
-        Episode episode2 = new Episode();
-        episode2.setName(NAME2);
+        Episode episode1 = Episode.builder().name(NAME1).build();
+        Episode episode2 =  Episode.builder().name(NAME2).build();
 
-        Series series = Series.builder().name(NAME).description(DESCRIPTION).imageURL(URL).id(ID).episodes(Arrays.asList(episode1,episode2)).build();
+        Series series = Series.builder().name(NAME).description(DESCRIPTION).imageURL(URL).id(ID).build();
+
+        series.getEpisodes().add(episode1);
+        series.getEpisodes().add(episode2);
+        episode1.setSeries(series);
+        episode2.setSeries(series);
+
 
         SeriesDTO seriesDTO = mapper.seriesToSeriesDTO(series);
 
