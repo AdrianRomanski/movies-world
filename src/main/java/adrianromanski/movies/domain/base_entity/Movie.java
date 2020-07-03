@@ -4,6 +4,7 @@ import adrianromanski.movies.domain.person.Director;
 import adrianromanski.movies.domain.person.User;
 import adrianromanski.movies.domain.award.MovieAward;
 import adrianromanski.movies.domain.person.Actor;
+import adrianromanski.movies.domain.review.MovieReview;
 import com.google.common.collect.ImmutableList;
 import lombok.*;
 
@@ -31,7 +32,7 @@ public class Movie extends BaseEntity {
     @Builder
     public Movie(Long id, String name, String description, String imageURL, Long minutes,
                  Category category, Director director,
-                 List<Actor> actors, List<MovieAward> awards,
+                 List<Actor> actors, List<MovieAward> awards, List<MovieReview> reviews,
                  Set<User> userFavourites, Set<User> userWatched) {
         super(id, name, description, imageURL);
         this.minutes = minutes;
@@ -39,8 +40,10 @@ public class Movie extends BaseEntity {
         this.director = director;
         if(actors == null){ this.actors = new ArrayList<>();}
         else { this.actors = actors; }
-        if(awards == null){ this.actors = new ArrayList<>();}
+        if(awards == null){ this.awards = new ArrayList<>();}
         else { this.awards = awards; }
+        if(reviews == null){ this.reviews = new ArrayList<>();}
+        else { this.reviews = reviews; }
         if(userFavourites == null){ this.userFavourites = new HashSet<>();}
         else { this.userFavourites = userFavourites; }
         if(userFavourites == null){ this.userWatched = new HashSet<>();}
@@ -55,6 +58,9 @@ public class Movie extends BaseEntity {
                 .filter(a -> a.getId().equals(id))
                 .findAny();
     }
+
+    @OneToMany(mappedBy = "movie")
+    private List<MovieReview> reviews = new ArrayList<>();
 
     @ManyToOne
     private Category category;

@@ -15,7 +15,8 @@ public interface MovieMapper {
             @Mapping(source = "category", target = "categoryDTO"),
             @Mapping(source = "awards", target = "awardsDTO"),
             @Mapping(source = "userWatched", target = "userWatchedDTO"),
-            @Mapping(source = "userFavourites", target = "userFavouritesDTO")
+            @Mapping(source = "userFavourites", target = "userFavouritesDTO"),
+            @Mapping(source = "reviews", target = "reviewsDTO")
     })
     MovieDTO movieToMovieDTO(Movie movie);
 
@@ -25,7 +26,8 @@ public interface MovieMapper {
             @Mapping(source = "categoryDTO", target = "category"),
             @Mapping(source = "awardsDTO", target = "awards"),
             @Mapping(source = "userWatchedDTO", target = "userWatched"),
-            @Mapping(source = "userFavouritesDTO", target = "userFavourites")
+            @Mapping(source = "userFavouritesDTO", target = "userFavourites"),
+            @Mapping(source = "reviewsDTO", target = "reviews")
     })
     Movie movieDTOToMovie(MovieDTO movieDTO);
 }

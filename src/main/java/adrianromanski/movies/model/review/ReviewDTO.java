@@ -1,7 +1,6 @@
 package adrianromanski.movies.model.review;
 
 import adrianromanski.movies.model.base_entity.BaseEntityDTO;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -17,12 +16,14 @@ public class ReviewDTO extends BaseEntityDTO {
 
     private LocalDate date;
     private Integer score;
+    private Long userID;
 
-    @Builder
+
     public ReviewDTO(Long id, String name, String description, String imageURL,
-                  LocalDate date, Integer score) {
+                  LocalDate date, Integer score, Long userID) {
         super(id, name, description, imageURL);
         this.date = date;
         this.score = score;
+        this.userID = userID;
     }
 }

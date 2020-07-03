@@ -1,6 +1,7 @@
 package adrianromanski.movies.domain.person;
 
 import adrianromanski.movies.domain.base_entity.Movie;
+import adrianromanski.movies.domain.review.MovieReview;
 import com.google.common.collect.ImmutableList;
 import lombok.*;
 
@@ -25,7 +26,7 @@ public class User extends Person {
      */
     @Builder
     public User(Long id, String firstName, String lastName, String gender, String username, String password,
-                Set<Movie> favouriteMovies,  Set<Movie> watchedMovies) {
+                Set<Movie> favouriteMovies,  Set<Movie> watchedMovies, List<MovieReview> movieReviews) {
         super(id, firstName, lastName, gender);
         this.username = username;
         this.password = password;
@@ -33,7 +34,12 @@ public class User extends Person {
         else { this.favouriteMovies = favouriteMovies; }
         if (watchedMovies == null) { this.watchedMovies = new HashSet<>(); }
         else { this.watchedMovies = watchedMovies; }
+        if (movieReviews == null) { this.movieReviews = new ArrayList<>(); }
+        else { this.movieReviews = movieReviews; }
     }
+
+    @OneToMany(mappedBy = "movie")
+    private List<MovieReview> movieReviews = new ArrayList<>();
 
 
     @ManyToMany

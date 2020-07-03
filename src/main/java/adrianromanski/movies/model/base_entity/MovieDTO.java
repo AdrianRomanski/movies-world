@@ -1,5 +1,6 @@
 package adrianromanski.movies.model.base_entity;
 
+import adrianromanski.movies.domain.review.MovieReview;
 import adrianromanski.movies.model.person.DirectorDTO;
 import adrianromanski.movies.model.person.UserDTO;
 import adrianromanski.movies.model.award.MovieAwardDTO;
@@ -28,7 +29,7 @@ public class MovieDTO extends BaseEntityDTO{
     @Builder
     public MovieDTO(Long id,  String name,  String description, String imageURL, Long minutes,
                     CategoryDTO categoryDTO, DirectorDTO directorDTO,
-                    List<ActorDTO> actorsDTO, List<MovieAwardDTO> awardsDTO,
+                    List<ActorDTO> actorsDTO, List<MovieAwardDTO> awardsDTO, List<MovieReview> reviewsDTO,
                     Set<UserDTO> userFavouritesDTO, Set<UserDTO> userWatchedDTO) {
         super(id, name, description, imageURL);
         this.minutes = minutes;
@@ -38,6 +39,8 @@ public class MovieDTO extends BaseEntityDTO{
         else{ this.actorsDTO = actorsDTO;}
         if(awardsDTO == null){ this.awardsDTO = new ArrayList<>();}
         else{ this.awardsDTO = awardsDTO;}
+        if(reviewsDTO == null){ this.reviewsDTO = new ArrayList<>();}
+        else{ this.reviewsDTO = reviewsDTO;}
         if(userFavouritesDTO == null){ this.userFavouritesDTO = new HashSet<>();}
         else{ this.userFavouritesDTO = userFavouritesDTO;}
         if(userWatchedDTO == null){ this.userWatchedDTO = new HashSet<>();}
@@ -48,6 +51,7 @@ public class MovieDTO extends BaseEntityDTO{
     private DirectorDTO directorDTO;
     private List<ActorDTO> actorsDTO = new ArrayList<>();
     private List<MovieAwardDTO> awardsDTO = new ArrayList<>();
+    private List<MovieReview> reviewsDTO = new ArrayList<>();
     private Set<UserDTO> userFavouritesDTO = new HashSet<>();
     private Set<UserDTO> userWatchedDTO = new HashSet<>();
 }

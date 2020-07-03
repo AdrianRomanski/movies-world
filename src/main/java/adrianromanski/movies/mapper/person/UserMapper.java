@@ -10,14 +10,16 @@ import org.mapstruct.Mappings;
 public interface UserMapper {
 
     @Mappings({
-        @Mapping(source = "favouriteMovies", target = "favouriteMoviesDTO"),
-            @Mapping(source = "watchedMovies", target = "watchedMoviesDTO")
+            @Mapping(source = "favouriteMovies", target = "favouriteMoviesDTO"),
+            @Mapping(source = "watchedMovies", target = "watchedMoviesDTO"),
+            @Mapping(source = "movieReviews", target = "movieReviewsDTO")
     })
     UserDTO userToUserDTO(User user);
 
     @Mappings({
             @Mapping(source = "favouriteMoviesDTO", target = "favouriteMovies"),
-            @Mapping(source = "watchedMoviesDTO", target = "watchedMovies")
+            @Mapping(source = "watchedMoviesDTO", target = "watchedMovies"),
+            @Mapping(source = "movieReviewsDTO", target = "movieReviews")
     })
     User userDTOToUser(UserDTO userDTO);
 }

@@ -1,11 +1,14 @@
 package adrianromanski.movies.model.person;
 
 import adrianromanski.movies.model.base_entity.MovieDTO;
+import adrianromanski.movies.model.review.MovieReviewDTO;
 import com.google.common.collect.ImmutableList;
 import lombok.*;
 
 import javax.validation.constraints.NotEmpty;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -26,7 +29,8 @@ public class UserDTO  extends PersonDTO {
      */
     @Builder
     public UserDTO(Long id, String firstName,  String lastName,  String gender, String username, String password,
-                     Set<MovieDTO> favouriteMoviesDTO, Set<MovieDTO> watchedMoviesDTO) {
+                     Set<MovieDTO> favouriteMoviesDTO, Set<MovieDTO> watchedMoviesDTO,
+                     List<MovieReviewDTO> movieReviewsDTO) {
         super(id, firstName, lastName, gender);
         this.username = username;
         this.password = password;
@@ -34,9 +38,12 @@ public class UserDTO  extends PersonDTO {
         else{ this.favouriteMoviesDTO = favouriteMoviesDTO; }
         if(watchedMoviesDTO == null){ this.watchedMoviesDTO = new HashSet<>();}
         else{ this.watchedMoviesDTO = watchedMoviesDTO; }
+        if(movieReviewsDTO == null){ this.movieReviewsDTO = new ArrayList<>();}
+        else{ this.movieReviewsDTO = movieReviewsDTO; }
     }
 
     private Set<MovieDTO> favouriteMoviesDTO = new HashSet<>();
     private Set<MovieDTO> watchedMoviesDTO = new HashSet<>();
+    private List<MovieReviewDTO> movieReviewsDTO = new ArrayList<>();
 
 }
