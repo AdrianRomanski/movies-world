@@ -2,10 +2,8 @@ package adrianromanski.movies.model.person;
 
 import adrianromanski.movies.domain.award.DirectorAward;
 import adrianromanski.movies.model.base_entity.MovieDTO;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.google.common.collect.ImmutableList;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -17,6 +15,12 @@ import java.util.Set;
 @NoArgsConstructor
 public class DirectorDTO extends PersonDTO {
 
+    /**
+     * I have to use this kind of structure because otherwise i couldn't initialize mutable Collection
+     * with @Singular annotation because it uses ImmutableList by default
+     * @see Singular
+     * @see ImmutableList
+     */
     @Builder
     public DirectorDTO(Long id, String firstName, String lastName, String gender,
                        List<MovieDTO> moviesDTO, Set<DirectorAward> awardsDTO) {

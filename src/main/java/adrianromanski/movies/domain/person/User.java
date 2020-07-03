@@ -1,10 +1,8 @@
 package adrianromanski.movies.domain.person;
 
 import adrianromanski.movies.domain.base_entity.Movie;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.google.common.collect.ImmutableList;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.*;
@@ -19,6 +17,12 @@ public class User extends Person {
     private String username;
     private String password;
 
+    /**
+     * I have to use this kind of structure because otherwise i couldn't initialize mutable Collection
+     * with @Singular annotation because it uses ImmutableList by default
+     * @see Singular
+     * @see ImmutableList
+     */
     @Builder
     public User(Long id, String firstName, String lastName, String gender, String username, String password,
                 Set<Movie> favouriteMovies,  Set<Movie> watchedMovies) {

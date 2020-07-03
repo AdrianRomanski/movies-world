@@ -1,10 +1,8 @@
 package adrianromanski.movies.model.person;
 
 import adrianromanski.movies.model.base_entity.MovieDTO;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.google.common.collect.ImmutableList;
+import lombok.*;
 
 import javax.validation.constraints.NotEmpty;
 import java.util.HashSet;
@@ -20,6 +18,12 @@ public class UserDTO  extends PersonDTO {
     @NotEmpty
     private String password;
 
+    /**
+     * I have to use this kind of structure because otherwise i couldn't initialize mutable Collection
+     * with @Singular annotation because it uses ImmutableList by default
+     * @see Singular
+     * @see ImmutableList
+     */
     @Builder
     public UserDTO(Long id, String firstName,  String lastName,  String gender, String username, String password,
                      Set<MovieDTO> favouriteMoviesDTO, Set<MovieDTO> watchedMoviesDTO) {

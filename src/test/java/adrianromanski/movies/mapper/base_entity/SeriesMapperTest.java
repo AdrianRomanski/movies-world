@@ -6,7 +6,9 @@ import adrianromanski.movies.model.base_entity.EpisodeDTO;
 import adrianromanski.movies.model.base_entity.SeriesDTO;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -26,13 +28,10 @@ class SeriesMapperTest {
         Episode episode1 = Episode.builder().name(NAME1).build();
         Episode episode2 =  Episode.builder().name(NAME2).build();
 
-        Series series = Series.builder().name(NAME).description(DESCRIPTION).imageURL(URL).id(ID).build();
+        Series series = Series.builder().name(NAME).description(DESCRIPTION).imageURL(URL).episodes(Arrays.asList(episode1, episode2)).id(ID).build();
 
-        series.getEpisodes().add(episode1);
-        series.getEpisodes().add(episode2);
         episode1.setSeries(series);
         episode2.setSeries(series);
-
 
         SeriesDTO seriesDTO = mapper.seriesToSeriesDTO(series);
 
@@ -47,12 +46,15 @@ class SeriesMapperTest {
 
     @Test
     void seriesDTOToSeries() {
-        EpisodeDTO episode1 = new EpisodeDTO();
-        episode1.setName(NAME1);
-        EpisodeDTO episode2 = new EpisodeDTO();
-        episode2.setName(NAME2);
+        EpisodeDTO episode1DTO = EpisodeDTO.builder().name(NAME1).build();
+        EpisodeDTO episode2DTO =  EpisodeDTO.builder().name(NAME2).build();
 
-        SeriesDTO seriesDTO = SeriesDTO.builder().name(NAME).description(DESCRIPTION).imageURL(URL).id(ID).episodesDTO(Arrays.asList(episode1, episode2)).build();
+        List<EpisodeDTO> episodeDTOList = new ArrayList<>();
+
+        episodeDTOList.add(episode1DTO);
+        episodeDTOList.add(episode2DTO);
+
+        SeriesDTO seriesDTO = SeriesDTO.builder().name(NAME).description(DESCRIPTION).imageURL(URL).id(ID).episodesDTO(episodeDTOList).build();
 
         Series series = mapper.seriesDTOToSeries(seriesDTO);
 

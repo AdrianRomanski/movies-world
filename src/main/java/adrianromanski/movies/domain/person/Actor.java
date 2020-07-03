@@ -3,10 +3,8 @@ package adrianromanski.movies.domain.person;
 
 import adrianromanski.movies.domain.base_entity.Movie;
 import adrianromanski.movies.domain.award.ActorAward;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.google.common.collect.ImmutableList;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -19,6 +17,12 @@ import java.util.Optional;
 @NoArgsConstructor
 public class Actor extends Person {
 
+    /**
+     * I have to use this kind of structure because otherwise i couldn't initialize mutable Collection
+     * with @Singular annotation because it uses ImmutableList by default
+     * @see Singular
+     * @see ImmutableList
+     */
     @Builder
     public Actor(Long id, String firstName, String lastName, String gender,
                  List<Movie> movies, List<ActorAward> awards) {

@@ -4,10 +4,8 @@ import adrianromanski.movies.model.person.DirectorDTO;
 import adrianromanski.movies.model.person.UserDTO;
 import adrianromanski.movies.model.award.MovieAwardDTO;
 import adrianromanski.movies.model.person.ActorDTO;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.google.common.collect.ImmutableList;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -21,6 +19,12 @@ public class MovieDTO extends BaseEntityDTO{
 
     private Long minutes;
 
+    /**
+     * I have to use this kind of structure because otherwise i couldn't initialize mutable Collection
+     * with @Singular annotation because it uses ImmutableList by default
+     * @see Singular
+     * @see ImmutableList
+     */
     @Builder
     public MovieDTO(Long id,  String name,  String description, String imageURL, Long minutes,
                     CategoryDTO categoryDTO, DirectorDTO directorDTO,

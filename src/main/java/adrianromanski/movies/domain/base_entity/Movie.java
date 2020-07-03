@@ -4,10 +4,8 @@ import adrianromanski.movies.domain.person.Director;
 import adrianromanski.movies.domain.person.User;
 import adrianromanski.movies.domain.award.MovieAward;
 import adrianromanski.movies.domain.person.Actor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.google.common.collect.ImmutableList;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
@@ -23,6 +21,13 @@ public class Movie extends BaseEntity {
 
     private Long minutes;
 
+
+    /**
+     * I have to use this kind of structure because otherwise i couldn't initialize mutable Collection
+     * with @Singular annotation because it uses ImmutableList by default
+     * @see Singular
+     * @see ImmutableList
+     */
     @Builder
     public Movie(Long id, String name, String description, String imageURL, Long minutes,
                  Category category, Director director,
