@@ -2,11 +2,16 @@ package adrianromanski.movies.services.user;
 
 import adrianromanski.movies.domain.base_entity.Movie;
 import adrianromanski.movies.domain.person.User;
+import adrianromanski.movies.domain.review.MovieReview;
+import adrianromanski.movies.domain.review.Review;
 import adrianromanski.movies.exceptions.ResourceNotFoundException;
 import adrianromanski.movies.jms.JmsTextMessageService;
 import adrianromanski.movies.mapper.person.UserMapper;
+import adrianromanski.movies.mapper.review.MovieReviewMapper;
 import adrianromanski.movies.model.person.UserDTO;
+import adrianromanski.movies.model.review.MovieReviewDTO;
 import adrianromanski.movies.repositories.base_entity.MovieRepository;
+import adrianromanski.movies.repositories.base_entity.ReviewRepository;
 import adrianromanski.movies.repositories.person.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -20,16 +25,20 @@ public class UserServiceImpl implements UserService{
 
     private final UserRepository userRepository;
     private final MovieRepository movieRepository;
+    private final ReviewRepository reviewRepository;
     private final JmsTextMessageService jmsTextMessageService;
     private final UserMapper userMapper;
+    private final MovieReviewMapper reviewMapper;
 
 
     public UserServiceImpl(UserRepository userRepository, MovieRepository movieRepository,
-                           JmsTextMessageService jmsTextMessageService, UserMapper userMapper) {
+                           ReviewRepository reviewRepository, JmsTextMessageService jmsTextMessageService, UserMapper userMapper, MovieReviewMapper reviewMapper) {
         this.userRepository = userRepository;
         this.movieRepository = movieRepository;
+        this.reviewRepository = reviewRepository;
         this.jmsTextMessageService = jmsTextMessageService;
         this.userMapper = userMapper;
+        this.reviewMapper = reviewMapper;
     }
 
     /**
@@ -104,6 +113,33 @@ public class UserServiceImpl implements UserService{
 
 
     /**
+     * @param userID ID of the User
+     * @param movieID ID of the Movie
+     * @param reviewDTO Body
+     * @return MovieReviewDTO if successfully saved to repositories
+     * @throws ResourceNotFoundException if not found
+     */
+    @Override
+    public MovieReviewDTO addMovieReview(Long userID, Long movieID, MovieReviewDTO reviewDTO) {
+        jmsTextMessageService.sendTextMessage("Adding Review to Movie with id: " + movieID + " from the User with id: " + userID);
+        User user = userRepository.findById(userID)
+                .orElseThrow(() -> new ResourceNotFoundException(userID, User.class));
+        Movie movie = movieRepository.findById(movieID)
+                .orElseThrow(() -> new ResourceNotFoundException(movieID, Movie.class));
+        MovieReview review = reviewMapper.reviewDTOToReview(reviewDTO);
+        movie.getReviews().add(review);
+        user.getMovieReviews().add(review);
+        review.setMovie(movie);
+        review.setUser(user);
+        userRepository.save(user);
+        movieRepository.save(movie);
+        reviewRepository.save(review);
+        jmsTextMessageService.sendTextMessage("Review to Movie with id: " + movieID + " from the User with id: " + userID + " succesfully added");
+        return reviewMapper.reviewToReviewDTO(review);
+    }
+
+
+    /**
      * User(Only it's own account), Admin, Moderator
      * @param id of the User to update
      * @param userDTO object for updating User Entity
@@ -122,6 +158,36 @@ public class UserServiceImpl implements UserService{
         userRepository.save(updatedUser);
         jmsTextMessageService.sendTextMessage("User with id:  " + id + " successfully updated");
         return userMapper.userToUserDTO(updatedUser);
+    }
+
+
+    /**
+     * @param userID ID of the User
+     * @param reviewID ID of the Review
+     * @param reviewDTO Body
+     * @throws ResourceNotFoundException if not found
+     * @return MovieReviewDTO if succesfully updated
+     */
+    @Override
+    public MovieReviewDTO updateMovieReview(Long userID, Long reviewID, MovieReviewDTO reviewDTO) {
+        jmsTextMessageService.sendTextMessage("Updating Review with id: " + reviewID + " from User with id: " + userID);
+        User user = userRepository.findById(userID)
+                .orElseThrow(() -> new ResourceNotFoundException(userID, User.class));
+        MovieReview review = user.getMovieReviewOptional(reviewID)
+                .orElseThrow(() -> new ResourceNotFoundException(reviewID, Review.class));
+        MovieReview updated = reviewMapper.reviewDTOToReview(reviewDTO);
+        Movie movie = review.getMovie();
+        movie.getReviews().remove(review);
+        user.getMovieReviews().remove(review);
+        updated.setId(reviewID);
+        movie.getReviews().add(updated);
+        user.getMovieReviews().add(updated);
+        reviewRepository.deleteById(reviewID);
+        userRepository.save(user);
+        movieRepository.save(movie);
+        reviewRepository.save(updated);
+        jmsTextMessageService.sendTextMessage("Successfully updated Review with id: " + reviewID + " from User with id: " + userID);
+        return reviewMapper.reviewToReviewDTO(updated);
     }
 
 
@@ -181,4 +247,26 @@ public class UserServiceImpl implements UserService{
     }
 
 
+    /**
+     * @param userID ID of the User
+     * @param reviewID ID of the Review
+     * @throws ResourceNotFoundException if User or Review not found
+     */
+    @Override
+    public void deleteMovieReview(Long userID, Long reviewID) {
+        jmsTextMessageService.sendTextMessage("Deleting Review with id: " + reviewID + " from User with id: " + userID);
+        User user = userRepository.findById(userID)
+                .orElseThrow(() -> new ResourceNotFoundException(userID, User.class));
+        MovieReview review = user.getMovieReviewOptional(reviewID)
+                .orElseThrow(() -> new ResourceNotFoundException(reviewID, Review.class));
+        user.getMovieReviews().remove(review);
+        Movie movie = review.getMovie();
+        movie.getReviews().remove(review);
+        userRepository.save(user);
+        movieRepository.save(movie);
+        reviewRepository.deleteById(reviewID);
+        jmsTextMessageService.sendTextMessage("Review with id: " + reviewID + " successfully deleted from the User with id: " + userID);
+    }
 }
+
+

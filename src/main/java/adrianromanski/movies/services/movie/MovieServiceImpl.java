@@ -1,22 +1,22 @@
 package adrianromanski.movies.services.movie;
 
-import adrianromanski.movies.domain.person.Actor;
-import adrianromanski.movies.domain.base_entity.Movie;
 import adrianromanski.movies.domain.award.MovieAward;
+import adrianromanski.movies.domain.base_entity.Movie;
+import adrianromanski.movies.domain.person.Actor;
 import adrianromanski.movies.exceptions.ResourceNotFoundException;
 import adrianromanski.movies.jms.JmsTextMessageService;
 import adrianromanski.movies.mapper.award.MovieAwardMapper;
 import adrianromanski.movies.mapper.base_entity.MovieMapper;
-import adrianromanski.movies.model.base_entity.MovieDTO;
 import adrianromanski.movies.model.award.MovieAwardDTO;
-import adrianromanski.movies.repositories.person.ActorRepository;
+import adrianromanski.movies.model.base_entity.MovieDTO;
 import adrianromanski.movies.repositories.award.AwardRepository;
 import adrianromanski.movies.repositories.base_entity.MovieRepository;
+import adrianromanski.movies.repositories.person.ActorRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static java.util.stream.Collectors.*;
+import static java.util.stream.Collectors.toList;
 
 @Service
 public class MovieServiceImpl implements MovieService {

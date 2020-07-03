@@ -1,7 +1,7 @@
 package adrianromanski.movies.services.movie;
 
-import adrianromanski.movies.model.base_entity.MovieDTO;
 import adrianromanski.movies.model.award.MovieAwardDTO;
+import adrianromanski.movies.model.base_entity.MovieDTO;
 
 import java.util.List;
 

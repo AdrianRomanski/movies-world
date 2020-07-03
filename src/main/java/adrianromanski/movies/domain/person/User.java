@@ -41,6 +41,12 @@ public class User extends Person {
     @OneToMany(mappedBy = "movie")
     private List<MovieReview> movieReviews = new ArrayList<>();
 
+    public Optional<MovieReview> getMovieReviewOptional(Long reviewID) {
+        return this.getMovieReviews().stream()
+                .filter(m -> m.getId().equals(reviewID))
+                .findAny();
+    }
+
 
     @ManyToMany
     @JoinTable(name = "user_favourite_movies", joinColumns = @JoinColumn(name = "user_id"),
