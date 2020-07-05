@@ -6,6 +6,7 @@ import adrianromanski.movies.domain.base_entity.Movie;
 import adrianromanski.movies.domain.person.Actor;
 import adrianromanski.movies.domain.person.User;
 import adrianromanski.movies.domain.review.MovieReview;
+import adrianromanski.movies.exceptions.EmptyListException;
 import adrianromanski.movies.exceptions.ResourceNotFoundException;
 import adrianromanski.movies.jms.JmsTextMessageService;
 import adrianromanski.movies.mapper.award.MovieAwardMapper;
@@ -193,7 +194,7 @@ class MovieServiceImplTest {
 
     @DisplayName("Happy Path, method = getMoviesByRating")
     @Test
-    void getMoviesByRating() {
+    void getMoviesByRatingHappyPath() {
         List<Movie> movies = Arrays.asList(getStarWars(), getIndianaJones());
 
         when(movieRepository.findAll()).thenReturn(movies);
@@ -202,6 +203,19 @@ class MovieServiceImplTest {
 
         assertEquals(returnDTO.size(), 2);
         assertThat(returnDTO.containsKey(7.5)); // (10 + 5) / 2 = 7.5
+    }
+
+
+    @DisplayName("UnHappy Path, method = getMoviesByRating")
+    @Test
+    void getMoviesByRatingUnHappyPath() {
+        List<Movie> movies = Arrays.asList(new Movie(), new Movie());
+
+        when(movieRepository.findAll()).thenReturn(movies);
+
+        Throwable ex = catchThrowable(() -> movieService.getMoviesByRating());
+
+        assertThat(ex).isInstanceOf(EmptyListException.class);
     }
 
 
