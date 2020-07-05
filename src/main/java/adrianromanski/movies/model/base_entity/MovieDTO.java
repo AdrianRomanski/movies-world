@@ -1,17 +1,16 @@
 package adrianromanski.movies.model.base_entity;
 
 import adrianromanski.movies.domain.review.MovieReview;
-import adrianromanski.movies.model.person.DirectorDTO;
-import adrianromanski.movies.model.person.UserDTO;
+import adrianromanski.movies.domain.review.Review;
+import adrianromanski.movies.exceptions.EmptyListException;
 import adrianromanski.movies.model.award.MovieAwardDTO;
 import adrianromanski.movies.model.person.ActorDTO;
+import adrianromanski.movies.model.person.DirectorDTO;
+import adrianromanski.movies.model.person.UserDTO;
 import com.google.common.collect.ImmutableList;
 import lombok.*;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Getter
 @NoArgsConstructor
@@ -35,16 +34,13 @@ public class MovieDTO extends BaseEntityDTO{
         this.minutes = minutes;
         this.categoryDTO = categoryDTO;
         this.directorDTO = directorDTO;
-        if(actorsDTO == null){ this.actorsDTO = new ArrayList<>();}
-        else{ this.actorsDTO = actorsDTO;}
+        this.actorsDTO = Objects.requireNonNullElseGet(actorsDTO, ArrayList::new);
         if(awardsDTO == null){ this.awardsDTO = new ArrayList<>();}
         else{ this.awardsDTO = awardsDTO;}
         if(reviewsDTO == null){ this.reviewsDTO = new ArrayList<>();}
         else{ this.reviewsDTO = reviewsDTO;}
-        if(userFavouritesDTO == null){ this.userFavouritesDTO = new HashSet<>();}
-        else{ this.userFavouritesDTO = userFavouritesDTO;}
-        if(userWatchedDTO == null){ this.userWatchedDTO = new HashSet<>();}
-        else{ this.userWatchedDTO = userWatchedDTO;}
+        this.userFavouritesDTO = Objects.requireNonNullElseGet(userFavouritesDTO, HashSet::new);
+        this.userWatchedDTO = Objects.requireNonNullElseGet(userWatchedDTO, HashSet::new);
     }
 
     private CategoryDTO categoryDTO;
@@ -52,6 +48,14 @@ public class MovieDTO extends BaseEntityDTO{
     private List<ActorDTO> actorsDTO = new ArrayList<>();
     private List<MovieAwardDTO> awardsDTO = new ArrayList<>();
     private List<MovieReview> reviewsDTO = new ArrayList<>();
+
+    public Double getAvgRating() {
+        return getReviewsDTO().stream()
+                .mapToDouble(Review::getScore)
+                .average()
+                .orElseThrow(EmptyListException::new);
+    }
+
     private Set<UserDTO> userFavouritesDTO = new HashSet<>();
     private Set<UserDTO> userWatchedDTO = new HashSet<>();
 }

@@ -4,6 +4,7 @@ import adrianromanski.movies.model.award.MovieAwardDTO;
 import adrianromanski.movies.model.base_entity.MovieDTO;
 
 import java.util.List;
+import java.util.Map;
 
 public interface MovieService {
 
@@ -15,6 +16,12 @@ public interface MovieService {
     MovieDTO getMovieByName(String name);
 
     List<MovieDTO> findAllMoviesWithActor(String firstName, String lastName);
+
+    List<MovieDTO> getMostFavouriteMovies();
+
+    List<MovieDTO> getMostWatchedMovies();
+
+    Map<Double, List<MovieDTO>> getMoviesByRating();
 
     //POST
     MovieDTO createMovie(MovieDTO movieDTO);

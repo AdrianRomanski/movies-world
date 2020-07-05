@@ -4,6 +4,8 @@ package adrianromanski.movies.services.base_entity;
 import adrianromanski.movies.domain.award.MovieAward;
 import adrianromanski.movies.domain.base_entity.Movie;
 import adrianromanski.movies.domain.person.Actor;
+import adrianromanski.movies.domain.person.User;
+import adrianromanski.movies.domain.review.MovieReview;
 import adrianromanski.movies.exceptions.ResourceNotFoundException;
 import adrianromanski.movies.jms.JmsTextMessageService;
 import adrianromanski.movies.mapper.award.MovieAwardMapper;
@@ -24,9 +26,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
@@ -37,11 +37,12 @@ import static org.mockito.Mockito.*;
 
 class MovieServiceImplTest {
 
-    public static final String NAME = "Star Wars";
+    public static final String STAR_WARS = "Star Wars";
     public static final String GOOD_MOVIE = "Good movie";
     public static final String CATEGORY = "Hottest movie";
     public static final String COUNTRY = "Poland";
     public static final LocalDate DATE = LocalDate.now();
+    public static final String INDIANA_JONES = "IndianaJones";
 
     @Mock
     MovieRepository movieRepository;
@@ -68,7 +69,21 @@ class MovieServiceImplTest {
 
     private List<Movie> getMovies() { return Arrays.asList(new Movie(), new Movie(), new Movie()); }
 
-    private Movie getStarWars() { return Movie.builder().name(NAME).awards(Arrays.asList(getAward(), getAward())).build(); }
+    private Movie getStarWars() {
+        Set<User> userFavourites = new HashSet<>(Arrays.asList(new User(), new User(), new User(), new User()));
+        Set<User> userWatched = new HashSet<>(Arrays.asList(new User(), new User(), new User(), new User()));
+        List<MovieReview> reviews = Arrays.asList(MovieReview.builder().score(10).build(), MovieReview.builder().score(5).build());
+        return Movie.builder().name(STAR_WARS).awards(Arrays.asList(getAward(), getAward()))
+                .userFavourites(userFavourites).userWatched(userWatched).reviews(reviews).build();
+    }
+
+    private Movie getIndianaJones() {
+        Set<User> userFavourites = new HashSet<>(Arrays.asList(new User(), new User()));
+        Set<User> userWatched = new HashSet<>(Arrays.asList(new User(), new User()));
+        List<MovieReview> reviews = Arrays.asList(MovieReview.builder().score(7).build(), MovieReview.builder().score(3).build());
+        return Movie.builder().name(INDIANA_JONES).awards(Arrays.asList(getAward(), getAward()))
+                .userFavourites(userFavourites).userWatched(userWatched).reviews(reviews).build();
+    }
 
     private MovieAward getAward() { return MovieAward.builder().awardCategory(CATEGORY).country(COUNTRY).date(DATE).build(); }
 
@@ -97,7 +112,7 @@ class MovieServiceImplTest {
 
         MovieDTO returnDTO = movieService.getMovieByID(1L);
 
-        assertEquals(returnDTO.getName(), NAME);
+        assertEquals(returnDTO.getName(), STAR_WARS);
     }
 
 
@@ -117,9 +132,9 @@ class MovieServiceImplTest {
 
         when(movieRepository.findByName(anyString())).thenReturn(Optional.of(movie));
 
-        MovieDTO returnDTO = movieService.getMovieByName(NAME);
+        MovieDTO returnDTO = movieService.getMovieByName(STAR_WARS);
 
-        assertEquals(returnDTO.getName(), NAME);
+        assertEquals(returnDTO.getName(), STAR_WARS);
     }
 
 
@@ -143,6 +158,50 @@ class MovieServiceImplTest {
         List<MovieDTO> returnDTO = movieService.findAllMoviesWithActor("Arnold", "Arnold");
 
         assertEquals(returnDTO.size(), 3);
+    }
+
+
+    @DisplayName("Happy Path, method = getMostFavouriteMovies")
+    @Test
+    void getMostFavouriteMovies() {
+        List<Movie> movies = Arrays.asList(getStarWars(), getIndianaJones());
+
+        when(movieRepository.findAll()).thenReturn(movies);
+
+        List<MovieDTO> returnDTO = movieService.getMostFavouriteMovies();
+
+        assertEquals(returnDTO.get(0).getName(), STAR_WARS);
+        assertEquals(returnDTO.get(1).getName(), INDIANA_JONES);
+        assertEquals(returnDTO.size(), 2);
+    }
+
+
+    @DisplayName("Happy Path, method = getMostWatchedMovies")
+    @Test
+    void getMostWatchedMovies() {
+        List<Movie> movies = Arrays.asList(getStarWars(), getIndianaJones());
+
+        when(movieRepository.findAll()).thenReturn(movies);
+
+        List<MovieDTO> returnDTO = movieService.getMostFavouriteMovies();
+
+        assertEquals(returnDTO.get(0).getName(), STAR_WARS);
+        assertEquals(returnDTO.get(1).getName(), INDIANA_JONES);
+        assertEquals(returnDTO.size(), 2);
+    }
+
+
+    @DisplayName("Happy Path, method = getMoviesByRating")
+    @Test
+    void getMoviesByRating() {
+        List<Movie> movies = Arrays.asList(getStarWars(), getIndianaJones());
+
+        when(movieRepository.findAll()).thenReturn(movies);
+
+        Map<Double, List<MovieDTO>> returnDTO = movieService.getMoviesByRating();
+
+        assertEquals(returnDTO.size(), 2);
+        assertThat(returnDTO.containsKey(7.5)); // (10 + 5) / 2 = 7.5
     }
 
 

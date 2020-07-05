@@ -1,9 +1,9 @@
 package adrianromanski.movies.domain.base_entity;
 
-import adrianromanski.movies.domain.person.Director;
-import adrianromanski.movies.domain.person.User;
 import adrianromanski.movies.domain.award.MovieAward;
 import adrianromanski.movies.domain.person.Actor;
+import adrianromanski.movies.domain.person.Director;
+import adrianromanski.movies.domain.person.User;
 import adrianromanski.movies.domain.review.MovieReview;
 import com.google.common.collect.ImmutableList;
 import lombok.*;
@@ -21,6 +21,7 @@ import java.util.*;
 public class Movie extends BaseEntity {
 
     private Long minutes;
+    private Double avgRating;
 
 
     /**

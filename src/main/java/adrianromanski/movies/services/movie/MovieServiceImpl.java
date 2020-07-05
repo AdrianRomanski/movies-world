@@ -15,7 +15,11 @@ import adrianromanski.movies.repositories.person.ActorRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
+import static java.util.Collections.reverseOrder;
+import static java.util.Comparator.comparing;
+import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toList;
 
 @Service
@@ -100,6 +104,46 @@ public class MovieServiceImpl implements MovieService {
 
 
     /**
+     * @return List containing Most Favourite User Movies - LIMIT 100
+     */
+    @Override
+    public List<MovieDTO> getMostFavouriteMovies() {
+        return movieRepository.findAll()
+                .stream()
+                .sorted(comparing(m -> m.getUserFavourites().size(), reverseOrder()))
+                .map(movieMapper::movieToMovieDTO)
+                .limit(100)
+                .collect(toList());
+    }
+
+
+    /**
+     * @return List containing Most Watched User Movies - LIMIT 100
+     */
+    @Override
+    public List<MovieDTO> getMostWatchedMovies() {
+        return movieRepository.findAll()
+                .stream()
+                .sorted(comparing(m -> m.getUserWatched().size(), reverseOrder()))
+                .map(movieMapper::movieToMovieDTO)
+                .limit(100)
+                .collect(toList());
+    }
+
+
+    /**
+     * @return List containing Movies with highest rating ratio
+     */
+    @Override
+    public Map<Double, List<MovieDTO>> getMoviesByRating() {
+        return movieRepository.findAll()
+                .stream()
+                .map(movieMapper::movieToMovieDTO)
+                .collect(groupingBy(MovieDTO::getAvgRating));
+    }
+
+
+    /**z
      * @param movieDTO to save
      * @return Movie if successfully saved
      */
