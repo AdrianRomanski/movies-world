@@ -184,7 +184,7 @@ class MovieServiceImplTest {
 
         when(movieRepository.findAll()).thenReturn(movies);
 
-        List<MovieDTO> returnDTO = movieService.getMostFavouriteMovies();
+        List<MovieDTO> returnDTO = movieService.getMostWatchedMovies();
 
         assertEquals(returnDTO.get(0).getName(), STAR_WARS);
         assertEquals(returnDTO.get(1).getName(), INDIANA_JONES);
