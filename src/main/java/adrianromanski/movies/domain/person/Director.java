@@ -26,10 +26,8 @@ public class Director extends Person {
     public Director(Long id, String firstName, String lastName, String gender,
                     List<Movie> movies, Set<DirectorAward> awards) {
         super(id, firstName, lastName, gender);
-        if(movies == null) { this.movies = new ArrayList<>(); }
-        else{ this.movies = movies; }
-        if(awards == null) { this.awards = new HashSet<>(); }
-        else{ this.awards = awards; }
+        this.movies = Objects.requireNonNullElseGet(movies, ArrayList::new);
+        this.awards = Objects.requireNonNullElseGet(awards, HashSet::new);
     }
 
     @OneToMany(mappedBy = "director")

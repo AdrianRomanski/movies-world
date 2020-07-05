@@ -5,10 +5,7 @@ import adrianromanski.movies.model.base_entity.MovieDTO;
 import com.google.common.collect.ImmutableList;
 import lombok.*;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Getter
 @Setter
@@ -25,10 +22,8 @@ public class DirectorDTO extends PersonDTO {
     public DirectorDTO(Long id, String firstName, String lastName, String gender,
                        List<MovieDTO> moviesDTO, Set<DirectorAward> awardsDTO) {
         super(id, firstName, lastName, gender);
-        if(moviesDTO == null) { this.moviesDTO = new ArrayList<>(); }
-        else{ this.moviesDTO = moviesDTO; }
-        if(awardsDTO == null) { this.awardsDTO = new HashSet<>(); }
-        else{ this.awardsDTO = awardsDTO; }
+        this.moviesDTO = Objects.requireNonNullElseGet(moviesDTO, ArrayList::new);
+        this.awardsDTO = Objects.requireNonNullElseGet(awardsDTO, HashSet::new);
     }
 
     private List<MovieDTO> moviesDTO = new ArrayList<>();

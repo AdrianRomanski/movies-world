@@ -12,9 +12,9 @@ import lombok.*;
 
 import java.util.*;
 
+@Setter
 @Getter
 @NoArgsConstructor
-@Setter
 public class MovieDTO extends BaseEntityDTO{
 
     private Long minutes;
@@ -35,10 +35,8 @@ public class MovieDTO extends BaseEntityDTO{
         this.categoryDTO = categoryDTO;
         this.directorDTO = directorDTO;
         this.actorsDTO = Objects.requireNonNullElseGet(actorsDTO, ArrayList::new);
-        if(awardsDTO == null){ this.awardsDTO = new ArrayList<>();}
-        else{ this.awardsDTO = awardsDTO;}
-        if(reviewsDTO == null){ this.reviewsDTO = new ArrayList<>();}
-        else{ this.reviewsDTO = reviewsDTO;}
+        this.awardsDTO = Objects.requireNonNullElseGet(awardsDTO, ArrayList::new);
+        this.reviewsDTO = Objects.requireNonNullElseGet(reviewsDTO, ArrayList::new);
         this.userFavouritesDTO = Objects.requireNonNullElseGet(userFavouritesDTO, HashSet::new);
         this.userWatchedDTO = Objects.requireNonNullElseGet(userWatchedDTO, HashSet::new);
     }
@@ -48,6 +46,8 @@ public class MovieDTO extends BaseEntityDTO{
     private List<ActorDTO> actorsDTO = new ArrayList<>();
     private List<MovieAwardDTO> awardsDTO = new ArrayList<>();
     private List<MovieReview> reviewsDTO = new ArrayList<>();
+    private Set<UserDTO> userFavouritesDTO = new HashSet<>();
+    private Set<UserDTO> userWatchedDTO = new HashSet<>();
 
     public Double getAvgRating() {
         return getReviewsDTO().stream()
@@ -55,7 +55,4 @@ public class MovieDTO extends BaseEntityDTO{
                 .average()
                 .orElseThrow(EmptyListException::new);
     }
-
-    private Set<UserDTO> userFavouritesDTO = new HashSet<>();
-    private Set<UserDTO> userWatchedDTO = new HashSet<>();
 }

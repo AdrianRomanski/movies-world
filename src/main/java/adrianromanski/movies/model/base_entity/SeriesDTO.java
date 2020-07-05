@@ -5,6 +5,7 @@ import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Getter
 @Setter
@@ -21,8 +22,7 @@ public class SeriesDTO extends BaseEntityDTO {
     public SeriesDTO(Long id, String name, String description, String imageURL,
                      List<EpisodeDTO> episodesDTO) {
         super(id, name, description, imageURL);
-        if(episodesDTO == null){ this.episodesDTO = new ArrayList<>();}
-        else { this.episodesDTO = episodesDTO; }
+        this.episodesDTO = Objects.requireNonNullElseGet(episodesDTO, ArrayList::new);
     }
 
     private List<EpisodeDTO> episodesDTO = new ArrayList<>();

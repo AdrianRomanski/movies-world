@@ -6,10 +6,7 @@ import com.google.common.collect.ImmutableList;
 import lombok.*;
 
 import javax.validation.constraints.NotEmpty;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Getter
 @NoArgsConstructor
@@ -34,12 +31,9 @@ public class UserDTO  extends PersonDTO {
         super(id, firstName, lastName, gender);
         this.username = username;
         this.password = password;
-        if(favouriteMoviesDTO == null){ this.favouriteMoviesDTO = new HashSet<>();}
-        else{ this.favouriteMoviesDTO = favouriteMoviesDTO; }
-        if(watchedMoviesDTO == null){ this.watchedMoviesDTO = new HashSet<>();}
-        else{ this.watchedMoviesDTO = watchedMoviesDTO; }
-        if(movieReviewsDTO == null){ this.movieReviewsDTO = new ArrayList<>();}
-        else{ this.movieReviewsDTO = movieReviewsDTO; }
+        this.favouriteMoviesDTO = Objects.requireNonNullElseGet(favouriteMoviesDTO, HashSet::new);
+        this.watchedMoviesDTO = Objects.requireNonNullElseGet(watchedMoviesDTO, HashSet::new);
+        this.movieReviewsDTO = Objects.requireNonNullElseGet(movieReviewsDTO, ArrayList::new);
     }
 
     private Set<MovieDTO> favouriteMoviesDTO = new HashSet<>();

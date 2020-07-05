@@ -26,16 +26,14 @@ public class User extends Person {
      */
     @Builder
     public User(Long id, String firstName, String lastName, String gender, String username, String password,
-                Set<Movie> favouriteMovies,  Set<Movie> watchedMovies, List<MovieReview> movieReviews) {
+                Set<Movie> favouriteMovies,  Set<Movie> watchedMovies,
+                List<MovieReview> movieReviews) {
         super(id, firstName, lastName, gender);
         this.username = username;
         this.password = password;
-        if (favouriteMovies == null) { this.favouriteMovies = new HashSet<>(); }
-        else { this.favouriteMovies = favouriteMovies; }
-        if (watchedMovies == null) { this.watchedMovies = new HashSet<>(); }
-        else { this.watchedMovies = watchedMovies; }
-        if (movieReviews == null) { this.movieReviews = new ArrayList<>(); }
-        else { this.movieReviews = movieReviews; }
+        this.favouriteMovies = Objects.requireNonNullElseGet(favouriteMovies, HashSet::new);
+        this.watchedMovies = Objects.requireNonNullElseGet(watchedMovies, HashSet::new);
+        this.movieReviews = Objects.requireNonNullElseGet(movieReviews, ArrayList::new);
     }
 
     @OneToMany(mappedBy = "movie")
@@ -46,7 +44,6 @@ public class User extends Person {
                 .filter(m -> m.getId().equals(reviewID))
                 .findAny();
     }
-
 
     @ManyToMany
     @JoinTable(name = "user_favourite_movies", joinColumns = @JoinColumn(name = "user_id"),
@@ -69,6 +66,4 @@ public class User extends Person {
                 .filter(m -> m.getId().equals(movieID))
                 .findAny();
     }
-
-
 }

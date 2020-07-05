@@ -39,16 +39,11 @@ public class Movie extends BaseEntity {
         this.minutes = minutes;
         this.category = category;
         this.director = director;
-        if(actors == null){ this.actors = new ArrayList<>();}
-        else { this.actors = actors; }
-        if(awards == null){ this.awards = new ArrayList<>();}
-        else { this.awards = awards; }
-        if(reviews == null){ this.reviews = new ArrayList<>();}
-        else { this.reviews = reviews; }
-        if(userFavourites == null){ this.userFavourites = new HashSet<>();}
-        else { this.userFavourites = userFavourites; }
-        if(userFavourites == null){ this.userWatched = new HashSet<>();}
-        else { this.userWatched = userWatched; }
+        this.actors = Objects.requireNonNullElseGet(actors, ArrayList::new);
+        this.awards = Objects.requireNonNullElseGet(awards, ArrayList::new);
+        this.reviews = Objects.requireNonNullElseGet(reviews, ArrayList::new);
+        this.userFavourites = Objects.requireNonNullElseGet(userFavourites, HashSet::new);
+        this.userWatched = Objects.requireNonNullElseGet(userWatched, HashSet::new);
     }
 
     @OneToMany(mappedBy = "movie")
