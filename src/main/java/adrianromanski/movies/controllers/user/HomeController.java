@@ -1,4 +1,4 @@
-package adrianromanski.movies.controllers;
+package adrianromanski.movies.controllers.user;
 
 import adrianromanski.movies.services.category.CategoryService;
 import org.springframework.stereotype.Controller;

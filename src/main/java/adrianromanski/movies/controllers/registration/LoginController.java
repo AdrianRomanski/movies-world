@@ -1,4 +1,4 @@
-package adrianromanski.movies.controllers;
+package adrianromanski.movies.controllers.registration;
 
 import adrianromanski.movies.model.person.UserDTO;
 import org.springframework.stereotype.Controller;

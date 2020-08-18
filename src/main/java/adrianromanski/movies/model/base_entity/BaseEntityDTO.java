@@ -19,11 +19,12 @@ public class BaseEntityDTO {
     private Long id;
 
     @NotEmpty
-    @Size(min = 1, max = 25)
+    @Size(min = 1, max = 3)
     private String name;
     @NotEmpty
-    @Size(min = 160, max = 200)
+////    @Size(min = 160, max = 200)
+    @Size(min = 10, max = 200)
     private String description;
-    @NotEmpty
+//    @NotEmpty
     private String imageURL;
 }

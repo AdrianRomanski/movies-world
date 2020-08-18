@@ -9,7 +9,7 @@
 }
 
 body {
-    background-size: cover;
+    background-size: auto;
     background-image: linear-gradient(to right bottom,
     #141E30, #2980b9);
     background-repeat: no-repeat;
@@ -18,7 +18,7 @@ body {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 14px;
     line-height: 1.42857;
-    min-height: 650px;
+    min-height: 1300px;
 }
 
 .row {
@@ -126,6 +126,14 @@ img {
 
 .registration-form {
     margin-top: 100px;
+}
+
+/*Create Category*/
+
+.category-name {
+    text-transform: uppercase;
+    font-weight: 500;
+    color: #2980b9;
 }
 
 

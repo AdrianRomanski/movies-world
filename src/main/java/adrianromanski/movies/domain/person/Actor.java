@@ -1,8 +1,8 @@
 package adrianromanski.movies.domain.person;
 
 
-import adrianromanski.movies.domain.base_entity.Movie;
 import adrianromanski.movies.domain.award.ActorAward;
+import adrianromanski.movies.domain.base_entity.Movie;
 import com.google.common.collect.ImmutableList;
 import lombok.*;
 
@@ -18,6 +18,8 @@ import java.util.Optional;
 @NoArgsConstructor
 public class Actor extends Person {
 
+    private Double rating;
+
     /**
      * I have to use this kind of structure because otherwise i couldn't initialize mutable Collection
      * with @Singular annotation because it uses ImmutableList by default
@@ -25,9 +27,10 @@ public class Actor extends Person {
      * @see ImmutableList
      */
     @Builder
-    public Actor(Long id, String firstName, String lastName, String gender,
+    public Actor(Long id, String firstName, String lastName, String gender, Double rating,
                  List<Movie> movies, List<ActorAward> awards) {
         super(id, firstName, lastName, gender);
+        this.rating = rating;
         this.movies = Objects.requireNonNullElseGet(movies, ArrayList::new);
         this.awards = Objects.requireNonNullElseGet(awards, ArrayList::new);
     }
@@ -45,4 +48,12 @@ public class Actor extends Person {
     @JoinTable(name = "actor_movies", joinColumns = @JoinColumn(name = "actor_id"),
     inverseJoinColumns = @JoinColumn(name = "movie_id"))
     private List<Movie> movies = new ArrayList<>();
+
+//    public  Double getRating() {
+//        ArrayList<Integer> scores = new ArrayList<>();
+//        this.getMovies()
+//                .forEach(m -> m.getReviews()
+//                        .forEach(r -> scores.add(r.getScore())));
+//        return (double) scores.stream().reduce(0, Integer::sum) / scores.size();
+//    }
 }

@@ -49,6 +49,15 @@ public class ActorServiceImpl implements ActorService {
     }
 
 
+//    @Override
+//    public List<ActorDTO> getActorByRating() {
+//        return actorRepository.findAll()
+//                .stream()
+//                .sorted(actor -> actor.getRating())
+//                .map(actorMapper::actorDTOToActor);
+//    }
+
+
     /**
      * @param actorDTO object for saving
      * @return Actor if successfully saved

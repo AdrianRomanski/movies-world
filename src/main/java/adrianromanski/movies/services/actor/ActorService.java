@@ -10,6 +10,8 @@ public interface ActorService {
     //GET
     List<ActorDTO> getAllActors();
 
+//    List<ActorDTO> getActorByRating();
+
     //POST
     ActorDTO createActor(ActorDTO actorDTO);
 

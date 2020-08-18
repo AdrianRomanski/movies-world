@@ -30,4 +30,6 @@ public class MovieReview extends Review{
 
     @ManyToOne
     private Movie movie;
+
+
 }

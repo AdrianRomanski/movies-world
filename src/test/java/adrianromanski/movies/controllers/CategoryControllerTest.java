@@ -1,5 +1,6 @@
 package adrianromanski.movies.controllers;
 
+import adrianromanski.movies.controllers.user.CategoryController;
 import adrianromanski.movies.model.base_entity.MovieDTO;
 import adrianromanski.movies.services.category.CategoryService;
 import org.junit.jupiter.api.BeforeEach;

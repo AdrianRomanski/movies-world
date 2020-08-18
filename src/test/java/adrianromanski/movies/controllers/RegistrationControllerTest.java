@@ -1,5 +1,6 @@
 package adrianromanski.movies.controllers;
 
+import adrianromanski.movies.controllers.registration.RegistrationController;
 import adrianromanski.movies.model.person.UserDTO;
 import adrianromanski.movies.services.user.UserService;
 

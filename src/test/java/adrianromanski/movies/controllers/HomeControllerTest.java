@@ -1,5 +1,6 @@
 package adrianromanski.movies.controllers;
 
+import adrianromanski.movies.controllers.user.HomeController;
 import adrianromanski.movies.services.category.CategoryService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

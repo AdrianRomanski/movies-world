@@ -113,6 +113,7 @@ public class UserServiceImpl implements UserService{
 
 
     /**
+     * Adding rating to movie and score to actors
      * @param userID ID of the User
      * @param movieID ID of the Movie
      * @param reviewDTO Body
