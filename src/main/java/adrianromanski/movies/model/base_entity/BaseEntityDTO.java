@@ -16,6 +16,7 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BaseEntityDTO {
+
     private Long id;
 
     @NotEmpty
@@ -26,4 +27,6 @@ public class BaseEntityDTO {
     private String description;
 //    @NotEmpty
     private String imageURL;
+
+
 }

@@ -21,7 +21,7 @@
                     <div class="col-lg-12">
                         <div class="movies-box-image-container">
                             <img role="presentation"
-                                 th:src="@{'/images/' + ${category.imageURL}}"
+                                 th:src="@{'/category/' + ${category.name} + '/categoryImage'}"
                                  class="movies-box-image">
                         </div>
                         <div class="movies-listing-title" th:text="${category.name}"></div>

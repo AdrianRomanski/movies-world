@@ -30,9 +30,9 @@ public class MoviesBootstrap implements ApplicationListener<ContextRefreshedEven
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
 
-        Movie movie = Movie.builder().name("Lord of the Rings").description("Fantastic journey").imageURL("fantasy.jpg").build();
+        Movie movie = Movie.builder().name("Lord of the Rings").description("Fantastic journey").build();
 
-        Category fantasy = Category.builder().name("Fantasy").imageURL("fantasy.jpg")
+        Category fantasy = Category.builder().name("Fantasy")
                 .description("Fantasy films are films that belong to the fantasy genre with fantastic themes, usually magic, " +
                             "supernatural events, mythology, folklore, or exotic fantasy worlds").movies(Arrays.asList(movie, movie)).build();
 
@@ -41,16 +41,11 @@ public class MoviesBootstrap implements ApplicationListener<ContextRefreshedEven
         Actor actor = Actor.builder().firstName("Arnold").lastName("Schwarzenegger").gender("Male").movies(Collections.singletonList(movie)).build();
 
 
-
-
-
-
-
-        Category horror = Category.builder().name("Horror").imageURL("horror.jpg")
+        Category horror = Category.builder().name("Horror")
                 .description("A horror film is a film that seeks to elicit fear for entertainment purposes " +
                                 "Initially inspired by literature from authors such as Edgar Allan Poe, Bram Stoker, and Mary Shelley").build();
 
-        Category sciFi = Category.builder().name("Sci-Fi").imageURL("sci-fi.jpg")
+        Category sciFi = Category.builder().name("Sci-Fi")
                 .description("A Sci-Fi film is science-based depictions of phenomena that are not fully accepted by mainstream science, " +
                                 "such as extraterrestrial lifeforms, alien worlds or time travel").build();
 

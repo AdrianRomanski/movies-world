@@ -22,7 +22,7 @@ public class AdminCategoryController {
         this.categoryService = categoryService;
     }
 
-    @GetMapping("/createCategory")
+    @GetMapping("admin/createCategory")
     public String createCategory(Model model) {
         model.addAttribute("categories", categoryService.getAllCategories());
         model.addAttribute("categoryDTO", new CategoryDTO());
@@ -30,11 +30,17 @@ public class AdminCategoryController {
         return "admin/createCategoryForm";
     }
 
+    @GetMapping("admin/showCategories")
+    public String showCategories(Model model) {
+        model.addAttribute("showCategories", categoryService.getAllCategories());
+        return "admin/showCategories";
+    }
 
-    @PostMapping("/checkCategory")
+
+    @PostMapping("admin/checkCategory")
     public String checkCategoryCreation(@Valid @ModelAttribute("categoryDTO") CategoryDTO categoryDTO,
                                     BindingResult bindingResult,
-                                    Model model) {
+                                    Model model)  {
         model.addAttribute("categories", categoryService.getAllCategories());
         if(bindingResult.hasErrors()){
             bindingResult.getAllErrors().forEach(objectError -> {
@@ -43,6 +49,7 @@ public class AdminCategoryController {
             return "admin/createCategoryForm";
         }
         categoryService.createCategory(categoryDTO);
-        return "successRegistration";
+        model.addAttribute("showCategories", categoryService.getAllCategories());
+        return "admin/showCategories";
     }
 }

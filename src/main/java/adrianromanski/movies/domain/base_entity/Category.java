@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableList;
 import lombok.*;
 
 import javax.persistence.Entity;
+import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +16,8 @@ import java.util.Objects;
 @NoArgsConstructor
 public class Category extends BaseEntity {
 
+    @Lob
+    private Byte[] image;
 
     /**
      * I have to use this kind of structure because otherwise i couldn't initialize mutable Collection
@@ -23,8 +26,9 @@ public class Category extends BaseEntity {
      * @see ImmutableList
      */
     @Builder
-    public Category(Long id, String name, String description, String imageURL, List<Movie> movies) {
+    public Category(Long id, String name, String description, String imageURL, Byte[] image, List<Movie> movies) {
         super(id, name, description, imageURL);
+        this.image = image;
         this.movies = Objects.requireNonNullElseGet(movies, ArrayList::new);
     }
 
