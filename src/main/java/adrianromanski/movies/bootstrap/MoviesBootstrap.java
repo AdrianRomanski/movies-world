@@ -1,15 +1,21 @@
 package adrianromanski.movies.bootstrap;
 
-import adrianromanski.movies.domain.person.Actor;
 import adrianromanski.movies.domain.base_entity.Category;
 import adrianromanski.movies.domain.base_entity.Movie;
-import adrianromanski.movies.repositories.person.ActorRepository;
+import adrianromanski.movies.domain.person.Actor;
 import adrianromanski.movies.repositories.base_entity.CategoryRepository;
 import adrianromanski.movies.repositories.base_entity.MovieRepository;
+import adrianromanski.movies.repositories.person.ActorRepository;
+import lombok.SneakyThrows;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
 
@@ -27,12 +33,16 @@ public class MoviesBootstrap implements ApplicationListener<ContextRefreshedEven
         this.actorRepository = actorRepository;
     }
 
+    @SneakyThrows
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
 
         Movie movie = Movie.builder().name("Lord of the Rings").description("Fantastic journey").build();
 
-        Category fantasy = Category.builder().name("Fantasy")
+        Byte[] bytes = getBytes("/Users/adrianromanski/Desktop/Java/movies-world/src/main/resources/static/images/horror.jpg");
+
+
+        Category fantasy = Category.builder().name("Fantasy").image(bytes)
                 .description("Fantasy films are films that belong to the fantasy genre with fantastic themes, usually magic, " +
                             "supernatural events, mythology, folklore, or exotic fantasy worlds").movies(Arrays.asList(movie, movie)).build();
 
@@ -58,5 +68,15 @@ public class MoviesBootstrap implements ApplicationListener<ContextRefreshedEven
 
 
 
+    }
+
+    private Byte[] getBytes(String path) throws IOException {
+        BufferedImage bImage = ImageIO.read(new File(path));
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        ImageIO.write(bImage, "jpg", bos );
+        byte [] data = bos.toByteArray();
+        Byte[] bytes = new Byte[data.length];
+        Arrays.setAll(bytes, n -> data[n]);
+        return bytes;
     }
 }
