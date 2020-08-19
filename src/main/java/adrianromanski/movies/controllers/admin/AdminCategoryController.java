@@ -23,7 +23,7 @@ public class AdminCategoryController {
     }
 
     @GetMapping("/createCategory")
-    public String registrationForm(Model model) {
+    public String createCategory(Model model) {
         model.addAttribute("categories", categoryService.getAllCategories());
         model.addAttribute("categoryDTO", new CategoryDTO());
 
@@ -32,7 +32,7 @@ public class AdminCategoryController {
 
 
     @PostMapping("/checkCategory")
-    public String checkRegistration(@Valid @ModelAttribute("categoryDTO") CategoryDTO categoryDTO,
+    public String checkCategoryCreation(@Valid @ModelAttribute("categoryDTO") CategoryDTO categoryDTO,
                                     BindingResult bindingResult,
                                     Model model) {
         model.addAttribute("categories", categoryService.getAllCategories());
