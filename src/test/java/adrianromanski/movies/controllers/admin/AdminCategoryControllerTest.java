@@ -37,11 +37,21 @@ class AdminCategoryControllerTest {
     @Test
     @DisplayName("Happy Path, method = createCategory")
     void createCategory() throws Exception {
-        mockMvc.perform(get("/createCategory"))
+        mockMvc.perform(get("/admin/createCategory"))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("categories"))
                 .andExpect(model().attributeExists("categoryDTO"))
                 .andExpect(view().name("admin/createCategoryForm"));
+    }
+
+
+    @Test
+    @DisplayName("Happy Path, method = showCategories")
+    void showCategories() throws Exception {
+        mockMvc.perform(get("/admin/showCategories"))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("showCategories"))
+                .andExpect(view().name("admin/showCategories"));
     }
 
 
@@ -55,13 +65,13 @@ class AdminCategoryControllerTest {
         when(categoryService.createCategory(any())).thenReturn(categoryDTO);
 
         //then
-        mockMvc.perform(post("/checkCategory")
+        mockMvc.perform(post("/admin/checkCategory")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .param("name", "Horror")
                 .param("description", "A horror film is a film that seeks to elicit fear for entertainment purposes Initially " +
                         "inspired by literature from authors such as Edgar Allan Poe, Bram Stoker, and Mary Shelley")
         )
-                .andExpect(view().name("successRegistration"))
+                .andExpect(view().name("admin/showCategories"))
                 .andExpect(model().attributeExists("categoryDTO"))
                 .andExpect(status().isOk());
     }
@@ -77,7 +87,7 @@ class AdminCategoryControllerTest {
         when(categoryService.createCategory(any())).thenReturn(categoryDTO);
 
         //then
-        mockMvc.perform(post("/checkCategory")
+        mockMvc.perform(post("/admin/checkCategory")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .param("name", "HorrorHorrorHorrorHorrorHorrorvHorrorHorrorHorrorHorrorHorrorHorror")
                 .param("description", "word")

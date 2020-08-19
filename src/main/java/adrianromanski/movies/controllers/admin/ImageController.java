@@ -1,9 +1,7 @@
 package adrianromanski.movies.controllers.admin;
 
-import adrianromanski.movies.domain.base_entity.Category;
-import adrianromanski.movies.mapper.base_entity.CategoryMapper;
 import adrianromanski.movies.services.category.CategoryService;
-import adrianromanski.movies.services.image.ImageService;
+import adrianromanski.movies.services.image.ImageServiceCategory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,14 +20,12 @@ import static org.apache.tomcat.util.http.fileupload.IOUtils.copy;
 @Controller
 public class ImageController {
 
-    private final ImageService<Category> imageService;
+    private final ImageServiceCategory imageService;
     private final CategoryService categoryService;
-    private final CategoryMapper categoryMapper;
 
-    public ImageController(ImageService<Category> imageService, CategoryService categoryService, CategoryMapper categoryMapper) {
+    public ImageController(ImageServiceCategory imageService, CategoryService categoryService) {
         this.imageService = imageService;
         this.categoryService = categoryService;
-        this.categoryMapper = categoryMapper;
     }
 
     @GetMapping("category/{name}/image")
@@ -41,7 +37,7 @@ public class ImageController {
 
     @PostMapping("category/{name}/image")
     public String handleImagePost(@PathVariable String name, @RequestParam("imagefile") MultipartFile file) throws IOException {
-        var category = categoryMapper.categoryDTOToCategory(categoryService.getCategoryByName(name));
+        var category = categoryService.getCategoryByName(name);
         imageService.saveImageFile(category, file);
 
         return "redirect:/category/" + name;
