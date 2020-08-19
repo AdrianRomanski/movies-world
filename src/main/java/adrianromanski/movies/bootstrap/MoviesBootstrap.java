@@ -39,7 +39,7 @@ public class MoviesBootstrap implements ApplicationListener<ContextRefreshedEven
 
         Movie movie = Movie.builder().name("Lord of the Rings").description("Fantastic journey").build();
 
-        Byte[] bytes = getBytes("/Users/adrianromanski/Desktop/Java/movies-world/src/main/resources/static/images/horror.jpg");
+        Byte[] bytes = getBytes("src/main/resources/static/images/fantasy.jpg");
 
 
         Category fantasy = Category.builder().name("Fantasy").image(bytes)
