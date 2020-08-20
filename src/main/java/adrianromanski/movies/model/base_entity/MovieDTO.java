@@ -10,6 +10,7 @@ import adrianromanski.movies.model.person.UserDTO;
 import com.google.common.collect.ImmutableList;
 import lombok.*;
 
+import javax.persistence.Lob;
 import java.util.*;
 
 @Setter
@@ -18,6 +19,8 @@ import java.util.*;
 public class MovieDTO extends BaseEntityDTO{
 
     private Long minutes;
+    @Lob
+    private Byte[] image;
 
     /**
      * I have to use this kind of structure because otherwise i couldn't initialize mutable Collection
@@ -26,12 +29,13 @@ public class MovieDTO extends BaseEntityDTO{
      * @see ImmutableList
      */
     @Builder
-    public MovieDTO(Long id,  String name,  String description, String imageURL, Long minutes,
+    public MovieDTO(Long id,  String name,  String description, String imageURL, Long minutes, Byte[] image,
                     CategoryDTO categoryDTO, DirectorDTO directorDTO,
                     List<ActorDTO> actorsDTO, List<MovieAwardDTO> awardsDTO, List<MovieReview> reviewsDTO,
                     Set<UserDTO> userFavouritesDTO, Set<UserDTO> userWatchedDTO) {
         super(id, name, description, imageURL);
         this.minutes = minutes;
+        this.image = image;
         this.categoryDTO = categoryDTO;
         this.directorDTO = directorDTO;
         this.actorsDTO = Objects.requireNonNullElseGet(actorsDTO, ArrayList::new);

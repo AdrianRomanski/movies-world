@@ -38,7 +38,7 @@ class ImageServiceCategoryTest {
     }
 
     @Test
-    @DisplayName("")
+    @DisplayName("Happy Path, method = saveImageFile")
     void saveImageFile() throws IOException {
         //given
         Long id = 1L;
@@ -47,11 +47,11 @@ class ImageServiceCategoryTest {
 
         Category category = new Category();
         category.setId(id);
-        Optional<Category> recipeOptional = Optional.of(category);
+        Optional<Category> categoryOptional = Optional.of(category);
 
         CategoryDTO categoryDTO = new CategoryDTO();
 
-        when(categoryRepository.findByName(anyString())).thenReturn(recipeOptional);
+        when(categoryRepository.findByName(anyString())).thenReturn(categoryOptional);
 
         ArgumentCaptor<Category> argumentCaptor = ArgumentCaptor.forClass(Category.class);
 

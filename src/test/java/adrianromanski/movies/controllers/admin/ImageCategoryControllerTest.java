@@ -5,6 +5,7 @@ import adrianromanski.movies.services.category.CategoryService;
 import adrianromanski.movies.services.image.ImageServiceCategory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.mock.web.MockHttpServletResponse;
@@ -19,7 +20,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-public class ImageControllerTest {
+public class ImageCategoryControllerTest {
 
     @Mock
     ImageServiceCategory imageService;
@@ -27,7 +28,8 @@ public class ImageControllerTest {
     @Mock
     CategoryService categoryService;
 
-    ImageController controller;
+    @InjectMocks
+    ImageCategoryController controller;
 
     MockMvc mockMvc;
 
@@ -35,7 +37,6 @@ public class ImageControllerTest {
     public void setUp() {
         MockitoAnnotations.initMocks(this);
 
-        controller = new ImageController(imageService, categoryService);
         mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
     }
 
@@ -85,6 +86,7 @@ public class ImageControllerTest {
         }
 
         categoryDTO.setImage(bytesBoxed);
+
 
         when(categoryService.getCategoryByName(anyString())).thenReturn(categoryDTO);
 

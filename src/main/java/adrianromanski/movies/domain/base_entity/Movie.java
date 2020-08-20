@@ -18,7 +18,8 @@ import java.util.*;
 public class Movie extends BaseEntity {
 
     private Long minutes;
-    private Double avgRating;
+    @Lob
+    private Byte[] image;
 
 
     /**
@@ -28,12 +29,13 @@ public class Movie extends BaseEntity {
      * @see ImmutableList
      */
     @Builder
-    public Movie(Long id, String name, String description, String imageURL, Long minutes,
+    public Movie(Long id, String name, String description, String imageURL, Long minutes, Byte[] image,
                  Category category, Director director,
                  List<Actor> actors, List<MovieAward> awards, List<MovieReview> reviews,
                  Set<User> userFavourites, Set<User> userWatched) {
         super(id, name, description, imageURL);
         this.minutes = minutes;
+        this.image = image;
         this.category = category;
         this.director = director;
         this.actors = Objects.requireNonNullElseGet(actors, ArrayList::new);

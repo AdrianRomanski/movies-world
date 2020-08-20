@@ -39,9 +39,18 @@ public class MoviesBootstrap implements ApplicationListener<ContextRefreshedEven
 
         Movie movie = Movie.builder().name("Lord of the Rings").description("Fantastic journey").build();
 
+        Byte[] starWars1Image = getBytes("src/main/resources/static/images/star_wars/part1.jpg");
+        Byte[] starWars2Image = getBytes("src/main/resources/static/images/star_wars/part2.jpg");
+        Byte[] starWars3Image = getBytes("src/main/resources/static/images/star_wars/part3.jpg");
+
         Byte[] fantasyImage = getBytes("src/main/resources/static/images/fantasy.jpg");
         Byte[] horrorImage = getBytes("src/main/resources/static/images/horror.jpg");
         Byte[] scifiImage = getBytes("src/main/resources/static/images/sci-fi.jpg");
+
+        Movie startWars1 = Movie.builder().name("Star Wars Phantom Menace").description("Star Wars 1").image(starWars1Image).build();
+        Movie startWars2 = Movie.builder().name("Star Wars Attack of the clones").description("Star Wars 2").image(starWars2Image).build();
+        Movie startWars3 = Movie.builder().name("Star Wars Return of the sith").description("Star Wars 3").image(starWars3Image).build();
+
 
 
         Category fantasy = Category.builder().name("Fantasy").image(fantasyImage)
@@ -57,15 +66,21 @@ public class MoviesBootstrap implements ApplicationListener<ContextRefreshedEven
                 .description("A horror film is a film that seeks to elicit fear for entertainment purposes " +
                                 "Initially inspired by literature from authors such as Edgar Allan Poe, Bram Stoker, and Mary Shelley").build();
 
-        Category sciFi = Category.builder().name("Sci-Fi").image(scifiImage)
+        Category sciFi = Category.builder().name("Sci-Fi").image(scifiImage).movies(Arrays.asList(startWars1, startWars2, startWars3))
                 .description("A Sci-Fi film is science-based depictions of phenomena that are not fully accepted by mainstream science, " +
                                 "such as extraterrestrial lifeforms, alien worlds or time travel").build();
 
+        startWars1.setCategory(sciFi);
+        startWars2.setCategory(sciFi);
+        startWars3.setCategory(sciFi);
 
         categoryRepository.save(fantasy);
         categoryRepository.save(horror);
         categoryRepository.save(sciFi);
         movieRepository.save(movie);
+        movieRepository.save(startWars1);
+        movieRepository.save(startWars2);
+        movieRepository.save(startWars3);
         actorRepository.save(actor);
 
 

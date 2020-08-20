@@ -15,21 +15,22 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import static org.apache.tomcat.util.http.fileupload.IOUtils.copy;
+import static com.google.common.io.ByteStreams.copy;
 
 @Controller
-public class ImageController {
+public class ImageCategoryController {
 
     private final ImageServiceCategory imageService;
     private final CategoryService categoryService;
 
-    public ImageController(ImageServiceCategory imageService, CategoryService categoryService) {
+    public ImageCategoryController(ImageServiceCategory imageService, CategoryService categoryService) {
         this.imageService = imageService;
         this.categoryService = categoryService;
+
     }
 
     @GetMapping("category/{name}/image")
-    public String showUploadForm(@PathVariable String name, Model model){
+    public String showUploadForm(@PathVariable String name, Model model) {
         model.addAttribute("category", categoryService.getCategoryByName(name));
 
         return "admin/imageUplForm";
@@ -46,7 +47,6 @@ public class ImageController {
     @GetMapping("category/{name}/categoryImage")
     public void renderImageFromDB(@PathVariable String name, HttpServletResponse response) throws IOException {
         var categoryDTO = categoryService.getCategoryByName(name);
-
         if (categoryDTO.getImage() != null) {
             byte[] byteArray = new byte[categoryDTO.getImage().length];
             int i = 0;
