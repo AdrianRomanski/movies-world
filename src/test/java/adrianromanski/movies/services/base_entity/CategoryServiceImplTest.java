@@ -117,6 +117,31 @@ class CategoryServiceImplTest {
     }
 
 
+    @Test
+    @DisplayName("Happy Path, method = getCategoryById")
+    void getCategoryById() {
+        //given
+        Category category = getCategory();
+
+        //when
+        when(categoryRepository.findById(anyLong())).thenReturn(Optional.of(category));
+
+        //then
+        CategoryDTO returnDTO = categoryService.getCategoryById(1L);
+
+        assertEquals(returnDTO.getName(), NAME);
+    }
+
+
+    @DisplayName("UnhappyPath, method = getCategoryById")
+    @Test
+    void getCategoryByIDUnhappyPath() {
+        Throwable ex = catchThrowable(() -> categoryService.getCategoryById(2222L));
+
+        assertThat(ex).isInstanceOf(ResourceNotFoundException.class);
+    }
+
+
     @DisplayName("Happy Path, method = createCategory")
     @Test
     void createCategory() {
