@@ -14,14 +14,14 @@
 </head>
 <body>
 <!--/*@thymesVar id="movie" type="adrianromanski.movies.domain.base_entity.Movie"*/-->
-<div class="col-md-4" th:fragment="moviediv">
+<div class="col-md-3" th:fragment="moviediv">
     <div class="movies-listing">
         <div class="row">
             <a th:href="@{'/movies/' + ${movie.name}}">
                 <div class="col-lg-12">
                     <div class="movies-box-image-container">
                         <img role="presentation"
-                             th:src="@{'/movie/' + ${movie.name} + '/movieImage'}"
+                             th:src="@{'/movie/' + ${movie.id} + '/movieImage'}"
                              class="movies-box-image">
                     </div>
                     <div class="movies-listing-title" th:text="${movie.name}"></div>

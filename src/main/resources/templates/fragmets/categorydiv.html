@@ -14,7 +14,7 @@
 </head>
 <body>
 <!--/*@thymesVar id="category" type="adrianromanski.movies.domain.base_entity.Category"*/-->
-    <div class="col-md-4" th:fragment="categorydiv">
+    <div class="col-md-3 col-md-offset-2" th:fragment="categorydiv">
         <div class="movies-listing">
             <div class="row">
                 <a th:href="@{'/category/' + ${category.name}}">

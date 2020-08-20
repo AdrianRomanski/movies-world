@@ -5,8 +5,18 @@
     text-shadow: #444 0 1px 1px;
     background-size: cover;
     text-align: center;
-
 }
+
+.sci-fi-banner {
+    background: url("../images/banners/sci-fi-banner.jpg") no-repeat center center;
+    height: 550px;
+    width: auto;
+    text-shadow: #444 0 1px 1px;
+    background-size: cover;
+    text-align: center;
+    opacity: inherit;
+}
+
 
 body {
     background-size: auto;
@@ -44,7 +54,7 @@ body {
     border-radius: 9px;
     box-shadow: 0 1px #f1f3f0;
     cursor: pointer;
-    height: 350px;
+    height: 700px;
     margin-bottom: 50px;
     padding: 0;
 }
@@ -54,7 +64,7 @@ body {
 }
 
 .movies-listing .movies-box-image-container {
-    max-height: 170px;
+    /*max-height: 220px;*/
     overflow: hidden;
     display: block;
     background-size: cover;
@@ -67,7 +77,8 @@ body {
     display: block;
     margin: auto;
     width: 100%;
-    height: 100%;
+    height: 450px;
+    background-size: cover;
 }
 
 img {
@@ -141,6 +152,20 @@ img {
 .select-file {
     margin-top: 12px;
 }
+
+/*Category Header*/
+.category-header {
+    text-transform: uppercase;
+    font-weight: 700;
+    color: whitesmoke;
+}
+
+.category-header-2{
+    font-family: 'Dancing Script', cursive;
+    font-size: 80px;
+    margin-bottom: 30px;
+}
+
 
 
 
