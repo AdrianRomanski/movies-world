@@ -126,7 +126,6 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
 
-
     /**
      * Admin, Moderator
      * @param id of the Category to delete

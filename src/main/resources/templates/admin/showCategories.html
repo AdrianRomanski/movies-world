@@ -45,13 +45,13 @@
                                     </td>
                                     <td class="col-md-1">
                                         <a class="btn btn-danger" href="#"
-                                           th:href="@{'/category/' + ${category.name + '/image'}}" role="button">Delete Category</a>
+                                           th:href="@{'/admin/deleteCategory/'  + ${category.id}}" role="button">Delete Category</a>
                                     </td>
                                 </tr>
                             </table>
                             <div class="col-md-12">
                                 <a class="btn btn-success" href="#"
-                                   th:href="@{#}" role="button">New Category</a>
+                                   th:href="@{'/admin/createCategory/'}" role="button">New Category</a>
                             </div>
                         </div>
                     </div>

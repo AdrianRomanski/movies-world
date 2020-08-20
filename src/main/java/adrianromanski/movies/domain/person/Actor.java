@@ -44,7 +44,7 @@ public class Actor extends Person {
                 .findAny();
     }
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "actor_movies", joinColumns = @JoinColumn(name = "actor_id"),
     inverseJoinColumns = @JoinColumn(name = "movie_id"))
     private List<Movie> movies = new ArrayList<>();

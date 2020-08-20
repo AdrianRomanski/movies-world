@@ -8,10 +8,7 @@ import adrianromanski.movies.domain.review.MovieReview;
 import com.google.common.collect.ImmutableList;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.*;
 
 @Getter
@@ -58,7 +55,7 @@ public class Movie extends BaseEntity {
     @OneToMany(mappedBy = "movie")
     private List<MovieReview> reviews = new ArrayList<>();
 
-    @ManyToOne
+    @ManyToOne()
     private Category category;
 
     @ManyToOne

@@ -6,10 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -23,6 +20,14 @@ public class AdminCategoryController {
         this.categoryService = categoryService;
     }
 
+
+    @GetMapping("admin/showCategories")
+    public String showCategories(Model model) {
+        model.addAttribute("showCategories", categoryService.getAllCategories());
+        return "admin/showCategories";
+    }
+
+
     @GetMapping("admin/createCategory")
     public String createCategory(Model model) {
         model.addAttribute("categories", categoryService.getAllCategories());
@@ -31,22 +36,11 @@ public class AdminCategoryController {
         return "admin/createCategoryForm";
     }
 
-    @GetMapping("admin/showCategories")
-    public String showCategories(Model model) {
-        model.addAttribute("showCategories", categoryService.getAllCategories());
-        return "admin/showCategories";
-    }
 
-    @GetMapping("admin/updateCategory/{id}")
-    public String updateCategory(Model model, @PathVariable String id) {
-        model.addAttribute("categoryDTO", categoryService.getCategoryById(Long.valueOf(id)));
-        return "admin/updateCategoryForm";
-    }
-
-    @PostMapping("admin/checkCategory")
+    @PostMapping("admin/createCategory/check")
     public String checkCategoryCreation(@Valid @ModelAttribute("categoryDTO") CategoryDTO categoryDTO,
-                                    BindingResult bindingResult,
-                                    Model model)  {
+                                        BindingResult bindingResult,
+                                        Model model)  {
         model.addAttribute("categories", categoryService.getAllCategories());
         if(bindingResult.hasErrors()){
             bindingResult.getAllErrors().forEach(objectError -> {
@@ -58,6 +52,14 @@ public class AdminCategoryController {
         model.addAttribute("showCategories", categoryService.getAllCategories());
         return "admin/showCategories";
     }
+
+
+    @GetMapping("admin/updateCategory/{id}")
+    public String updateCategory(Model model, @PathVariable String id) {
+        model.addAttribute("categoryDTO", categoryService.getCategoryById(Long.valueOf(id)));
+        return "admin/updateCategoryForm";
+    }
+
 
     @PostMapping("admin/updateCategory/check")
     public String checkCategoryUpdate(@Valid @ModelAttribute("categoryDTO") CategoryDTO categoryDTO,
@@ -74,4 +76,11 @@ public class AdminCategoryController {
         return "admin/showCategories";
     }
 
+
+    @GetMapping("admin/deleteCategory/{id}")
+    public String deleteCategory(@PathVariable String id, Model model) {
+        categoryService.deleteCategoryByID(Long.valueOf(id));
+        model.addAttribute("showCategories", categoryService.getAllCategories());
+        return "admin/showCategories";
+    }
 }

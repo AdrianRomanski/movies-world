@@ -14,7 +14,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -83,7 +83,7 @@ class AdminCategoryControllerTest {
         when(categoryService.createCategory(any())).thenReturn(categoryDTO);
 
         //then
-        mockMvc.perform(post("/admin/checkCategory")
+        mockMvc.perform(post("/admin/createCategory/check")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .param("name", "Horror")
                 .param("description", "A horror film is a film that seeks to elicit fear for entertainment purposes Initially " +
@@ -105,7 +105,7 @@ class AdminCategoryControllerTest {
         when(categoryService.createCategory(any())).thenReturn(categoryDTO);
 
         //then
-        mockMvc.perform(post("/admin/checkCategory")
+        mockMvc.perform(post("/admin/createCategory/check")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .param("name", "HorrorHorrorHorrorHorrorHorrorvHorrorHorrorHorrorHorrorHorrorHorror")
                 .param("description", "word")
@@ -160,5 +160,21 @@ class AdminCategoryControllerTest {
                 .param("description", "word")
         )
                 .andExpect(view().name("admin/updateCategoryForm"));
+    }
+
+
+    @Test
+    @DisplayName("Happy Path, method = deleteCategory")
+    void deleteCategory() throws Exception {
+        //given
+        CategoryDTO categoryDTO = new CategoryDTO();
+
+        //when
+        when(categoryService.getCategoryById(anyLong())).thenReturn(categoryDTO);
+
+        mockMvc.perform(get("/admin/deleteCategory/1"))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("showCategories"))
+                .andExpect(view().name("admin/showCategories"));
     }
 }

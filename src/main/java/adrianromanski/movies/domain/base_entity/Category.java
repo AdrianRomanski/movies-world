@@ -3,9 +3,7 @@ package adrianromanski.movies.domain.base_entity;
 import com.google.common.collect.ImmutableList;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.Lob;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -32,6 +30,14 @@ public class Category extends BaseEntity {
         this.movies = Objects.requireNonNullElseGet(movies, ArrayList::new);
     }
 
-    @OneToMany(mappedBy = "category")
+    @OneToMany(mappedBy = "category", cascade=CascadeType.ALL)
     private List<Movie> movies = new ArrayList<>();
+
+
+
+    //, fetch = FetchType.LAZY,
+    //            cascade = {
+    //            CascadeType.PERSIST,
+    //            CascadeType.MERGE
+    //    })
 }
