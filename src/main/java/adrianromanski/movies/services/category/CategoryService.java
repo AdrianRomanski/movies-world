@@ -15,6 +15,8 @@ public interface CategoryService {
 
     CategoryDTO getCategoryByName(String name);
 
+    CategoryDTO getCategoryById(Long id);
+
     //POST
     CategoryDTO createCategory(CategoryDTO categoryDTO);
 

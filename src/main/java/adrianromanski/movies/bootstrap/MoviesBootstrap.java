@@ -39,10 +39,12 @@ public class MoviesBootstrap implements ApplicationListener<ContextRefreshedEven
 
         Movie movie = Movie.builder().name("Lord of the Rings").description("Fantastic journey").build();
 
-        Byte[] bytes = getBytes("src/main/resources/static/images/fantasy.jpg");
+        Byte[] fantasyImage = getBytes("src/main/resources/static/images/fantasy.jpg");
+        Byte[] horrorImage = getBytes("src/main/resources/static/images/horror.jpg");
+        Byte[] scifiImage = getBytes("src/main/resources/static/images/sci-fi.jpg");
 
 
-        Category fantasy = Category.builder().name("Fantasy").image(bytes)
+        Category fantasy = Category.builder().name("Fantasy").image(fantasyImage)
                 .description("Fantasy films are films that belong to the fantasy genre with fantastic themes, usually magic, " +
                             "supernatural events, mythology, folklore, or exotic fantasy worlds").movies(Arrays.asList(movie, movie)).build();
 
@@ -51,11 +53,11 @@ public class MoviesBootstrap implements ApplicationListener<ContextRefreshedEven
         Actor actor = Actor.builder().firstName("Arnold").lastName("Schwarzenegger").gender("Male").movies(Collections.singletonList(movie)).build();
 
 
-        Category horror = Category.builder().name("Horror")
+        Category horror = Category.builder().name("Horror").image(horrorImage)
                 .description("A horror film is a film that seeks to elicit fear for entertainment purposes " +
                                 "Initially inspired by literature from authors such as Edgar Allan Poe, Bram Stoker, and Mary Shelley").build();
 
-        Category sciFi = Category.builder().name("Sci-Fi")
+        Category sciFi = Category.builder().name("Sci-Fi").image(scifiImage)
                 .description("A Sci-Fi film is science-based depictions of phenomena that are not fully accepted by mainstream science, " +
                                 "such as extraterrestrial lifeforms, alien worlds or time travel").build();
 

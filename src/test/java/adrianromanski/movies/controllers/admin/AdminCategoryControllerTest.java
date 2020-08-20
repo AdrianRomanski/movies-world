@@ -13,7 +13,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -42,6 +43,23 @@ class AdminCategoryControllerTest {
                 .andExpect(model().attributeExists("categories"))
                 .andExpect(model().attributeExists("categoryDTO"))
                 .andExpect(view().name("admin/createCategoryForm"));
+    }
+
+
+    @Test
+    @DisplayName("Happy Path, method = updateCategory")
+    void updateCategory() throws Exception {
+        //given
+        CategoryDTO categoryDTO = new CategoryDTO();
+
+        //when
+        when(categoryService.getCategoryById(anyLong())).thenReturn(categoryDTO);
+
+        //then
+        mockMvc.perform(get("/admin/updateCategory/1"))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("categoryDTO"))
+                .andExpect(view().name("admin/updateCategoryForm"));
     }
 
 
@@ -79,7 +97,7 @@ class AdminCategoryControllerTest {
 
     @Test
     @DisplayName("UnHappy Path, method = checkCategoryCreation")
-    void name() throws Exception {
+    void checkCategoryCreationUnHappyPath() throws Exception {
         //given
         CategoryDTO categoryDTO = new CategoryDTO();
 
@@ -93,6 +111,54 @@ class AdminCategoryControllerTest {
                 .param("description", "word")
         )
                 .andExpect(view().name("admin/createCategoryForm"));
+    }
 
+
+    @Test
+    @DisplayName("Happy Path, method = checkCategoryCreation")
+    void checkCategoryUpdateHappyPath() throws Exception {
+        //given
+        CategoryDTO categoryDTO = CategoryDTO.builder().name("Horror")
+                .description("A horror film is a film that seeks to elicit fear for entertainment purposes Initially " +
+                        "inspired by literature from authors such as Edgar Allan Poe, Bram Stoker, and Mary Shelley")
+                .id(1L)
+                .build();
+
+        //when
+        when(categoryService.getCategoryById(anyLong())).thenReturn(categoryDTO);
+
+        //then
+        mockMvc.perform(post("/admin/updateCategory/check")
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .param("name", "Horror")
+                .param("description", "A horror film is a film that seeks to elicit fear for entertainment purposes Initially " +
+                        "inspired by literature from authors such as Edgar Allan Poe, Bram Stoker, and Mary Shelley")
+        )
+                .andExpect(view().name("admin/showCategories"))
+                .andExpect(model().attributeExists("categoryDTO"))
+                .andExpect(status().isOk());
+    }
+
+
+    @Test
+    @DisplayName("UnHappy Path, method = checkCategoryUpdate")
+    void checkCategoryUpdateUnHappyPath() throws Exception {
+        //given
+        CategoryDTO categoryDTO = CategoryDTO.builder().name("Horror")
+                .description("A horror film is a film that seeks to elicit fear for entertainment purposes Initially " +
+                        "inspired by literature from authors such as Edgar Allan Poe, Bram Stoker, and Mary Shelley")
+                .id(1L)
+                .build();
+
+        //when
+        when(categoryService.getCategoryById(anyLong())).thenReturn(categoryDTO);
+
+        //then
+        mockMvc.perform(post("/admin/updateCategory/check")
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .param("name", "HorrorHorrorHorrorHorrorHorrorvHorrorHorrorHorrorHorrorHorrorHorror")
+                .param("description", "word")
+        )
+                .andExpect(view().name("admin/updateCategoryForm"));
     }
 }

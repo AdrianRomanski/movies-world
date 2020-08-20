@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
@@ -36,6 +37,11 @@ public class AdminCategoryController {
         return "admin/showCategories";
     }
 
+    @GetMapping("admin/updateCategory/{id}")
+    public String updateCategory(Model model, @PathVariable String id) {
+        model.addAttribute("categoryDTO", categoryService.getCategoryById(Long.valueOf(id)));
+        return "admin/updateCategoryForm";
+    }
 
     @PostMapping("admin/checkCategory")
     public String checkCategoryCreation(@Valid @ModelAttribute("categoryDTO") CategoryDTO categoryDTO,
@@ -52,4 +58,20 @@ public class AdminCategoryController {
         model.addAttribute("showCategories", categoryService.getAllCategories());
         return "admin/showCategories";
     }
+
+    @PostMapping("admin/updateCategory/check")
+    public String checkCategoryUpdate(@Valid @ModelAttribute("categoryDTO") CategoryDTO categoryDTO,
+                                      BindingResult bindingResult,
+                                      Model model)  {
+        if(bindingResult.hasErrors()){
+            bindingResult.getAllErrors().forEach(objectError -> {
+                log.warn(objectError.getDefaultMessage());
+            });
+            return "admin/updateCategoryForm";
+        }
+        categoryService.updateCategory(categoryDTO.getId(), categoryDTO);
+        model.addAttribute("showCategories", categoryService.getAllCategories());
+        return "admin/showCategories";
+    }
+
 }

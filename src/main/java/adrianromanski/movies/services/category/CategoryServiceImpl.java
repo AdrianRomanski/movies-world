@@ -79,6 +79,19 @@ public class CategoryServiceImpl implements CategoryService {
                 .orElseThrow(() -> new ResourceNotFoundException(name, Movie.class));
     }
 
+    /**
+     * Admin, Moderator
+     * @param id of the Category looking for
+     * @return Category
+     * @throws ResourceNotFoundException if not found
+     */
+    @Override
+    public CategoryDTO getCategoryById(Long id) {
+        return categoryRepository.findById(id)
+                .map(categoryMapper::categoryToCategoryDTO)
+                .orElseThrow(() -> new ResourceNotFoundException(id, Movie.class));
+    }
+
 
     /**
      * Admin, Moderator
@@ -111,6 +124,7 @@ public class CategoryServiceImpl implements CategoryService {
         categoryRepository.save(updatedCategory);
         return categoryMapper.categoryToCategoryDTO(updatedCategory);
     }
+
 
 
     /**
