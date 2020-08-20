@@ -21,6 +21,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 class AdminCategoryControllerTest {
 
+    public static final String DESCRIPTION = "A horror film is a film that seeks to elicit fear for entertainment purposes Initially " +
+            "inspired by literature from authors such as Edgar Allan Poe, Bram Stoker, and Mary Shelley";
+    public static final String NAME = "Horror";
+    public static final String VIEW = "admin/category/";
+
     @Mock
     CategoryService categoryService;
 
@@ -42,7 +47,7 @@ class AdminCategoryControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("categories"))
                 .andExpect(model().attributeExists("categoryDTO"))
-                .andExpect(view().name("admin/createCategoryForm"));
+                .andExpect(view().name(VIEW + "createCategoryForm"));
     }
 
 
@@ -59,7 +64,7 @@ class AdminCategoryControllerTest {
         mockMvc.perform(get("/admin/updateCategory/1"))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("categoryDTO"))
-                .andExpect(view().name("admin/updateCategoryForm"));
+                .andExpect(view().name(VIEW + "updateCategoryForm"));
     }
 
 
@@ -69,7 +74,7 @@ class AdminCategoryControllerTest {
         mockMvc.perform(get("/admin/showCategories"))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("showCategories"))
-                .andExpect(view().name("admin/showCategories"));
+                .andExpect(view().name(VIEW + "showCategories"));
     }
 
 
@@ -85,11 +90,10 @@ class AdminCategoryControllerTest {
         //then
         mockMvc.perform(post("/admin/createCategory/check")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                .param("name", "Horror")
-                .param("description", "A horror film is a film that seeks to elicit fear for entertainment purposes Initially " +
-                        "inspired by literature from authors such as Edgar Allan Poe, Bram Stoker, and Mary Shelley")
+                .param("name", NAME)
+                .param("description", DESCRIPTION)
         )
-                .andExpect(view().name("admin/showCategories"))
+                .andExpect(view().name(VIEW + "showCategories"))
                 .andExpect(model().attributeExists("categoryDTO"))
                 .andExpect(status().isOk());
     }
@@ -110,7 +114,7 @@ class AdminCategoryControllerTest {
                 .param("name", "HorrorHorrorHorrorHorrorHorrorvHorrorHorrorHorrorHorrorHorrorHorror")
                 .param("description", "word")
         )
-                .andExpect(view().name("admin/createCategoryForm"));
+                .andExpect(view().name(VIEW + "createCategoryForm"));
     }
 
 
@@ -119,8 +123,7 @@ class AdminCategoryControllerTest {
     void checkCategoryUpdateHappyPath() throws Exception {
         //given
         CategoryDTO categoryDTO = CategoryDTO.builder().name("Horror")
-                .description("A horror film is a film that seeks to elicit fear for entertainment purposes Initially " +
-                        "inspired by literature from authors such as Edgar Allan Poe, Bram Stoker, and Mary Shelley")
+                .description(DESCRIPTION)
                 .id(1L)
                 .build();
 
@@ -131,10 +134,9 @@ class AdminCategoryControllerTest {
         mockMvc.perform(post("/admin/updateCategory/check")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .param("name", "Horror")
-                .param("description", "A horror film is a film that seeks to elicit fear for entertainment purposes Initially " +
-                        "inspired by literature from authors such as Edgar Allan Poe, Bram Stoker, and Mary Shelley")
+                .param("description", DESCRIPTION)
         )
-                .andExpect(view().name("admin/showCategories"))
+                .andExpect(view().name(VIEW + "showCategories"))
                 .andExpect(model().attributeExists("categoryDTO"))
                 .andExpect(status().isOk());
     }
@@ -145,8 +147,7 @@ class AdminCategoryControllerTest {
     void checkCategoryUpdateUnHappyPath() throws Exception {
         //given
         CategoryDTO categoryDTO = CategoryDTO.builder().name("Horror")
-                .description("A horror film is a film that seeks to elicit fear for entertainment purposes Initially " +
-                        "inspired by literature from authors such as Edgar Allan Poe, Bram Stoker, and Mary Shelley")
+                .description(DESCRIPTION)
                 .id(1L)
                 .build();
 
@@ -159,7 +160,7 @@ class AdminCategoryControllerTest {
                 .param("name", "HorrorHorrorHorrorHorrorHorrorvHorrorHorrorHorrorHorrorHorrorHorror")
                 .param("description", "word")
         )
-                .andExpect(view().name("admin/updateCategoryForm"));
+                .andExpect(view().name(VIEW + "updateCategoryForm"));
     }
 
 
@@ -175,6 +176,6 @@ class AdminCategoryControllerTest {
         mockMvc.perform(get("/admin/deleteCategory/1"))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("showCategories"))
-                .andExpect(view().name("admin/showCategories"));
+                .andExpect(view().name(VIEW + "showCategories"));
     }
 }

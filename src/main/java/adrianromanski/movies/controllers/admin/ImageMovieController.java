@@ -25,9 +25,9 @@ public class ImageMovieController {
     }
 
 
-    @GetMapping("movie/{name}/movieImage")
-    public void renderImageFromDB(@PathVariable String name, HttpServletResponse response) throws IOException {
-        var movieDTO = movieService.getMovieByName(name);
+    @GetMapping("movie/{id}/movieImage")
+    public void renderImageFromDB(@PathVariable String id, HttpServletResponse response) throws IOException {
+        var movieDTO = movieService.getMovieByID(Long.valueOf(id));
         if (movieDTO.getImage() != null) {
             byte[] byteArray = new byte[movieDTO.getImage().length];
             int i = 0;

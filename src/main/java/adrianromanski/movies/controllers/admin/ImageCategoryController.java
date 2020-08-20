@@ -33,7 +33,7 @@ public class ImageCategoryController {
     public String showUploadForm(@PathVariable String name, Model model) {
         model.addAttribute("category", categoryService.getCategoryByName(name));
 
-        return "admin/imageUplForm";
+        return "admin/category/categoryImageUplForm";
     }
 
     @PostMapping("category/{name}/image")

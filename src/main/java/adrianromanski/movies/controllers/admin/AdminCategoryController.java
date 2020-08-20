@@ -24,7 +24,7 @@ public class AdminCategoryController {
     @GetMapping("admin/showCategories")
     public String showCategories(Model model) {
         model.addAttribute("showCategories", categoryService.getAllCategories());
-        return "admin/showCategories";
+        return "admin/category/showCategories";
     }
 
 
@@ -33,7 +33,7 @@ public class AdminCategoryController {
         model.addAttribute("categories", categoryService.getAllCategories());
         model.addAttribute("categoryDTO", new CategoryDTO());
 
-        return "admin/createCategoryForm";
+        return "admin/category/createCategoryForm";
     }
 
 
@@ -46,18 +46,18 @@ public class AdminCategoryController {
             bindingResult.getAllErrors().forEach(objectError -> {
                 log.warn(objectError.getDefaultMessage());
             });
-            return "admin/createCategoryForm";
+            return "admin/category/createCategoryForm";
         }
         categoryService.createCategory(categoryDTO);
         model.addAttribute("showCategories", categoryService.getAllCategories());
-        return "admin/showCategories";
+        return "admin/category/showCategories";
     }
 
 
     @GetMapping("admin/updateCategory/{id}")
     public String updateCategory(Model model, @PathVariable String id) {
         model.addAttribute("categoryDTO", categoryService.getCategoryById(Long.valueOf(id)));
-        return "admin/updateCategoryForm";
+        return "admin/category/updateCategoryForm";
     }
 
 
@@ -69,11 +69,11 @@ public class AdminCategoryController {
             bindingResult.getAllErrors().forEach(objectError -> {
                 log.warn(objectError.getDefaultMessage());
             });
-            return "admin/updateCategoryForm";
+            return "admin/category/updateCategoryForm";
         }
         categoryService.updateCategory(categoryDTO.getId(), categoryDTO);
         model.addAttribute("showCategories", categoryService.getAllCategories());
-        return "admin/showCategories";
+        return "admin/category/showCategories";
     }
 
 
@@ -81,6 +81,6 @@ public class AdminCategoryController {
     public String deleteCategory(@PathVariable String id, Model model) {
         categoryService.deleteCategoryByID(Long.valueOf(id));
         model.addAttribute("showCategories", categoryService.getAllCategories());
-        return "admin/showCategories";
+        return "admin/category/showCategories";
     }
 }

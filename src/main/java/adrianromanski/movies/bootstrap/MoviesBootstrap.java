@@ -47,9 +47,12 @@ public class MoviesBootstrap implements ApplicationListener<ContextRefreshedEven
         Byte[] horrorImage = getBytes("src/main/resources/static/images/horror.jpg");
         Byte[] scifiImage = getBytes("src/main/resources/static/images/sci-fi.jpg");
 
-        Movie startWars1 = Movie.builder().name("Star Wars Phantom Menace").description("Star Wars 1").image(starWars1Image).build();
-        Movie startWars2 = Movie.builder().name("Star Wars Attack of the clones").description("Star Wars 2").image(starWars2Image).build();
-        Movie startWars3 = Movie.builder().name("Star Wars Return of the sith").description("Star Wars 3").image(starWars3Image).build();
+        Movie startWars1 = Movie.builder().name("Star Wars Phantom Menace").description("A Sci-Fi film is science-based depictions of phenomena that are not fully accepted by mainstream science, \" +\n" +
+                "                                \"such as extraterrestrial lifeforms, alien worlds or time travel").image(starWars1Image).build();
+        Movie startWars2 = Movie.builder().name("Star Wars Attack of the clones").description("A Sci-Fi film is science-based depictions of phenomena that are not fully accepted by mainstream science, \" +\n" +
+                "                                \"such as extraterrestrial lifeforms, alien worlds or time travel").image(starWars2Image).build();
+        Movie startWars3 = Movie.builder().name("Star Wars Return of the sith").description("A Sci-Fi film is science-based depictions of phenomena that are not fully accepted by mainstream science, \" +\n" +
+                "                                \"such as extraterrestrial lifeforms, alien worlds or time travel").image(starWars3Image).build();
 
 
 
