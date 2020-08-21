@@ -93,10 +93,15 @@ public class MoviesBootstrap implements ApplicationListener<ContextRefreshedEven
         Movie interstellar = Movie.builder().name("Interstellar").description("A team of explorers travel through a wormhole in space in an attempt to ensure humanity's survival.")
                 .image(interstellarPict).build();
 
-
+        // Categories Images
         Byte[] fantasyImage = getBytes("src/main/resources/static/images/fantasy.jpg");
-        Byte[] horrorImage = getBytes("src/main/resources/static/images/horror.jpg");
         Byte[] scifiImage = getBytes("src/main/resources/static/images/sci-fi.jpg");
+        Byte[] horrorImage = getBytes("src/main/resources/static/images/categories/horror.jpg");
+        Byte[] actionImage = getBytes("src/main/resources/static/images/categories/action.jpg");
+        Byte[] comedyImage = getBytes("src/main/resources/static/images/categories/comedy.jpg");
+        Byte[] thrillerImage = getBytes("src/main/resources/static/images/categories/thriller.jpg");
+        Byte[] animatedImage = getBytes("src/main/resources/static/images/categories/animated.jpg");
+        Byte[] historicalImage = getBytes("src/main/resources/static/images/categories/historical.jpg");
 
 
 
@@ -113,9 +118,30 @@ public class MoviesBootstrap implements ApplicationListener<ContextRefreshedEven
                 .description("A horror film is a film that seeks to elicit fear for entertainment purposes " +
                                 "Initially inspired by literature from authors such as Edgar Allan Poe, Bram Stoker, and Mary Shelley").build();
 
-        Category sciFi = Category.builder().name("Sci-Fi").image(scifiImage).movies(Arrays.asList(startWars1, startWars2, startWars3))
+        Category sciFi = Category.builder().name("Sci-Fi").image(scifiImage).movies(Arrays.asList(startWars1, startWars2, startWars3, startWars4, startWars5, startWars6, backToTheFuture1, backToTheFuture2, backToTheFuture3, fifthElement, matrix, interstellar))
                 .description("A Sci-Fi film is science-based depictions of phenomena that are not fully accepted by mainstream science, " +
                                 "such as extraterrestrial lifeforms, alien worlds or time travel").build();
+
+        Category action = Category.builder().name("Action").image(actionImage)
+                .description("One of the earliest film genres in existence, the action genre has close ties to classic strife and struggle narratives that you find across all manner of art and literature").build();
+
+        Category comedy = Category.builder().name("Comedy").image(comedyImage)
+                .description("A favorite genre of film audiences young and old, from the very beginning of cinema, the comedy genre has been a fun-loving, quite sophisticated," +
+                        " and innovative genre that’s delighted viewers for decades").build();
+
+        Category thriller = Category.builder().name("Thriller").image(thrillerImage)
+                .description("Once a stylized niche genre, the thriller film has gone so mainstream that it might be time to change the genre’s name to Summer Blockbuster Event. " +
+                        "The thriller’s rise coincides with the rise of the spy and detective pulp novels of the 1960s and 1970s.").build();
+
+        Category animated = Category.builder().name("Animated").image(animatedImage)
+                .description("A computer-animated film is a feature film that has been computer-animated to appear three-dimensional. " +
+                        "While traditional 2D animated films are now made primarily with the help of computers, " +
+                        "the technique to render (CG) or (CGI), is unique to computers.").build();
+
+        Category historical = Category.builder().name("Historical").image(historicalImage)
+                .description("Historical Films often take an historical or imagined event, mythic, legendary, or heroic figure," +
+                        " and add an extravagant setting and lavish costumes, accompanied by grandeur and spectacle and a sweeping musical score.").build();
+
 
         startWars1.setCategory(sciFi);
         startWars2.setCategory(sciFi);
@@ -135,6 +161,12 @@ public class MoviesBootstrap implements ApplicationListener<ContextRefreshedEven
         categoryRepository.save(fantasy);
         categoryRepository.save(horror);
         categoryRepository.save(sciFi);
+        categoryRepository.save(action);
+        categoryRepository.save(comedy);
+        categoryRepository.save(thriller);
+        categoryRepository.save(animated);
+        categoryRepository.save(historical);
+
         movieRepository.save(movie);
         movieRepository.save(startWars1);
         movieRepository.save(startWars2);
@@ -148,6 +180,8 @@ public class MoviesBootstrap implements ApplicationListener<ContextRefreshedEven
         movieRepository.save(interstellar);
         movieRepository.save(matrix);
         movieRepository.save(fifthElement);
+
+
         actorRepository.save(actor);
 
 

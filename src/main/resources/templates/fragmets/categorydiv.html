@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Category</title>
+    <title>CategoryDiv</title>
 
     <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet" media="screen"/>
 
@@ -14,7 +14,7 @@
 </head>
 <body>
 <!--/*@thymesVar id="category" type="adrianromanski.movies.domain.base_entity.Category"*/-->
-    <div class="col-md-3 col-md-offset-2" th:fragment="categorydiv">
+    <div class="col-md-3" th:fragment="categorydiv">
         <div class="movies-listing">
             <div class="row">
                 <a th:href="@{'/category/' + ${category.name}}">
@@ -41,7 +41,6 @@
                 </div>
             </div>
         </div>
-    </div>
 
 </body>
 </html>
