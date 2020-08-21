@@ -2,6 +2,7 @@ package adrianromanski.movies.services.base_entity;
 
 
 import adrianromanski.movies.domain.award.MovieAward;
+import adrianromanski.movies.domain.base_entity.Category;
 import adrianromanski.movies.domain.base_entity.Movie;
 import adrianromanski.movies.domain.person.Actor;
 import adrianromanski.movies.domain.person.User;
@@ -11,13 +12,16 @@ import adrianromanski.movies.exceptions.ResourceNotFoundException;
 import adrianromanski.movies.jms.JmsTextMessageService;
 import adrianromanski.movies.mapper.award.MovieAwardMapper;
 import adrianromanski.movies.mapper.award.MovieAwardMapperImpl;
+import adrianromanski.movies.mapper.base_entity.CategoryMapper;
+import adrianromanski.movies.mapper.base_entity.CategoryMapperImpl;
 import adrianromanski.movies.mapper.base_entity.MovieMapper;
 import adrianromanski.movies.mapper.base_entity.MovieMapperImpl;
 import adrianromanski.movies.model.award.MovieAwardDTO;
 import adrianromanski.movies.model.base_entity.MovieDTO;
-import adrianromanski.movies.repositories.person.ActorRepository;
 import adrianromanski.movies.repositories.award.AwardRepository;
+import adrianromanski.movies.repositories.base_entity.CategoryRepository;
 import adrianromanski.movies.repositories.base_entity.MovieRepository;
+import adrianromanski.movies.repositories.person.ActorRepository;
 import adrianromanski.movies.services.movie.MovieService;
 import adrianromanski.movies.services.movie.MovieServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
@@ -55,6 +59,9 @@ class MovieServiceImplTest {
     AwardRepository awardRepository;
 
     @Mock
+    CategoryRepository categoryRepository;
+
+    @Mock
     JmsTextMessageService jms;
 
     MovieService movieService;
@@ -63,9 +70,10 @@ class MovieServiceImplTest {
     void setUp() {
         MockitoAnnotations.initMocks(this);
         MovieAwardMapper awardMapper = new MovieAwardMapperImpl();
+        CategoryMapper categoryMapper = new CategoryMapperImpl();
         MovieMapper movieMapper = new MovieMapperImpl(); // I have to do something with this ugly init - That should be singleton!!!!!
-        movieService = new MovieServiceImpl(movieRepository, actorRepository,awardRepository, jms,
-                                            movieMapper, awardMapper);
+        movieService = new MovieServiceImpl(movieRepository, categoryRepository, actorRepository,awardRepository, jms,
+                                            movieMapper, categoryMapper, awardMapper);
     }
 
     private List<Movie> getMovies() { return Arrays.asList(new Movie(), new Movie(), new Movie()); }
@@ -237,6 +245,25 @@ class MovieServiceImplTest {
         MovieDTO returnDTO = movieService.createMovie(movieDTO);
 
         verify(movieRepository, times(1)).save(any(Movie.class));
+
+        assertEquals(returnDTO.getDescription(), GOOD_MOVIE);
+    }
+
+
+    @DisplayName("Happy Path, method = addCategoryToMovie")
+    @Test
+    void addCategoryToMovie() {
+        Movie movie = new Movie();
+        movie.setDescription(GOOD_MOVIE);
+        Category category = new Category();
+
+        when(movieRepository.findById(anyLong())).thenReturn(Optional.of(movie));
+        when(categoryRepository.findById(anyLong())).thenReturn(Optional.of(category));
+
+        MovieDTO returnDTO = movieService.addCategoryToMovie(1L, 1L);
+
+        verify(movieRepository, times(1)).save(any(Movie.class));
+        verify(categoryRepository, times(1)).save(any(Category.class));
 
         assertEquals(returnDTO.getDescription(), GOOD_MOVIE);
     }

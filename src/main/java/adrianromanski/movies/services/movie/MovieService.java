@@ -26,6 +26,10 @@ public interface MovieService {
     //POST
     MovieDTO createMovie(MovieDTO movieDTO);
 
+    MovieDTO addCategoryToMovie(Long movieID, Long categoryID);
+
+//    MovieDTO createMovie(MovieDTO movieDTO, Long categoryID);
+
     MovieAwardDTO addAward(Long id, MovieAwardDTO awardDTO);
 
     //PUT

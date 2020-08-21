@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+
+    <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet" media="screen"/>
+
+    <script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.4/jquery.min.js"></script>
+
+    <link th:href="@{/css/custom.css}" rel="stylesheet" media="screen"/>
+
+    <title>Create Category</title>
+</head>
+<!--<div class="jumbotron" th:replace="fragmets/jumbotron :: jumbotron"></div>-->
+
+<body>
+<!--/*@thymesVar id="categoryDTO" type="adrianromanski.movies.model.base_entity.CategoryDTO"*/-->
+<div class="container-fluid" style="margin-top: 150px">
+    <div class="row">
+
+        <div class="col-md-8 col-md-offset-2">
+            <div class="panel-group">
+                <div class="panel panel-info">
+                    <div class="panel panel-heading">
+                        <h1 class="panel-title">Select Category</h1>
+                    </div>
+                    <div class="panel-body">
+                        <table class="table table-hover">
+                            <tr>
+                                <td class="category-name">Name</td>
+                                <td class="category-name">Description</td>
+                            </tr>
+
+                            <tr th:each="category : ${categories}">
+                                <td th:text="${category.name}"></td>
+                                <td th:text="${category.description}"> </td>
+                                <td class="col-md-1">
+                                    <a class="btn btn-info" href="#"
+                                       th:href="@{'/admin/createMovie-' + ${newMovie.id} + '/addCategory-' + ${category.id}}" role="button">
+                                    Select Category</a>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

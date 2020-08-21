@@ -29,7 +29,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
-class CategoryServiceImplTest {
+class ££CategoryServiceImplTest {
 
     public static final String NAME = "Fantasy";
     @Mock

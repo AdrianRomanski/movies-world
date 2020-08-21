@@ -37,7 +37,7 @@
 
                                 <tr th:each="movie : ${movies}">
                                     <td th:text="${movie.name}"></td>
-                                    <td th:text="${movie.category.name}"> </td>
+                                    <td th:text="${movie.categoryDTO.name}"> </td>
                                     <td th:text="${movie.description}"></td>
                                     <td class="col-md-1">
                                         <a class="btn btn-info" href="#"

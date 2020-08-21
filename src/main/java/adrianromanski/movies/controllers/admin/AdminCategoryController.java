@@ -43,9 +43,8 @@ public class AdminCategoryController {
                                         Model model)  {
         model.addAttribute("categories", categoryService.getAllCategories());
         if(bindingResult.hasErrors()){
-            bindingResult.getAllErrors().forEach(objectError -> {
-                log.warn(objectError.getDefaultMessage());
-            });
+            bindingResult.getAllErrors()
+                    .forEach(objectError -> log.warn(objectError.getDefaultMessage()));
             return "admin/category/createCategoryForm";
         }
         categoryService.createCategory(categoryDTO);

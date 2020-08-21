@@ -29,6 +29,7 @@ body {
     font-size: 14px;
     line-height: 1.42857;
     min-height: 1500px;
+    max-height: max-content;
 }
 
 .row {

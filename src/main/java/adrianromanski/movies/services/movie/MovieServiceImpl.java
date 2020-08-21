@@ -1,15 +1,18 @@
 package adrianromanski.movies.services.movie;
 
 import adrianromanski.movies.domain.award.MovieAward;
+import adrianromanski.movies.domain.base_entity.Category;
 import adrianromanski.movies.domain.base_entity.Movie;
 import adrianromanski.movies.domain.person.Actor;
 import adrianromanski.movies.exceptions.ResourceNotFoundException;
 import adrianromanski.movies.jms.JmsTextMessageService;
 import adrianromanski.movies.mapper.award.MovieAwardMapper;
+import adrianromanski.movies.mapper.base_entity.CategoryMapper;
 import adrianromanski.movies.mapper.base_entity.MovieMapper;
 import adrianromanski.movies.model.award.MovieAwardDTO;
 import adrianromanski.movies.model.base_entity.MovieDTO;
 import adrianromanski.movies.repositories.award.AwardRepository;
+import adrianromanski.movies.repositories.base_entity.CategoryRepository;
 import adrianromanski.movies.repositories.base_entity.MovieRepository;
 import adrianromanski.movies.repositories.person.ActorRepository;
 import org.springframework.stereotype.Service;
@@ -26,20 +29,25 @@ import static java.util.stream.Collectors.toList;
 public class MovieServiceImpl implements MovieService {
 
     private final MovieRepository movieRepository;
+    private final CategoryRepository categoryRepository;
     private final ActorRepository actorRepository;
     private final AwardRepository awardRepository;
     private final JmsTextMessageService jmsTextMessageService;
     private final MovieMapper movieMapper;
+    private final CategoryMapper categoryMapper;
     private final MovieAwardMapper awardMapper;
 
 
-    public MovieServiceImpl(MovieRepository movieRepository, ActorRepository actorRepository, AwardRepository awardRepository,
-                            JmsTextMessageService jmsTextMessageService, MovieMapper movieMapper, MovieAwardMapper awardMapper) {
+
+    public MovieServiceImpl(MovieRepository movieRepository, CategoryRepository categoryRepository, ActorRepository actorRepository, AwardRepository awardRepository,
+                            JmsTextMessageService jmsTextMessageService, MovieMapper movieMapper, CategoryMapper categoryMapper, MovieAwardMapper awardMapper) {
         this.movieRepository = movieRepository;
+        this.categoryRepository = categoryRepository;
         this.actorRepository = actorRepository;
         this.awardRepository = awardRepository;
         this.jmsTextMessageService = jmsTextMessageService;
         this.movieMapper = movieMapper;
+        this.categoryMapper = categoryMapper;
         this.awardMapper = awardMapper;
     }
 
@@ -154,6 +162,20 @@ public class MovieServiceImpl implements MovieService {
         jmsTextMessageService.sendTextMessage("Movie " + movie.getName() + " successfully saved");
         return movieMapper.movieToMovieDTO(movie);
     }
+
+    @Override
+    public MovieDTO addCategoryToMovie(Long movieID, Long categoryID) {
+        Movie movie = movieRepository.findById(movieID)
+                .orElseThrow(() -> new ResourceNotFoundException(movieID, Movie.class));
+        Category category = categoryRepository.findById(categoryID)
+                .orElseThrow(() -> new ResourceNotFoundException(movieID, Movie.class));
+        movie.setCategory(category);
+        category.getMovies().add(movie);
+        movieRepository.save(movie);
+        categoryRepository.save(category);
+        return movieMapper.movieToMovieDTO(movie);
+    }
+
 
 
     /**
