@@ -54,7 +54,6 @@ public class ImageCategoryControllerTest {
                 .andExpect(model().attributeExists("category"));
 
         verify(categoryService, times(1)).getCategoryByName(anyString());
-
     }
 
 

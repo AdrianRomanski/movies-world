@@ -1,7 +1,7 @@
 package adrianromanski.movies.controllers.admin;
 
 import adrianromanski.movies.model.base_entity.MovieDTO;
-import adrianromanski.movies.services.image.ImageService;
+import adrianromanski.movies.services.image.ImageServiceMovie;
 import adrianromanski.movies.services.movie.MovieService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -10,19 +10,22 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 class ImageMovieControllerTest {
 
     @Mock
-    ImageService<MovieDTO> imageService;
+    ImageServiceMovie imageService;
 
     @Mock
     MovieService movieService;
@@ -39,6 +42,36 @@ class ImageMovieControllerTest {
 
         mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
     }
+
+
+    @Test
+    @DisplayName("Happy Path, method = getImageForm")
+    void getImageForm() throws Exception {
+        //given
+        MovieDTO movieDTO = new MovieDTO();
+
+        //when
+        when(movieService.getMovieByName(anyString())).thenReturn(movieDTO);
+        //then
+        mockMvc.perform(get("/movie/star-wars/image"))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("movie"));
+
+        verify(movieService, times(1)).getMovieByName(anyString());
+    }
+
+
+    @Test
+    public void handleImagePost() throws Exception {
+        MockMultipartFile multipartFile =
+                new MockMultipartFile("imagefile", "testing.txt", "text/plain",
+                        "Spring Framework Guru".getBytes());
+
+        mockMvc.perform(multipart("/movie/star-wars/image").file(multipartFile))
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(view().name("admin/movie/showMoviesForm"));
+    }
+
 
 
     @Test
