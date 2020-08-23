@@ -16,7 +16,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
@@ -51,13 +50,13 @@ class ImageMovieControllerTest {
         MovieDTO movieDTO = new MovieDTO();
 
         //when
-        when(movieService.getMovieByName(anyString())).thenReturn(movieDTO);
+        when(movieService.getMovieByID(anyLong())).thenReturn(movieDTO);
         //then
-        mockMvc.perform(get("/movie/star-wars/image"))
+        mockMvc.perform(get("/movie/1/image"))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("movie"));
 
-        verify(movieService, times(1)).getMovieByName(anyString());
+        verify(movieService, times(1)).getMovieByID(anyLong());
     }
 
 
