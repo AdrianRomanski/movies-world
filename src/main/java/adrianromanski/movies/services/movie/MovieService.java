@@ -37,6 +37,9 @@ public interface MovieService {
 
     MovieAwardDTO updateAward(Long movieID, Long awardID, MovieAwardDTO awardDTO);
 
+    //PATCH
+    MovieDTO updateMovieFields(Long id, MovieDTO movieDTO);
+
     //DELETE
     void deleteMovieByID(Long id);
 

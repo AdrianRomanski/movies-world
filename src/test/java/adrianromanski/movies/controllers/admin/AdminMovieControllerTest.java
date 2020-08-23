@@ -126,4 +126,52 @@ class AdminMovieControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(view().name("admin/movie/showMoviesForm"));
     }
+
+
+    @Test
+    @DisplayName("Happy Path, method = updateMovie")
+    void updateMovie() throws Exception {
+        mockMvc.perform(get("/admin/updateMovie/1"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("admin/movie/updateMovieForm"));
+    }
+
+
+    @Test
+    @DisplayName("Happy Path, method = checkMovieUpdate")
+    void checkMovieUpdateHappyPath() throws Exception {
+        //given
+        MovieDTO movieDTO = new MovieDTO();
+
+        //when
+        when(movieService.createMovie(any())).thenReturn(movieDTO);
+
+        mockMvc.perform(post("/admin/updateMovie/check")
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .param("name", NAME)
+                .param("description", DESCRIPTION)
+        )
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("movie"))
+                .andExpect(view().name("admin/movie/showMoviesForm"));
+    }
+
+
+    @Test
+    @DisplayName("Unhappy Path, method = checkMovieUpdate")
+    void checkMovieUpdateUnHappyPath() throws Exception {
+        //given
+        MovieDTO movieDTO = new MovieDTO();
+
+        //when
+        when(movieService.createMovie(any())).thenReturn(movieDTO);
+
+        mockMvc.perform(post("/admin/updateMovie/check")
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .param("name", "n")
+                .param("description", "n")
+        )
+                .andExpect(model().attributeExists("movie"))
+                .andExpect(view().name("admin/movie/updateMovieForm"));
+    }
 }

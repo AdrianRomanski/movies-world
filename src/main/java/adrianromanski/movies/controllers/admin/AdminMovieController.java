@@ -67,10 +67,34 @@ public class AdminMovieController {
         return "admin/movie/movieImageUplForm";
     }
 
-    // Pinging CodeCov
+
     @GetMapping("/admin/createMovie-{movieID}/addImage")
     public String addImageToMovie(@PathVariable String movieID, Model model) {
         model.addAttribute("movie", movieService.getMovieByID(Long.valueOf(movieID)));
         return "admin/movie/showMoviesForm";
     }
+
+
+    @GetMapping("/admin/updateMovie/{id}")
+    public String updateMovie(@PathVariable String id, Model model) {
+        model.addAttribute("movie", movieService.getMovieByID(Long.valueOf(id)));
+        return "admin/movie/updateMovieForm";
+    }
+
+
+    @PostMapping("admin/updateMovie/check")
+    public String checkUpdateMovie(@Valid @ModelAttribute("movie") MovieDTO movieDTO,
+                                      BindingResult bindingResult,
+                                      Model model)  {
+        if(bindingResult.hasErrors()){
+            bindingResult.getAllErrors().forEach(objectError -> {
+                log.warn(objectError.getDefaultMessage());
+            });
+            return "admin/movie/updateMovieForm";
+        }
+        movieService.updateMovieFields(movieDTO.getId(), movieDTO);
+        model.addAttribute("movies", movieService.getAllMovies());
+        return "admin/movie/showMoviesForm";
+    }
+
 }

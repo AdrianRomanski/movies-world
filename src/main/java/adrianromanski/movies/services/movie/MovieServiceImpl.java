@@ -22,8 +22,7 @@ import java.util.Map;
 
 import static java.util.Collections.reverseOrder;
 import static java.util.Comparator.comparing;
-import static java.util.stream.Collectors.groupingBy;
-import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.*;
 
 @Service
 public class MovieServiceImpl implements MovieService {
@@ -200,6 +199,7 @@ public class MovieServiceImpl implements MovieService {
 
 
     /**
+     *  Post operation
       * @param id of the Movie to update
       * @param movieDTO object for updating
       * @return Movie if successfully updated
@@ -238,6 +238,25 @@ public class MovieServiceImpl implements MovieService {
         updatedAward.setMovie(movie);
         jmsTextMessageService.sendTextMessage("Award with id: " + awardID + " of Movie with id: " + movieID + " successfully updated");
         return awardMapper.awardToAwardDTO(updatedAward);
+    }
+
+
+
+    /**
+     * PATCH operation it only updates basic fields of movie like description,name,time
+     * @param id of the Movie to update
+     * @param movieDTO object for updating
+     * @return Movie if successfully updated
+     * @throws ResourceNotFoundException if not found
+     */
+    @Override
+    public MovieDTO updateMovieFields(Long id, MovieDTO movieDTO) {
+        Movie movie = movieRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(id, Movie.class));
+        movie.setDescription(movieDTO.getDescription());
+        movie.setName(movieDTO.getName());
+        movieRepository.save(movie);
+        return movieMapper.movieToMovieDTO(movie);
     }
 
 

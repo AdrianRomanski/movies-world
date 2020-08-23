@@ -20,7 +20,7 @@
 
         <div class="col-md-8 col-md-offset-2">
             <div class="panel-group">
-                <div class="panel panel-info">
+                <div class="panel panel-primary">
                     <div class="panel panel-heading">
                         <h1 class="panel-title">Existing Movies</h1>
                     </div>
@@ -41,11 +41,11 @@
                                     <td th:text="${movie.description}"></td>
                                     <td class="col-md-1">
                                         <a class="btn btn-info" href="#"
-                                           th:href="@{'/movie/' + ${movie.id + '/movieImage'}}" role="button">Change Image</a>
+                                           th:href="@{'//' + ${movie.id + '/movieImage'}}" role="button">Change Image</a>
                                     </td>
                                     <td class="col-md-1">
                                         <a class="btn btn-primary" href="#"
-                                           th:href="@{'/movie/updateMovie/' + ${movie.id}}" role="button">Update Movie</a>
+                                           th:href="@{'/admin/updateMovie/' + ${movie.id}}" role="button">Update Movie</a>
                                     </td>
                                     <td class="col-md-1">
                                         <a class="btn btn-danger" href="#"

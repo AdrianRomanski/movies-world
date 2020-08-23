@@ -48,6 +48,7 @@ class MovieServiceImplTest {
     public static final String COUNTRY = "Poland";
     public static final LocalDate DATE = LocalDate.now();
     public static final String INDIANA_JONES = "IndianaJones";
+    public static final String TESTING_DESCRIPTION = "Test Test Test Test Test Test Test Test Test Test Test Test Test Test";
 
     @Mock
     MovieRepository movieRepository;
@@ -350,6 +351,26 @@ class MovieServiceImplTest {
 
         assertThat(ex).isInstanceOf(ResourceNotFoundException.class);
     }
+
+
+    @DisplayName("Happy Path, method = updateMovieFields")
+    @Test
+    void updateMovieFieldsHappyPath() {
+        Movie movie = getStarWars();
+        MovieDTO movieDTO = MovieDTO.builder().name("Test").description(TESTING_DESCRIPTION).build();
+
+        when(movieRepository.findById(anyLong())).thenReturn(Optional.of(movie));
+
+        MovieDTO returnDTO = movieService.updateMovieFields(1L, movieDTO);
+
+        assertEquals(returnDTO.getDescription(), TESTING_DESCRIPTION);
+        assertEquals(returnDTO.getName(), "Test");
+        assertEquals(returnDTO.getUserFavouritesDTO().size(), 4);
+        assertEquals(returnDTO.getUserWatchedDTO().size(), 4);
+
+        verify(movieRepository, times(1)).save(any(Movie.class));
+    }
+
 
 
     @DisplayName("Happy Path, method = deleteMovieByID")
