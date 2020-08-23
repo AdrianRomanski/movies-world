@@ -67,7 +67,7 @@ public class AdminMovieController {
         return "admin/movie/movieImageUplForm";
     }
 
-
+    // Pinging CodeCov
     @GetMapping("/admin/createMovie-{movieID}/addImage")
     public String addImageToMovie(@PathVariable String movieID, Model model) {
         model.addAttribute("movie", movieService.getMovieByID(Long.valueOf(movieID)));
