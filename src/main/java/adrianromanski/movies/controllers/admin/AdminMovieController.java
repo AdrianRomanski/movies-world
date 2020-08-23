@@ -82,7 +82,7 @@ public class AdminMovieController {
     }
 
 
-    @PostMapping("admin/updateMovie/check")
+    @PostMapping("/admin/updateMovie/check")
     public String checkUpdateMovie(@Valid @ModelAttribute("movie") MovieDTO movieDTO,
                                       BindingResult bindingResult,
                                       Model model)  {
@@ -97,5 +97,12 @@ public class AdminMovieController {
         return "admin/movie/showMoviesForm";
     }
 
+
+    @GetMapping("/admin/deleteMovie/{id}")
+    public String deleteMovie(@PathVariable String id, Model model) {
+        movieService.deleteMovieByID(Long.valueOf(id));
+        model.addAttribute("movies", movieService.getAllMovies());
+        return "admin/movie/showMoviesForm";
+    }
 
 }

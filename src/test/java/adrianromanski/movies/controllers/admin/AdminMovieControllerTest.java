@@ -174,4 +174,14 @@ class AdminMovieControllerTest {
                 .andExpect(model().attributeExists("movie"))
                 .andExpect(view().name("admin/movie/updateMovieForm"));
     }
+
+
+    @Test
+    @DisplayName("Happy Path, method = deleteMovie")
+    void deleteMovie() throws Exception {
+        mockMvc.perform(get("/admin/deleteMovie/1"))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("movies"))
+                .andExpect(view().name("admin/movie/showMoviesForm"));
+    }
 }

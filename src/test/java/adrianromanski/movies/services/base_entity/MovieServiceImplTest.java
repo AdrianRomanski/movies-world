@@ -377,6 +377,9 @@ class MovieServiceImplTest {
     @Test
     void deleteMovieByIDHappyPath() {
         Movie movie = new Movie();
+        Category category = new Category();
+        category.getMovies().add(movie);
+        movie.setCategory(category);
 
         when(movieRepository.findById(anyLong())).thenReturn(Optional.of(movie));
 

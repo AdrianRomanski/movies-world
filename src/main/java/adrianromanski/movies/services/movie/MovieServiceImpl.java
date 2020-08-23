@@ -267,9 +267,14 @@ public class MovieServiceImpl implements MovieService {
     @Override
     public void deleteMovieByID(Long id) {
         jmsTextMessageService.sendTextMessage("Deleting Movie with id: " + id);
-        movieRepository.findById(id)
+        Movie movie = movieRepository.findById(id)
            .orElseThrow(() -> new ResourceNotFoundException(id, Movie.class));
+        movie.getActors()
+                .forEach(actor -> actor.getMovies().remove(movie));
+        Category category = movie.getCategory();
+        category.getMovies().remove(movie);
         movieRepository.deleteById(id);
+        categoryRepository.save(category);
         jmsTextMessageService.sendTextMessage("Movie with id: " + id + " successfully deleted");
     }
 
