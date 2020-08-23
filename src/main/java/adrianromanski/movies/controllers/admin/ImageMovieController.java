@@ -28,11 +28,9 @@ public class ImageMovieController {
         this.movieService = movieService;
     }
 
-    @GetMapping("movie/{name}/image")
-    public String showUploadForm(@PathVariable String name, Model model) {
-        model.addAttribute("movie", movieService.getMovieByName(name));
-
-        // I have to create form for movie image upload later
+    @GetMapping("movie/{id}/image")
+    public String showUploadForm(@PathVariable String id, Model model) {
+        model.addAttribute("movie", movieService.getMovieByID(Long.valueOf(id)));
         return "admin/movie/movieImageUplForm";
     }
 

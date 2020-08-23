@@ -41,7 +41,7 @@
                                     <td th:text="${movie.description}"></td>
                                     <td class="col-md-1">
                                         <a class="btn btn-info" href="#"
-                                           th:href="@{'//' + ${movie.id + '/movieImage'}}" role="button">Change Image</a>
+                                           th:href="@{'/movie/' + ${movie.id} + '/image'}" role="button">Change Image</a>
                                     </td>
                                     <td class="col-md-1">
                                         <a class="btn btn-primary" href="#"
