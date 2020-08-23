@@ -115,6 +115,15 @@ class AdminMovieControllerTest {
         mockMvc.perform(get("/admin/createMovie-1/addCategory-1"))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("movies"))
+                .andExpect(view().name("admin/movie/movieImageUplForm"));
+    }
+
+
+    @Test
+    @DisplayName("Happy Path, method = addImageToMovie")
+    void addImageToMovie() throws Exception {
+        mockMvc.perform(get("/admin/createMovie-1/addImage"))
+                .andExpect(status().isOk())
                 .andExpect(view().name("admin/movie/showMoviesForm"));
     }
 }

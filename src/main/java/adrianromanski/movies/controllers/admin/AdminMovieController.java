@@ -63,6 +63,14 @@ public class AdminMovieController {
                                      Model model) {
         movieService.addCategoryToMovie(Long.valueOf(movieID), Long.valueOf(categoryID));
         model.addAttribute("movies", movieService.getAllMovies());
+        model.addAttribute("movie", movieService.getMovieByID(Long.valueOf(movieID)));
+        return "admin/movie/movieImageUplForm";
+    }
+
+
+    @GetMapping("/admin/createMovie-{movieID}/addImage")
+    public String addImageToMovie(@PathVariable String movieID, Model model) {
+        model.addAttribute("movie", movieService.getMovieByID(Long.valueOf(movieID)));
         return "admin/movie/showMoviesForm";
     }
 }

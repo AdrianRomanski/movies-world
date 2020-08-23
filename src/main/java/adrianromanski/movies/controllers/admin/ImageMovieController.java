@@ -33,14 +33,16 @@ public class ImageMovieController {
         model.addAttribute("movie", movieService.getMovieByName(name));
 
         // I have to create form for movie image upload later
-        return "admin/category/categoryImageUplForm";
+        return "admin/movie/movieImageUplForm";
     }
 
-    @PostMapping("movie/{name}/image")
-    public String handleImagePost(@PathVariable String name, @RequestParam("imagefile") MultipartFile file) throws IOException {
-        var movie = movieService.getMovieByName(name);
+    @PostMapping("movie/{id}/image")
+    public String handleImagePost(@PathVariable String id, Model model,
+                                  @RequestParam("imagefile") MultipartFile file) throws IOException {
+        System.out.println("Am i here - handleImagePost");
+        var movie = movieService.getMovieByID(Long.valueOf(id));
         imageService.saveImageFile(movie, file);
-
+        model.addAttribute("movies", movieService.getAllMovies());
         return "admin/movie/showMoviesForm";
     }
 

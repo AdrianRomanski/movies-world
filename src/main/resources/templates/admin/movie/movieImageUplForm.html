@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+
+    <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet" media="screen"/>
+
+    <script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.4/jquery.min.js"></script>
+
+    <link th:href="@{/css/custom.css}" rel="stylesheet" media="screen"/>
+
+    <title>Movie Image Upload</title>
+</head>
+<div class="jumbotron" th:replace="fragmets/jumbotron :: jumbotron"></div>
+
+<body>
+
+<div class="container-fluid" style="margin-top: 20px">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="panel-group">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h1 class="panel-title">Upload a new Movie Image</h1>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <form  action="http:\\localhost" method="post" enctype="multipart/form-data"
+                                       th:action="@{'/movie/' + ${movie.id} + '/image'}">
+                                    <label class="control-label">Select File</label>
+                                    <input id="imagefile" name="imagefile" type="file" class="file">
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+
+
+
+
+
+
+
+<!--<body>-->
+
+<!--<div class="container" style="margin-top: 80px"></div>-->
+<!--    <div class="row">-->
+<!--        <div class="col-md-6 col-md-offset-3">-->
+<!--            <div class="panel-group">-->
+<!--                <div class="panel panel-primary">-->
+<!--                    <div class="panel-heading">-->
+<!--                        <h1 class="panel-title">Select an Image</h1>-->
+<!--                    </div>-->
+<!--                    <div class="panel-body">-->
+<!--                    <table class="table table-hover">-->
+<!--                        <tr>-->
+<!--                            <td th:text="${movie.name}"></td>-->
+<!--                            <td th:text="${movie.description}"></td>-->
+<!--                        </tr>-->
+<!--                        <tr>-->
+<!--                            <td th:text="${movie.categoryDTO.name}"></td>-->
+<!--                            <td th:text="${movie.categoryDTO.description}"></td>-->
+<!--                        </tr>-->
+<!--                    </table>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+
+<!--        <div class="row">-->
+<!--            <div class="col-md-4 col-md-offset-4">-->
+<!--                <div class="panel-group">-->
+<!--                    <div class="panel panel-primary">-->
+<!--                        <div class="panel-heading">-->
+<!--                            <h1 class="panel-title">Upload an Image</h1>-->
+<!--                        </div>-->
+<!--                        <div class="panel-body">-->
+<!--                            <div>-->
+<!--                                <div class="row col-md-4">-->
+<!--                                    <form method="post" enctype="multipart/form-data"-->
+<!--                                           th:action="@{'/movie/' + ${movie.name} + '/image'}">-->
+<!--                                        &lt;!&ndash;                                    <div class="row col-md-4 col-md-pull-1">&ndash;&gt;-->
+<!--                                        &lt;!&ndash;                                        <label class="control-label">Select File</label>&ndash;&gt;-->
+<!--                                        &lt;!&ndash;                                    </div>&ndash;&gt;-->
+<!--                                        <div class="row col-md-4 col-md-pull-1 select-file">-->
+<!--                                            <input id="imagefile" name="imagefile" type="file" class="file">-->
+<!--                                        </div>-->
+<!--                                    </form>-->
+<!--                                </div>-->
+<!--                                <div class="row col-md-4 col-md-push-6">-->
+<!--                                    <button type="submit" class="btn btn-primary btn-lg">Submit</button>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                 </div>-->
+<!--             </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</body>-->
+<!--</html>-->

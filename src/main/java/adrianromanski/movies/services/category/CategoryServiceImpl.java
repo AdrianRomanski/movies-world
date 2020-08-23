@@ -72,11 +72,18 @@ public class CategoryServiceImpl implements CategoryService {
      * @throws ResourceNotFoundException if not found
      */
     @Override
-    public CategoryDTO getCategoryByName(String name) {
+    public CategoryDTO getCategoryDTOByName(String name) {
         jmsTextMessageService.sendTextMessage("Finding Category: " + name);
         return categoryRepository.findByName(name)
                 .map(categoryMapper::categoryToCategoryDTO)
                 .orElseThrow(() -> new ResourceNotFoundException(name, Movie.class));
+    }
+
+
+    @Override
+    public Category getCategoryById(Long id) {
+        return categoryRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(id, Movie.class));
     }
 
     /**
@@ -86,7 +93,7 @@ public class CategoryServiceImpl implements CategoryService {
      * @throws ResourceNotFoundException if not found
      */
     @Override
-    public CategoryDTO getCategoryById(Long id) {
+    public CategoryDTO getCategoryDTOById(Long id) {
         return categoryRepository.findById(id)
                 .map(categoryMapper::categoryToCategoryDTO)
                 .orElseThrow(() -> new ResourceNotFoundException(id, Movie.class));

@@ -31,27 +31,25 @@ public class ImageCategoryController {
 
     @GetMapping("category/{name}/image")
     public String showUploadForm(@PathVariable String name, Model model) {
-        model.addAttribute("category", categoryService.getCategoryByName(name));
-
+        model.addAttribute("category", categoryService.getCategoryDTOByName(name));
         return "admin/category/categoryImageUplForm";
     }
 
-    @PostMapping("category/{name}/image")
-    public String handleImagePost(@PathVariable String name, @RequestParam("imagefile") MultipartFile file) throws IOException {
-        var category = categoryService.getCategoryByName(name);
+    @PostMapping("category/{id}/image")
+    public String handleImagePost(@PathVariable String id, @RequestParam("imagefile") MultipartFile file) throws IOException {
+        var category = categoryService.getCategoryById(Long.valueOf(id));
         imageService.saveImageFile(category, file);
-
-        return "redirect:/category/" + name;
+        return "redirect:/category/" + category.getName();
     }
 
-    @GetMapping("category/{name}/categoryImage")
-    public void renderImageFromDB(@PathVariable String name, HttpServletResponse response) throws IOException {
-        var categoryDTO = categoryService.getCategoryByName(name);
-        if (categoryDTO.getImage() != null) {
-            byte[] byteArray = new byte[categoryDTO.getImage().length];
+    @GetMapping("category/{id}/categoryImage")
+    public void renderImageFromDB(@PathVariable String id, HttpServletResponse response) throws IOException {
+        var category = categoryService.getCategoryById(Long.valueOf(id));
+        if (category.getImage() != null) {
+            byte[] byteArray = new byte[category.getImage().length];
             int i = 0;
 
-            for (Byte wrappedByte : categoryDTO.getImage()) {
+            for (Byte wrappedByte : category.getImage()) {
                 byteArray[i++] = wrappedByte; //auto unboxing
             }
             response.setContentType("image/jpeg");

@@ -1,5 +1,6 @@
 package adrianromanski.movies.controllers.admin;
 
+import adrianromanski.movies.domain.base_entity.Category;
 import adrianromanski.movies.model.base_entity.CategoryDTO;
 import adrianromanski.movies.services.category.CategoryService;
 import adrianromanski.movies.services.image.ImageServiceCategory;
@@ -46,24 +47,31 @@ public class ImageCategoryControllerTest {
         CategoryDTO categoryDTO = new CategoryDTO();
         categoryDTO.setId(1L);
 
-        when(categoryService.getCategoryByName(anyString())).thenReturn(categoryDTO);
+        when(categoryService.getCategoryDTOByName(anyString())).thenReturn(categoryDTO);
 
         //when
         mockMvc.perform(get("/category/comedy/image"))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("category"));
 
-        verify(categoryService, times(1)).getCategoryByName(anyString());
+        verify(categoryService, times(1)).getCategoryDTOByName(anyString());
     }
 
 
     @Test
     public void handleImagePost() throws Exception {
+        //given
+        Category category = new Category();
+        category.setId(1L);
+        category.setName("comedy");
+
         MockMultipartFile multipartFile =
                 new MockMultipartFile("imagefile", "testing.txt", "text/plain",
                         "Spring Framework Guru".getBytes());
 
-        mockMvc.perform(multipart("/category/comedy/image").file(multipartFile))
+        when(categoryService.getCategoryById(anyLong())).thenReturn(category);
+
+        mockMvc.perform(multipart("/category/1/image").file(multipartFile))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(header().string("Location", "/category/comedy"));
     }
@@ -72,8 +80,8 @@ public class ImageCategoryControllerTest {
     @Test
     public void renderImageFromDB() throws Exception {
         //given
-        CategoryDTO categoryDTO = new CategoryDTO();
-        categoryDTO.setId(1L);
+        Category category = new Category();
+        category.setId(1L);
 
         String s = "fake image text";
         Byte[] bytesBoxed = new Byte[s.getBytes().length];
@@ -84,13 +92,13 @@ public class ImageCategoryControllerTest {
             bytesBoxed[i++] = primByte;
         }
 
-        categoryDTO.setImage(bytesBoxed);
+        category.setImage(bytesBoxed);
 
 
-        when(categoryService.getCategoryByName(anyString())).thenReturn(categoryDTO);
+        when(categoryService.getCategoryById(anyLong())).thenReturn(category);
 
         //when
-        MockHttpServletResponse response = mockMvc.perform(get("/category/comedy/categoryImage"))
+        MockHttpServletResponse response = mockMvc.perform(get("/category/1/categoryImage"))
                 .andExpect(status().isOk())
                 .andReturn().getResponse();
 

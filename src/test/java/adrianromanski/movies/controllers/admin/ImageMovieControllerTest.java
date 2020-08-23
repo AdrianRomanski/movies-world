@@ -63,11 +63,17 @@ class ImageMovieControllerTest {
 
     @Test
     public void handleImagePost() throws Exception {
+        MovieDTO movieDTO = new MovieDTO();
+        movieDTO.setId(1L);
+        movieDTO.setName("Star Wars");
+
         MockMultipartFile multipartFile =
                 new MockMultipartFile("imagefile", "testing.txt", "text/plain",
                         "Spring Framework Guru".getBytes());
 
-        mockMvc.perform(multipart("/movie/star-wars/image").file(multipartFile))
+        when(movieService.getMovieByID(anyLong())).thenReturn(movieDTO);
+
+        mockMvc.perform(multipart("/movie/1/image").file(multipartFile))
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(view().name("admin/movie/showMoviesForm"));
     }

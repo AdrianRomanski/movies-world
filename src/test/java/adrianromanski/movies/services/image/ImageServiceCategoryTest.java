@@ -1,9 +1,6 @@
 package adrianromanski.movies.services.image;
 
 import adrianromanski.movies.domain.base_entity.Category;
-import adrianromanski.movies.mapper.base_entity.CategoryMapper;
-import adrianromanski.movies.mapper.base_entity.CategoryMapperImpl;
-import adrianromanski.movies.model.base_entity.CategoryDTO;
 import adrianromanski.movies.repositories.base_entity.CategoryRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -32,9 +29,7 @@ class ImageServiceCategoryTest {
     void setUp() {
         MockitoAnnotations.initMocks(this);
 
-        CategoryMapper categoryMapper = new CategoryMapperImpl();
-
-        imageService = new ImageServiceCategory(categoryRepository, categoryMapper);
+        imageService = new ImageServiceCategory(categoryRepository);
     }
 
     @Test
@@ -49,14 +44,13 @@ class ImageServiceCategoryTest {
         category.setId(id);
         Optional<Category> categoryOptional = Optional.of(category);
 
-        CategoryDTO categoryDTO = new CategoryDTO();
 
         when(categoryRepository.findByName(anyString())).thenReturn(categoryOptional);
 
         ArgumentCaptor<Category> argumentCaptor = ArgumentCaptor.forClass(Category.class);
 
         //when
-        imageService.saveImageFile(categoryDTO, multipartFile);
+        imageService.saveImageFile(category, multipartFile);
 
         //then
         verify(categoryRepository, times(1)).save(argumentCaptor.capture());

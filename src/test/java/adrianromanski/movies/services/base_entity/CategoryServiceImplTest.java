@@ -29,7 +29,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
-class ££CategoryServiceImplTest {
+class CategoryServiceImplTest {
 
     public static final String NAME = "Fantasy";
     @Mock
@@ -102,7 +102,7 @@ class ££CategoryServiceImplTest {
 
         when(categoryRepository.findByName(anyString())).thenReturn(Optional.of(category));
 
-        CategoryDTO returnDTO = categoryService.getCategoryByName(NAME);
+        CategoryDTO returnDTO = categoryService.getCategoryDTOByName(NAME);
 
         assertEquals(returnDTO.getName(), NAME);
     }
@@ -111,7 +111,7 @@ class ££CategoryServiceImplTest {
     @DisplayName("UnhappyPath, method = getCategoryByName")
     @Test
     void getCategoryByNameUnhappyPath() {
-        Throwable ex = catchThrowable(() -> categoryService.getCategoryByName("24421"));
+        Throwable ex = catchThrowable(() -> categoryService.getCategoryDTOByName("24421"));
 
         assertThat(ex).isInstanceOf(ResourceNotFoundException.class);
     }
@@ -127,7 +127,7 @@ class ££CategoryServiceImplTest {
         when(categoryRepository.findById(anyLong())).thenReturn(Optional.of(category));
 
         //then
-        CategoryDTO returnDTO = categoryService.getCategoryById(1L);
+        CategoryDTO returnDTO = categoryService.getCategoryDTOById(1L);
 
         assertEquals(returnDTO.getName(), NAME);
     }

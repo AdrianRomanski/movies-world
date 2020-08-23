@@ -55,7 +55,7 @@ public class AdminCategoryController {
 
     @GetMapping("admin/updateCategory/{id}")
     public String updateCategory(Model model, @PathVariable String id) {
-        model.addAttribute("categoryDTO", categoryService.getCategoryById(Long.valueOf(id)));
+        model.addAttribute("categoryDTO", categoryService.getCategoryDTOById(Long.valueOf(id)));
         return "admin/category/updateCategoryForm";
     }
 

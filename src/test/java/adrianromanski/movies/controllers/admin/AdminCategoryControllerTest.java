@@ -58,7 +58,7 @@ class AdminCategoryControllerTest {
         CategoryDTO categoryDTO = new CategoryDTO();
 
         //when
-        when(categoryService.getCategoryById(anyLong())).thenReturn(categoryDTO);
+        when(categoryService.getCategoryDTOById(anyLong())).thenReturn(categoryDTO);
 
         //then
         mockMvc.perform(get("/admin/updateCategory/1"))
@@ -128,7 +128,7 @@ class AdminCategoryControllerTest {
                 .build();
 
         //when
-        when(categoryService.getCategoryById(anyLong())).thenReturn(categoryDTO);
+        when(categoryService.getCategoryDTOById(anyLong())).thenReturn(categoryDTO);
 
         //then
         mockMvc.perform(post("/admin/updateCategory/check")
@@ -152,7 +152,7 @@ class AdminCategoryControllerTest {
                 .build();
 
         //when
-        when(categoryService.getCategoryById(anyLong())).thenReturn(categoryDTO);
+        when(categoryService.getCategoryDTOById(anyLong())).thenReturn(categoryDTO);
 
         //then
         mockMvc.perform(post("/admin/updateCategory/check")
@@ -171,7 +171,7 @@ class AdminCategoryControllerTest {
         CategoryDTO categoryDTO = new CategoryDTO();
 
         //when
-        when(categoryService.getCategoryById(anyLong())).thenReturn(categoryDTO);
+        when(categoryService.getCategoryDTOById(anyLong())).thenReturn(categoryDTO);
 
         mockMvc.perform(get("/admin/deleteCategory/1"))
                 .andExpect(status().isOk())
