@@ -11,6 +11,7 @@ import adrianromanski.movies.mapper.base_entity.MovieMapperImpl;
 import adrianromanski.movies.model.base_entity.CategoryDTO;
 import adrianromanski.movies.model.base_entity.MovieDTO;
 import adrianromanski.movies.repositories.base_entity.CategoryRepository;
+import adrianromanski.movies.repositories.paging.CategoryDao;
 import adrianromanski.movies.services.category.CategoryService;
 import adrianromanski.movies.services.category.CategoryServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
@@ -36,6 +37,9 @@ class CategoryServiceImplTest {
     CategoryRepository categoryRepository;
 
     @Mock
+    CategoryDao categoryDao;
+
+    @Mock
     JmsTextMessageService jms;
 
     CategoryService categoryService;
@@ -47,7 +51,7 @@ class CategoryServiceImplTest {
 
         CategoryMapper categoryMapper = new CategoryMapperImpl();
         MovieMapper movieMapper = new MovieMapperImpl();
-        categoryService = new CategoryServiceImpl(categoryRepository, jms, categoryMapper, movieMapper);
+        categoryService = new CategoryServiceImpl(categoryRepository, categoryDao, jms, categoryMapper, movieMapper);
     }
 
     private Category getCategory() {

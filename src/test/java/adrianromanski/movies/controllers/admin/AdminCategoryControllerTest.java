@@ -1,5 +1,6 @@
 package adrianromanski.movies.controllers.admin;
 
+import adrianromanski.movies.domain.base_entity.Category;
 import adrianromanski.movies.model.base_entity.CategoryDTO;
 import adrianromanski.movies.services.category.CategoryService;
 import org.junit.jupiter.api.BeforeEach;
@@ -8,9 +9,15 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
+import java.util.Arrays;
+import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
@@ -71,7 +78,15 @@ class AdminCategoryControllerTest {
     @Test
     @DisplayName("Happy Path, method = showCategories")
     void showCategories() throws Exception {
-        mockMvc.perform(get("/admin/showCategories"))
+        PageRequest pageable = PageRequest.of(5 - 1, 3);
+
+        List<Category> categoryList = Arrays.asList(new Category(), new Category(), new Category());
+
+        Page<Category> categoryPage = new PageImpl<>(categoryList, pageable, categoryList.size());
+
+        when(categoryService.getAllCategoriesPaged(pageable)).thenReturn(categoryPage);
+
+        mockMvc.perform(get("/admin/showCategories/page/1"))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("showCategories"))
                 .andExpect(view().name(VIEW + "showCategories"));
