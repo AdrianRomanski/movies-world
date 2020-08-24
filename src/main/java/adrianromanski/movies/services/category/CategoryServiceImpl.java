@@ -9,7 +9,7 @@ import adrianromanski.movies.mapper.base_entity.MovieMapper;
 import adrianromanski.movies.model.base_entity.CategoryDTO;
 import adrianromanski.movies.model.base_entity.MovieDTO;
 import adrianromanski.movies.repositories.base_entity.CategoryRepository;
-import adrianromanski.movies.repositories.paging.CategoryDao;
+import adrianromanski.movies.repositories.pages.CategoryPage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,16 +22,16 @@ import java.util.stream.Collectors;
 public class CategoryServiceImpl implements CategoryService {
 
     private final CategoryRepository categoryRepository;
-    private final CategoryDao categoryDao;
+    private final CategoryPage categoryPage;
     private final JmsTextMessageService jmsTextMessageService;
     private final CategoryMapper categoryMapper;
     private final MovieMapper movieMapper;
 
     @Autowired
-    public CategoryServiceImpl(CategoryRepository categoryRepository, CategoryDao categoryDao, JmsTextMessageService jmsTextMessageService,
+    public CategoryServiceImpl(CategoryRepository categoryRepository, CategoryPage categoryPage, JmsTextMessageService jmsTextMessageService,
                                CategoryMapper categoryMapper, MovieMapper movieMapper) {
         this.categoryRepository = categoryRepository;
-        this.categoryDao = categoryDao;
+        this.categoryPage = categoryPage;
         this.jmsTextMessageService = jmsTextMessageService;
         this.categoryMapper = categoryMapper;
         this.movieMapper = movieMapper;
@@ -53,7 +53,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Page<Category> getAllCategoriesPaged(Pageable pageable) {
-        return categoryDao.findAll(pageable);
+        return categoryPage.findAll(pageable);
     }
 
 

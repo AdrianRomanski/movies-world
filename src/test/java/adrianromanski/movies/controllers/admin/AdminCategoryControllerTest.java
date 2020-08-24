@@ -76,11 +76,11 @@ class AdminCategoryControllerTest {
 
 
     @Test
-    @DisplayName("Happy Path, method = showCategories")
-    void showCategories() throws Exception {
-        PageRequest pageable = PageRequest.of(5 - 1, 3);
-
+    @DisplayName("Happy Path, method = listCategoryPageByPage")
+    void listCategoryPageByPage() throws Exception {
         List<Category> categoryList = Arrays.asList(new Category(), new Category(), new Category());
+
+        PageRequest pageable = PageRequest.of(0, 3);
 
         Page<Category> categoryPage = new PageImpl<>(categoryList, pageable, categoryList.size());
 
@@ -88,8 +88,8 @@ class AdminCategoryControllerTest {
 
         mockMvc.perform(get("/admin/showCategories/page/1"))
                 .andExpect(status().isOk())
-                .andExpect(model().attributeExists("showCategories"))
-                .andExpect(view().name(VIEW + "showCategories"));
+                .andExpect(model().attributeExists("categoryList"))
+                .andExpect(view().name("admin/category/showCategories"));
     }
 
 
