@@ -3,19 +3,65 @@
 <head>
     <meta charset="UTF-8">
 
-    <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet" media="screen"/>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"
+          th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}">
 
-    <script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.4/jquery.min.js"></script>
+    <script src="/webjars/jquery/1.11.1/jquery.min.js"></script>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous" th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
 
     <link th:href="@{/css/custom.css}" rel="stylesheet" media="screen"/>
 
     <title>Create Category</title>
 </head>
-<!--<div class="jumbotron" th:replace="fragmets/jumbotron :: jumbotron"></div>-->
+<div class="jumbotron" th:replace="fragmets/jumbotron :: jumbotron"></div>
 
 <body>
-<!--/*@thymesVar id="categoryDTO" type="adrianromanski.movies.model.base_entity.CategoryDTO"*/-->
-<div class="container-fluid" style="margin-top: 200px">
+<ul class="nav nav-pills admin-navbar">
+    <li><a href="#" th:href="@{'/admin/'}">Admin Main Page</a></li>
+    <li class="dropdown active">
+        <a data-toggle="dropdown" data-target="#" href="http://www.google.com">
+            Categories <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu">
+            <li><a href="#" th:href="@{'/admin/showCategories/'}" type="button">Show All Categories</a></li>
+            <li><a href="#" th:href="@{'/admin/createCategory/'}" type="button" >Create New Category</a></li>
+        </ul>
+    </li>
+    <li class="dropdown">
+        <a data-toggle="dropdown" data-target="#" href="http://www.google.com">
+            Movies <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu">
+            <li><a href="#" th:href="@{'/admin/showMovies/'}" type="button" >Show All Movies</a></li>
+            <li><a href="#" th:href="@{'/admin/createMovie/'}" type="button">Create New Movie</a></li>
+        </ul>
+    </li>
+    <li class="dropdown">
+        <a data-toggle="dropdown" data-target="#" href="http://www.google.com">
+            Actors <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu">
+            <li><a href="#">Show All Movies</a></li>
+            <li><a href="#">Create New Movie</a></li>
+        </ul>
+    </li>
+    <li class="dropdown">
+        <a data-toggle="dropdown" data-target="#" href="http://www.google.com">
+            Directors <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu">
+            <li><a href="#">Show All Movies</a></li>
+            <li><a href="#">Create New Movie</a></li>
+        </ul>
+    </li>
+</ul>
+<div class="container-fluid" style="margin-top: 75px">
 
 
         <div class="col-md-8 col-md-offset-2">
@@ -67,7 +113,7 @@
                 </form>
             </div>
 
-    <div class="container-fluid" style="margin-top: 550px">
+    <div class="container-fluid" style="margin-top: 325px">
         <div class="row">
 
             <div class="col-md-8 col-md-offset-2">
