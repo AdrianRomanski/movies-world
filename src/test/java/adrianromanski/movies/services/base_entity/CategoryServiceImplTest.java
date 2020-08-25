@@ -90,7 +90,22 @@ class CategoryServiceImplTest {
 
         when(categoryPageRepository.findAll(pageable)).thenReturn(categoryPage);
 
-        Page<Category> returnDTO = categoryService.getAllCategoriesPaged(pageable);
+        Page<Category> returnObj = categoryService.getAllCategoriesPaged(pageable);
+
+        assertEquals(returnObj.getTotalElements(), 3);
+    }
+
+
+    @DisplayName("Happy Path, method = getPageCategoryDTO")
+    @Test
+    void getPageCategoryDTO() {
+        List<Category> categoryList = Arrays.asList(new Category(), new Category(), new Category());
+
+        PageRequest pageable = PageRequest.of(0, 3);
+
+        Page<Category> categoryPage = new PageImpl<>(categoryList, pageable, categoryList.size());
+
+        Page<CategoryDTO> returnDTO = categoryService.getPageCategoryDTO(categoryPage, pageable);
 
         assertEquals(returnDTO.getTotalElements(), 3);
     }

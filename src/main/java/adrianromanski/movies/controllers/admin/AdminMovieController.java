@@ -34,12 +34,6 @@ public class AdminMovieController {
     }
 
 
-//    @GetMapping("/admin/showMovies")
-//    public String showMovies(Model model) {
-//        model.addAttribute("movies", movieService.getAllMovies());
-//        return "admin/movie/showMoviesForm";
-//    }
-
     @RequestMapping(value = "/admin/showMovies/page/{page}")
     public ModelAndView showMoviesPaged(@PathVariable("page") int page) {
         ModelAndView modelAndView = new ModelAndView("admin/movie/showMoviesForm");

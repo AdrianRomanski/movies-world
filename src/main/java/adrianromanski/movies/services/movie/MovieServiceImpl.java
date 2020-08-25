@@ -86,7 +86,9 @@ public class MovieServiceImpl implements MovieService {
      */
     @Override
     public Page<MovieDTO> getPageMovieDTO(Page<Movie> moviePage, Pageable pageable) {
-        List<MovieDTO> moviesDTO = moviePage.get().map(movieMapper::movieToMovieDTO).collect(Collectors.toList());
+        List<MovieDTO> moviesDTO = moviePage.get()
+                .map(movieMapper::movieToMovieDTO)
+                .collect(Collectors.toList());
         return  new PageImpl<>(moviesDTO, pageable, moviesDTO.size());
     }
 

@@ -78,13 +78,17 @@ class AdminCategoryControllerTest {
     @Test
     @DisplayName("Happy Path, method = listCategoryPageByPage")
     void listCategoryPageByPage() throws Exception {
+        // Given
         List<Category> categoryList = Arrays.asList(new Category(), new Category(), new Category());
-
-        PageRequest pageable = PageRequest.of(0, 3);
-
+        PageRequest pageable = PageRequest.of(0, 5);
         Page<Category> categoryPage = new PageImpl<>(categoryList, pageable, categoryList.size());
 
+        List<CategoryDTO> categoryListDTO = Arrays.asList(new CategoryDTO(), new CategoryDTO(), new CategoryDTO());
+        PageRequest pageableDTO = PageRequest.of(0, 5);
+        Page<CategoryDTO> categoryPageDTO = new PageImpl<>(categoryListDTO, pageableDTO, categoryListDTO.size());
+
         when(categoryService.getAllCategoriesPaged(pageable)).thenReturn(categoryPage);
+        when(categoryService.getPageCategoryDTO(categoryPage, pageable)).thenReturn(categoryPageDTO);
 
         mockMvc.perform(get("/admin/showCategories/page/1"))
                 .andExpect(status().isOk())

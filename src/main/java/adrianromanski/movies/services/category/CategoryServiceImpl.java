@@ -12,6 +12,7 @@ import adrianromanski.movies.repositories.base_entity.CategoryRepository;
 import adrianromanski.movies.repositories.pages.CategoryPageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -60,6 +61,18 @@ public class CategoryServiceImpl implements CategoryService {
     public Page<Category> getAllCategoriesPaged(Pageable pageable) {
         jmsTextMessageService.sendTextMessage("Listing Categories Paged");
         return categoryPage.findAll(pageable);
+    }
+
+
+    /**
+     * Converting All Categories in Page to CategoryDTO
+     */
+    @Override
+    public Page<CategoryDTO> getPageCategoryDTO(Page<Category> categoryPage, Pageable pageable) {
+        List<CategoryDTO> categoriesDTO = categoryPage.get()
+                .map(categoryMapper::categoryToCategoryDTO)
+                .collect(Collectors.toList());
+        return new PageImpl<>(categoriesDTO, pageable, categoriesDTO.size());
     }
 
 

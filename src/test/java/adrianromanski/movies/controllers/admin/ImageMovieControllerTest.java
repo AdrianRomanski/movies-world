@@ -54,7 +54,7 @@ class ImageMovieControllerTest {
         //then
         mockMvc.perform(get("/movie/1/image"))
                 .andExpect(status().isOk())
-                .andExpect(model().attributeExists("movie"));
+                .andExpect(model().attributeExists("movieDTO"));
 
         verify(movieService, times(1)).getMovieByID(anyLong());
     }

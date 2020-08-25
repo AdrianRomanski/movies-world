@@ -16,6 +16,8 @@ public interface CategoryService {
 
     Page<Category> getAllCategoriesPaged(Pageable pageable);
 
+    Page<CategoryDTO> getPageCategoryDTO(Page<Category> categoryPage, Pageable pageable);
+
     List<MovieDTO> getAllMoviesForCategory(String name);
 
     CategoryDTO getCategoryDTOByName(String name);

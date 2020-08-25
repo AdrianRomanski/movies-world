@@ -31,15 +31,16 @@ public class AdminCategoryController {
     @RequestMapping(value = "/admin/showCategories/page/{page}")
     public ModelAndView listCategoryPageByPage(@PathVariable("page") int page) {
         ModelAndView modelAndView = new ModelAndView("admin/category/showCategories");
-        PageRequest pageable = PageRequest.of(page - 1, 3);
-        Page<Category> categoryPage = categoryService.getAllCategoriesPaged(pageable);
-        int totalPages = categoryPage.getTotalPages();
+        PageRequest pageable = PageRequest.of(page - 1, 5);
+        Page<Category> categoryPages = categoryService.getAllCategoriesPaged(pageable);
+        Page<CategoryDTO> categoryDTOPage = categoryService.getPageCategoryDTO(categoryPages, pageable);
+        int totalPages = categoryPages.getTotalPages();
         if(totalPages > 0) {
             List<Integer> pageNumbers = IntStream.rangeClosed(1,totalPages).boxed().collect(Collectors.toList());
             modelAndView.addObject("pageNumbers", pageNumbers);
         }
         modelAndView.addObject("activeCategoryList", true);
-        modelAndView.addObject("categoryList", categoryPage.getContent());
+        modelAndView.addObject("categoryList", categoryDTOPage.getContent());
         return modelAndView;
     }
 
