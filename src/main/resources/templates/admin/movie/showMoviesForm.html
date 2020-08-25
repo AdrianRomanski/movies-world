@@ -87,21 +87,21 @@
                                     <td class="category-name">Description</td>
                                 </tr>
 
-                                <tr th:each="movie : ${moviesList}">
-                                    <td th:text="${movie.name}"></td>
-                                    <td th:text="${movie.category.name}"> </td>
-                                    <td th:text="${movie.description}"></td>
+                                <tr th:each="movieDTO : ${moviesDTOList}">
+                                    <td th:text="${movieDTO.name}"></td>
+                                    <td th:text="${movieDTO.categoryDTO.name}"> </td>
+                                    <td th:text="${movieDTO.description}"></td>
                                     <td class="col-md-1">
                                         <a class="btn btn-info" href="#"
-                                           th:href="@{'/movie/' + ${movie.id} + '/image'}" role="button">Change Image</a>
+                                           th:href="@{'/movie/' + ${movieDTO.id} + '/image'}" role="button">Change Image</a>
                                     </td>
                                     <td class="col-md-1">
                                         <a class="btn btn-primary" href="#"
-                                           th:href="@{'/admin/updateMovie/' + ${movie.id}}" role="button">Update Movie</a>
+                                           th:href="@{'/admin/updateMovie/' + ${movieDTO.id}}" role="button">Update Movie</a>
                                     </td>
                                     <td class="col-md-1">
                                         <a class="btn btn-danger" href="#"
-                                           th:href="@{'/admin/deleteMovie/'  + ${movie.id}}" role="button">Delete Movie</a>
+                                           th:href="@{'/admin/deleteMovie/'  + ${movieDTO.id}}" role="button">Delete Movie</a>
                                     </td>
                                 </tr>
                             </table>

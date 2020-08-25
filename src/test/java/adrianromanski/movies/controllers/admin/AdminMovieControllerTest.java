@@ -59,17 +59,23 @@ class AdminMovieControllerTest {
     @Test
     @DisplayName("Happy Path, method = showMoviesPaged")
     void showMoviesPaged() throws Exception {
+        // Given
         List<Movie> movieList = Arrays.asList(new Movie(), new Movie(), new Movie());
-
         PageRequest pageable = PageRequest.of(0, 5);
-
         Page<Movie> moviePage = new PageImpl<>(movieList, pageable, movieList.size());
 
-        when(movieService.getAllMoviesPaged(pageable)).thenReturn(moviePage);
+        List<MovieDTO> movieListDTO = Arrays.asList(new MovieDTO(), new MovieDTO(), new MovieDTO());
+        PageRequest pageableDTO = PageRequest.of(0, 5);
+        Page<MovieDTO> moviePageDTO = new PageImpl<>(movieListDTO, pageableDTO, movieListDTO.size());
 
+        //When
+        when(movieService.getAllMoviesPaged(pageable)).thenReturn(moviePage);
+        when(movieService.getPageMovieDTO(moviePage, pageable)).thenReturn(moviePageDTO);
+
+        //Then
         mockMvc.perform(get("/admin/showMovies/page/1"))
                 .andExpect(status().isOk())
-                .andExpect(model().attributeExists("moviesList"))
+                .andExpect(model().attributeExists("moviesDTOList"))
                 .andExpect(view().name("admin/movie/showMoviesForm"));
     }
 
@@ -131,14 +137,6 @@ class AdminMovieControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("movies"))
                 .andExpect(view().name("admin/movie/movieImageUplForm"));
-    }
-
-
-    @Test
-    @DisplayName("Happy Path, method = addImageToMovie")
-    void addImageToMovie() throws Exception {
-        mockMvc.perform(get("/admin/createMovie-1/addImage"))
-                .andExpect(status().isOk());
     }
 
 

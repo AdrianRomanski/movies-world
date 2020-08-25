@@ -17,11 +17,13 @@ import adrianromanski.movies.repositories.base_entity.MovieRepository;
 import adrianromanski.movies.repositories.pages.MoviePageRepository;
 import adrianromanski.movies.repositories.person.ActorRepository;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static java.util.Collections.reverseOrder;
 import static java.util.Comparator.comparing;
@@ -68,17 +70,24 @@ public class MovieServiceImpl implements MovieService {
                 .collect(toList());
     }
 
+
     /**
      * @return All Movies from database Paged
      */
     @Override
     public Page<Movie> getAllMoviesPaged(Pageable pageable) {
-//        List<MovieDTO> moviesDT0 = movieRepository.findAll()
-//                .stream()
-//                .map(movieMapper::movieToMovieDTO)
-//                .collect(toList());
-//        return new PageImpl<>(moviesDT0, pageable, moviesDT0.size());
+        jmsTextMessageService.sendTextMessage("Listing Movies Paged");
         return moviePageRepository.findAll(pageable);
+    }
+
+
+    /**
+     * Converting All Movie in Page Object to MovieDTO
+     */
+    @Override
+    public Page<MovieDTO> getPageMovieDTO(Page<Movie> moviePage, Pageable pageable) {
+        List<MovieDTO> moviesDTO = moviePage.get().map(movieMapper::movieToMovieDTO).collect(Collectors.toList());
+        return  new PageImpl<>(moviesDTO, pageable, moviesDTO.size());
     }
 
 

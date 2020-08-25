@@ -30,7 +30,7 @@ public class ImageMovieController {
 
     @GetMapping("movie/{id}/image")
     public String showUploadForm(@PathVariable String id, Model model) {
-        model.addAttribute("movie", movieService.getMovieByID(Long.valueOf(id)));
+        model.addAttribute("movieDTO", movieService.getMovieByID(Long.valueOf(id)));
         return "admin/movie/movieImageUplForm";
     }
 
@@ -39,7 +39,7 @@ public class ImageMovieController {
                                   @RequestParam("imagefile") MultipartFile file) throws IOException {
         var movie = movieService.getMovieByID(Long.valueOf(id));
         imageService.saveImageFile(movie, file);
-//        model.addAttribute("movies", movieService.getAllMovies());
+        model.addAttribute("movieDTO", movie);
         return "admin/adminHome";
     }
 

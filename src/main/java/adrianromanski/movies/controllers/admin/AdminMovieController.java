@@ -45,14 +45,14 @@ public class AdminMovieController {
         ModelAndView modelAndView = new ModelAndView("admin/movie/showMoviesForm");
         PageRequest pageable = PageRequest.of(page - 1, 5);
         Page<Movie> moviePage = movieService.getAllMoviesPaged(pageable);
+        Page<MovieDTO> movieDTOPage = movieService.getPageMovieDTO(moviePage, pageable);
         int totalPages = moviePage.getTotalPages();
-        System.out.println(totalPages);
         if(totalPages > 0) {
             List<Integer> pageNumbers = IntStream.rangeClosed(1,totalPages).boxed().collect(Collectors.toList());
             modelAndView.addObject("pageNumbers", pageNumbers);
         }
         modelAndView.addObject("activeMovieList", true);
-        modelAndView.addObject("moviesList", moviePage.getContent());
+        modelAndView.addObject("moviesDTOList", movieDTOPage.getContent());
         return modelAndView;
     }
 
@@ -85,12 +85,6 @@ public class AdminMovieController {
         model.addAttribute("movies", movieService.getAllMovies());
         model.addAttribute("movieDTO", movieService.getMovieByID(Long.valueOf(movieID)));
         return "admin/movie/movieImageUplForm";
-    }
-
-
-    @GetMapping("/admin/createMovie-{movieID}/addImage")
-    public void addImageToMovie(@PathVariable String movieID, Model model) {
-        model.addAttribute("movieDTO", movieService.getMovieByID(Long.valueOf(movieID)));
     }
 
 

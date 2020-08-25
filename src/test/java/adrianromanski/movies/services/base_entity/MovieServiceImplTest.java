@@ -138,6 +138,22 @@ class MovieServiceImplTest {
     }
 
 
+
+    @DisplayName("Happy Path, method = getPageMovieDTO")
+    @Test
+    void getPageMovieDTO() {
+        // Given
+        List<Movie> movieList = Arrays.asList(new Movie(), new Movie(), new Movie());
+        PageRequest pageable = PageRequest.of(0, 5);
+        Page<Movie> moviePage = new PageImpl<>(movieList, pageable, movieList.size());
+
+        Page<MovieDTO> returnDTO = movieService.getPageMovieDTO(moviePage, pageable);
+
+        assertEquals(returnDTO.getTotalPages(), 1);
+        assertEquals(returnDTO.getContent().size(), 3);
+    }
+
+
     @DisplayName("Happy Path, method = getMovieByID")
     @Test
     void getMovieByIDHappyPath() {
