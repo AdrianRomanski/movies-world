@@ -21,6 +21,7 @@ import adrianromanski.movies.model.base_entity.MovieDTO;
 import adrianromanski.movies.repositories.award.AwardRepository;
 import adrianromanski.movies.repositories.base_entity.CategoryRepository;
 import adrianromanski.movies.repositories.base_entity.MovieRepository;
+import adrianromanski.movies.repositories.pages.MoviePageRepository;
 import adrianromanski.movies.repositories.person.ActorRepository;
 import adrianromanski.movies.services.movie.MovieService;
 import adrianromanski.movies.services.movie.MovieServiceImpl;
@@ -29,6 +30,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 
 import java.time.LocalDate;
 import java.util.*;
@@ -54,6 +58,9 @@ class MovieServiceImplTest {
     MovieRepository movieRepository;
 
     @Mock
+    MoviePageRepository moviePageRepository;
+
+    @Mock
     ActorRepository actorRepository;
 
     @Mock
@@ -73,7 +80,7 @@ class MovieServiceImplTest {
         MovieAwardMapper awardMapper = new MovieAwardMapperImpl();
         CategoryMapper categoryMapper = new CategoryMapperImpl();
         MovieMapper movieMapper = new MovieMapperImpl(); // I have to do something with this ugly init - That should be singleton!!!!!
-        movieService = new MovieServiceImpl(movieRepository, categoryRepository, actorRepository,awardRepository, jms,
+        movieService = new MovieServiceImpl(movieRepository, moviePageRepository, categoryRepository, actorRepository,awardRepository, jms,
                                             movieMapper, categoryMapper, awardMapper);
     }
 
@@ -110,6 +117,24 @@ class MovieServiceImplTest {
         List<MovieDTO> returnDTO = movieService.getAllMovies();
 
         assertEquals(returnDTO.size(), 3);
+    }
+
+
+    @DisplayName("Happy Path, method = getAllMoviesPaged")
+    @Test
+    void getAllMoviesPaged() {
+        List<Movie> movies = getMovies();
+
+        PageRequest pageable = PageRequest.of(0, 3);
+
+        Page<Movie> moviePage = new PageImpl<>(movies, pageable, movies.size());
+
+        when(moviePageRepository.findAll(pageable)).thenReturn(moviePage);
+
+        Page<Movie> returnMovie = movieService.getAllMoviesPaged(pageable);
+
+        assertEquals(returnMovie.getTotalElements(), 3);
+        assertEquals(returnMovie.getTotalPages(), 1);
     }
 
 

@@ -1,7 +1,10 @@
 package adrianromanski.movies.services.movie;
 
+import adrianromanski.movies.domain.base_entity.Movie;
 import adrianromanski.movies.model.award.MovieAwardDTO;
 import adrianromanski.movies.model.base_entity.MovieDTO;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Map;
@@ -10,6 +13,8 @@ public interface MovieService {
 
     //GET
     List<MovieDTO> getAllMovies();
+
+    Page<Movie> getAllMoviesPaged(Pageable pageable);
 
     MovieDTO getMovieByID(Long id);
 

@@ -39,7 +39,7 @@
             Movies <span class="caret"></span>
         </a>
         <ul class="dropdown-menu">
-            <li><a href="#" th:href="@{'/admin/showMovies/'}" type="button" >Show All Movies</a></li>
+            <li><a href="#" th:href="@{'/admin/showMovies/page/1'}" type="button" >Show All Movies</a></li>
             <li><a href="#" th:href="@{'/admin/createMovie/'}" type="button">Create New Movie</a></li>
         </ul>
     </li>
@@ -80,7 +80,7 @@
                                     <td>Something went wrong</td>
                                     <td>Something went wrong</td>
                                 </tr>
-                                <tr th:each="category, iStat : ${categoryList}">
+                                <tr th:each="category : ${categoryList}">
                                     <td class="category-name" th:text="${category.name}"></td>
                                     <td th:text="${category.description}"></td>
                                     <td class="col-md-1">

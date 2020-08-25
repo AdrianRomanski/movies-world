@@ -11,7 +11,7 @@ import adrianromanski.movies.mapper.base_entity.MovieMapperImpl;
 import adrianromanski.movies.model.base_entity.CategoryDTO;
 import adrianromanski.movies.model.base_entity.MovieDTO;
 import adrianromanski.movies.repositories.base_entity.CategoryRepository;
-import adrianromanski.movies.repositories.pages.CategoryPage;
+import adrianromanski.movies.repositories.pages.CategoryPageRepository;
 import adrianromanski.movies.services.category.CategoryService;
 import adrianromanski.movies.services.category.CategoryServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,6 +19,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 
 import java.util.Arrays;
 import java.util.List;
@@ -37,7 +40,7 @@ class CategoryServiceImplTest {
     CategoryRepository categoryRepository;
 
     @Mock
-    CategoryPage categoryPage;
+    CategoryPageRepository categoryPageRepository;
 
     @Mock
     JmsTextMessageService jms;
@@ -51,7 +54,7 @@ class CategoryServiceImplTest {
 
         CategoryMapper categoryMapper = new CategoryMapperImpl();
         MovieMapper movieMapper = new MovieMapperImpl();
-        categoryService = new CategoryServiceImpl(categoryRepository, categoryPage, jms, categoryMapper, movieMapper);
+        categoryService = new CategoryServiceImpl(categoryRepository, categoryPageRepository, jms, categoryMapper, movieMapper);
     }
 
     private Category getCategory() {
@@ -73,6 +76,23 @@ class CategoryServiceImplTest {
         List<CategoryDTO> returnDTO = categoryService.getAllCategories();
 
         assertEquals(returnDTO.size(), 3);
+    }
+
+
+    @DisplayName("Happy Path, method = getAllCategoriesPaged")
+    @Test
+    void getAllCategoriesPaged() {
+        List<Category> categoryList = Arrays.asList(new Category(), new Category(), new Category());
+
+        PageRequest pageable = PageRequest.of(0, 3);
+
+        Page<Category> categoryPage = new PageImpl<>(categoryList, pageable, categoryList.size());
+
+        when(categoryPageRepository.findAll(pageable)).thenReturn(categoryPage);
+
+        Page<Category> returnDTO = categoryService.getAllCategoriesPaged(pageable);
+
+        assertEquals(returnDTO.getTotalElements(), 3);
     }
 
 

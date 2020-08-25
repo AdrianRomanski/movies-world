@@ -37,11 +37,10 @@ public class ImageMovieController {
     @PostMapping("movie/{id}/image")
     public String handleImagePost(@PathVariable String id, Model model,
                                   @RequestParam("imagefile") MultipartFile file) throws IOException {
-        System.out.println("Am i here - handleImagePost");
         var movie = movieService.getMovieByID(Long.valueOf(id));
         imageService.saveImageFile(movie, file);
-        model.addAttribute("movies", movieService.getAllMovies());
-        return "admin/movie/showMoviesForm";
+//        model.addAttribute("movies", movieService.getAllMovies());
+        return "admin/adminHome";
     }
 
 

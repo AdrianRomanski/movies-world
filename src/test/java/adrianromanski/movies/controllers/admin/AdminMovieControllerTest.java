@@ -1,5 +1,6 @@
 package adrianromanski.movies.controllers.admin;
 
+import adrianromanski.movies.domain.base_entity.Movie;
 import adrianromanski.movies.mapper.base_entity.MovieMapper;
 import adrianromanski.movies.mapper.base_entity.MovieMapperImpl;
 import adrianromanski.movies.model.base_entity.MovieDTO;
@@ -10,9 +11,15 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
+import java.util.Arrays;
+import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -50,11 +57,19 @@ class AdminMovieControllerTest {
 
 
     @Test
-    @DisplayName("Happy Path, method = showMovies")
-    void showMovies() throws Exception {
-        mockMvc.perform(get("/admin/showMovies"))
+    @DisplayName("Happy Path, method = showMoviesPaged")
+    void showMoviesPaged() throws Exception {
+        List<Movie> movieList = Arrays.asList(new Movie(), new Movie(), new Movie());
+
+        PageRequest pageable = PageRequest.of(0, 5);
+
+        Page<Movie> moviePage = new PageImpl<>(movieList, pageable, movieList.size());
+
+        when(movieService.getAllMoviesPaged(pageable)).thenReturn(moviePage);
+
+        mockMvc.perform(get("/admin/showMovies/page/1"))
                 .andExpect(status().isOk())
-                .andExpect(model().attributeExists("movies"))
+                .andExpect(model().attributeExists("moviesList"))
                 .andExpect(view().name("admin/movie/showMoviesForm"));
     }
 
@@ -64,7 +79,7 @@ class AdminMovieControllerTest {
     void createMovie() throws Exception {
         mockMvc.perform(get("/admin/createMovie"))
                 .andExpect(status().isOk())
-                .andExpect(model().attributeExists("movie"))
+                .andExpect(model().attributeExists("movieDTO"))
                 .andExpect(view().name("admin/movie/createMovieForm"));
     }
 
@@ -84,7 +99,7 @@ class AdminMovieControllerTest {
                 .param("description", DESCRIPTION)
         )
                 .andExpect(status().isOk())
-                .andExpect(model().attributeExists("movie"))
+                .andExpect(model().attributeExists("movieDTO"))
                 .andExpect(view().name("admin/movie/selectCategoryForMovieForm"));
     }
 
@@ -103,7 +118,7 @@ class AdminMovieControllerTest {
                 .param("name", "n")
                 .param("description", "n")
         )
-                .andExpect(model().attributeExists("movie"))
+                .andExpect(model().attributeExists("movieDTO"))
                 .andExpect(view().name("admin/movie/createMovieForm"));
     }
 
@@ -123,8 +138,7 @@ class AdminMovieControllerTest {
     @DisplayName("Happy Path, method = addImageToMovie")
     void addImageToMovie() throws Exception {
         mockMvc.perform(get("/admin/createMovie-1/addImage"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("admin/movie/showMoviesForm"));
+                .andExpect(status().isOk());
     }
 
 
@@ -152,8 +166,8 @@ class AdminMovieControllerTest {
                 .param("description", DESCRIPTION)
         )
                 .andExpect(status().isOk())
-                .andExpect(model().attributeExists("movie"))
-                .andExpect(view().name("admin/movie/showMoviesForm"));
+                .andExpect(model().attributeExists("movieDTO"))
+                .andExpect(view().name("admin/adminHome"));
     }
 
 
@@ -171,7 +185,7 @@ class AdminMovieControllerTest {
                 .param("name", "n")
                 .param("description", "n")
         )
-                .andExpect(model().attributeExists("movie"))
+                .andExpect(model().attributeExists("movieDTO"))
                 .andExpect(view().name("admin/movie/updateMovieForm"));
     }
 
@@ -182,6 +196,6 @@ class AdminMovieControllerTest {
         mockMvc.perform(get("/admin/deleteMovie/1"))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("movies"))
-                .andExpect(view().name("admin/movie/showMoviesForm"));
+                .andExpect(view().name("admin/adminHome"));
     }
 }

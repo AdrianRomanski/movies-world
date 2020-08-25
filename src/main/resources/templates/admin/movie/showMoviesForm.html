@@ -41,7 +41,7 @@
             Movies <span class="caret"></span>
         </a>
         <ul class="dropdown-menu">
-            <li><a href="#" th:href="@{'/admin/showMovies/'}" type="button" >Show All Movies</a></li>
+            <li><a href="#" th:href="@{'/admin/showMovies/page/1'}" type="button" >Show All Movies</a></li>
             <li><a href="#" th:href="@{'/admin/createMovie/'}" type="button">Create New Movie</a></li>
         </ul>
     </li>
@@ -87,9 +87,9 @@
                                     <td class="category-name">Description</td>
                                 </tr>
 
-                                <tr th:each="movie : ${movies}">
+                                <tr th:each="movie : ${moviesList}">
                                     <td th:text="${movie.name}"></td>
-                                    <td th:text="${movie.categoryDTO.name}"> </td>
+                                    <td th:text="${movie.category.name}"> </td>
                                     <td th:text="${movie.description}"></td>
                                     <td class="col-md-1">
                                         <a class="btn btn-info" href="#"
@@ -109,6 +109,19 @@
                                 <a class="btn btn-success" href="#"
                                    th:href="@{'/admin/createMovie'}" role="button">New Movie</a>
                             </div>
+                        </div>
+                        <div class="row" th:fragment="pagination">
+                            <div class="col-md-2"></div>
+                            <div class="col-md-8">
+                                <nav aria-label="Pagination">
+                                    <ul class="pagination justify-content-center">
+                                        <li class="page-item" th:each="pageNumber : ${pageNumbers}" >
+                                            <a class="page-link" th:href="@{|/admin/showMovies/page/${pageNumber}|}" th:text=${pageNumber}>1</a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
+                            <div class="col-md-2"></div>
                         </div>
                     </div>
                 </div>

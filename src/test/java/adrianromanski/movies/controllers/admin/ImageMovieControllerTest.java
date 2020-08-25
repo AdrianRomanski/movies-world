@@ -74,7 +74,7 @@ class ImageMovieControllerTest {
 
         mockMvc.perform(multipart("/movie/1/image").file(multipartFile))
                 .andExpect(status().is2xxSuccessful())
-                .andExpect(view().name("admin/movie/showMoviesForm"));
+                .andExpect(view().name("admin/adminHome"));
     }
 
 

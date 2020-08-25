@@ -14,7 +14,10 @@ import adrianromanski.movies.model.base_entity.MovieDTO;
 import adrianromanski.movies.repositories.award.AwardRepository;
 import adrianromanski.movies.repositories.base_entity.CategoryRepository;
 import adrianromanski.movies.repositories.base_entity.MovieRepository;
+import adrianromanski.movies.repositories.pages.MoviePageRepository;
 import adrianromanski.movies.repositories.person.ActorRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,12 +25,14 @@ import java.util.Map;
 
 import static java.util.Collections.reverseOrder;
 import static java.util.Comparator.comparing;
-import static java.util.stream.Collectors.*;
+import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.toList;
 
 @Service
 public class MovieServiceImpl implements MovieService {
 
     private final MovieRepository movieRepository;
+    private final MoviePageRepository moviePageRepository;
     private final CategoryRepository categoryRepository;
     private final ActorRepository actorRepository;
     private final AwardRepository awardRepository;
@@ -38,9 +43,10 @@ public class MovieServiceImpl implements MovieService {
 
 
 
-    public MovieServiceImpl(MovieRepository movieRepository, CategoryRepository categoryRepository, ActorRepository actorRepository, AwardRepository awardRepository,
+    public MovieServiceImpl(MovieRepository movieRepository, MoviePageRepository moviePageRepository, CategoryRepository categoryRepository, ActorRepository actorRepository, AwardRepository awardRepository,
                             JmsTextMessageService jmsTextMessageService, MovieMapper movieMapper, CategoryMapper categoryMapper, MovieAwardMapper awardMapper) {
         this.movieRepository = movieRepository;
+        this.moviePageRepository = moviePageRepository;
         this.categoryRepository = categoryRepository;
         this.actorRepository = actorRepository;
         this.awardRepository = awardRepository;
@@ -60,6 +66,19 @@ public class MovieServiceImpl implements MovieService {
                 .stream()
                 .map(movieMapper::movieToMovieDTO)
                 .collect(toList());
+    }
+
+    /**
+     * @return All Movies from database Paged
+     */
+    @Override
+    public Page<Movie> getAllMoviesPaged(Pageable pageable) {
+//        List<MovieDTO> moviesDT0 = movieRepository.findAll()
+//                .stream()
+//                .map(movieMapper::movieToMovieDTO)
+//                .collect(toList());
+//        return new PageImpl<>(moviesDT0, pageable, moviesDT0.size());
+        return moviePageRepository.findAll(pageable);
     }
 
 

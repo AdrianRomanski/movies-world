@@ -7,7 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Component;
 
 @Component
-public interface CategoryPage extends CrudRepository<Category, Long> {
+public interface CategoryPageRepository extends CrudRepository<Category, Long> {
 
     Page<Category> findAll(Pageable pageable);
 
