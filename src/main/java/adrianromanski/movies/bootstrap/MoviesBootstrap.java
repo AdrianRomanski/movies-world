@@ -35,81 +35,8 @@ public class MoviesBootstrap implements ApplicationListener<ContextRefreshedEven
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
 
-
         initScienceFiction();
-
-        // The Lord Of The Rings
-        Byte[] lordOfTheRings1Image = getBytes("src/main/resources/static/images/fantasy/lord_of_the_rings/part1.jpg");
-        Byte[] lordOfTheRings2Image = getBytes("src/main/resources/static/images/fantasy/lord_of_the_rings/part2.jpg");
-        Byte[] lordOfTheRings3Image = getBytes("src/main/resources/static/images/fantasy/lord_of_the_rings/part3.jpg");
-
-        Movie lordOfTheRings1 = Movie.builder().name("The Lord of the Rings: Fellowship of the rings").image(lordOfTheRings1Image)
-                .description("A meek Hobbit from the Shire and eight companions set out on a journey to destroy the powerful One Ring and save Middle-earth from the Dark Lord Sauron.").build();
-
-        Movie lordOfTheRings2 = Movie.builder().name("The Lord of the Rings: Two Towers").image(lordOfTheRings2Image)
-                .description("While Frodo and Sam edge closer to Mordor with the help of the shifty Gollum, the divided fellowship makes a stand against Sauron's new ally, Saruman, and his hordes of Isengard.").build();
-
-        Movie lordOfTheRings3 = Movie.builder().name("The Lord of the Rings: The Return of the King").image(lordOfTheRings3Image)
-                .description("Gandalf and Aragorn lead the World of Men against Sauron's army to draw his gaze from Frodo and Sam as they approach Mount Doom with the One Ring.").build();
-
-        // Harry Potter
-        Byte[] harryPotter1Image = getBytes("src/main/resources/static/images/fantasy/harryPotter/part1.jpg");
-        Byte[] harryPotter2Image = getBytes("src/main/resources/static/images/fantasy/harryPotter/part2.jpg");
-        Byte[] harryPotter3Image = getBytes("src/main/resources/static/images/fantasy/harryPotter/part3.jpg");
-        Byte[] harryPotter4Image = getBytes("src/main/resources/static/images/fantasy/harryPotter/part4.jpg");
-        Byte[] harryPotter5Image = getBytes("src/main/resources/static/images/fantasy/harryPotter/part5.jpg");
-        Byte[] harryPotter6Image = getBytes("src/main/resources/static/images/fantasy/harryPotter/part6.jpg");
-
-        Movie harryPotter1 = Movie.builder().name("Harry Potter and the Sorcerer's Stone").image(harryPotter1Image)
-                .description("An orphaned boy enrolls in a school of wizardry, where he learns the truth about himself, his family and the terrible evil that haunts the magical world.").build();
-
-        Movie harryPotter2 = Movie.builder().name("Harry Potter and the Chamber of Secrets ").image(harryPotter2Image)
-                .description("An ancient prophecy seems to be coming true when a mysterious presence begins stalking the corridors of a school of magic and leaving its victims paralyzed.").build();
-
-        Movie harryPotter3 = Movie.builder().name("Harry Potter and the Prisoner of Azkaban ").image(harryPotter3Image)
-                .description("Harry Potter, Ron and Hermione return to Hogwarts School of Witchcraft and Wizardry for their third year of study, " +
-                        "where they delve into the mystery surrounding an escaped prisoner who poses a dangerous threat to the young wizard.").build();
-
-        Movie harryPotter4 = Movie.builder().name("Harry Potter and the Goblet of Fire").image(harryPotter4Image)
-                .description("Harry Potter finds himself competing in a hazardous tournament between rival schools of magic, but he is distracted by recurring nightmares.").build();
-
-        Movie harryPotter5 = Movie.builder().name("Harry Potter and the Order of the Phoenix ").image(harryPotter5Image)
-                .description("With their warning about Lord Voldemort's return scoffed at, Harry and Dumbledore are targeted by the Wizard authorities as an authoritarian bureaucrat slowly seizes power at Hogwarts.").build();
-
-        Movie harryPotter6 = Movie.builder().name("Harry Potter and the Half-Blood Prince").image(harryPotter6Image)
-                .description("As Harry Potter begins his sixth year at Hogwarts, he discovers an old book marked as the property of the Half-Blood Prince and begins to learn more about Lord Voldemort's dark past.").build();
-
-
-        // Categories Images
-        Byte[] fantasyImage = getBytes("src/main/resources/static/images/fantasy.jpg");
-
-        Category fantasy = Category.builder().name("Fantasy").image(fantasyImage)
-                .description("Fantasy films are films that belong to the fantasy genre with fantastic themes, usually magic, " +
-                        "supernatural events, mythology, folklore, or exotic fantasy worlds")
-                .movies(Arrays.asList(lordOfTheRings1, lordOfTheRings2, lordOfTheRings3, harryPotter1, harryPotter2, harryPotter3, harryPotter4, harryPotter5, harryPotter6)).build();
-
-        lordOfTheRings1.setCategory(fantasy);
-        lordOfTheRings2.setCategory(fantasy);
-        lordOfTheRings3.setCategory(fantasy);
-        harryPotter1.setCategory(fantasy);
-        harryPotter2.setCategory(fantasy);
-        harryPotter3.setCategory(fantasy);
-        harryPotter4.setCategory(fantasy);
-        harryPotter5.setCategory(fantasy);
-        harryPotter6.setCategory(fantasy);
-
-
-        categoryRepository.save(fantasy);
-        movieRepository.save(lordOfTheRings1);
-        movieRepository.save(lordOfTheRings2);
-        movieRepository.save(lordOfTheRings3);
-        movieRepository.save(harryPotter1);
-        movieRepository.save(harryPotter2);
-        movieRepository.save(harryPotter3);
-        movieRepository.save(harryPotter4);
-        movieRepository.save(harryPotter5);
-        movieRepository.save(harryPotter6);
-
+        initFantasy();
 
         Byte[] horrorImage = getBytes("src/main/resources/static/images/categories/horror.jpg");
         Byte[] actionImage = getBytes("src/main/resources/static/images/categories/action.jpg");
@@ -154,10 +81,104 @@ public class MoviesBootstrap implements ApplicationListener<ContextRefreshedEven
         categoryRepository.save(animated);
         categoryRepository.save(historical);
 
+    }
+
+    private void initFantasy() throws IOException {
+        // The Lord Of The Rings
+        Byte[] lordOfTheRings1Image = getBytes("src/main/resources/static/images/fantasy/lord_of_the_rings/part1.jpg");
+        Byte[] lordOfTheRings2Image = getBytes("src/main/resources/static/images/fantasy/lord_of_the_rings/part2.jpg");
+        Byte[] lordOfTheRings3Image = getBytes("src/main/resources/static/images/fantasy/lord_of_the_rings/part3.jpg");
+
+        Movie lordOfTheRings1 = Movie.builder().name("The Lord of the Rings: Fellowship of the rings").image(lordOfTheRings1Image)
+                .description("A meek Hobbit from the Shire and eight companions set out on a journey to destroy the powerful One Ring and save Middle-earth from the Dark Lord Sauron.").build();
+
+        Movie lordOfTheRings2 = Movie.builder().name("The Lord of the Rings: Two Towers").image(lordOfTheRings2Image)
+                .description("While Frodo and Sam edge closer to Mordor with the help of the shifty Gollum, the divided fellowship makes a stand against Sauron's new ally, Saruman, and his hordes of Isengard.").build();
+
+        Movie lordOfTheRings3 = Movie.builder().name("The Lord of the Rings: The Return of the King").image(lordOfTheRings3Image)
+                .description("Gandalf and Aragorn lead the World of Men against Sauron's army to draw his gaze from Frodo and Sam as they approach Mount Doom with the One Ring.").build();
+
+        // Harry Potter
+        Byte[] harryPotter1Image = getBytes("src/main/resources/static/images/fantasy/harryPotter/part1.jpg");
+        Byte[] harryPotter2Image = getBytes("src/main/resources/static/images/fantasy/harryPotter/part2.jpg");
+        Byte[] harryPotter3Image = getBytes("src/main/resources/static/images/fantasy/harryPotter/part3.jpg");
+        Byte[] harryPotter4Image = getBytes("src/main/resources/static/images/fantasy/harryPotter/part4.jpg");
+        Byte[] harryPotter5Image = getBytes("src/main/resources/static/images/fantasy/harryPotter/part5.jpg");
+        Byte[] harryPotter6Image = getBytes("src/main/resources/static/images/fantasy/harryPotter/part6.jpg");
+        Byte[] harryPotter7Image = getBytes("src/main/resources/static/images/fantasy/harryPotter/part7.jpg");
+        Byte[] harryPotter8Image = getBytes("src/main/resources/static/images/fantasy/harryPotter/part8.jpg");
+
+        Movie harryPotter1 = Movie.builder().name("Harry Potter and the Sorcerer's Stone").image(harryPotter1Image)
+                .description("An orphaned boy enrolls in a school of wizardry, where he learns the truth about himself, his family and the terrible evil that haunts the magical world.").build();
+
+        Movie harryPotter2 = Movie.builder().name("Harry Potter and the Chamber of Secrets ").image(harryPotter2Image)
+                .description("An ancient prophecy seems to be coming true when a mysterious presence begins stalking the corridors of a school of magic and leaving its victims paralyzed.").build();
+
+        Movie harryPotter3 = Movie.builder().name("Harry Potter and the Prisoner of Azkaban ").image(harryPotter3Image)
+                .description("Harry Potter, Ron and Hermione return to Hogwarts School of Witchcraft and Wizardry for their third year of study, " +
+                        "where they delve into the mystery surrounding an escaped prisoner who poses a dangerous threat to the young wizard.").build();
+
+        Movie harryPotter4 = Movie.builder().name("Harry Potter and the Goblet of Fire").image(harryPotter4Image)
+                .description("Harry Potter finds himself competing in a hazardous tournament between rival schools of magic, but he is distracted by recurring nightmares.").build();
+
+        Movie harryPotter5 = Movie.builder().name("Harry Potter and the Order of the Phoenix ").image(harryPotter5Image)
+                .description("With their warning about Lord Voldemort's return scoffed at, Harry and Dumbledore are targeted by the Wizard authorities as an authoritarian bureaucrat slowly seizes power at Hogwarts.").build();
+
+        Movie harryPotter6 = Movie.builder().name("Harry Potter and the Half-Blood Prince").image(harryPotter6Image)
+                .description("As Harry Potter begins his sixth year at Hogwarts, he discovers an old book marked as the property of the Half-Blood Prince and begins to learn more about Lord Voldemort's dark past.").build();
 
 
+        Movie harryPotter7 = Movie.builder().name("Harry Potter and the Deathly Hallows: Part 1").image(harryPotter7Image)
+                .description("As Harry, Ron and Hermione race against time and evil to destroy the Horcruxes, they uncover the existence of the three most powerful objects in the wizarding world: the Deathly Hallows.").build();
 
 
+        Movie harryPotter8 = Movie.builder().name("Harry Potter and the Deathly Hallows: Part 1").image(harryPotter8Image)
+                .description("Harry, Ron, and Hermione search for Voldemort's remaining Horcruxes in their effort to destroy the Dark Lord as the final battle rages on at Hogwarts.").build();
+
+
+        // Spiderman
+        Byte[] spiderManImage = getBytes("src/main/resources/static/images/fantasy/spiderMan/part1.jpg");
+
+        Movie spiderMan = Movie.builder().name("Spider-Man").image(spiderManImage)
+                .description("When bitten by a genetically modified spider, a nerdy, shy, and awkward high school student gains spider-like abilities that he eventually must use" +
+                        "to fight evil as a superhero after tragedy befalls his family.").build();
+
+
+        // Categories Images
+        Byte[] fantasyImage = getBytes("src/main/resources/static/images/fantasy.jpg");
+
+        Category fantasy = Category.builder().name("Fantasy").image(fantasyImage)
+                .description("Fantasy films are films that belong to the fantasy genre with fantastic themes, usually magic, " +
+                        "supernatural events, mythology, folklore, or exotic fantasy worlds")
+                .movies(Arrays.asList(lordOfTheRings1, lordOfTheRings2, lordOfTheRings3, harryPotter1, harryPotter2, harryPotter3, harryPotter4, harryPotter5, harryPotter6, harryPotter7, harryPotter8, spiderMan)).build();
+
+        lordOfTheRings1.setCategory(fantasy);
+        lordOfTheRings2.setCategory(fantasy);
+        lordOfTheRings3.setCategory(fantasy);
+        harryPotter1.setCategory(fantasy);
+        harryPotter2.setCategory(fantasy);
+        harryPotter3.setCategory(fantasy);
+        harryPotter4.setCategory(fantasy);
+        harryPotter5.setCategory(fantasy);
+        harryPotter6.setCategory(fantasy);
+        harryPotter7.setCategory(fantasy);
+        harryPotter8.setCategory(fantasy);
+        spiderMan.setCategory(fantasy);
+
+
+        categoryRepository.save(fantasy);
+        movieRepository.save(lordOfTheRings1);
+        movieRepository.save(lordOfTheRings2);
+        movieRepository.save(lordOfTheRings3);
+        movieRepository.save(harryPotter1);
+        movieRepository.save(harryPotter2);
+        movieRepository.save(harryPotter3);
+        movieRepository.save(harryPotter4);
+        movieRepository.save(harryPotter5);
+        movieRepository.save(harryPotter6);
+        movieRepository.save(harryPotter7);
+        movieRepository.save(harryPotter8);
+        movieRepository.save(spiderMan);
     }
 
     private void initScienceFiction() throws IOException {

@@ -171,9 +171,79 @@ img {
 
 .admin-navbar {
     font-size: 30px;
-
 }
 
+
+/*User Home Page*/
+.home-listing {
+    background-color: #f7f7f7;
+    border: 1px solid #f1f3f0;
+    border-radius: 9px;
+    box-shadow: 0 1px #f1f3f0;
+    cursor: pointer;
+    height: 250px;
+    margin-bottom: 50px;
+    padding: 0;
+}
+
+
+.home-listing .home-listing-title {
+    color: #4169E1;
+    font-size: 35px;
+    font-weight: bold;
+    line-height: 25px;
+    max-height: 75px;
+    overflow: hidden;
+    padding: 16px 16px 35px;
+}
+
+.home-listing .home-listing-description {
+    color: #586f6f;
+    font-size: 30px;
+    font-weight: 200;
+    max-height: 100px;
+    overflow: hidden;
+    padding: 5px 15px;
+}
+
+.home-listing .home-listing-extra-info .home-price {
+    color: #4169E1 !important;
+    font-size: 15px;
+    font-weight: bold;
+    line-height: 34px;
+    margin-right: 70px;
+    margin-top: -18px;
+    text-align: right;
+}
+
+.home-listing .home-listing-extra-info .home-author-name {
+    font-size: 15px;
+    font-weight: 200;
+    line-height: 30px;
+    max-height: 30px;
+    margin-top: 4px;
+    margin-right: 40px;
+    margin-bottom: 5px;
+    text-align: right;
+}
+
+.home-listing .home-box-image-container {
+    /*max-height: 220px;*/
+    overflow: hidden;
+    display: block;
+    background-size: cover;
+}
+
+.home-listing .home-box-image-container .home-box-image {
+    border-bottom: 1px solid #ededed;
+    border-top-left-radius: 9px;
+    border-top-right-radius: 9px;
+    display: block;
+    margin: auto;
+    width: 100%;
+    height: 450px;
+    background-size: cover;
+}
 
 
 

@@ -17,9 +17,8 @@ import java.util.List;
 
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 class CategoryControllerTest {
 
@@ -38,8 +37,8 @@ class CategoryControllerTest {
         mockMvc = MockMvcBuilders.standaloneSetup(categoryController).build();
     }
 
-    @DisplayName("GET, HappyPath, method = getAllMoviesForCategory")
     @Test
+    @DisplayName("GET, HappyPath, method = getAllMoviesForCategory")
     void getAllMoviesForCategory() throws Exception {
         List<MovieDTO> movies = Arrays.asList( new MovieDTO(),  new MovieDTO(), new MovieDTO());
 
@@ -48,5 +47,13 @@ class CategoryControllerTest {
         mockMvc.perform(get("/category/fantasy"))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("movies"));
+    }
+
+    @Test
+    @DisplayName("GET, HappyPath, method = getAllCategories")
+    void getAllCategories() throws Exception {
+        mockMvc.perform(get("/categories"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("user/categories"));
     }
 }

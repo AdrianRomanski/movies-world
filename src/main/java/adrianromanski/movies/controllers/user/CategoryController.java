@@ -19,7 +19,13 @@ public class CategoryController {
     @GetMapping("category/{categoryName}")
     public String getAllMoviesForCategory(@PathVariable String categoryName, Model model) {
         model.addAttribute("movies", categoryService.getAllMoviesForCategory(categoryName));
-        return "category";
+        return "user/categoryMovies";
+    }
+
+    @GetMapping("/categories")
+    public String getAllCategories(Model model) {
+        model.addAttribute("Categories", categoryService.getAllCategories());
+        return "user/categories";
     }
 
 }

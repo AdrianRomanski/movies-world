@@ -1,38 +1,32 @@
-package adrianromanski.movies.controllers;
+package adrianromanski.movies.controllers.user;
 
-import adrianromanski.movies.controllers.user.HomeController;
-import adrianromanski.movies.services.category.CategoryService;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 class HomeControllerTest {
 
-    @InjectMocks
-    HomeController homeController;
-
-    @Mock
-    CategoryService categoryService;
+    HomeController controller;
 
     MockMvc mockMvc;
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.initMocks(this);
+        controller = new HomeController();
 
-        mockMvc = MockMvcBuilders.standaloneSetup(homeController).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
     }
 
+
     @Test
-    void home() throws Exception {
+    @DisplayName("GET, HappyPath, method = getHome")
+    void getAllCategories() throws Exception {
         mockMvc.perform(get("/"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("user/home"));
