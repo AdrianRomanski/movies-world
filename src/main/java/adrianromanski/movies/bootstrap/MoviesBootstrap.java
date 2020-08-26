@@ -33,6 +33,7 @@ public class MoviesBootstrap implements ApplicationListener<ContextRefreshedEven
 
     @SneakyThrows
     @Override
+    // Checking build
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
 
         initScienceFiction();
