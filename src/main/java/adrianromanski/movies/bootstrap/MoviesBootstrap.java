@@ -39,9 +39,108 @@ public class MoviesBootstrap implements ApplicationListener<ContextRefreshedEven
         initScienceFiction();
         initFantasy();
 
+
+
+        Byte[] comedyImage = getBytes("src/main/resources/static/images/categories/comedy.jpg");
+
+        Byte[] american_pie_img = getBytes("src/main/resources/static/images/comedy/american_pie.jpg");
+        Byte[] hangover_img = getBytes("src/main/resources/static/images/comedy/hangover.jpg");
+        Byte[] scary_movie_img = getBytes("src/main/resources/static/images/comedy/scary_movie.jpg");
+        Byte[] truman_img = getBytes("src/main/resources/static/images/comedy/truman_show.jpg");
+        Byte[] home_alone_img = getBytes("src/main/resources/static/images/comedy/home_alone.jpg");
+        Byte[] blended_img = getBytes("src/main/resources/static/images/comedy/blended.jpg");
+        Byte[] groundHog_img = getBytes("src/main/resources/static/images/comedy/groundhog.jpg");
+        Byte[] happyGilmore_img = getBytes("src/main/resources/static/images/comedy/happy_gilmore.jpg");
+        Byte[] comingAmerica_img = getBytes("src/main/resources/static/images/comedy/coming_america.jpg");
+        Byte[] euro_trip_img = getBytes("src/main/resources/static/images/comedy/eurotrip.jpg");
+        Byte[] shrunked_kids = getBytes("src/main/resources/static/images/comedy/shrunked_kids.jpg");
+        Byte[] dumb_and_dumber_img = getBytes("src/main/resources/static/images/comedy/dumb_and_dumber.jpg");
+
+
+        Movie americanPie = Movie.builder().name("American Pie").image(american_pie_img).minutes(95L)
+                .description("Jim, Oz, Finch and Kevin are four friends who make a pact that before they graduate they will all lose their virginity. The hard job now is how to reach that goal by prom night.").build();
+
+        Movie hangover = Movie.builder().name("The Hangover").image(hangover_img).minutes(100L)
+                .description("Three buddies wake up from a bachelor party in Las Vegas, with no memory of the previous night and the bachelor missing. " +
+                        "They make their way around the city in order to find their friend before his wedding.").build();
+
+        Movie scaryMovie = Movie.builder().name("Scary Movie").image(scary_movie_img).minutes(88L)
+                .description("A year after disposing of the body of a man they accidentally killed, a group of dumb teenagers are stalked by a bumbling serial killer.").build();
+
+        Movie trumanShow = Movie.builder().name("The Truman Show").image(truman_img).minutes(103L)
+                .description("Since birth, a big fat lie defines the well-organised but humdrum life of the kind-hearted insurance salesman and ambitious explorer, Truman Burbank. " +
+                        "Utterly unaware of the thousands of cleverly hidden cameras watching his every move").build();
+
+        Movie homeAlone = Movie.builder().name("Home Alone ").image(home_alone_img).minutes(103L)
+                .description("An eight-year-old troublemaker must protect his house from a pair of burglars when he is accidentally left home alone by his family during Christmas vacation.").build();
+
+        Movie blended = Movie.builder().name("Blended").image(blended_img).minutes(117L)
+                .description("After a bad blind date, a man and woman find themselves stuck together at a resort for families, where their attraction grows as their respective kids benefit from the burgeoning relationship.").build();
+
+        Movie groundhogDay = Movie.builder().name("Groundhog Day").image(groundHog_img).minutes(101L)
+                .description("A weather man is reluctantly sent to cover a story about a weather forecasting. On awaking the 'following' day he discovers that it's Groundhog Day again, and again, and again. ").build();
+
+        Movie happyGilmore = Movie.builder().name("Happy Gilmore").image(happyGilmore_img).minutes(92L)
+                .description("A Hockey player wannabe finds out that he has the most powerful golf drive in history. He joins the P.G.A. tour to make some money to save grandma's house. " +
+                        "The downside is that his hockey player mentality doesn't really go on the P.G.A. tour").build();
+
+        Movie comingToAmerica = Movie.builder().name("Coming to America").image(comingAmerica_img).minutes(114L)
+                .description("Immersed in luxury and riches, the courteous blue blood and refined heir apparent to Africa's prosperous kingdom of Zamunda, " +
+                        "Prince Akeem, summons up the courage to reject an arranged marriage proposal on his twenty-first birthday.").build();
+
+        Movie euroTrip = Movie.builder().name("Euro Trip").image(euro_trip_img).minutes(117L)
+                .description("Ohio high school student Scott Thomas - who is about to graduate and go into pre-med. " +
+                        "Dumped by his girlfriend, a high school grad decides to embark on an overseas adventure in Europe with his friends.").build();
+
+        Movie shrunkKids = Movie.builder().name("Honey, I Shrunk the Kids").image(shrunked_kids).minutes(93L)
+                .description("The scientist father of a teenage girl and boy accidentally shrinks his and two other neighborhood teens to the size of insects." +
+                        " Now the teens must fight diminutive dangers as the father searches for them.").build();
+
+        Movie dumbAndDumber = Movie.builder().name("Dumb and Dumber").image(dumb_and_dumber_img).minutes(107L)
+                .description("After a woman leaves a briefcase at the airport terminal, a dumb limo driver and his dumber friend set out on a hilarious cross-country road trip to Aspen to return it.").build();
+
+
+        Category comedy = Category.builder().name("Comedy").image(comedyImage)
+                .movies(Arrays.asList(americanPie, hangover, scaryMovie, trumanShow, homeAlone, blended, groundhogDay, happyGilmore, comingToAmerica, euroTrip, shrunkKids, dumbAndDumber))
+                .description("A favorite genre of film audiences young and old, from the very beginning of cinema, the comedy genre has been a fun-loving, quite sophisticated," +
+                        " and innovative genre that’s delighted viewers for decades").build();
+
+        americanPie.setCategory(comedy);
+        hangover.setCategory(comedy);
+        scaryMovie.setCategory(comedy);
+        trumanShow.setCategory(comedy);
+        homeAlone.setCategory(comedy);
+        blended.setCategory(comedy);
+        groundhogDay.setCategory(comedy);
+        happyGilmore.setCategory(comedy);
+        comingToAmerica.setCategory(comedy);
+        euroTrip.setCategory(comedy);
+        shrunkKids.setCategory(comedy);
+        dumbAndDumber.setCategory(comedy);
+
+        categoryRepository.save(comedy);
+
+        movieRepository.save(americanPie);
+        movieRepository.save(hangover);
+        movieRepository.save(scaryMovie);
+        movieRepository.save(trumanShow);
+        movieRepository.save(homeAlone);
+        movieRepository.save(blended);
+        movieRepository.save(groundhogDay);
+        movieRepository.save(happyGilmore);
+        movieRepository.save(comingToAmerica);
+        movieRepository.save(euroTrip);
+        movieRepository.save(shrunkKids);
+        movieRepository.save(dumbAndDumber);
+
+
+
+
+
+
         Byte[] horrorImage = getBytes("src/main/resources/static/images/categories/horror.jpg");
         Byte[] actionImage = getBytes("src/main/resources/static/images/categories/action.jpg");
-        Byte[] comedyImage = getBytes("src/main/resources/static/images/categories/comedy.jpg");
+
         Byte[] thrillerImage = getBytes("src/main/resources/static/images/categories/thriller.jpg");
         Byte[] animatedImage = getBytes("src/main/resources/static/images/categories/animated.jpg");
         Byte[] historicalImage = getBytes("src/main/resources/static/images/categories/historical.jpg");
@@ -55,9 +154,7 @@ public class MoviesBootstrap implements ApplicationListener<ContextRefreshedEven
         Category action = Category.builder().name("Action").image(actionImage)
                 .description("One of the earliest film genres in existence, the action genre has close ties to classic strife and struggle narratives that you find across all manner of art and literature").build();
 
-        Category comedy = Category.builder().name("Comedy").image(comedyImage)
-                .description("A favorite genre of film audiences young and old, from the very beginning of cinema, the comedy genre has been a fun-loving, quite sophisticated," +
-                        " and innovative genre that’s delighted viewers for decades").build();
+
 
         Category thriller = Category.builder().name("Thriller").image(thrillerImage)
                 .description("Once a stylized niche genre, the thriller film has gone so mainstream that it might be time to change the genre’s name to Summer Blockbuster Event. " +
@@ -77,7 +174,7 @@ public class MoviesBootstrap implements ApplicationListener<ContextRefreshedEven
 
         categoryRepository.save(horror);
         categoryRepository.save(action);
-        categoryRepository.save(comedy);
+
         categoryRepository.save(thriller);
         categoryRepository.save(animated);
         categoryRepository.save(historical);
