@@ -129,22 +129,17 @@ public class MoviesBootstrap implements ApplicationListener<ContextRefreshedEven
                 .description("As Harry Potter begins his sixth year at Hogwarts, he discovers an old book marked as the property of the Half-Blood Prince and begins to learn more about Lord Voldemort's dark past.").build();
 
 
-//        Movie harryPotter7 = Movie.builder().name("Harry Potter and the Deathly Hallows: Part 1").image(harryPotter7Image)
-//                .description("As Harry, Ron and Hermione race against time and evil to destroy the Horcruxes, they uncover the existence of the three most powerful objects in the wizarding world: the Deathly Hallows.").build();
-//
-//
-//        Movie harryPotter8 = Movie.builder().name("Harry Potter and the Deathly Hallows: Part 1").image(harryPotter8Image)
-//                .description("Harry, Ron, and Hermione search for Voldemort's remaining Horcruxes in their effort to destroy the Dark Lord as the final battle rages on at Hogwarts.").build();
-//
-//
-//        // Spiderman
-//        Byte[] spiderManImage = getBytes("src/main/resources/static/images/fantasy/spiderMan/part1.jpg");
-//
-//        Movie spiderMan = Movie.builder().name("Spider-Man").image(spiderManImage)
-//                .description("When bitten by a genetically modified spider, a nerdy, shy, and awkward high school student gains spider-like abilities that he eventually must use" +
-//                        "to fight evil as a superhero after tragedy befalls his family.").build();
+        Movie harryPotter7 = Movie.builder().name("Harry Potter and the Deathly Hallows: Part 1").image(harryPotter7Image)
+                .description("As Harry, Ron and Hermione race against time and evil to destroy the Horcruxes, they uncover the existence of the three most powerful objects in the wizarding world: the Deathly Hallows.").build();
 
-        //, harryPotter7, harryPotter8, spiderMan
+
+        Movie harryPotter8 = Movie.builder().name("Harry Potter and the Deathly Hallows: Part 1").image(harryPotter8Image)
+                .description("Harry, Ron, and Hermione search for Voldemort's remaining Horcruxes in their effort to destroy the Dark Lord as the final battle rages on at Hogwarts.").build();
+
+
+
+
+        //, , spiderMan
 
         // Categories Images
         Byte[] fantasyImage = getBytes("src/main/resources/static/images/fantasy.jpg");
@@ -152,7 +147,7 @@ public class MoviesBootstrap implements ApplicationListener<ContextRefreshedEven
         Category fantasy = Category.builder().name("Fantasy").image(fantasyImage)
                 .description("Fantasy films are films that belong to the fantasy genre with fantastic themes, usually magic, " +
                         "supernatural events, mythology, folklore, or exotic fantasy worlds")
-                .movies(Arrays.asList(lordOfTheRings1, lordOfTheRings2, lordOfTheRings3, harryPotter1, harryPotter2, harryPotter3, harryPotter4, harryPotter5, harryPotter6)).build();
+                .movies(Arrays.asList(lordOfTheRings1, lordOfTheRings2, lordOfTheRings3, harryPotter1, harryPotter2, harryPotter3, harryPotter4, harryPotter5, harryPotter6, harryPotter7, harryPotter8)).build();
 
         lordOfTheRings1.setCategory(fantasy);
         lordOfTheRings2.setCategory(fantasy);
@@ -163,9 +158,9 @@ public class MoviesBootstrap implements ApplicationListener<ContextRefreshedEven
         harryPotter4.setCategory(fantasy);
         harryPotter5.setCategory(fantasy);
         harryPotter6.setCategory(fantasy);
-//        harryPotter7.setCategory(fantasy);
-//        harryPotter8.setCategory(fantasy);
-//        spiderMan.setCategory(fantasy);
+        harryPotter7.setCategory(fantasy);
+        harryPotter8.setCategory(fantasy);
+
 
 
         categoryRepository.save(fantasy);
@@ -178,10 +173,9 @@ public class MoviesBootstrap implements ApplicationListener<ContextRefreshedEven
         movieRepository.save(harryPotter4);
         movieRepository.save(harryPotter5);
         movieRepository.save(harryPotter6);
-//        movieRepository.save(harryPotter7);
-//        movieRepository.save(harryPotter8);
-//        movieRepository.save(spiderMan);
-    }
+        movieRepository.save(harryPotter7);
+        movieRepository.save(harryPotter8);
+   }
 
     private void initScienceFiction() throws IOException {
         // Star Wars Images

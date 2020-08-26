@@ -22,6 +22,48 @@
 <div class="jumbotron" th:replace="fragmets/jumbotron :: jumbotron"></div>
 <body>
 
+<ul class="nav nav-pills admin-navbar">
+    <li><a href="#" th:href="@{'/'}" >Main Page</a></li>
+    <li class="dropdown active">
+        <a data-toggle="dropdown" data-target="#" href="http://www.google.com">
+            Categories <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu">
+            <li><a href="#" th:href="@{'/categories'}" type="button">Show All Categories</a></li>
+            <li><a href="#" type="button">Something</a></li>
+        </ul>
+    </li>
+    <li class="dropdown">
+        <a data-toggle="dropdown" data-target="#" href="http://www.google.com">
+            Movies <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu">
+            <li><a href="#" type="button" >Show All Movies</a></li>
+            <li><a href="#" type="button">Something</a></li>
+        </ul>
+    </li>
+    <li class="dropdown">
+        <a data-toggle="dropdown" data-target="#" href="http://www.google.com">
+            Actors <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu">
+            <li><a href="#">Show All Movies</a></li>
+            <li><a href="#">Create New Movie</a></li>
+        </ul>
+    </li>
+    <li class="dropdown">
+        <a data-toggle="dropdown" data-target="#" href="http://www.google.com">
+            Directors <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu">
+            <li><a href="#">Show All Movies</a></li>
+            <li><a href="#">Create New Movie</a></li>
+        </ul>
+    </li>
+
+
+
+
 
 <div class="row">
     <div class="col-md-12">
