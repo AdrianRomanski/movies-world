@@ -154,6 +154,24 @@ class MovieServiceImplTest {
     }
 
 
+    @DisplayName("Happy Path, method = getAllMoviesForCategoryPaged")
+    @Test
+    void getAllMoviesForCategoryPaged() {
+        List<Movie> movies = getMovies();
+
+        PageRequest pageable = PageRequest.of(0, 3);
+
+        Page<Movie> moviePage = new PageImpl<>(movies, pageable, movies.size());
+
+        when(moviePageRepository.findAllByCategory_Name("Sci-fi", pageable)).thenReturn(Optional.of(moviePage));
+
+        Page<Movie> returnMovie = movieService.getAllMoviesForCategoryPaged("Sci-fi", pageable);
+
+        assertEquals(returnMovie.getTotalElements(), 3);
+        assertEquals(returnMovie.getTotalPages(), 1);
+    }
+
+
     @DisplayName("Happy Path, method = getMovieByID")
     @Test
     void getMovieByIDHappyPath() {

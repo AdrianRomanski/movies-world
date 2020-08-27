@@ -94,6 +94,16 @@ public class MovieServiceImpl implements MovieService {
 
 
     /**
+     * @return All Movies for Category
+     */
+    @Override
+    public Page<Movie> getAllMoviesForCategoryPaged(String name, Pageable pageable) {
+        return moviePageRepository.findAllByCategory_Name(name, pageable)
+                .orElseThrow(() -> new ResourceNotFoundException(name, Category.class));
+    }
+
+
+    /**
      * @param id of the movie
      * @return Movie with matching id
      * @throws ResourceNotFoundException if not found

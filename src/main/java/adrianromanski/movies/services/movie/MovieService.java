@@ -18,6 +18,8 @@ public interface MovieService {
 
     Page<MovieDTO> getPageMovieDTO(Page<Movie> moviePage, Pageable pageable);
 
+    Page<Movie> getAllMoviesForCategoryPaged(String name, Pageable pageable);
+
     MovieDTO getMovieByID(Long id);
 
     MovieDTO getMovieByName(String name);
