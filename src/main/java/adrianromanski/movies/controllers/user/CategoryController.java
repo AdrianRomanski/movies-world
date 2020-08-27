@@ -1,6 +1,8 @@
 package adrianromanski.movies.controllers.user;
 
+import adrianromanski.movies.domain.base_entity.Category;
 import adrianromanski.movies.domain.base_entity.Movie;
+import adrianromanski.movies.model.base_entity.CategoryDTO;
 import adrianromanski.movies.model.base_entity.MovieDTO;
 import adrianromanski.movies.services.category.CategoryService;
 import adrianromanski.movies.services.movie.MovieService;
@@ -10,7 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
@@ -35,14 +36,24 @@ public class CategoryController {
         return "user/categoryMovies";
     }
 
-    @GetMapping("/categories")
-    public String getAllCategories(Model model) {
-        model.addAttribute("Categories", categoryService.getAllCategories());
-        return "user/categories";
+    @GetMapping("/categories/page/{page}")
+    public ModelAndView getAllCategoriesPaged(@PathVariable int page) {
+        ModelAndView modelAndView = new ModelAndView("user/categories");
+        PageRequest pageable = PageRequest.of(page - 1, 8);
+        Page<Category> categoryPage = categoryService.getAllCategoriesPaged(pageable);
+        Page<CategoryDTO> categoryDTOPage = categoryService.getPageCategoryDTO(categoryPage, pageable);
+        int totalPages = categoryPage.getTotalPages();
+        if(totalPages > 0) {
+            List<Integer> pageNumbers = IntStream.rangeClosed(1,totalPages).boxed().collect(Collectors.toList());
+            modelAndView.addObject("pageNumbers", pageNumbers);
+        }
+        modelAndView.addObject("activeCategoryList", true);
+        modelAndView.addObject("categoriesDTOList", categoryDTOPage.getContent());
+        return modelAndView;
     }
 
-    @RequestMapping(value = "/category/{categoryName}/page/{page}")
-    public ModelAndView getAllMoviesForCategoryPaged(@PathVariable("page") int page, @PathVariable String categoryName) {
+    @GetMapping(value = "/category/{categoryName}/page/{page}")
+    public ModelAndView getAllMoviesForCategoryPaged(@PathVariable int page, @PathVariable String categoryName) {
         ModelAndView modelAndView = new ModelAndView("user/categoryMovies");
         PageRequest pageable = PageRequest.of(page - 1, 8);
         Page<Movie> moviePage = movieService.getAllMoviesForCategoryPaged(categoryName, pageable);

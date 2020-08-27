@@ -1,7 +1,9 @@
 package adrianromanski.movies.controllers;
 
 import adrianromanski.movies.controllers.user.CategoryController;
+import adrianromanski.movies.domain.base_entity.Category;
 import adrianromanski.movies.domain.base_entity.Movie;
+import adrianromanski.movies.model.base_entity.CategoryDTO;
 import adrianromanski.movies.model.base_entity.MovieDTO;
 import adrianromanski.movies.services.category.CategoryService;
 import adrianromanski.movies.services.movie.MovieService;
@@ -57,17 +59,31 @@ class CategoryControllerTest {
                 .andExpect(model().attributeExists("movies"));
     }
 
+
     @Test
-    @DisplayName("GET, HappyPath, method = getAllCategories")
-    void getAllCategories() throws Exception {
-        mockMvc.perform(get("/categories"))
+    @DisplayName("GET, Happy Path, method = getAllCategoriesPages")
+    void getAllCategoriesPages() throws Exception {
+        // Given
+        List<Category> categoryList = Arrays.asList(new Category(), new Category(), new Category());
+        PageRequest pageable = PageRequest.of(0, 8);
+        Page<Category> categoryPage = new PageImpl<>(categoryList, pageable, categoryList.size());
+
+        List<CategoryDTO> categoryListDTO = Arrays.asList(new CategoryDTO(), new CategoryDTO(), new CategoryDTO());
+        PageRequest pageableDTO = PageRequest.of(0, 8);
+        Page<CategoryDTO> categoryPageDTO = new PageImpl<>(categoryListDTO, pageableDTO, categoryListDTO.size());
+
+        when(categoryService.getAllCategoriesPaged(pageable)).thenReturn(categoryPage);
+        when(categoryService.getPageCategoryDTO(categoryPage, pageable)).thenReturn(categoryPageDTO);
+
+        mockMvc.perform(get("/categories/page/1"))
                 .andExpect(status().isOk())
+                .andExpect(model().attributeExists("categoriesDTOList"))
                 .andExpect(view().name("user/categories"));
     }
 
 
     @Test
-    @DisplayName("Happy Path, method = getAllMoviesForCategoryPaged")
+    @DisplayName("GET, Happy Path, method = getAllMoviesForCategoryPaged")
     void getAllMoviesForCategoryPaged() throws Exception {
         // Given
         List<Movie> movieList = Arrays.asList(new Movie(), new Movie(), new Movie());

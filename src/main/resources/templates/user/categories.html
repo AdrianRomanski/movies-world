@@ -22,6 +22,7 @@
 <div class="jumbotron" th:replace="fragmets/jumbotron :: jumbotron"></div>
 <body>
 
+
 <ul class="nav nav-pills admin-navbar">
     <li><a href="#" th:href="@{'/'}" >Main Page</a></li>
     <li class="dropdown active">
@@ -60,7 +61,7 @@
             <li><a href="#">Create New Movie</a></li>
         </ul>
     </li>
-
+</ul>
 
 
 
@@ -74,12 +75,28 @@
 <div class="container col-md-10 col-md-offset-1 movies-section" style="margin-top: 75px">
     <div class="row">
         <div class="row">
-            <div th:each="category: ${Categories}">
+            <div th:each="category: ${categoriesDTOList}">
                 <div th:replace="fragmets/categorydiv :: categorydiv">
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+
+<div class="row" th:fragment="pagination">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+        <nav aria-label="Pagination">
+            <ul class="pagination justify-content-center">
+                <li class="page-item" th:each="pageNumber : ${pageNumbers}" >
+                    <a class="page-link" th:href="@{|/categories/page/${pageNumber}|}" th:text=${pageNumber}>1</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <div class="col-md-2"></div>
+</div>
+
 </body>
 </html>
