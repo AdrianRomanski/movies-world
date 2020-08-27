@@ -38,9 +38,144 @@ public class MoviesBootstrap implements ApplicationListener<ContextRefreshedEven
 
         initScienceFiction();
         initFantasy();
+        initComedy();
+        initAnimated();
+
+
+        Byte[] horrorImage = getBytes("src/main/resources/static/images/categories/horror.jpg");
+        Byte[] actionImage = getBytes("src/main/resources/static/images/categories/action.jpg");
+        Byte[] thrillerImage = getBytes("src/main/resources/static/images/categories/thriller.jpg");
+        Byte[] historicalImage = getBytes("src/main/resources/static/images/categories/historical.jpg");
+
+
+        Category horror = Category.builder().name("Horror").image(horrorImage)
+                .description("A horror film is a film that seeks to elicit fear for entertainment purposes " +
+                                "Initially inspired by literature from authors such as Edgar Allan Poe, Bram Stoker, and Mary Shelley").build();
+
+
+        Category action = Category.builder().name("Action").image(actionImage)
+                .description("One of the earliest film genres in existence, the action genre has close ties to classic strife and struggle narratives that you find across all manner of art and literature").build();
 
 
 
+        Category thriller = Category.builder().name("Thriller").image(thrillerImage)
+                .description("Once a stylized niche genre, the thriller film has gone so mainstream that it might be time to change the genre’s name to Summer Blockbuster Event. " +
+                        "The thriller’s rise coincides with the rise of the spy and detective pulp novels of the 1960s and 1970s.").build();
+
+
+
+        Category historical = Category.builder().name("Historical").image(historicalImage)
+                .description("Historical Films often take an historical or imagined event, mythic, legendary, or heroic figure," +
+                        " and add an extravagant setting and lavish costumes, accompanied by grandeur and spectacle and a sweeping musical score.").build();
+
+
+
+
+        categoryRepository.save(horror);
+        categoryRepository.save(action);
+
+        categoryRepository.save(thriller);
+        categoryRepository.save(historical);
+
+    }
+
+    private void initAnimated() throws IOException {
+        Byte[] shrek_img = getBytes("src/main/resources/static/images/animated/shrek.jpg");
+        Byte[] shrek2_img = getBytes("src/main/resources/static/images/animated/shrek2.jpg");
+        Byte[] shrek3_img = getBytes("src/main/resources/static/images/animated/shrek3.jpg");
+        Byte[] monsters_img = getBytes("src/main/resources/static/images/animated/monsters.jpg");
+        Byte[] monstersUniversity_img = getBytes("src/main/resources/static/images/animated/monstersUniversity.jpg");
+        Byte[] toyStory_img = getBytes("src/main/resources/static/images/animated/toyStory.jpg");
+        Byte[] findingNemo_img = getBytes("src/main/resources/static/images/animated/findingNemo.jpg");
+        Byte[] cars_img = getBytes("src/main/resources/static/images/animated/cars.jpg");
+        Byte[] mulan_img = getBytes("src/main/resources/static/images/animated/mulan.jpg");
+        Byte[] kungFuPanda_img = getBytes("src/main/resources/static/images/animated/kungFuPanda.jpg");
+        Byte[] ratatouille_img = getBytes("src/main/resources/static/images/animated/ratatouille.jpg");
+        Byte[] incredibles_img = getBytes("src/main/resources/static/images/animated/incredibles.jpg");
+
+
+        Movie shrek = Movie.builder().name("Shrek").image(shrek_img).minutes(90L)
+                .description("A mean lord exiles fairytale creatures to the swamp of a grumpy ogre, who must go on a quest and rescue a princess for the lord in order to get his land back.").build();
+
+        Movie shrek2 = Movie.builder().name("Shrek 2").image(shrek2_img).minutes(100L)
+                .description("Shrek and Fiona travel to the Kingdom of Far Far Away, where Fiona's parents are King and Queen," +
+                                " to celebrate their marriage. When they arrive, they find they are not as welcome as they thought they would be.").build();
+
+        Movie shrek3 = Movie.builder().name("Shrek the Third").image(shrek3_img).minutes(111L)
+                .description("When his new father-in-law, King Harold falls ill, Shrek is looked at as the heir to the land of Far, Far Away." +
+                        " Not one to give up his beloved swamp").build();
+
+        Movie monsters = Movie.builder().name("Monsters, Inc.").image(monsters_img).minutes(92L)
+                .description("In order to power the city, monsters have to scare children so that they scream. However, the children are toxic to the monsters," +
+                        " and after a child gets through, 2 monsters realize things may not be what they think.").build();
+
+        Movie monstersUniversity = Movie.builder().name("Monsters University").image(monstersUniversity_img).minutes(103L)
+                .description("A look at the relationship between Mike Wazowski  and James P. Sully Sullivan  during their days at Monsters University, when they weren't necessarily the best of friends.").build();
+
+        Movie toyStory = Movie.builder().name("Toy Story").image(toyStory_img).minutes(81L)
+                .description("A cowboy doll is profoundly threatened and jealous when a new spaceman figure supplants him as top toy in a boy's room.").build();
+
+        Movie findingNemo = Movie.builder().name("Finding Nemo").image(findingNemo_img).minutes(100L)
+                .description("After his son is captured in the Great Barrier Reef and taken to Sydney, a timid clownfish sets out on a journey to bring him home.").build();
+
+        Movie cars = Movie.builder().name("Cars").image(cars_img).minutes(92L)
+                .description("A hot-shot race-car named Lightning McQueen gets waylaid in Radiator Springs, where he finds the true meaning of friendship and family").build();
+
+        Movie mulan = Movie.builder().name("Mulan").image(mulan_img).minutes(88L)
+                .description("To save her father from death in the army, a young maiden secretly goes in his place and becomes one of China's greatest heroines in the process.").build();
+
+        Movie kungFuPanda = Movie.builder().name("Kung Fu Panda").image(kungFuPanda_img).minutes(92L)
+                .description("The Dragon Warrior has to clash against the savage Tai Lung as China's fate hangs in the balance. " +
+                        "However, the Dragon Warrior mantle is supposedly mistaken to be bestowed upon an obese panda who is a novice in martial arts").build();
+
+        Movie ratatouille = Movie.builder().name("Ratatouille").image(ratatouille_img).minutes(93L)
+                .description("A rat named Remy dreams of becoming a great French chef despite his family's wishes and the obvious problem of being a rat in a decidedly rodent-phobic profession.").build();
+
+        Movie incredibles = Movie.builder().name("The Incredibles").image(incredibles_img).minutes(115L)
+                .description("Bob Parr, and his wife Helen, are the world's greatest famous crime-fighting superheroes. Always saving lives and battling evil on a daily basis. But fifteen years later, " +
+                        "they have been forced to adopt civilian identities and retreat to retire").build();
+
+
+        Byte[] animatedImage = getBytes("src/main/resources/static/images/categories/animated.jpg");
+
+        Category animated = Category.builder().name("Animated").image(animatedImage)
+                .movies(Arrays.asList(shrek, shrek2, shrek3, monsters, monstersUniversity, toyStory, findingNemo, cars, mulan, kungFuPanda, ratatouille, incredibles))
+                .description("A computer-animated film is a feature film that has been computer-animated to appear three-dimensional. " +
+                        "While traditional 2D animated films are now made primarily with the help of computers, " +
+                        "the technique to render (CG) or (CGI), is unique to computers.").build();
+
+
+        shrek.setCategory(animated);
+        shrek2.setCategory(animated);
+        shrek3.setCategory(animated);
+        monsters.setCategory(animated);
+        monstersUniversity.setCategory(animated);
+        toyStory.setCategory(animated);
+        findingNemo.setCategory(animated);
+        cars.setCategory(animated);
+        mulan.setCategory(animated);
+        kungFuPanda.setCategory(animated);
+        ratatouille.setCategory(animated);
+        incredibles.setCategory(animated);
+
+
+        categoryRepository.save(animated);
+
+        movieRepository.save(shrek);
+        movieRepository.save(shrek2);
+        movieRepository.save(shrek3);
+        movieRepository.save(monsters);
+        movieRepository.save(monstersUniversity);
+        movieRepository.save(toyStory);
+        movieRepository.save(findingNemo);
+        movieRepository.save(cars);
+        movieRepository.save(mulan);
+        movieRepository.save(kungFuPanda);
+        movieRepository.save(ratatouille);
+        movieRepository.save(incredibles);
+    }
+
+    private void initComedy() throws IOException {
         Byte[] comedyImage = getBytes("src/main/resources/static/images/categories/comedy.jpg");
 
         Byte[] american_pie_img = getBytes("src/main/resources/static/images/comedy/american_pie.jpg");
@@ -132,53 +267,6 @@ public class MoviesBootstrap implements ApplicationListener<ContextRefreshedEven
         movieRepository.save(euroTrip);
         movieRepository.save(shrunkKids);
         movieRepository.save(dumbAndDumber);
-
-
-
-
-
-
-        Byte[] horrorImage = getBytes("src/main/resources/static/images/categories/horror.jpg");
-        Byte[] actionImage = getBytes("src/main/resources/static/images/categories/action.jpg");
-
-        Byte[] thrillerImage = getBytes("src/main/resources/static/images/categories/thriller.jpg");
-        Byte[] animatedImage = getBytes("src/main/resources/static/images/categories/animated.jpg");
-        Byte[] historicalImage = getBytes("src/main/resources/static/images/categories/historical.jpg");
-
-
-        Category horror = Category.builder().name("Horror").image(horrorImage)
-                .description("A horror film is a film that seeks to elicit fear for entertainment purposes " +
-                                "Initially inspired by literature from authors such as Edgar Allan Poe, Bram Stoker, and Mary Shelley").build();
-
-
-        Category action = Category.builder().name("Action").image(actionImage)
-                .description("One of the earliest film genres in existence, the action genre has close ties to classic strife and struggle narratives that you find across all manner of art and literature").build();
-
-
-
-        Category thriller = Category.builder().name("Thriller").image(thrillerImage)
-                .description("Once a stylized niche genre, the thriller film has gone so mainstream that it might be time to change the genre’s name to Summer Blockbuster Event. " +
-                        "The thriller’s rise coincides with the rise of the spy and detective pulp novels of the 1960s and 1970s.").build();
-
-        Category animated = Category.builder().name("Animated").image(animatedImage)
-                .description("A computer-animated film is a feature film that has been computer-animated to appear three-dimensional. " +
-                        "While traditional 2D animated films are now made primarily with the help of computers, " +
-                        "the technique to render (CG) or (CGI), is unique to computers.").build();
-
-        Category historical = Category.builder().name("Historical").image(historicalImage)
-                .description("Historical Films often take an historical or imagined event, mythic, legendary, or heroic figure," +
-                        " and add an extravagant setting and lavish costumes, accompanied by grandeur and spectacle and a sweeping musical score.").build();
-
-
-
-
-        categoryRepository.save(horror);
-        categoryRepository.save(action);
-
-        categoryRepository.save(thriller);
-        categoryRepository.save(animated);
-        categoryRepository.save(historical);
-
     }
 
     private void initFantasy() throws IOException {
