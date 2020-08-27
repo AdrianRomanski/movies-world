@@ -17,7 +17,7 @@
 
     <link th:href="@{/css/custom.css}" rel="stylesheet" media="screen"/>en"/>
 
-    <title>Movies World Home Page</title>
+    <title>Movies</title>
 </head>
 <div class="jumbotron" th:replace="fragmets/jumbotron :: jumbotron"></div>
 <body>
@@ -39,7 +39,7 @@
             Movies <span class="caret"></span>
         </a>
         <ul class="dropdown-menu">
-            <li><a href="#" th:href="@{'/movies/page/1'}" type="button" >Show All Movies</a></li>
+            <li><a href="#" type="button" >Show All Movies</a></li>
             <li><a href="#" type="button">Something</a></li>
         </ul>
     </li>
@@ -48,7 +48,7 @@
             Actors <span class="caret"></span>
         </a>
         <ul class="dropdown-menu">
-            <li><a href="#">Show All Movies</a></li>
+            <li><a href="#" th:href="@{'/movies/page/1'}" type="button" >Show All Movies</a></li>
             <li><a href="#">Create New Movie</a></li>
         </ul>
     </li>
@@ -68,15 +68,15 @@
 
 <div class="row">
     <div class="col-md-12">
-        <h1 class="category-header-2"> Categories</h1>
+        <h1 class="category-header-2">Movies</h1>
     </div>
 </div>
 
 <div class="container col-md-10 col-md-offset-1 movies-section" style="margin-top: 75px">
     <div class="row">
         <div class="row">
-            <div th:each="category: ${categoriesDTOList}">
-                <div th:replace="fragmets/categorydiv :: categorydiv">
+            <div th:each="movie: ${moviesDTOList}">
+                <div th:replace="fragmets/moviediv :: moviediv">
                 </div>
             </div>
         </div>
@@ -90,7 +90,7 @@
         <nav aria-label="Pagination">
             <ul class="pagination justify-content-center">
                 <li class="page-item" th:each="pageNumber : ${pageNumbers}" >
-                    <a class="page-link" th:href="@{|/categories/page/${pageNumber}|}" th:text=${pageNumber}>1</a>
+                    <a class="page-link" th:href="@{|/movies/page/${pageNumber}|}" th:text=${pageNumber}>1</a>
                 </li>
             </ul>
         </nav>
