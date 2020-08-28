@@ -40,35 +40,17 @@ public class MoviesController {
         return getModelAndView(modelAndView, pageable);
     }
 
-    @GetMapping("/movies/sorted/asc/name/page/{page}")
-    private ModelAndView showMoviesSortedByNameAscending(@PathVariable int page) {
-        ModelAndView modelAndView = new ModelAndView("user/movies/moviesSortedByName");
-        modelAndView.addObject("sortType", "asc");
-        PageRequest pageable = PageRequest.of(page - 1, 8, Sort.by("name").ascending());
-        return getModelAndView(modelAndView, pageable);
-    }
-
-    @GetMapping("/movies/sorted/desc/name/page/{page}")
-    private ModelAndView showMoviesSortedByNameDescending(@PathVariable int page) {
-        ModelAndView modelAndView = new ModelAndView("user/movies/moviesSortedByName");
-        modelAndView.addObject("sortType", "desc");
-        PageRequest pageable = PageRequest.of(page - 1, 8, Sort.by("name").descending());
-        return getModelAndView(modelAndView, pageable);
-    }
-
-    @GetMapping("/movies/sorted/asc/time/page/{page}")
-    private ModelAndView showMoviesSortedByTimeAscending(@PathVariable int page) {
-        ModelAndView modelAndView = new ModelAndView("user/movies/moviesSortedByTime");
-        modelAndView.addObject("sortType", "asc");
-        PageRequest pageable = PageRequest.of(page - 1, 8, Sort.by("minutes").ascending());
-        return getModelAndView(modelAndView, pageable);
-    }
-
-    @GetMapping("/movies/sorted/desc/time/page/{page}")
-    private ModelAndView showMoviesSortedByTimeDescending(@PathVariable int page) {
-        ModelAndView modelAndView = new ModelAndView("user/movies/moviesSortedByTime");
-        modelAndView.addObject("sortType", "desc");
-        PageRequest pageable = PageRequest.of(page - 1, 8, Sort.by("minutes").descending());
+    @GetMapping("/movies/sorted/{sortType}/{sortBy}/page/{page}")
+    private ModelAndView showMoviesSortedBy(@PathVariable int page,
+                                            @PathVariable String sortBy, @PathVariable String sortType) {
+        ModelAndView modelAndView = new ModelAndView("user/movies/moviesSorted");
+        modelAndView.addObject("sortType", sortType);
+        PageRequest pageable = null;
+        if(sortType.equals("asc")) {
+            pageable = PageRequest.of(page - 1, 8, Sort.by(sortBy).ascending());
+        } else if(sortType.equals("desc")) {
+            pageable = PageRequest.of(page - 1, 8, Sort.by(sortBy).descending());
+        }
         return getModelAndView(modelAndView, pageable);
     }
 

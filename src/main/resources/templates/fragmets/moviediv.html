@@ -48,18 +48,14 @@
         </div>
         <div class="movies-listing-extra">
             <div class="movies-listing-extra-item col-md-4">
-                <div class="small movie-price" th:text="${movie.minutes}">
+                <div class="small movie-price" th:text="${movie.time}">
                 </div>
             </div>
             <div class="movies-listing-extra-item col-md-4">
-                <div class="small movie-price">
-                1992
-                </div>
+                <div class="small movie-price" th:text="${movie.year}"></div>
             </div>
             <div class="movies-listing-extra-item col-md-4">
-                <div class="small movie-price">
-                Belgium
-                </div>
+                <div class="small movie-price" th:text="${movie.country}"></div>
             </div>
         </div>
 

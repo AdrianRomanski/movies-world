@@ -50,20 +50,20 @@ class MoviesControllerTest {
     void setUp() {
         MockitoAnnotations.initMocks(this);
 
-        movie1 = Movie.builder().name(SHREK + " 1").minutes(90L)
+        movie1 = Movie.builder().name(SHREK + " 1").time(90L)
                 .description("A " + DESC).build();
-        movie2 = Movie.builder().name(SHREK + " 2").minutes(100L)
+        movie2 = Movie.builder().name(SHREK + " 2").time(100L)
                 .description("B " + DESC).build();
-        movie3 = Movie.builder().name(SHREK + " 3").minutes(110L)
+        movie3 = Movie.builder().name(SHREK + " 3").time(110L)
                 .description("C " + DESC).build();
 
         movieList = Arrays.asList(movie1, movie2, movie3);
 
-        movieDTO1 = MovieDTO.builder().name(SHREK + " 1").minutes(90L)
+        movieDTO1 = MovieDTO.builder().name(SHREK + " 1").time(90L)
                 .description("A " + DESC).build();
-        movieDTO2 = MovieDTO.builder().name(SHREK + " 2").minutes(100L)
+        movieDTO2 = MovieDTO.builder().name(SHREK + " 2").time(100L)
                 .description("B " + DESC).build();
-        movieDTO3 = MovieDTO.builder().name(SHREK + " 3").minutes(110L)
+        movieDTO3 = MovieDTO.builder().name(SHREK + " 3").time(110L)
                 .description("C " + DESC).build();
 
         movieListDTO = Arrays.asList(movieDTO1, movieDTO2, movieDTO3);
@@ -109,81 +109,15 @@ class MoviesControllerTest {
     }
 
 
-    @Test
-    @DisplayName("GET, Happy Path, method = showMoviesSortedByNameAscending")
-    void showMoviesSortedByNameAscending() throws Exception {
-        // Given
-        PageRequest pageable = PageRequest.of(0, 8, Sort.by("name"));
-        Page<Movie> moviePage = new PageImpl<>(movieList, pageable, movieList.size());
-
-        PageRequest pageableDTO = PageRequest.of(0, 8, Sort.by("name"));
-        Page<MovieDTO> moviePageDTO = new PageImpl<>(movieListDTO, pageableDTO, movieListDTO.size());
-
-        when(movieService.getAllMoviesPaged(pageable)).thenReturn(moviePage);
-        when(movieService.getPageMovieDTO(moviePage, pageable)).thenReturn(moviePageDTO);
-
-        mockMvc.perform(get("/movies/sorted/asc/name/page/1"))
-                .andExpect(status().isOk())
-                .andExpect(model().attributeExists("activeMoviesList"))
-                .andExpect(model().attributeExists("moviesDTOList"))
-                .andExpect(model().attributeExists("pageNumbers"))
-                .andExpect(view().name("user/movies/moviesSortedByName"));
-    }
 
     @Test
-    @DisplayName("GET, Happy Path, method = showMoviesSortedByNameDescending")
-    void showMoviesSortedByNameDescending() throws Exception {
+    @DisplayName("GET, Happy Path, method = showMoviesSortedDescending")
+    void showMoviesSortedDesc() throws Exception {
         // Given
-        PageRequest pageable = PageRequest.of(0, 8, Sort.by("name").descending());
+        PageRequest pageable = PageRequest.of(0, 8, Sort.by("time").descending());
         Page<Movie> moviePage = new PageImpl<>(movieList, pageable, movieList.size());
 
-        PageRequest pageableDTO = PageRequest.of(0, 8, Sort.by("name").descending());
-        Page<MovieDTO> moviePageDTO = new PageImpl<>(movieListDTO, pageableDTO, movieListDTO.size());
-
-        when(movieService.getAllMoviesPaged(pageable)).thenReturn(moviePage);
-        when(movieService.getPageMovieDTO(moviePage, pageable)).thenReturn(moviePageDTO);
-
-
-        mockMvc.perform(get("/movies/sorted/desc/name/page/1"))
-                .andExpect(status().isOk())
-                .andExpect(model().attributeExists("activeMoviesList"))
-                .andExpect(model().attributeExists("moviesDTOList"))
-                .andExpect(model().attributeExists("pageNumbers"))
-                .andExpect(view().name("user/movies/moviesSortedByName"));
-    }
-
-
-    @Test
-    @DisplayName("GET, Happy Path, method = showMoviesSortedByTimeAscending")
-    void showMoviesSortedByTimeAscending() throws Exception {
-        // Given
-        PageRequest pageable = PageRequest.of(0, 8, Sort.by("minutes"));
-        Page<Movie> moviePage = new PageImpl<>(movieList, pageable, movieList.size());
-
-        PageRequest pageableDTO = PageRequest.of(0, 8, Sort.by("minutes"));
-        Page<MovieDTO> moviePageDTO = new PageImpl<>(movieListDTO, pageableDTO, movieListDTO.size());
-
-        when(movieService.getAllMoviesPaged(pageable)).thenReturn(moviePage);
-        when(movieService.getPageMovieDTO(moviePage, pageable)).thenReturn(moviePageDTO);
-
-
-        mockMvc.perform(get("/movies/sorted/asc/time/page/1"))
-                .andExpect(status().isOk())
-                .andExpect(model().attributeExists("activeMoviesList"))
-                .andExpect(model().attributeExists("moviesDTOList"))
-                .andExpect(model().attributeExists("pageNumbers"))
-                .andExpect(view().name("user/movies/moviesSortedByTime"));
-    }
-
-
-    @Test
-    @DisplayName("GET, Happy Path, method = showMoviesSortedByTimeDescending")
-    void showMoviesSortedByTimeDescending() throws Exception {
-        // Given
-        PageRequest pageable = PageRequest.of(0, 8, Sort.by("minutes").descending());
-        Page<Movie> moviePage = new PageImpl<>(movieList, pageable, movieList.size());
-
-        PageRequest pageableDTO = PageRequest.of(0, 8, Sort.by("minutes").descending());
+        PageRequest pageableDTO = PageRequest.of(0, 8, Sort.by("time").descending());
         Page<MovieDTO> moviePageDTO = new PageImpl<>(movieListDTO, pageableDTO, movieListDTO.size());
 
         when(movieService.getAllMoviesPaged(pageable)).thenReturn(moviePage);
@@ -195,6 +129,28 @@ class MoviesControllerTest {
                 .andExpect(model().attributeExists("activeMoviesList"))
                 .andExpect(model().attributeExists("moviesDTOList"))
                 .andExpect(model().attributeExists("pageNumbers"))
-                .andExpect(view().name("user/movies/moviesSortedByTime"));
+                .andExpect(view().name("user/movies/moviesSorted"));
+    }
+
+    @Test
+    @DisplayName("GET, Happy Path, method = showMoviesSortedAscending")
+    void showMoviesSortedAsc() throws Exception {
+        // Given
+        PageRequest pageable = PageRequest.of(0, 8, Sort.by("time").ascending());
+        Page<Movie> moviePage = new PageImpl<>(movieList, pageable, movieList.size());
+
+        PageRequest pageableDTO = PageRequest.of(0, 8, Sort.by("time").ascending());
+        Page<MovieDTO> moviePageDTO = new PageImpl<>(movieListDTO, pageableDTO, movieListDTO.size());
+
+        when(movieService.getAllMoviesPaged(pageable)).thenReturn(moviePage);
+        when(movieService.getPageMovieDTO(moviePage, pageable)).thenReturn(moviePageDTO);
+
+
+        mockMvc.perform(get("/movies/sorted/asc/time/page/1"))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("activeMoviesList"))
+                .andExpect(model().attributeExists("moviesDTOList"))
+                .andExpect(model().attributeExists("pageNumbers"))
+                .andExpect(view().name("user/movies/moviesSorted"));
     }
 }

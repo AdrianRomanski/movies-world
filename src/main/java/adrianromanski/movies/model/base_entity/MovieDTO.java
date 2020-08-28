@@ -18,9 +18,11 @@ import java.util.*;
 @NoArgsConstructor
 public class MovieDTO extends BaseEntityDTO{
 
-    private Long minutes;
+    private Long time;
     @Lob
     private Byte[] image;
+    private Integer year;
+    private String country;
 
     /**
      * I have to use this kind of structure because otherwise i couldn't initialize mutable Collection
@@ -29,13 +31,15 @@ public class MovieDTO extends BaseEntityDTO{
      * @see ImmutableList
      */
     @Builder
-    public MovieDTO(Long id,  String name,  String description, String imageURL, Long minutes, Byte[] image,
+    public MovieDTO(Long id,  String name,  String description, String imageURL, Long time, Byte[] image, Integer year, String country,
                     CategoryDTO categoryDTO, DirectorDTO directorDTO,
                     List<ActorDTO> actorsDTO, List<MovieAwardDTO> awardsDTO, List<MovieReview> reviewsDTO,
                     Set<UserDTO> userFavouritesDTO, Set<UserDTO> userWatchedDTO) {
         super(id, name, description, imageURL);
-        this.minutes = minutes;
+        this.time = time;
         this.image = image;
+        this.year = year;
+        this.country = country;
         this.categoryDTO = categoryDTO;
         this.directorDTO = directorDTO;
         this.actorsDTO = Objects.requireNonNullElseGet(actorsDTO, ArrayList::new);
