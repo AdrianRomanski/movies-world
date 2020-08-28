@@ -5,6 +5,7 @@ import adrianromanski.movies.model.base_entity.MovieDTO;
 import adrianromanski.movies.services.movie.MovieServiceImpl;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,20 +25,39 @@ public class MoviesController {
     }
 
 
+    @GetMapping("/movie/{id}")
+    private ModelAndView showMovie(@PathVariable Long id) {
+        ModelAndView modelAndView = new ModelAndView("user/movies/showMovie");
+        modelAndView.addObject("movie", movieService.getMovieByID(id));
+        return modelAndView;
+    }
+
+
     @GetMapping("/movies/page/{page}")
     private ModelAndView showMovies(@PathVariable int page) {
-        ModelAndView modelAndView = new ModelAndView("user/movies");
+        ModelAndView modelAndView = new ModelAndView("user/movies/showMovies");
         PageRequest pageable = PageRequest.of(page - 1, 8);
+        return getModelAndView(modelAndView, pageable);
+    }
+
+    @GetMapping("/movies/sorted/name/page/{page}")
+    private ModelAndView showMoviesSortedByName(@PathVariable int page) {
+        ModelAndView modelAndView = new ModelAndView("user/movies/moviesSortedByName");
+        PageRequest pageable = PageRequest.of(page - 1, 8, Sort.by("name"));
+        return getModelAndView(modelAndView, pageable);
+    }
+
+
+    public ModelAndView getModelAndView(ModelAndView modelAndView, PageRequest pageable) {
         Page<Movie> moviePage = movieService.getAllMoviesPaged(pageable);
         Page<MovieDTO> movieDTOPage = movieService.getPageMovieDTO(moviePage, pageable);
         int totalPages = moviePage.getTotalPages();
-        if(totalPages > 0) {
-            List<Integer> pageNumbers = IntStream.rangeClosed(1,totalPages).boxed().collect(Collectors.toList());
+        if (totalPages > 0) {
+            List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages).boxed().collect(Collectors.toList());
             modelAndView.addObject("pageNumbers", pageNumbers);
         }
         modelAndView.addObject("activeMoviesList", true);
         modelAndView.addObject("moviesDTOList", movieDTOPage.getContent());
         return modelAndView;
-
     }
 }

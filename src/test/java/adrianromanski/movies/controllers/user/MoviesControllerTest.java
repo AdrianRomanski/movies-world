@@ -12,12 +12,14 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.Arrays;
 import java.util.List;
 
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -32,11 +34,32 @@ class MoviesControllerTest {
 
     MockMvc mockMvc;
 
+    Movie movie;
+    MovieDTO movieDTO;
+
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
 
+        movie = Movie.builder().name("Shrek").minutes(90L)
+                .description("A mean lord exiles fairytale creatures to the swamp of a grumpy ogre, who must go on a quest and rescue a princess for the lord in order to get his land back.").build();
+
+        movieDTO = MovieDTO.builder().name("Shrek").minutes(90L)
+                .description("A mean lord exiles fairytale creatures to the swamp of a grumpy ogre, who must go on a quest and rescue a princess for the lord in order to get his land back.").build();
+
         mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
+    }
+
+
+    @Test
+    @DisplayName("GET, Happy Path, method = showMovie")
+    void showMovie() throws Exception {
+        when(movieService.getMovieByID(anyLong())).thenReturn(movieDTO);
+
+        mockMvc.perform(get("/movie/1"))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("movie"))
+                .andExpect(view().name("user/movies/showMovie"));
     }
 
 
@@ -61,6 +84,31 @@ class MoviesControllerTest {
                 .andExpect(model().attributeExists("activeMoviesList"))
                 .andExpect(model().attributeExists("moviesDTOList"))
                 .andExpect(model().attributeExists("pageNumbers"))
-                .andExpect(view().name("user/movies"));
+                .andExpect(view().name("user/movies/showMovies"));
+    }
+
+
+    @Test
+    @DisplayName("GET, Happy Path, method = showMoviesSortedByName")
+    void showMoviesSortedByName() throws Exception {
+        // Given
+        List<Movie> movieList = Arrays.asList(movie, movie, movie);
+        PageRequest pageable = PageRequest.of(0, 8, Sort.by("name"));
+        Page<Movie> moviePage = new PageImpl<>(movieList, pageable, movieList.size());
+
+        List<MovieDTO> movieListDTO = Arrays.asList(movieDTO, movieDTO, movieDTO);
+        PageRequest pageableDTO = PageRequest.of(0, 8, Sort.by("name"));
+        Page<MovieDTO> moviePageDTO = new PageImpl<>(movieListDTO, pageableDTO, movieListDTO.size());
+
+        when(movieService.getAllMoviesPaged(pageable)).thenReturn(moviePage);
+        when(movieService.getPageMovieDTO(moviePage, pageable)).thenReturn(moviePageDTO);
+
+
+        mockMvc.perform(get("/movies/sorted/name/page/1"))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("activeMoviesList"))
+                .andExpect(model().attributeExists("moviesDTOList"))
+                .andExpect(model().attributeExists("pageNumbers"))
+                .andExpect(view().name("user/movies/moviesSortedByName"));
     }
 }

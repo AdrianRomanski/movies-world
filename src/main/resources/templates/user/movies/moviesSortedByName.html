@@ -15,16 +15,16 @@
             integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
             crossorigin="anonymous" th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
 
-    <link th:href="@{/css/custom.css}" rel="stylesheet" media="screen"/>
+    <link th:href="@{/css/custom.css}" rel="stylesheet" media="screen"/>en"/>
 
-    <title>Movies World Home Page</title>
+    <title>Movies</title>
 </head>
 <div class="jumbotron" th:replace="fragmets/jumbotron :: jumbotron"></div>
 <body>
 
-<ul class="nav nav-pills admin-navbar">
 
-    <li class="active"><a href="#" th:href="@{'/'}" >Main Page</a></li>
+<ul class="nav nav-pills admin-navbar">
+    <li><a href="#" th:href="@{'/'}" >Main Page</a></li>
     <li class="dropdown">
         <a data-toggle="dropdown" data-target="#" href="http://www.google.com">
             Categories <span class="caret"></span>
@@ -34,7 +34,7 @@
             <li><a href="#" type="button">Something</a></li>
         </ul>
     </li>
-    <li class="dropdown">
+    <li class="dropdown active">
         <a data-toggle="dropdown" data-target="#" href="http://www.google.com">
             Movies <span class="caret"></span>
         </a>
@@ -80,51 +80,39 @@
 </script>
 
 
-<div class="container" style="margin-top: 75px"></div>
 
-<div class="col-lg-10 col-lg-offset-1">
 
-    <div class="home-listing">
-        <a th:href="@{'/categories/'}">
+<div class="row">
+    <div class="col-md-12">
+        <h1 class="category-header-2">Movies</h1>
+    </div>
+</div>
+
+<div class="container col-md-10 col-md-offset-1 movies-section" style="margin-top: 75px">
+    <div class="row">
         <div class="row">
-                <div class="col-lg-12">
-                    <div class="home-listing-title" th:text="${'Event Name'}"></div>
-                    <div class="home-listing-description" th:text="${'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum'}"></div>
+            <div th:each="movie: ${moviesDTOList}">
+                <div th:replace="fragmets/moviediv :: moviediv">
                 </div>
+            </div>
         </div>
-        </a>
     </div>
-
-    <div class="home-listing">
-        <a th:href="@{'/categories/'}">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="home-listing-title" th:text="${'Event Name'}"></div>
-                    <div class="home-listing-description" th:text="${'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum'}"></div>
-                </div>
-            </div>
-        </a>
-    </div>
-
-    <div class="home-listing">
-        <a th:href="@{'/categories/'}">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="home-listing-title" th:text="${'Event Name'}"></div>
-                    <div class="home-listing-description" th:text="${'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum'}"></div>
-                </div>
-            </div>
-        </a>
-    </div>
-
-
-
 </div>
 
 
+<div class="row" th:fragment="pagination">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+        <nav aria-label="Pagination">
+            <ul class="pagination justify-content-center">
+                <li class="page-item" th:each="pageNumber : ${pageNumbers}" >
+                    <a class="page-link" th:href="@{|/movies/sorted/name/page/${pageNumber}|}" th:text=${pageNumber}>1</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <div class="col-md-2"></div>
+</div>
 
 </body>
-
-
-
 </html>

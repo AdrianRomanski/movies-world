@@ -38,8 +38,13 @@
             Movies <span class="caret"></span>
         </a>
         <ul class="dropdown-menu">
-            <li><a href="#" th:href="@{'/movies/page/1'}" type="button" >Show All Movies</a></li>
-            <li><a href="#" type="button">Something</a></li>
+            <li><a href="#" type="button" th:href="@{'/movies/page/1'}" >Show All Movies</a></li>
+            <li class="dropdown-submenu">
+                <a class="test" tabindex="-1" href="#">Sorted By<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a tabindex="-1" href="#" th:href="@{'/movies/sorted/name/page/1/'}">Name</a></li>
+                </ul>
+            </li>
         </ul>
     </li>
     <li class="dropdown">
@@ -47,7 +52,7 @@
             Actors <span class="caret"></span>
         </a>
         <ul class="dropdown-menu">
-            <li><a href="#">Show All Movies</a></li>
+            <li><a href="#" th:href="@{'/movies/page/1'}" type="button" >Show All Movies</a></li>
             <li><a href="#">Create New Movie</a></li>
         </ul>
     </li>
@@ -61,6 +66,17 @@
         </ul>
     </li>
 </ul>
+
+
+<script>
+    $(document).ready(function(){
+        $('.dropdown-submenu a.test').on("click", function(e){
+            $(this).next('ul').toggle();
+            e.stopPropagation();
+            e.preventDefault();
+        });
+    });
+</script>
 
 <div class="row">
     <div class="col-md-12">

@@ -18,12 +18,15 @@ import adrianromanski.movies.repositories.pages.MoviePageRepository;
 import adrianromanski.movies.repositories.person.ActorRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static java.util.Collections.reverseOrder;
 import static java.util.Comparator.comparing;
@@ -190,7 +193,8 @@ public class MovieServiceImpl implements MovieService {
     }
 
 
-    /**z
+
+    /**
      * @param movieDTO to save
      * @return Movie if successfully saved
      */
@@ -201,6 +205,7 @@ public class MovieServiceImpl implements MovieService {
         jmsTextMessageService.sendTextMessage("Movie " + movie.getName() + " successfully saved");
         return movieMapper.movieToMovieDTO(movie);
     }
+
 
     @Override
     public MovieDTO addCategoryToMovie(Long movieID, Long categoryID) {

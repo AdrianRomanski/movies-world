@@ -21,11 +21,18 @@
 </head>
 <div class="jumbotron" th:replace="fragmets/jumbotron :: jumbotron"></div>
 <body>
-
-
+<script>
+    $(document).ready(function(){
+        $('.dropdown-submenu a.test').on("click", function(e){
+            $(this).next('ul').toggle();
+            e.stopPropagation();
+            e.preventDefault();
+        });
+    });
+</script>
 <ul class="nav nav-pills admin-navbar">
     <li><a href="#" th:href="@{'/'}" >Main Page</a></li>
-    <li class="dropdown active">
+    <li class="dropdown">
         <a data-toggle="dropdown" data-target="#" href="http://www.google.com">
             Categories <span class="caret"></span>
         </a>
@@ -34,13 +41,18 @@
             <li><a href="#" type="button">Something</a></li>
         </ul>
     </li>
-    <li class="dropdown">
+    <li class="dropdown active">
         <a data-toggle="dropdown" data-target="#" href="http://www.google.com">
             Movies <span class="caret"></span>
         </a>
         <ul class="dropdown-menu">
-            <li><a href="#" type="button" >Show All Movies</a></li>
-            <li><a href="#" type="button">Something</a></li>
+            <li><a href="#" type="button" th:href="@{'/movies/page/1'}" >Show All Movies</a></li>
+            <li class="dropdown-submenu">
+                <a class="test" tabindex="-1" href="#">Sorted By<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a tabindex="-1" href="#" th:href="@{'/movies/sorted/name/page/1/'}">Name</a></li>
+                </ul>
+            </li>
         </ul>
     </li>
     <li class="dropdown">
@@ -62,41 +74,68 @@
         </ul>
     </li>
 </ul>
+<div class="container-fluid" style="margin-top: 50px">
 
 
-
-
-<div class="row">
-    <div class="col-md-12">
-        <h1 class="category-header-2">Movies</h1>
-    </div>
-</div>
-
-<div class="container col-md-10 col-md-offset-1 movies-section" style="margin-top: 75px">
-    <div class="row">
+<div class="col-md-3">
+    <div class="single-movie-listing">
         <div class="row">
-            <div th:each="movie: ${moviesDTOList}">
-                <div th:replace="fragmets/moviediv :: moviediv">
+                <div class="col-lg-12">
+                    <div class="single-movie-box-image-container">
+                        <img role="presentation"
+                             th:src="@{'/movie/' + ${movie.id} + '/movieImage'}"
+                             class="single-movie-box-image">
+                    </div>
                 </div>
-            </div>
         </div>
     </div>
 </div>
 
+<div class="col-md-9">
+    <div class="single-movie-infos">
 
-<div class="row" th:fragment="pagination">
-    <div class="col-md-2"></div>
-    <div class="col-md-8">
-        <nav aria-label="Pagination">
-            <ul class="pagination justify-content-center">
-                <li class="page-item" th:each="pageNumber : ${pageNumbers}" >
-                    <a class="page-link" th:href="@{|/movies/page/${pageNumber}|}" th:text=${pageNumber}>1</a>
-                </li>
-            </ul>
-        </nav>
+
+        <div class="panel-primary">
+           <div class="panel-heading">
+               <div class="single-movie-infos-title">
+                   <h4 th:text="${movie.name}"></h4>
+               </div>
+           </div>
+           <div class="panel-body">
+               <div class="single-movie-infos-description"
+               th:text="${movie.description}">
+                DESCRIPTION
+               </div>
+
+               <div class="single-movie-infos-additional">
+                    <div class="col-md-3">
+                        Time
+                    </div>
+                   <div class="col-md-3">
+                       Country
+                   </div>
+                   <div class="col-md-3">
+                       Year
+                   </div>
+               </div>
+
+               <div class="single-movie-infos-actors">
+               ACTORS
+               </div>
+
+               <div class="single-movie-infos-awards">
+               AWARDS
+               </div>
+           </div>
+        </div>
+
     </div>
-    <div class="col-md-2"></div>
 </div>
+
+
+
+
+
 
 </body>
 </html>
