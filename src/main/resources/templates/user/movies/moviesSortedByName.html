@@ -119,7 +119,7 @@
         <nav aria-label="Pagination">
             <ul class="pagination justify-content-center">
                 <li class="page-item" th:each="pageNumber : ${pageNumbers}" >
-                    <a class="page-link" th:href="@{|/movies/sorted/name/page/${pageNumber}|}" th:text=${pageNumber}>1</a>
+                    <a class="page-link" th:href="@{|/movies/sorted/${sortType}/name/page/${pageNumber}|}" th:text=${pageNumber}>1</a>
                 </li>
             </ul>
         </nav>

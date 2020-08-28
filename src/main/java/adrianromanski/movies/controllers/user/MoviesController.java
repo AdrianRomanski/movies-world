@@ -43,6 +43,7 @@ public class MoviesController {
     @GetMapping("/movies/sorted/asc/name/page/{page}")
     private ModelAndView showMoviesSortedByNameAscending(@PathVariable int page) {
         ModelAndView modelAndView = new ModelAndView("user/movies/moviesSortedByName");
+        modelAndView.addObject("sortType", "asc");
         PageRequest pageable = PageRequest.of(page - 1, 8, Sort.by("name").ascending());
         return getModelAndView(modelAndView, pageable);
     }
@@ -50,6 +51,7 @@ public class MoviesController {
     @GetMapping("/movies/sorted/desc/name/page/{page}")
     private ModelAndView showMoviesSortedByNameDescending(@PathVariable int page) {
         ModelAndView modelAndView = new ModelAndView("user/movies/moviesSortedByName");
+        modelAndView.addObject("sortType", "desc");
         PageRequest pageable = PageRequest.of(page - 1, 8, Sort.by("name").descending());
         return getModelAndView(modelAndView, pageable);
     }
@@ -57,6 +59,7 @@ public class MoviesController {
     @GetMapping("/movies/sorted/asc/time/page/{page}")
     private ModelAndView showMoviesSortedByTimeAscending(@PathVariable int page) {
         ModelAndView modelAndView = new ModelAndView("user/movies/moviesSortedByTime");
+        modelAndView.addObject("sortType", "asc");
         PageRequest pageable = PageRequest.of(page - 1, 8, Sort.by("minutes").ascending());
         return getModelAndView(modelAndView, pageable);
     }
@@ -64,6 +67,7 @@ public class MoviesController {
     @GetMapping("/movies/sorted/desc/time/page/{page}")
     private ModelAndView showMoviesSortedByTimeDescending(@PathVariable int page) {
         ModelAndView modelAndView = new ModelAndView("user/movies/moviesSortedByTime");
+        modelAndView.addObject("sortType", "desc");
         PageRequest pageable = PageRequest.of(page - 1, 8, Sort.by("minutes").descending());
         return getModelAndView(modelAndView, pageable);
     }
