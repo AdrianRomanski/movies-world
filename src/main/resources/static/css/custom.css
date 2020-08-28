@@ -49,19 +49,50 @@ body {
     background-color: rgba(255, 255, 255, 0.7);
 }
 
+
+* {
+    box-sizing: border-box;
+}
+
+
+
+img {
+    vertical-align: middle;
+}
+
+img {
+    border: 0 none;
+}
+/*MOVIES*/
 .movies-listing {
     background-color: #f7f7f7;
     border: 1px solid #f1f3f0;
     border-radius: 9px;
     box-shadow: 0 1px #f1f3f0;
     cursor: pointer;
-    height: 700px;
+    height: 650px;
     margin-bottom: 50px;
     padding: 0;
+    display: flex;
+    flex-direction: column;
 }
 
-* {
-    box-sizing: border-box;
+.movies-listing .movies-listing-extra {
+    display: flex;
+    margin-top: auto;
+    color: #4169E1 !important;
+    font-size: 15px;
+    font-weight: bold;
+    line-height: 15px;
+    justify-content: space-around;
+}
+
+.movies-listing .movies-listing-extra-item {
+    margin-top: auto;
+    color: #4169E1 !important;
+    font-size: 15px;
+    font-weight: bold;
+    line-height: 15px;
 }
 
 .movies-listing .movies-box-image-container {
@@ -82,14 +113,7 @@ body {
     background-size: cover;
 }
 
-img {
-    vertical-align: middle;
-}
 
-img {
-    border: 0 none;
-}
-/*CATEGORIES-MOVIES*/
 .movies-listing .movies-listing-title {
     color: #4169E1;
     font-size: 18px;
@@ -129,6 +153,7 @@ img {
     margin-bottom: 5px;
     text-align: right;
 }
+
 
 /*REGISTRATION*/
 

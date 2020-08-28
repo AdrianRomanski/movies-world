@@ -43,7 +43,20 @@
             <li class="dropdown-submenu">
                 <a class="test" tabindex="-1" href="#">Sorted By<span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                    <li><a tabindex="-1" href="#" th:href="@{'/movies/sorted/name/page/1/'}">Name</a></li>
+                    <li class="dropdown-submenu">
+                        <a class="test" href="#">Name<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#" th:href="@{'/movies/sorted/asc/name/page/1'}">Ascending</a></li>
+                            <li><a href="#" th:href="@{'/movies/sorted/desc/name/page/1'}" >Descending</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown-submenu">
+                        <a class="test" href="#">Time<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#" th:href="@{'/movies/sorted/asc/time/page/1'}">Ascending</a></li>
+                            <li><a href="#" th:href="@{'/movies/sorted/desc/time/page/1'}">Descending</a></li>
+                        </ul>
+                    </li>
                 </ul>
             </li>
         </ul>

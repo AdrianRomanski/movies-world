@@ -26,6 +26,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 class MoviesControllerTest {
 
+    public static final String DESC = "mean lord exiles fairytale creatures to the swamp of a grumpy ogre, who must go on a quest and rescue a princess for the lord in order to get his land back.";
+    public static final String SHREK = "Shrek";
     @Mock
     MovieServiceImpl movieService;
 
@@ -34,18 +36,37 @@ class MoviesControllerTest {
 
     MockMvc mockMvc;
 
-    Movie movie;
-    MovieDTO movieDTO;
+    Movie movie1;
+    Movie movie2;
+    Movie movie3;
+    MovieDTO movieDTO1;
+    MovieDTO movieDTO2;
+    MovieDTO movieDTO3;
+
+    List<Movie> movieList;
+    List<MovieDTO> movieListDTO;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
 
-        movie = Movie.builder().name("Shrek").minutes(90L)
-                .description("A mean lord exiles fairytale creatures to the swamp of a grumpy ogre, who must go on a quest and rescue a princess for the lord in order to get his land back.").build();
+        movie1 = Movie.builder().name(SHREK + " 1").minutes(90L)
+                .description("A " + DESC).build();
+        movie2 = Movie.builder().name(SHREK + " 2").minutes(100L)
+                .description("B " + DESC).build();
+        movie3 = Movie.builder().name(SHREK + " 3").minutes(110L)
+                .description("C " + DESC).build();
 
-        movieDTO = MovieDTO.builder().name("Shrek").minutes(90L)
-                .description("A mean lord exiles fairytale creatures to the swamp of a grumpy ogre, who must go on a quest and rescue a princess for the lord in order to get his land back.").build();
+        movieList = Arrays.asList(movie1, movie2, movie3);
+
+        movieDTO1 = MovieDTO.builder().name(SHREK + " 1").minutes(90L)
+                .description("A " + DESC).build();
+        movieDTO2 = MovieDTO.builder().name(SHREK + " 2").minutes(100L)
+                .description("B " + DESC).build();
+        movieDTO3 = MovieDTO.builder().name(SHREK + " 3").minutes(110L)
+                .description("C " + DESC).build();
+
+        movieListDTO = Arrays.asList(movieDTO1, movieDTO2, movieDTO3);
 
         mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
     }
@@ -54,7 +75,7 @@ class MoviesControllerTest {
     @Test
     @DisplayName("GET, Happy Path, method = showMovie")
     void showMovie() throws Exception {
-        when(movieService.getMovieByID(anyLong())).thenReturn(movieDTO);
+        when(movieService.getMovieByID(anyLong())).thenReturn(movieDTO1);
 
         mockMvc.perform(get("/movie/1"))
                 .andExpect(status().isOk())
@@ -89,26 +110,91 @@ class MoviesControllerTest {
 
 
     @Test
-    @DisplayName("GET, Happy Path, method = showMoviesSortedByName")
-    void showMoviesSortedByName() throws Exception {
+    @DisplayName("GET, Happy Path, method = showMoviesSortedByNameAscending")
+    void showMoviesSortedByNameAscending() throws Exception {
         // Given
-        List<Movie> movieList = Arrays.asList(movie, movie, movie);
         PageRequest pageable = PageRequest.of(0, 8, Sort.by("name"));
         Page<Movie> moviePage = new PageImpl<>(movieList, pageable, movieList.size());
 
-        List<MovieDTO> movieListDTO = Arrays.asList(movieDTO, movieDTO, movieDTO);
         PageRequest pageableDTO = PageRequest.of(0, 8, Sort.by("name"));
         Page<MovieDTO> moviePageDTO = new PageImpl<>(movieListDTO, pageableDTO, movieListDTO.size());
 
         when(movieService.getAllMoviesPaged(pageable)).thenReturn(moviePage);
         when(movieService.getPageMovieDTO(moviePage, pageable)).thenReturn(moviePageDTO);
 
-
-        mockMvc.perform(get("/movies/sorted/name/page/1"))
+        mockMvc.perform(get("/movies/sorted/asc/name/page/1"))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("activeMoviesList"))
                 .andExpect(model().attributeExists("moviesDTOList"))
                 .andExpect(model().attributeExists("pageNumbers"))
                 .andExpect(view().name("user/movies/moviesSortedByName"));
+    }
+
+    @Test
+    @DisplayName("GET, Happy Path, method = showMoviesSortedByNameDescending")
+    void showMoviesSortedByNameDescending() throws Exception {
+        // Given
+        PageRequest pageable = PageRequest.of(0, 8, Sort.by("name").descending());
+        Page<Movie> moviePage = new PageImpl<>(movieList, pageable, movieList.size());
+
+        PageRequest pageableDTO = PageRequest.of(0, 8, Sort.by("name").descending());
+        Page<MovieDTO> moviePageDTO = new PageImpl<>(movieListDTO, pageableDTO, movieListDTO.size());
+
+        when(movieService.getAllMoviesPaged(pageable)).thenReturn(moviePage);
+        when(movieService.getPageMovieDTO(moviePage, pageable)).thenReturn(moviePageDTO);
+
+
+        mockMvc.perform(get("/movies/sorted/desc/name/page/1"))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("activeMoviesList"))
+                .andExpect(model().attributeExists("moviesDTOList"))
+                .andExpect(model().attributeExists("pageNumbers"))
+                .andExpect(view().name("user/movies/moviesSortedByName"));
+    }
+
+
+    @Test
+    @DisplayName("GET, Happy Path, method = showMoviesSortedByTimeAscending")
+    void showMoviesSortedByTimeAscending() throws Exception {
+        // Given
+        PageRequest pageable = PageRequest.of(0, 8, Sort.by("minutes"));
+        Page<Movie> moviePage = new PageImpl<>(movieList, pageable, movieList.size());
+
+        PageRequest pageableDTO = PageRequest.of(0, 8, Sort.by("minutes"));
+        Page<MovieDTO> moviePageDTO = new PageImpl<>(movieListDTO, pageableDTO, movieListDTO.size());
+
+        when(movieService.getAllMoviesPaged(pageable)).thenReturn(moviePage);
+        when(movieService.getPageMovieDTO(moviePage, pageable)).thenReturn(moviePageDTO);
+
+
+        mockMvc.perform(get("/movies/sorted/asc/time/page/1"))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("activeMoviesList"))
+                .andExpect(model().attributeExists("moviesDTOList"))
+                .andExpect(model().attributeExists("pageNumbers"))
+                .andExpect(view().name("user/movies/moviesSortedByTime"));
+    }
+
+
+    @Test
+    @DisplayName("GET, Happy Path, method = showMoviesSortedByTimeDescending")
+    void showMoviesSortedByTimeDescending() throws Exception {
+        // Given
+        PageRequest pageable = PageRequest.of(0, 8, Sort.by("minutes").descending());
+        Page<Movie> moviePage = new PageImpl<>(movieList, pageable, movieList.size());
+
+        PageRequest pageableDTO = PageRequest.of(0, 8, Sort.by("minutes").descending());
+        Page<MovieDTO> moviePageDTO = new PageImpl<>(movieListDTO, pageableDTO, movieListDTO.size());
+
+        when(movieService.getAllMoviesPaged(pageable)).thenReturn(moviePage);
+        when(movieService.getPageMovieDTO(moviePage, pageable)).thenReturn(moviePageDTO);
+
+
+        mockMvc.perform(get("/movies/sorted/desc/time/page/1"))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("activeMoviesList"))
+                .andExpect(model().attributeExists("moviesDTOList"))
+                .andExpect(model().attributeExists("pageNumbers"))
+                .andExpect(view().name("user/movies/moviesSortedByTime"));
     }
 }

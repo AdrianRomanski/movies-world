@@ -275,13 +275,13 @@ public class MoviesBootstrap implements ApplicationListener<ContextRefreshedEven
         Byte[] lordOfTheRings2Image = getBytes("src/main/resources/static/images/fantasy/lord_of_the_rings/part2.jpg");
         Byte[] lordOfTheRings3Image = getBytes("src/main/resources/static/images/fantasy/lord_of_the_rings/part3.jpg");
 
-        Movie lordOfTheRings1 = Movie.builder().name("The Lord of the Rings: Fellowship of the rings").image(lordOfTheRings1Image)
+        Movie lordOfTheRings1 = Movie.builder().name("The Lord of the Rings: Fellowship of the rings").image(lordOfTheRings1Image).minutes(228L)
                 .description("A meek Hobbit from the Shire and eight companions set out on a journey to destroy the powerful One Ring and save Middle-earth from the Dark Lord Sauron.").build();
 
-        Movie lordOfTheRings2 = Movie.builder().name("The Lord of the Rings: Two Towers").image(lordOfTheRings2Image)
+        Movie lordOfTheRings2 = Movie.builder().name("The Lord of the Rings: Two Towers").image(lordOfTheRings2Image).minutes(223L)
                 .description("While Frodo and Sam edge closer to Mordor with the help of the shifty Gollum, the divided fellowship makes a stand against Sauron's new ally, Saruman, and his hordes of Isengard.").build();
 
-        Movie lordOfTheRings3 = Movie.builder().name("The Lord of the Rings: The Return of the King").image(lordOfTheRings3Image)
+        Movie lordOfTheRings3 = Movie.builder().name("The Lord of the Rings: The Return of the King").image(lordOfTheRings3Image).minutes(251L)
                 .description("Gandalf and Aragorn lead the World of Men against Sauron's army to draw his gaze from Frodo and Sam as they approach Mount Doom with the One Ring.").build();
 
         // Harry Potter
@@ -294,37 +294,34 @@ public class MoviesBootstrap implements ApplicationListener<ContextRefreshedEven
         Byte[] harryPotter7Image = getBytes("src/main/resources/static/images/fantasy/harryPotter/part7.jpg");
         Byte[] harryPotter8Image = getBytes("src/main/resources/static/images/fantasy/harryPotter/part8.jpg");
 
-        Movie harryPotter1 = Movie.builder().name("Harry Potter and the Sorcerer's Stone").image(harryPotter1Image)
+        Movie harryPotter1 = Movie.builder().name("Harry Potter and the Sorcerer's Stone").image(harryPotter1Image).minutes(154L)
                 .description("An orphaned boy enrolls in a school of wizardry, where he learns the truth about himself, his family and the terrible evil that haunts the magical world.").build();
 
-        Movie harryPotter2 = Movie.builder().name("Harry Potter and the Chamber of Secrets ").image(harryPotter2Image)
+        Movie harryPotter2 = Movie.builder().name("Harry Potter and the Chamber of Secrets ").image(harryPotter2Image).minutes(174L)
                 .description("An ancient prophecy seems to be coming true when a mysterious presence begins stalking the corridors of a school of magic and leaving its victims paralyzed.").build();
 
-        Movie harryPotter3 = Movie.builder().name("Harry Potter and the Prisoner of Azkaban ").image(harryPotter3Image)
+        Movie harryPotter3 = Movie.builder().name("Harry Potter and the Prisoner of Azkaban ").image(harryPotter3Image).minutes(142L)
                 .description("Harry Potter, Ron and Hermione return to Hogwarts School of Witchcraft and Wizardry for their third year of study, " +
                         "where they delve into the mystery surrounding an escaped prisoner who poses a dangerous threat to the young wizard.").build();
 
-        Movie harryPotter4 = Movie.builder().name("Harry Potter and the Goblet of Fire").image(harryPotter4Image)
+        Movie harryPotter4 = Movie.builder().name("Harry Potter and the Goblet of Fire").image(harryPotter4Image).minutes(157L)
                 .description("Harry Potter finds himself competing in a hazardous tournament between rival schools of magic, but he is distracted by recurring nightmares.").build();
 
-        Movie harryPotter5 = Movie.builder().name("Harry Potter and the Order of the Phoenix ").image(harryPotter5Image)
+        Movie harryPotter5 = Movie.builder().name("Harry Potter and the Order of the Phoenix ").image(harryPotter5Image).minutes(142L)
                 .description("With their warning about Lord Voldemort's return scoffed at, Harry and Dumbledore are targeted by the Wizard authorities as an authoritarian bureaucrat slowly seizes power at Hogwarts.").build();
 
-        Movie harryPotter6 = Movie.builder().name("Harry Potter and the Half-Blood Prince").image(harryPotter6Image)
+        Movie harryPotter6 = Movie.builder().name("Harry Potter and the Half-Blood Prince").image(harryPotter6Image).minutes(154L)
                 .description("As Harry Potter begins his sixth year at Hogwarts, he discovers an old book marked as the property of the Half-Blood Prince and begins to learn more about Lord Voldemort's dark past.").build();
 
 
-        Movie harryPotter7 = Movie.builder().name("Harry Potter and the Deathly Hallows: Part 1").image(harryPotter7Image)
+        Movie harryPotter7 = Movie.builder().name("Harry Potter and the Deathly Hallows: Part 1").image(harryPotter7Image).minutes(146L)
                 .description("As Harry, Ron and Hermione race against time and evil to destroy the Horcruxes, they uncover the existence of the three most powerful objects in the wizarding world: the Deathly Hallows.").build();
 
 
-        Movie harryPotter8 = Movie.builder().name("Harry Potter and the Deathly Hallows: Part 1").image(harryPotter8Image)
+        Movie harryPotter8 = Movie.builder().name("Harry Potter and the Deathly Hallows: Part 1").image(harryPotter8Image).minutes(130L)
                 .description("Harry, Ron, and Hermione search for Voldemort's remaining Horcruxes in their effort to destroy the Dark Lord as the final battle rages on at Hogwarts.").build();
 
 
-
-
-        //, , spiderMan
 
         // Categories Images
         Byte[] fantasyImage = getBytes("src/main/resources/static/images/fantasy.jpg");
@@ -372,17 +369,23 @@ public class MoviesBootstrap implements ApplicationListener<ContextRefreshedEven
         Byte[] starWars6Image = getBytes("src/main/resources/static/images/science-fiction/star_wars/part6.jpg");
 
         // Star Wars Movies
-        Movie startWars1 = Movie.builder().name("Star Wars: Phantom Menace").description("Two Jedi escape a hostile blockade to find allies and come across a young boy who may bring balance to the Force, " +
+        Movie startWars1 = Movie.builder().name("Star Wars: Phantom Menace").minutes(136L)
+                .description("Two Jedi escape a hostile blockade to find allies and come across a young boy who may bring balance to the Force, " +
                 "but the long dormant Sith resurface to claim their original glory.").image(starWars1Image).build();
-        Movie startWars2 = Movie.builder().name("Star Wars: Attack Of The Clones").description("Ten years after initially meeting, Anakin Skywalker shares a forbidden romance with Padmé Amidala, " +
+        Movie startWars2 = Movie.builder().name("Star Wars: Attack Of The Clones").minutes(142L)
+                .description("Ten years after initially meeting, Anakin Skywalker shares a forbidden romance with Padmé Amidala, " +
                         "while Obi-Wan Kenobi investigates an assassination attempt on the senator and discovers a secret clone army crafted for the Jedi").image(starWars2Image).build();
-        Movie startWars3 = Movie.builder().name("Star Wars: Revenge of the Sith").description("Three years into the Clone Wars, the Jedi rescue Palpatine from Count Dooku. As Obi-Wan pursues a new threat," +
+        Movie startWars3 = Movie.builder().name("Star Wars: Revenge of the Sith").minutes(140L)
+                .description("Three years into the Clone Wars, the Jedi rescue Palpatine from Count Dooku. As Obi-Wan pursues a new threat," +
                 " Anakin acts as a double agent between the Jedi Council and Palpatine and is lured into a sinister plan to rule the galaxy").image(starWars3Image).build();
-        Movie startWars4 = Movie.builder().name("Star Wars: A New Hope").description("Luke Skywalker joins forces with a Jedi Knight, a cocky pilot, a Wookiee and two droids to save the galaxy from the Empire's world-destroying battle station, " +
+        Movie startWars4 = Movie.builder().name("Star Wars: A New Hope").minutes(125L)
+                .description("Luke Skywalker joins forces with a Jedi Knight, a cocky pilot, a Wookiee and two droids to save the galaxy from the Empire's world-destroying battle station, " +
                 "while also attempting to rescue Princess Leia from the mysterious Darth Vader").image(starWars4Image).build();
-        Movie startWars5 = Movie.builder().name("Star Wars: The Empire Strikes Back").description("After the Rebels are brutally overpowered by the Empire on the ice planet Hoth, Luke Skywalker begins Jedi training with Yoda," +
+        Movie startWars5 = Movie.builder().name("Star Wars: The Empire Strikes Back").minutes(127L)
+                .description("After the Rebels are brutally overpowered by the Empire on the ice planet Hoth, Luke Skywalker begins Jedi training with Yoda," +
                 " while his friends are pursued by Darth Vader and a bounty hunter named Boba Fett all over the galaxy").image(starWars5Image).build();
-        Movie startWars6 = Movie.builder().name("Star Wars Return of the the Jedi").description("After a daring mission to rescue Han Solo from Jabba the Hutt, the Rebels dispatch to Endor to destroy the second Death Star. " +
+        Movie startWars6 = Movie.builder().name("Star Wars Return of the the Jedi").minutes(136L)
+                .description("After a daring mission to rescue Han Solo from Jabba the Hutt, the Rebels dispatch to Endor to destroy the second Death Star. " +
                 "Meanwhile, Luke struggles to help Darth Vader back from the dark side without falling into the Emperor's trap.").image(starWars6Image).build();
 
         // Back to the Future Images
@@ -391,29 +394,35 @@ public class MoviesBootstrap implements ApplicationListener<ContextRefreshedEven
         Byte[] backToTheFuture3Image = getBytes("src/main/resources/static/images/science-fiction/back_to_the_future/part3.jpg");
 
         // Back to the future movies
-        Movie backToTheFuture1 = Movie.builder().name("Back To The Future Part 1").description("Marty McFly, a 17-year-old high school student, is accidentally sent thirty years into the past in a time-traveling DeLorean " +
+        Movie backToTheFuture1 = Movie.builder().name("Back To The Future Part 1").minutes(111L)
+                .description("Marty McFly, a 17-year-old high school student, is accidentally sent thirty years into the past in a time-traveling DeLorean " +
                 "invented by his close friend, the eccentric scientist Doc Brown.").image(backToTheFuture1Image).build();
-        Movie backToTheFuture2 = Movie.builder().name("Back To The Future Part 2").description("After visiting 2015, Marty McFly must repeat his visit to 1955 to prevent disastrous changes to 1985..." +
+        Movie backToTheFuture2 = Movie.builder().name("Back To The Future Part 2").minutes(108L)
+                .description("After visiting 2015, Marty McFly must repeat his visit to 1955 to prevent disastrous changes to 1985..." +
                 "without interfering with his first trip").image(backToTheFuture2Image).build();
-        Movie backToTheFuture3 = Movie.builder().name("Back To The Future Part 3").description("Stranded in 1955, Marty McFly learns about the death of Doc Brown in 1885 and must travel back in time to save him." +
+        Movie backToTheFuture3 = Movie.builder().name("Back To The Future Part 3").minutes(119L)
+                .description("Stranded in 1955, Marty McFly learns about the death of Doc Brown in 1885 and must travel back in time to save him." +
                 " With no fuel readily available for the DeLorean, the two must figure how to escape the Old West before Emmett is murdered.").image(backToTheFuture3Image).build();
 
         // Matrix
         Byte[] matrixPict = getBytes("src/main/resources/static/images/science-fiction/matrix.jpg");
 
-        Movie matrix = Movie.builder().name("Matrix").description("A computer hacker learns from mysterious rebels about the true nature of his reality and his role in the war against its controllers.")
+        Movie matrix = Movie.builder().name("Matrix").minutes(150L)
+                .description("A computer hacker learns from mysterious rebels about the true nature of his reality and his role in the war against its controllers.")
                 .image(matrixPict).build();
 
         // The Fifth Element
         Byte[] fifthElementPict = getBytes("src/main/resources/static/images/science-fiction/fifthElement.jpg");
 
-        Movie fifthElement = Movie.builder().name("The Fifth Element").description("In the colorful future, a cab driver unwittingly becomes the central figure in the search for a legendary cosmic weapon to keep Evil and Mr. Zorg at bay")
+        Movie fifthElement = Movie.builder().name("The Fifth Element").minutes(127L)
+                .description("In the colorful future, a cab driver unwittingly becomes the central figure in the search for a legendary cosmic weapon to keep Evil and Mr. Zorg at bay")
                 .image(fifthElementPict).build();
 
         // Interstellar
         Byte[] interstellarPict = getBytes("src/main/resources/static/images/science-fiction/interstellar.jpg");
 
-        Movie interstellar = Movie.builder().name("Interstellar").description("A team of explorers travel through a wormhole in space in an attempt to ensure humanity's survival.")
+        Movie interstellar = Movie.builder().name("Interstellar").minutes(169L)
+                .description("A team of explorers travel through a wormhole in space in an attempt to ensure humanity's survival.")
                 .image(interstellarPict).build();
 
 

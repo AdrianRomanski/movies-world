@@ -29,18 +29,15 @@
                     </div>
                 </a>
             </div>
-                <div class="row movies-listing-extra-info">
-                    <div class="small movie-author-name">
-                        Total movies
-                    </div>
+            <div class="movies-listing-extra col-md-4">
+                <div class="small movie-price">
+                    Movies
                 </div>
-                <div class="row movies-listing-extra-info">
-                    <div class="small movie-price">
-                        120
-                    </div>
+                <div class="movies-listing-extra col-md-4">
+                    <div class="small movie-price" th:text="${category.moviesDTO.size()}"></div>
                 </div>
             </div>
         </div>
-
+    </div>
 </body>
 </html>

@@ -67,7 +67,7 @@
         </a>
         <ul class="dropdown-menu">
             <li><a href="#" th:href="@{'/movies/page/1'}" type="button" >Show All Movies</a></li>
-            <li><a href="#">Create New Movie</a></li>
+            <li><a href="#">Something</a></li>
         </ul>
     </li>
     <li class="dropdown">
@@ -76,7 +76,7 @@
         </a>
         <ul class="dropdown-menu">
             <li><a href="#">Show All Movies</a></li>
-            <li><a href="#">Create New Movie</a></li>
+            <li><a href="#">Something</a></li>
         </ul>
     </li>
 </ul>
@@ -119,7 +119,7 @@
         <nav aria-label="Pagination">
             <ul class="pagination justify-content-center">
                 <li class="page-item" th:each="pageNumber : ${pageNumbers}" >
-                    <a class="page-link" th:href="@{|/movies/page/${pageNumber}|}" th:text=${pageNumber}>1</a>
+                    <a class="page-link" th:href="@{|/movies/sorted/time/page/${pageNumber}|}" th:text=${pageNumber}>1</a>
                 </li>
             </ul>
         </nav>
