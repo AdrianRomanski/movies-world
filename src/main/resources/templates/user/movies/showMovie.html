@@ -129,7 +129,6 @@
 <div class="col-md-9">
     <div class="single-movie-infos">
 
-
         <div class="panel-primary">
            <div class="panel-heading">
                <div class="single-movie-infos-title">
@@ -141,33 +140,63 @@
                th:text="${movie.description}">
                </div>
                <div class="single-movie-infos-additional">
-                   <div class="col-md-3">Minutes</div>
-                   <div class="col-md-3">Country</div>
-                   <div class="col-md-3">Year</div>
+                   <div class="col-md-4">Minutes</div>
+                   <div class="col-md-4">Country</div>
+                   <div class="col-md-4">Year</div>
                </div>
                <div class="single-movie-infos-additional">
-                   <div class="col-md-3" th:text="${movie.time}"></div>
-                   <div class="col-md-3" th:text="${movie.country}"></div>
-                   <div class="col-md-3" th:text="${movie.year}"></div>
-               </div>
-
-               <div class="single-movie-infos-actors">
-               ACTORS
-               </div>
-
-               <div class="single-movie-infos-awards">
-               AWARDS
+                   <div class="col-md-4" th:text="${movie.time}"></div>
+                   <div class="col-md-4" th:text="${movie.country}"></div>
+                   <div class="col-md-4" th:text="${movie.year}"></div>
                </div>
            </div>
         </div>
 
+            <div class="col-md-12 single-movie-infos-buttons">
+                <a class="btn btn-primary btn-lg" href="#" role="button">Show Actors</a>
+                <a class="btn btn-primary btn-lg" href="#" role="button">Show Director</a>
+                <a class="btn btn-primary btn-lg" href="#" role="button">Show Awards</a>
+            </div>
+
+<!--            <div class="col-md-4 single-movie-infos-buttons">-->
+<!--                <a class="btn btn-primary btn-lg" href="#" role="button">Show Director</a>-->
+<!--            </div>-->
+<!--            <div class="col-md-4 single-movie-infos-buttons">-->
+<!--                <a class="btn btn-danger btn-lg" href="#" role="button">Show Awards</a>-->
+<!--            </div>-->
+
+<!--               <div class="single-movie-infos-actors">-->
+<!--               ACTORS-->
+<!--               </div>-->
+<!--               <div class="single-movie-infos-awards">-->
+<!--                   <div class="col-md-4">-->
+<!--                       <a class="btn btn-info btn-lg" href="#" role="button">Show Actors</a>-->
+<!--                   </div>-->
+<!--                   <div class="col-md-4">-->
+<!--                       <a class="btn btn-primary btn-lg" href="#" role="button">Show Director</a>-->
+<!--                   </div>-->
+<!--                   <div class="col-md-4">-->
+<!--                       <a class="btn btn-danger btn-lg" href="#" role="button">Show Awards</a>-->
+<!--                   </div>-->
+<!--               </div>-->
     </div>
 </div>
-
-
-
-
-
-
+    <div class="col-md-12">
+        <div class="single-movie-infos">
+            <div class="panel-info">
+                <div class="panel-heading">
+                    <div class="single-movie-infos-title">
+                        <h4>User Comments</h4>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="single-movie-infos-description">
+                        COMING SOON
+                    </div>
+                </div>
+           </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>
