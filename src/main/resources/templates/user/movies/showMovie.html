@@ -64,6 +64,20 @@
                             <li><a href="#" th:href="@{'/movies/sorted/desc/time/page/1'}">Descending</a></li>
                         </ul>
                     </li>
+                    <li class="dropdown-submenu">
+                        <a class="test" href="#">Year<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#" th:href="@{'/movies/sorted/asc/year/page/1'}">Ascending</a></li>
+                            <li><a href="#" th:href="@{'/movies/sorted/desc/year/page/1'}">Descending</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown-submenu">
+                        <a class="test" href="#">Country<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#" th:href="@{'/movies/sorted/asc/country/page/1'}">Ascending</a></li>
+                            <li><a href="#" th:href="@{'/movies/sorted/desc/country/page/1'}">Descending</a></li>
+                        </ul>
+                    </li>
                 </ul>
             </li>
         </ul>
@@ -117,19 +131,16 @@
            <div class="panel-body">
                <div class="single-movie-infos-description"
                th:text="${movie.description}">
-                DESCRIPTION
                </div>
-
                <div class="single-movie-infos-additional">
-                    <div class="col-md-3">
-                        Time
-                    </div>
-                   <div class="col-md-3">
-                       Country
-                   </div>
-                   <div class="col-md-3">
-                       Year
-                   </div>
+                   <div class="col-md-3">Minutes</div>
+                   <div class="col-md-3">Country</div>
+                   <div class="col-md-3">Year</div>
+               </div>
+               <div class="single-movie-infos-additional">
+                   <div class="col-md-3" th:text="${movie.time}"></div>
+                   <div class="col-md-3" th:text="${movie.country}"></div>
+                   <div class="col-md-3" th:text="${movie.year}"></div>
                </div>
 
                <div class="single-movie-infos-actors">
