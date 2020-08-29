@@ -7,6 +7,7 @@ import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import java.time.LocalDate;
 import java.util.*;
 
 @Entity
@@ -23,9 +24,9 @@ public class Director extends Person {
      * @see ImmutableList
      */
     @Builder
-    public Director(Long id, String firstName, String lastName, String gender,
+    public Director(Long id, String firstName, String lastName, String gender, Byte[] image, LocalDate dateOfBirth,
                     List<Movie> movies, Set<DirectorAward> awards) {
-        super(id, firstName, lastName, gender);
+        super(id, firstName, lastName, gender, image, dateOfBirth);
         this.movies = Objects.requireNonNullElseGet(movies, ArrayList::new);
         this.awards = Objects.requireNonNullElseGet(awards, HashSet::new);
     }

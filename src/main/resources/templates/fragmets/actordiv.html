@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Category</title>
+
+    <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet" media="screen"/>
+
+    <script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.4/jquery.min.js"></script>
+
+    <link th:href="@{/css/custom.css}" rel="stylesheet" media="screen"/>
+
+
+</head>
+<body>
+<!--/*@thymesVar id="actor" type="adrianromanski.movies.domain.person.Actor"*/-->
+<!--/*@thymesVar id="actorDTO" type="adrianromanski.movies.model.person.ActorDTO"*/-->
+<div class="col-md-3" th:fragment="actordiv">
+    <div class="movies-listing">
+        <div class="row">
+            <a th:href="@{'/actor/' + ${actor.id}}">
+                <div class="col-lg-12">
+                    <div class="movies-box-image-container">
+                        <img role="presentation"
+                             th:src="@{'/actor/' + ${actor.id} + '/actorImage'}"
+                             class="movies-box-image">
+                    </div>
+                    <div class="movies-listing-title" th:text="${actor.firstName} + ' ' + ${actor.lastName}"></div>
+<!--                    <div class="movies-listing-description" th:text="${actor.description}"></div>-->
+                </div>
+            </a>
+        </div>
+        <div class="movies-listing-extra">
+            <div class="movies-listing-extra-item col-md-4">
+                <div class="small movie-price">
+                    Awards
+                </div>
+            </div>
+            <div class="movies-listing-extra-item col-md-4">
+                <div class="small movie-price">
+                    Date of Birth
+                </div>
+            </div>
+            <div class="movies-listing-extra-item col-md-4">
+                <div class="small movie-price">
+                    Country
+                </div>
+            </div>
+        </div>
+        <div class="movies-listing-extra">
+            <div class="movies-listing-extra-item col-md-4">
+                <div class="small movie-price">
+                    0
+                </div>
+            </div>
+            <div class="movies-listing-extra-item col-md-4">
+                <div class="small movie-price">
+                    03-11-1992
+                </div>
+            </div>
+            <div class="movies-listing-extra-item col-md-4">
+                <div class="small movie-price">
+                    Poland
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>

@@ -10,8 +10,9 @@ import adrianromanski.movies.mapper.person.ActorMapper;
 import adrianromanski.movies.mapper.person.ActorMapperImpl;
 import adrianromanski.movies.model.award.ActorAwardDTO;
 import adrianromanski.movies.model.person.ActorDTO;
-import adrianromanski.movies.repositories.person.ActorRepository;
 import adrianromanski.movies.repositories.award.AwardRepository;
+import adrianromanski.movies.repositories.pages.ActorPageRepository;
+import adrianromanski.movies.repositories.person.ActorRepository;
 import adrianromanski.movies.services.actor.ActorService;
 import adrianromanski.movies.services.actor.ActorServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,6 +20,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -45,6 +49,9 @@ class ActorServiceImplTest {
     AwardRepository awardRepository;
 
     @Mock
+    ActorPageRepository actorPageRepository;
+
+    @Mock
     JmsTextMessageService jms;
 
     ActorService actorService;
@@ -64,7 +71,7 @@ class ActorServiceImplTest {
         ActorMapper actorMapper = new ActorMapperImpl();
         ActorAwardMapper awardMapper = new ActorAwardMapperImpl();
 
-        actorService = new ActorServiceImpl(actorRepository, awardRepository, actorMapper, awardMapper, jms);
+        actorService = new ActorServiceImpl(actorRepository, awardRepository, actorPageRepository, actorMapper, awardMapper, jms);
     }
 
 
@@ -78,6 +85,37 @@ class ActorServiceImplTest {
         List<ActorDTO> returnDTO = actorService.getAllActors();
 
         assertEquals(returnDTO.size(), 3);
+    }
+
+
+    @DisplayName("Happy Path, method = getActorById")
+    @Test
+    void getActorById() {
+        Actor actor = Actor.builder().id(1L).build();
+
+        when(actorRepository.findById(anyLong())).thenReturn(Optional.of(actor));
+
+        ActorDTO returnDTO = actorService.getActorByID(1L);
+
+        assertEquals(returnDTO.getId(), 1);
+    }
+
+
+    @DisplayName("Happy Path, method = getAllActorsPaged")
+    @Test
+    void getAllActorsPaged() {
+        List<Actor> actors = Arrays.asList(new Actor(), new Actor(), new Actor());
+
+        PageRequest pageable = PageRequest.of(0, 3);
+
+        Page<Actor> actorPage = new PageImpl<>(actors, pageable, actors.size());
+
+        when(actorPageRepository.findAll(pageable)).thenReturn(actorPage);
+
+        Page<Actor> returnPage = actorService.getActorsPaged(pageable);
+
+        assertEquals(returnPage.getTotalElements(), 3);
+        assertEquals(returnPage.getTotalPages(), 1);
     }
 
 

@@ -6,6 +6,7 @@ import com.google.common.collect.ImmutableList;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.*;
 
 
@@ -25,10 +26,10 @@ public class User extends Person {
      * @see ImmutableList
      */
     @Builder
-    public User(Long id, String firstName, String lastName, String gender, String username, String password,
+    public User(Long id, String firstName, String lastName, String gender, String username, String password, Byte[] image,  LocalDate dateOfBirth,
                 Set<Movie> favouriteMovies,  Set<Movie> watchedMovies,
                 List<MovieReview> movieReviews) {
-        super(id, firstName, lastName, gender);
+        super(id, firstName, lastName, gender, image, dateOfBirth);
         this.username = username;
         this.password = password;
         this.favouriteMovies = Objects.requireNonNullElseGet(favouriteMovies, HashSet::new);

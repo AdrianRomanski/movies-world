@@ -2,6 +2,7 @@ package adrianromanski.movies.bootstrap;
 
 import adrianromanski.movies.domain.base_entity.Category;
 import adrianromanski.movies.domain.base_entity.Movie;
+import adrianromanski.movies.domain.person.Actor;
 import adrianromanski.movies.repositories.base_entity.CategoryRepository;
 import adrianromanski.movies.repositories.base_entity.MovieRepository;
 import adrianromanski.movies.repositories.person.ActorRepository;
@@ -15,6 +16,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.Arrays;
 
 @Component
@@ -369,24 +371,127 @@ public class MoviesBootstrap implements ApplicationListener<ContextRefreshedEven
         Byte[] starWars6Image = getBytes("src/main/resources/static/images/science-fiction/star_wars/part6.jpg");
 
         // Star Wars Movies
+
+        // Star Wars 1
+        Byte[] liamNeesonImage = getBytes("src/main/resources/static/images/actors/starwars/liam_neeson.jpg");
+        Byte[] ewanMcGregorImage = getBytes("src/main/resources/static/images/actors/starwars/ewan_mcgregor.jpg");
+        Byte[] nataliePortmanImage = getBytes("src/main/resources/static/images/actors/starwars/natalie_portman.jpg");
+        Byte[] jakeLloydImage = getBytes("src/main/resources/static/images/actors/starwars/jake_lloyd.jpg");
+        Byte[] ianMcDiarnidImage = getBytes("src/main/resources/static/images/actors/starwars/ian_mciarmid.jpg");
+
+        // Qui-Gon Jinn
+        Actor liamNeeson = Actor.builder().firstName("Liam").lastName("Neeson").image(liamNeesonImage).dateOfBirth(LocalDate.of(1952,6,7)).build();
+        // Obi-Wan Kenobi young
+        Actor ewanMcGregor = Actor.builder().firstName("Ewan").lastName("McGregor").image(ewanMcGregorImage).dateOfBirth(LocalDate.of(1971,3,31)).build();
+        //Padmé Amidala
+        Actor nataliePortman = Actor.builder().firstName("Natalie").lastName("Portman").image(nataliePortmanImage).dateOfBirth(LocalDate.of(1981,6,9)).build();
+        // Anakin Skywalker kid
+        Actor jakeLloyd = Actor.builder().firstName("Jacob").lastName("Lloyd").image(jakeLloydImage).dateOfBirth(LocalDate.of(1989,3,5)).build();
+        // Senator Sheev Palpatine
+        Actor ianMcDiarnid = Actor.builder().firstName("Ian").lastName("McDiarmid").image(ianMcDiarnidImage).dateOfBirth(LocalDate.of(1944,8,11)).build();
+
+
         Movie startWars1 = Movie.builder().name("Star Wars: Phantom Menace").time(136L).year(1999).country("USA")
+                .actors(Arrays.asList(liamNeeson, ewanMcGregor, nataliePortman, jakeLloyd, ianMcDiarnid))
                 .description("Two Jedi escape a hostile blockade to find allies and come across a young boy who may bring balance to the Force, " +
                 "but the long dormant Sith resurface to claim their original glory.").image(starWars1Image).build();
+
+        liamNeeson.getMovies().add(startWars1);
+        ewanMcGregor.getMovies().add(startWars1);
+        nataliePortman.getMovies().add(startWars1);
+        jakeLloyd.getMovies().add(startWars1);
+        ianMcDiarnid.getMovies().add(startWars1);
+
+
+        // Star Wars 2
+        Byte[] haydenChristensenImage = getBytes("src/main/resources/static/images/actors/starwars/hayden-christensen.jpg");
+        Byte[] samuelLJacksonImage = getBytes("src/main/resources/static/images/actors/starwars/samuel.jpg");
+
+        // Anakin Skywalker
+        Actor haydenChristensen = Actor.builder().firstName("Hayden").lastName("Christensen").image(haydenChristensenImage).dateOfBirth(LocalDate.of(1981,4,19)).build();
+        // Mace Windu
+        Actor samuelLJackson = Actor.builder().firstName("Samuel").lastName("L. Jackson").image(samuelLJacksonImage).dateOfBirth(LocalDate.of(1948,12,21)).build();
+
         Movie startWars2 = Movie.builder().name("Star Wars: Attack Of The Clones").time(142L).year(2002).country("USA")
+                .actors(Arrays.asList(ianMcDiarnid, ewanMcGregor, haydenChristensen, samuelLJackson, ianMcDiarnid))
                 .description("Ten years after initially meeting, Anakin Skywalker shares a forbidden romance with Padmé Amidala, " +
                         "while Obi-Wan Kenobi investigates an assassination attempt on the senator and discovers a secret clone army crafted for the Jedi").image(starWars2Image).build();
+
+        ewanMcGregor.getMovies().add(startWars2);
+        nataliePortman.getMovies().add(startWars2);
+        haydenChristensen.getMovies().add(startWars2);
+        samuelLJackson.getMovies().add(startWars2);
+        ianMcDiarnid.getMovies().add(startWars2);
+
+        // Star Wars 3
         Movie startWars3 = Movie.builder().name("Star Wars: Revenge of the Sith").time(140L).year(2005).country("USA")
+                .actors(Arrays.asList(ianMcDiarnid, ewanMcGregor, haydenChristensen, samuelLJackson, ianMcDiarnid))
                 .description("Three years into the Clone Wars, the Jedi rescue Palpatine from Count Dooku. As Obi-Wan pursues a new threat," +
                 " Anakin acts as a double agent between the Jedi Council and Palpatine and is lured into a sinister plan to rule the galaxy").image(starWars3Image).build();
+
+        ewanMcGregor.getMovies().add(startWars3);
+        nataliePortman.getMovies().add(startWars3);
+        haydenChristensen.getMovies().add(startWars3);
+        samuelLJackson.getMovies().add(startWars3);
+        ianMcDiarnid.getMovies().add(startWars3);
+
+
+        // Star Wars 4
+        Byte[] markHamillImage = getBytes("src/main/resources/static/images/actors/starwars/mark_hammil.jpg");
+        Byte[] harrisonFordImage = getBytes("src/main/resources/static/images/actors/starwars/harrison_ford.jpg");
+        Byte[] carrieFisherImage = getBytes("src/main/resources/static/images/actors/starwars/carrie_fisher.jpg");
+        Byte[] anthonyDanielsImage = getBytes("src/main/resources/static/images/actors/starwars/c3po.jpg");
+        Byte[] kennyBakerImage = getBytes("src/main/resources/static/images/actors/starwars/r2d2.jpg");
+
+        // Luke Skywalker
+        Actor markHamill = Actor.builder().firstName("Mark").lastName("Hamill").image(markHamillImage).dateOfBirth(LocalDate.of(1951,9,25)).build();
+        // Han Solo
+        Actor harrisonFord = Actor.builder().firstName("Harrison").lastName("Ford").image(harrisonFordImage).dateOfBirth(LocalDate.of(1942,7,13)).build();
+        // Leya
+        Actor carrieFisher = Actor.builder().firstName("Carrie").lastName("Fisher").image(carrieFisherImage).dateOfBirth(LocalDate.of(1956,10,21)).build();
+        // C3PO
+        Actor anthonyDaniels = Actor.builder().firstName("Anthony").lastName("Daniels").image(anthonyDanielsImage).dateOfBirth(LocalDate.of(1946,2,21)).build();
+        // R2D2
+        Actor kennyBaker = Actor.builder().firstName("Kenny").lastName("Baker").image(kennyBakerImage).dateOfBirth(LocalDate.of(1934,9,24)).build();
+
+
         Movie startWars4 = Movie.builder().name("Star Wars: A New Hope").time(125L).year(1977).country("USA")
+                .actors(Arrays.asList(markHamill, harrisonFord, carrieFisher, anthonyDaniels, kennyBaker))
                 .description("Luke Skywalker joins forces with a Jedi Knight, a cocky pilot, a Wookiee and two droids to save the galaxy from the Empire's world-destroying battle station, " +
                 "while also attempting to rescue Princess Leia from the mysterious Darth Vader").image(starWars4Image).build();
+
+        ewanMcGregor.getMovies().add(startWars4);
+        nataliePortman.getMovies().add(startWars4);
+        haydenChristensen.getMovies().add(startWars4);
+        samuelLJackson.getMovies().add(startWars4);
+        ianMcDiarnid.getMovies().add(startWars4);
+
+        // Star Wars 5
         Movie startWars5 = Movie.builder().name("Star Wars: The Empire Strikes Back").time(127L).year(1980).country("USA")
+                .actors(Arrays.asList(markHamill, harrisonFord, carrieFisher, anthonyDaniels, kennyBaker))
                 .description("After the Rebels are brutally overpowered by the Empire on the ice planet Hoth, Luke Skywalker begins Jedi training with Yoda," +
                 " while his friends are pursued by Darth Vader and a bounty hunter named Boba Fett all over the galaxy").image(starWars5Image).build();
+
+        ewanMcGregor.getMovies().add(startWars5);
+        nataliePortman.getMovies().add(startWars5);
+        haydenChristensen.getMovies().add(startWars5);
+        samuelLJackson.getMovies().add(startWars5);
+        ianMcDiarnid.getMovies().add(startWars5);
+
+        // Star Wars 6
         Movie startWars6 = Movie.builder().name("Star Wars Return of the the Jedi").time(136L).year(1983).country("USA")
+                .actors(Arrays.asList(markHamill, harrisonFord, carrieFisher, anthonyDaniels, kennyBaker))
                 .description("After a daring mission to rescue Han Solo from Jabba the Hutt, the Rebels dispatch to Endor to destroy the second Death Star. " +
                 "Meanwhile, Luke struggles to help Darth Vader back from the dark side without falling into the Emperor's trap.").image(starWars6Image).build();
+
+        ewanMcGregor.getMovies().add(startWars6);
+        nataliePortman.getMovies().add(startWars6);
+        haydenChristensen.getMovies().add(startWars6);
+        samuelLJackson.getMovies().add(startWars6);
+        ianMcDiarnid.getMovies().add(startWars6);
+        // END OF STAR WARS
+
+        // I finished here with actors - exhausted xD
 
         // Back to the Future Images
         Byte[] backToTheFuture1Image = getBytes("src/main/resources/static/images/science-fiction/back_to_the_future/part1.jpg");
@@ -462,6 +567,19 @@ public class MoviesBootstrap implements ApplicationListener<ContextRefreshedEven
         movieRepository.save(interstellar);
         movieRepository.save(matrix);
         movieRepository.save(fifthElement);
+
+        actorRepository.save(liamNeeson);
+        actorRepository.save(ewanMcGregor);
+        actorRepository.save(nataliePortman);
+        actorRepository.save(jakeLloyd);
+        actorRepository.save(ianMcDiarnid);
+        actorRepository.save(haydenChristensen);
+        actorRepository.save(samuelLJackson);
+        actorRepository.save(markHamill);
+        actorRepository.save(harrisonFord);
+        actorRepository.save(carrieFisher);
+        actorRepository.save(anthonyDaniels);
+        actorRepository.save(kennyBaker);
     }
 
     private Byte[] getBytes(String path) throws IOException {

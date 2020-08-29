@@ -5,6 +5,7 @@ import adrianromanski.movies.model.base_entity.MovieDTO;
 import com.google.common.collect.ImmutableList;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.*;
 
 @Getter
@@ -19,9 +20,9 @@ public class DirectorDTO extends PersonDTO {
      * @see ImmutableList
      */
     @Builder
-    public DirectorDTO(Long id, String firstName, String lastName, String gender,
+    public DirectorDTO(Long id, String firstName, String lastName, String gender, Byte[] image, LocalDate dateOfBirth,
                        List<MovieDTO> moviesDTO, Set<DirectorAward> awardsDTO) {
-        super(id, firstName, lastName, gender);
+        super(id, firstName, lastName, gender, dateOfBirth, image);
         this.moviesDTO = Objects.requireNonNullElseGet(moviesDTO, ArrayList::new);
         this.awardsDTO = Objects.requireNonNullElseGet(awardsDTO, HashSet::new);
     }

@@ -6,6 +6,7 @@ import com.google.common.collect.ImmutableList;
 import lombok.*;
 
 import javax.validation.constraints.NotEmpty;
+import java.time.LocalDate;
 import java.util.*;
 
 @Getter
@@ -25,10 +26,10 @@ public class UserDTO  extends PersonDTO {
      * @see ImmutableList
      */
     @Builder
-    public UserDTO(Long id, String firstName,  String lastName,  String gender, String username, String password,
+    public UserDTO(Long id, String firstName,  String lastName,  String gender, String username, String password, Byte[] image, LocalDate dateOfBirth,
                      Set<MovieDTO> favouriteMoviesDTO, Set<MovieDTO> watchedMoviesDTO,
                      List<MovieReviewDTO> movieReviewsDTO) {
-        super(id, firstName, lastName, gender);
+        super(id, firstName, lastName, gender, dateOfBirth, image);
         this.username = username;
         this.password = password;
         this.favouriteMoviesDTO = Objects.requireNonNullElseGet(favouriteMoviesDTO, HashSet::new);

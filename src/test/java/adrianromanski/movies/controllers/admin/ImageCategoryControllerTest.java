@@ -1,5 +1,6 @@
 package adrianromanski.movies.controllers.admin;
 
+import adrianromanski.movies.controllers.image.ImageCategoryController;
 import adrianromanski.movies.domain.base_entity.Category;
 import adrianromanski.movies.model.base_entity.CategoryDTO;
 import adrianromanski.movies.services.category.CategoryService;

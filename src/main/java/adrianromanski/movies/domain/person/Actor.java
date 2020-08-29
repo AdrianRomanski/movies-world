@@ -7,6 +7,7 @@ import com.google.common.collect.ImmutableList;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -27,9 +28,9 @@ public class Actor extends Person {
      * @see ImmutableList
      */
     @Builder
-    public Actor(Long id, String firstName, String lastName, String gender, Double rating,
+    public Actor(Long id, String firstName, String lastName, String gender, Double rating, Byte[] image, LocalDate dateOfBirth,
                  List<Movie> movies, List<ActorAward> awards) {
-        super(id, firstName, lastName, gender);
+        super(id, firstName, lastName, gender, image, dateOfBirth);
         this.rating = rating;
         this.movies = Objects.requireNonNullElseGet(movies, ArrayList::new);
         this.awards = Objects.requireNonNullElseGet(awards, ArrayList::new);

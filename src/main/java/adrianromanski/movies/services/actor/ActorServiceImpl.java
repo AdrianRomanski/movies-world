@@ -9,8 +9,12 @@ import adrianromanski.movies.mapper.award.ActorAwardMapper;
 import adrianromanski.movies.mapper.person.ActorMapper;
 import adrianromanski.movies.model.person.ActorDTO;
 import adrianromanski.movies.model.award.ActorAwardDTO;
+import adrianromanski.movies.repositories.pages.ActorPageRepository;
 import adrianromanski.movies.repositories.person.ActorRepository;
 import adrianromanski.movies.repositories.award.AwardRepository;
+import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,23 +23,16 @@ import static java.util.stream.Collectors.*;
 
 
 @Service
+@AllArgsConstructor
 public class ActorServiceImpl implements ActorService {
 
     private final ActorRepository actorRepository;
     private final AwardRepository awardRepository;
+    private final ActorPageRepository actorPageRepository;
     private final ActorMapper actorMapper;
     private final ActorAwardMapper awardMapper;
     private final JmsTextMessageService jmsTextMessageService;
 
-
-    public ActorServiceImpl(ActorRepository actorRepository, AwardRepository awardRepository,
-                            ActorMapper actorMapper, ActorAwardMapper awardMapper, JmsTextMessageService jmsTextMessageService) {
-        this.actorRepository = actorRepository;
-        this.awardRepository = awardRepository;
-        this.actorMapper = actorMapper;
-        this.awardMapper = awardMapper;
-        this.jmsTextMessageService = jmsTextMessageService;
-    }
 
     /**
      * @return All actors from Database
@@ -48,14 +45,18 @@ public class ActorServiceImpl implements ActorService {
                 .collect(toList());
     }
 
+    @Override
+    public ActorDTO getActorByID(Long id) {
+        return actorRepository.findById(id)
+                .map(actorMapper::actorToActorDTO)
+                .orElseThrow(() -> new ResourceNotFoundException(id, Actor.class));
+    }
 
-//    @Override
-//    public List<ActorDTO> getActorByRating() {
-//        return actorRepository.findAll()
-//                .stream()
-//                .sorted(actor -> actor.getRating())
-//                .map(actorMapper::actorDTOToActor);
-//    }
+    @Override
+    public Page<Actor> getActorsPaged(Pageable pageable) {
+        return actorPageRepository.findAll(pageable);
+    }
+
 
 
     /**

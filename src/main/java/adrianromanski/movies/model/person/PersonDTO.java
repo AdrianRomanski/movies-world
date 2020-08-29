@@ -8,6 +8,7 @@ import lombok.Setter;
 import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+import java.time.LocalDate;
 
 
 @MappedSuperclass
@@ -27,5 +28,7 @@ public class PersonDTO {
     @NotEmpty
     @Size(min = 3, max = 10)
     private String gender;
+    private LocalDate dateOfBirth;
+    Byte[] image;
 
 }

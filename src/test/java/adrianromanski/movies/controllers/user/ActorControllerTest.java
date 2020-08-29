@@ -1,0 +1,74 @@
+package adrianromanski.movies.controllers.user;
+
+import adrianromanski.movies.domain.person.Actor;
+import adrianromanski.movies.model.person.ActorDTO;
+import adrianromanski.movies.services.actor.ActorServiceImpl;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
+import java.util.Arrays;
+import java.util.List;
+
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
+
+class ActorControllerTest {
+
+    @Mock
+    ActorServiceImpl actorService;
+
+    @InjectMocks
+    ActorController actorController;
+
+    MockMvc mockMvc;
+
+    @BeforeEach
+    void setUp() {
+        MockitoAnnotations.initMocks(this);
+
+        mockMvc = MockMvcBuilders.standaloneSetup(actorController).build();
+    }
+
+    @Test
+    @DisplayName("GET, method = showActor")
+    void getActor() throws Exception {
+        ActorDTO actorDTO = ActorDTO.builder().id(1L).build();
+
+        when(actorService.getActorByID(anyLong())).thenReturn(actorDTO);
+
+        mockMvc.perform(get("/actor/1"))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("actor"))
+                .andExpect(view().name("user/actors/showActors"));
+    }
+
+    @Test
+    @DisplayName("GET, method = getActors")
+    void getActors() throws Exception {
+        // Given
+        List<Actor> actorList = Arrays.asList(new Actor(), new Actor(), new Actor());
+        PageRequest pageable = PageRequest.of(0, 8);
+        Page<Actor> actorPage = new PageImpl<>(actorList, pageable, actorList.size());
+
+        //When
+        when(actorService.getActorsPaged( pageable)).thenReturn(actorPage);
+
+        //Then
+        mockMvc.perform(get("/actors/page/1"))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("actorsList"))
+                .andExpect(view().name("user/actors/showActors"));
+    }
+}

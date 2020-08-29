@@ -1,8 +1,9 @@
 package adrianromanski.movies.controllers.admin;
 
+import adrianromanski.movies.controllers.image.ImageMovieController;
 import adrianromanski.movies.model.base_entity.MovieDTO;
 import adrianromanski.movies.services.image.ImageServiceMovie;
-import adrianromanski.movies.services.movie.MovieService;
+import adrianromanski.movies.services.movie.MovieServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -27,7 +28,7 @@ class ImageMovieControllerTest {
     ImageServiceMovie imageService;
 
     @Mock
-    MovieService movieService;
+    MovieServiceImpl movieService;
 
     @InjectMocks
     ImageMovieController controller;
