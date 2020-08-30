@@ -2,6 +2,7 @@ package adrianromanski.movies.controllers.user;
 
 import adrianromanski.movies.domain.base_entity.Movie;
 import adrianromanski.movies.model.base_entity.MovieDTO;
+import adrianromanski.movies.model.person.ActorDTO;
 import adrianromanski.movies.services.movie.MovieServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -43,6 +44,8 @@ class MoviesControllerTest {
     MovieDTO movieDTO2;
     MovieDTO movieDTO3;
 
+    ActorDTO actorDTO;
+
     List<Movie> movieList;
     List<MovieDTO> movieListDTO;
 
@@ -59,8 +62,12 @@ class MoviesControllerTest {
 
         movieList = Arrays.asList(movie1, movie2, movie3);
 
+        actorDTO = ActorDTO.builder().firstName("Adrian").build();
+
         movieDTO1 = MovieDTO.builder().name(SHREK + " 1").time(90L)
                 .description("A " + DESC).build();
+        movieDTO1.getActorsDTO().add(actorDTO);
+
         movieDTO2 = MovieDTO.builder().name(SHREK + " 2").time(100L)
                 .description("B " + DESC).build();
         movieDTO3 = MovieDTO.builder().name(SHREK + " 3").time(110L)
@@ -152,5 +159,18 @@ class MoviesControllerTest {
                 .andExpect(model().attributeExists("moviesDTOList"))
                 .andExpect(model().attributeExists("pageNumbers"))
                 .andExpect(view().name("user/movies/moviesSorted"));
+    }
+
+
+    @Test
+    @DisplayName("GET, Happy Path, method = showMovie")
+    void getAllActorsForMovie() throws Exception {
+
+        when(movieService.getMovieByID(anyLong())).thenReturn(movieDTO1);
+
+        mockMvc.perform(get("/movie/1/actors"))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("actorsList"))
+                .andExpect(view().name("user/actors/showActors"));
     }
 }

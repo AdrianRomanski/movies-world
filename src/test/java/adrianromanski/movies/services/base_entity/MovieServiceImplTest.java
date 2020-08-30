@@ -18,6 +18,7 @@ import adrianromanski.movies.mapper.base_entity.MovieMapper;
 import adrianromanski.movies.mapper.base_entity.MovieMapperImpl;
 import adrianromanski.movies.model.award.MovieAwardDTO;
 import adrianromanski.movies.model.base_entity.MovieDTO;
+import adrianromanski.movies.model.person.ActorDTO;
 import adrianromanski.movies.repositories.award.AwardRepository;
 import adrianromanski.movies.repositories.base_entity.CategoryRepository;
 import adrianromanski.movies.repositories.base_entity.MovieRepository;
@@ -222,11 +223,27 @@ class MovieServiceImplTest {
         List<Movie> movies = getMovies();
         Actor actor = Actor.builder().firstName("Arnold").movies(movies).build();
 
-        when(actorRepository.findByFirstNameAndAndLastName(anyString(), anyString())).thenReturn(Optional.of(actor));
+        when(actorRepository.findById(anyLong())).thenReturn(Optional.of(actor));
 
-        List<MovieDTO> returnDTO = movieService.findAllMoviesWithActor("Arnold", "Arnold");
+        List<MovieDTO> returnDTO = movieService.findAllMoviesWithActor(1L);
 
         assertEquals(returnDTO.size(), 3);
+    }
+
+
+    @DisplayName("Happy Path, method = findAllActorsForMovie")
+    @Test
+    void findAllActorsForMovieHappyPath() {
+        Movie movie = getStarWars();
+        Actor actor = Actor.builder().firstName("Arnold").build();
+        actor.getMovies().add(movie);
+        movie.getActors().add(actor);
+
+        when(movieRepository.findById(anyLong())).thenReturn(Optional.of(movie));
+
+        List<ActorDTO> returnDTO = movieService.findAllActorsForMovie(1L);
+
+        assertEquals(returnDTO.size(), 1);
     }
 
 
@@ -290,7 +307,7 @@ class MovieServiceImplTest {
     @DisplayName("UnHappyPath, method = findAllMoviesWithActor")
     @Test
     void findAllMoviesWithActorUnHappyPath() {
-        Throwable ex = catchThrowable(() -> movieService.findAllMoviesWithActor("Spider", "Chum"));
+        Throwable ex = catchThrowable(() -> movieService.findAllMoviesWithActor(2222L));
 
         assertThat(ex).isInstanceOf(ResourceNotFoundException.class);
     }

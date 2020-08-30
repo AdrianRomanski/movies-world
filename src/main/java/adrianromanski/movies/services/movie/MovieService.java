@@ -3,6 +3,7 @@ package adrianromanski.movies.services.movie;
 import adrianromanski.movies.domain.base_entity.Movie;
 import adrianromanski.movies.model.award.MovieAwardDTO;
 import adrianromanski.movies.model.base_entity.MovieDTO;
+import adrianromanski.movies.model.person.ActorDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -24,7 +25,9 @@ public interface MovieService {
 
     MovieDTO getMovieByName(String name);
 
-    List<MovieDTO> findAllMoviesWithActor(String firstName, String lastName);
+    List<MovieDTO> findAllMoviesWithActor(Long id);
+
+    List<ActorDTO> findAllActorsForMovie(Long movieID);
 
     List<MovieDTO> getMostFavouriteMovies();
 

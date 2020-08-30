@@ -17,6 +17,8 @@ public interface ActorService {
 
 //    List<ActorDTO> getActorByRating();
 
+//    List<MovieDTO> getAllMoviesForActor(Long id);
+
     Page<Actor> getActorsPaged(Pageable pageable);
 
     //POST

@@ -153,7 +153,7 @@
         </div>
 
             <div class="col-md-12 single-movie-infos-buttons">
-                <a class="btn btn-primary btn-lg" href="#" role="button">Show Actors</a>
+                <a class="btn btn-primary btn-lg" href="#" th:href="@{'/movie/' + ${movie.id} +'/actors'}" role="button">Show Actors</a>
                 <a class="btn btn-primary btn-lg" href="#" role="button">Show Director</a>
                 <a class="btn btn-primary btn-lg" href="#" role="button">Show Awards</a>
             </div>

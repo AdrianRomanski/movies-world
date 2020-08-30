@@ -1,17 +1,17 @@
 package adrianromanski.movies.services.actor;
 
-import adrianromanski.movies.domain.person.Actor;
 import adrianromanski.movies.domain.award.ActorAward;
 import adrianromanski.movies.domain.award.Award;
+import adrianromanski.movies.domain.person.Actor;
 import adrianromanski.movies.exceptions.ResourceNotFoundException;
 import adrianromanski.movies.jms.JmsTextMessageService;
 import adrianromanski.movies.mapper.award.ActorAwardMapper;
 import adrianromanski.movies.mapper.person.ActorMapper;
-import adrianromanski.movies.model.person.ActorDTO;
 import adrianromanski.movies.model.award.ActorAwardDTO;
+import adrianromanski.movies.model.person.ActorDTO;
+import adrianromanski.movies.repositories.award.AwardRepository;
 import adrianromanski.movies.repositories.pages.ActorPageRepository;
 import adrianromanski.movies.repositories.person.ActorRepository;
-import adrianromanski.movies.repositories.award.AwardRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static java.util.stream.Collectors.*;
+import static java.util.stream.Collectors.toList;
 
 
 @Service
@@ -45,6 +45,9 @@ public class ActorServiceImpl implements ActorService {
                 .collect(toList());
     }
 
+    /**
+     * @return  Actor with matching id
+     */
     @Override
     public ActorDTO getActorByID(Long id) {
         return actorRepository.findById(id)
@@ -52,6 +55,20 @@ public class ActorServiceImpl implements ActorService {
                 .orElseThrow(() -> new ResourceNotFoundException(id, Actor.class));
     }
 
+//    /**
+//     * @return All Movies For the Actor with matching id
+//     */
+//    @Override
+//    public List<MovieDTO> getAllMoviesForActor(Long id) {
+//        ActorDTO actorDTO = actorRepository.findById(id)
+//                .map(actorMapper::actorToActorDTO)
+//                .orElseThrow(() -> new ResourceNotFoundException(id, Actor.class));
+//        return actorDTO.getMoviesDTO();
+//    }
+
+    /**
+     * @return All Actors Paged
+     */
     @Override
     public Page<Actor> getActorsPaged(Pageable pageable) {
         return actorPageRepository.findAll(pageable);

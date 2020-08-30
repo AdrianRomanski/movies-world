@@ -2,6 +2,7 @@ package adrianromanski.movies.controllers.user;
 
 import adrianromanski.movies.domain.person.Actor;
 import adrianromanski.movies.services.actor.ActorServiceImpl;
+import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
@@ -14,13 +15,10 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @Controller
+@AllArgsConstructor
 public class ActorController {
 
     private final ActorServiceImpl actorService;
-
-    public ActorController(ActorServiceImpl actorService) {
-        this.actorService = actorService;
-    }
 
     @GetMapping("/actor/{id}")
     public ModelAndView getActor(@PathVariable String id) {
@@ -36,6 +34,14 @@ public class ActorController {
         PageRequest pageable = PageRequest.of(page - 1, 8);
         return getModelAndView(modelAndView, pageable);
     }
+
+
+//    @GetMapping("/actor/{id}/movies")
+//    public ModelAndView getActorMovies(@PathVariable String id) {
+//        ModelAndView modelAndView = new ModelAndView("user/actors/showActors");
+//        modelAndView.addObject("movies", actorService.getAllMoviesForActor(Long.valueOf(id)));
+//        return modelAndView;
+//    }
 
 
     public ModelAndView getModelAndView(ModelAndView modelAndView, PageRequest pageable) {

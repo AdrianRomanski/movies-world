@@ -3,6 +3,7 @@ package adrianromanski.movies.controllers.user;
 import adrianromanski.movies.domain.base_entity.Movie;
 import adrianromanski.movies.model.base_entity.MovieDTO;
 import adrianromanski.movies.services.movie.MovieServiceImpl;
+import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -16,13 +17,10 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @Controller
+@AllArgsConstructor
 public class MoviesController {
 
     private final MovieServiceImpl movieService;
-
-    public MoviesController(MovieServiceImpl movieService) {
-        this.movieService = movieService;
-    }
 
 
     @GetMapping("/movie/{id}")
@@ -52,6 +50,13 @@ public class MoviesController {
             pageable = PageRequest.of(page - 1, 8, Sort.by(sortBy).descending());
         }
         return getModelAndView(modelAndView, pageable);
+    }
+
+    @GetMapping("/movie/{id}/actors")
+    private ModelAndView getActorsForMovie(@PathVariable String id) {
+        ModelAndView modelAndView = new ModelAndView("user/actors/showActors");
+        modelAndView.addObject("actorsList", movieService.findAllActorsForMovie(Long.valueOf(id)));
+        return modelAndView;
     }
 
 

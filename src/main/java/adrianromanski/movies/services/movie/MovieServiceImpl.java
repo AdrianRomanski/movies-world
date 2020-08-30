@@ -11,6 +11,7 @@ import adrianromanski.movies.mapper.base_entity.CategoryMapper;
 import adrianromanski.movies.mapper.base_entity.MovieMapper;
 import adrianromanski.movies.model.award.MovieAwardDTO;
 import adrianromanski.movies.model.base_entity.MovieDTO;
+import adrianromanski.movies.model.person.ActorDTO;
 import adrianromanski.movies.repositories.award.AwardRepository;
 import adrianromanski.movies.repositories.base_entity.CategoryRepository;
 import adrianromanski.movies.repositories.base_entity.MovieRepository;
@@ -18,15 +19,12 @@ import adrianromanski.movies.repositories.pages.MoviePageRepository;
 import adrianromanski.movies.repositories.person.ActorRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 import static java.util.Collections.reverseOrder;
 import static java.util.Comparator.comparing;
@@ -134,23 +132,54 @@ public class MovieServiceImpl implements MovieService {
     }
 
 
+
     /**
-     * @param firstName of Actor
-     * @param lastName of Actor
+     * @param id of Actor
      * @return list of Movies with that Actor
      * @throws ResourceNotFoundException if not found
      */
     @Override
-    public List<MovieDTO> findAllMoviesWithActor(String firstName, String lastName) {
-        jmsTextMessageService.sendTextMessage("Finding movies for Actor:" + firstName + " " + lastName);
-        Actor actor = actorRepository.findByFirstNameAndAndLastName(firstName, lastName)
-                .orElseThrow(() -> new ResourceNotFoundException(firstName, lastName, Actor.class));
+    public List<MovieDTO> findAllMoviesWithActor(Long id) {
+        jmsTextMessageService.sendTextMessage("Finding movies for Actor with id:" + id);
+        Actor actor = actorRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(id, Actor.class));
         jmsTextMessageService.sendTextMessage("Founded " + actor.getMovies().size()  + " movies");
         return actor.getMovies()
                 .stream()
                 .map(movieMapper::movieToMovieDTO)
                 .collect(toList());
     }
+
+
+    /**
+     * @return Return Actors for Movie
+     */
+    @Override
+    public List<ActorDTO> findAllActorsForMovie(Long movieID) {
+        MovieDTO movieDTO = movieRepository.findById(movieID)
+                .map(movieMapper::movieToMovieDTO)
+                .orElseThrow(() -> new ResourceNotFoundException(movieID, Movie.class));
+        return movieDTO.getActorsDTO();
+    }
+
+//
+//    /**
+//     * @param firstName of Actor
+//     * @param lastName of Actor
+//     * @return list of Movies with that Actor
+//     * @throws ResourceNotFoundException if not found
+//     */
+//    @Override
+//    public List<MovieDTO> findAllMoviesWithActor(String firstName, String lastName) {
+//        jmsTextMessageService.sendTextMessage("Finding movies for Actor:" + firstName + " " + lastName);
+//        Actor actor = actorRepository.findByFirstNameAndAndLastName(firstName, lastName)
+//                .orElseThrow(() -> new ResourceNotFoundException(firstName, lastName, Actor.class));
+//        jmsTextMessageService.sendTextMessage("Founded " + actor.getMovies().size()  + " movies");
+//        return actor.getMovies()
+//                .stream()
+//                .map(movieMapper::movieToMovieDTO)
+//                .collect(toList());
+//    }
 
 
     /**
