@@ -79,7 +79,26 @@
             Actors <span class="caret"></span>
         </a>
         <ul class="dropdown-menu">
-            <li><a href="#" th:href="@{'/actors/page/1'}" type="button" >Show All Actors</a></li>
+            <li><a href="#" type="button" th:href="@{'/actors/page/1'}" >Show All Actors</a></li>
+            <li class="dropdown-submenu">
+                <a class="test" tabindex="-1" href="#">Sorted By<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li class="dropdown-submenu">
+                        <a class="test" href="#">Last Name<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#" th:href="@{'/actors/sorted/asc/lastName/page/1'}">Ascending</a></li>
+                            <li><a href="#" th:href="@{'/actors/sorted/desc/lastName/page/1'}" >Descending</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown-submenu">
+                        <a class="test" href="#">Date Of Birth<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#" th:href="@{'/actors/sorted/asc/dateOfBirth/page/1'}">Ascending</a></li>
+                            <li><a href="#" th:href="@{'/actors/sorted/desc/dateOfBirth/page/1'}">Descending</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
         </ul>
     </li>
     <li class="dropdown">

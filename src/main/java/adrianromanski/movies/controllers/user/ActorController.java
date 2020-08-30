@@ -5,6 +5,7 @@ import adrianromanski.movies.services.actor.ActorServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -42,6 +43,20 @@ public class ActorController {
 //        modelAndView.addObject("movies", actorService.getAllMoviesForActor(Long.valueOf(id)));
 //        return modelAndView;
 //    }
+
+    @GetMapping("/actors/sorted/{sortType}/{sortBy}/page/{page}")
+    private ModelAndView showActorsSortedBy(@PathVariable int page,
+                                            @PathVariable String sortBy, @PathVariable String sortType) {
+        ModelAndView modelAndView = new ModelAndView("user/actors/actorsSorted");
+        modelAndView.addObject("sortType", sortType);
+        PageRequest pageable = null;
+        if(sortType.equals("asc")) {
+            pageable = PageRequest.of(page - 1, 8, Sort.by(sortBy).ascending());
+        } else if(sortType.equals("desc")) {
+            pageable = PageRequest.of(page - 1, 8, Sort.by(sortBy).descending());
+        }
+        return getModelAndView(modelAndView, pageable);
+    }
 
 
     public ModelAndView getModelAndView(ModelAndView modelAndView, PageRequest pageable) {

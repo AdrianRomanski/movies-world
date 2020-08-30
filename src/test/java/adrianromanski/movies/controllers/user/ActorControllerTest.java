@@ -12,6 +12,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
@@ -34,11 +35,15 @@ class ActorControllerTest {
 
     MockMvc mockMvc;
 
+    List<Actor> actors;
+
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
 
         mockMvc = MockMvcBuilders.standaloneSetup(actorController).build();
+
+        actors = Arrays.asList(new Actor(), new Actor(), new Actor());
     }
 
     @Test
@@ -70,5 +75,39 @@ class ActorControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("actorsList"))
                 .andExpect(view().name("user/actors/showActors"));
+    }
+
+    @Test
+    @DisplayName("GET, Happy Path, method = showActorsSortedDesc")
+    void showActorsSortedDesc() throws Exception {
+        // Given
+        PageRequest pageable = PageRequest.of(0, 8, Sort.by("lastName").descending());
+        Page<Actor> actorPage = new PageImpl<>(actors, pageable, actors.size());
+
+        when(actorService.getActorsPaged(pageable)).thenReturn(actorPage);
+
+        mockMvc.perform(get("/actors/sorted/desc/lastName/page/1"))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("activeActorsList"))
+                .andExpect(model().attributeExists("actorsList"))
+                .andExpect(model().attributeExists("pageNumbers"))
+                .andExpect(view().name("user/actors/actorsSorted"));
+    }
+
+    @Test
+    @DisplayName("GET, Happy Path, method = showActorsSortedAsc")
+    void showActorsSortedAsc() throws Exception {
+        // Given
+        PageRequest pageable = PageRequest.of(0, 8, Sort.by("lastName").ascending());
+        Page<Actor> actorPage = new PageImpl<>(actors, pageable, actors.size());
+
+        when(actorService.getActorsPaged(pageable)).thenReturn(actorPage);
+
+        mockMvc.perform(get("/actors/sorted/asc/lastName/page/1"))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("activeActorsList"))
+                .andExpect(model().attributeExists("actorsList"))
+                .andExpect(model().attributeExists("pageNumbers"))
+                .andExpect(view().name("user/actors/actorsSorted"));
     }
 }
