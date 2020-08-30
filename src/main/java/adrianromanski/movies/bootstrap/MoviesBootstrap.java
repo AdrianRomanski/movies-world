@@ -460,11 +460,11 @@ public class MoviesBootstrap implements ApplicationListener<ContextRefreshedEven
                 .description("Luke Skywalker joins forces with a Jedi Knight, a cocky pilot, a Wookiee and two droids to save the galaxy from the Empire's world-destroying battle station, " +
                 "while also attempting to rescue Princess Leia from the mysterious Darth Vader").image(starWars4Image).build();
 
-        ewanMcGregor.getMovies().add(startWars4);
-        nataliePortman.getMovies().add(startWars4);
-        haydenChristensen.getMovies().add(startWars4);
-        samuelLJackson.getMovies().add(startWars4);
-        ianMcDiarnid.getMovies().add(startWars4);
+        markHamill.getMovies().add(startWars4);
+        harrisonFord.getMovies().add(startWars4);
+        carrieFisher.getMovies().add(startWars4);
+        anthonyDaniels.getMovies().add(startWars4);
+        kennyBaker.getMovies().add(startWars4);
 
         // Star Wars 5
         Movie startWars5 = Movie.builder().name("Star Wars: The Empire Strikes Back").time(127L).year(1980).country("USA")
@@ -472,11 +472,11 @@ public class MoviesBootstrap implements ApplicationListener<ContextRefreshedEven
                 .description("After the Rebels are brutally overpowered by the Empire on the ice planet Hoth, Luke Skywalker begins Jedi training with Yoda," +
                 " while his friends are pursued by Darth Vader and a bounty hunter named Boba Fett all over the galaxy").image(starWars5Image).build();
 
-        ewanMcGregor.getMovies().add(startWars5);
-        nataliePortman.getMovies().add(startWars5);
-        haydenChristensen.getMovies().add(startWars5);
-        samuelLJackson.getMovies().add(startWars5);
-        ianMcDiarnid.getMovies().add(startWars5);
+        markHamill.getMovies().add(startWars5);
+        harrisonFord.getMovies().add(startWars5);
+        carrieFisher.getMovies().add(startWars5);
+        anthonyDaniels.getMovies().add(startWars5);
+        kennyBaker.getMovies().add(startWars5);
 
         // Star Wars 6
         Movie startWars6 = Movie.builder().name("Star Wars Return of the the Jedi").time(136L).year(1983).country("USA")
@@ -484,14 +484,13 @@ public class MoviesBootstrap implements ApplicationListener<ContextRefreshedEven
                 .description("After a daring mission to rescue Han Solo from Jabba the Hutt, the Rebels dispatch to Endor to destroy the second Death Star. " +
                 "Meanwhile, Luke struggles to help Darth Vader back from the dark side without falling into the Emperor's trap.").image(starWars6Image).build();
 
-        ewanMcGregor.getMovies().add(startWars6);
-        nataliePortman.getMovies().add(startWars6);
-        haydenChristensen.getMovies().add(startWars6);
-        samuelLJackson.getMovies().add(startWars6);
-        ianMcDiarnid.getMovies().add(startWars6);
+        markHamill.getMovies().add(startWars6);
+        harrisonFord.getMovies().add(startWars6);
+        carrieFisher.getMovies().add(startWars6);
+        anthonyDaniels.getMovies().add(startWars6);
+        kennyBaker.getMovies().add(startWars6);
         // END OF STAR WARS
 
-        // I finished here with actors - exhausted xD
 
         // Back to the Future Images
         Byte[] backToTheFuture1Image = getBytes("src/main/resources/static/images/science-fiction/back_to_the_future/part1.jpg");

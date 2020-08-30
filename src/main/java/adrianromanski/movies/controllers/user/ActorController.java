@@ -2,6 +2,7 @@ package adrianromanski.movies.controllers.user;
 
 import adrianromanski.movies.domain.person.Actor;
 import adrianromanski.movies.services.actor.ActorServiceImpl;
+import adrianromanski.movies.services.movie.MovieServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -20,10 +21,12 @@ import java.util.stream.IntStream;
 public class ActorController {
 
     private final ActorServiceImpl actorService;
+    private final MovieServiceImpl movieService;
 
     @GetMapping("/actor/{id}")
     public ModelAndView getActor(@PathVariable String id) {
-        ModelAndView modelAndView = new ModelAndView("user/actors/showActors");
+        ModelAndView modelAndView = new ModelAndView("user/actors/showActor");
+        modelAndView.addObject("actorMovies", movieService.findAllMoviesWithActor(Long.valueOf(id)));
         modelAndView.addObject("actor", actorService.getActorByID(Long.valueOf(id)));
         return modelAndView;
     }

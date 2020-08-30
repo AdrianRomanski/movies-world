@@ -171,6 +171,12 @@ img {
     text-transform: uppercase;
     font-weight: 500;
     color: #2980b9;
+    font-size: 16px;
+}
+
+.category-info {
+    font-weight: 500;
+    font-size: 16px;
 }
 
 /*Select File*/

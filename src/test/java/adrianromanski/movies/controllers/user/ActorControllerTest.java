@@ -1,8 +1,10 @@
 package adrianromanski.movies.controllers.user;
 
 import adrianromanski.movies.domain.person.Actor;
+import adrianromanski.movies.model.base_entity.MovieDTO;
 import adrianromanski.movies.model.person.ActorDTO;
 import adrianromanski.movies.services.actor.ActorServiceImpl;
+import adrianromanski.movies.services.movie.MovieServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -30,6 +32,9 @@ class ActorControllerTest {
     @Mock
     ActorServiceImpl actorService;
 
+    @Mock
+    MovieServiceImpl movieService;
+
     @InjectMocks
     ActorController actorController;
 
@@ -50,13 +55,16 @@ class ActorControllerTest {
     @DisplayName("GET, method = showActor")
     void getActor() throws Exception {
         ActorDTO actorDTO = ActorDTO.builder().id(1L).build();
+        List<MovieDTO> movieDTOS = Arrays.asList(new MovieDTO(), new MovieDTO());
 
         when(actorService.getActorByID(anyLong())).thenReturn(actorDTO);
+        when(movieService.findAllMoviesWithActor(anyLong())).thenReturn(movieDTOS);
 
         mockMvc.perform(get("/actor/1"))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("actor"))
-                .andExpect(view().name("user/actors/showActors"));
+                .andExpect(model().attributeExists("actorMovies"))
+                .andExpect(view().name("user/actors/showActor"));
     }
 
     @Test
