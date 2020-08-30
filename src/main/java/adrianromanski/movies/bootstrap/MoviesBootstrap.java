@@ -377,7 +377,7 @@ public class MoviesBootstrap implements ApplicationListener<ContextRefreshedEven
         Byte[] ewanMcGregorImage = getBytes("src/main/resources/static/images/actors/starwars/ewan_mcgregor.jpg");
         Byte[] nataliePortmanImage = getBytes("src/main/resources/static/images/actors/starwars/natalie_portman.jpg");
         Byte[] jakeLloydImage = getBytes("src/main/resources/static/images/actors/starwars/jake_lloyd.jpg");
-        Byte[] ianMcDiarnidImage = getBytes("src/main/resources/static/images/actors/starwars/ian_mciarmid.jpg");
+        Byte[] ianMcDiarnidImage = getBytes("src/main/resources/static/images/actors/starwars/ian_mc.jpg");
 
         // Qui-Gon Jinn
         Actor liamNeeson = Actor.builder().firstName("Liam").lastName("Neeson").image(liamNeesonImage).dateOfBirth(LocalDate.of(1952,6,7)).build();
@@ -499,43 +499,153 @@ public class MoviesBootstrap implements ApplicationListener<ContextRefreshedEven
         Byte[] backToTheFuture3Image = getBytes("src/main/resources/static/images/science-fiction/back_to_the_future/part3.jpg");
 
         // Back to the future movies
+        Byte[] christopherLLoydImage = getBytes("src/main/resources/static/images/actors/back_to_future/christopherLloyd.jpg");
+        Byte[] michaelFoxImage = getBytes("src/main/resources/static/images/actors/back_to_future/michaelFox.jpg");
+        Byte[] thomasWilsonImage = getBytes("src/main/resources/static/images/actors/back_to_future/thomasWilson.jpg");
+        Byte[] crispingGloverImage = getBytes("src/main/resources/static/images/actors/back_to_future/crispingGlover.jpg");
+        Byte[] leaThompsonImage = getBytes("src/main/resources/static/images/actors/back_to_future/leaThompson.jpg");
+
+        // Dr Emmett Brown
+        Actor christopherLLoyd = Actor.builder().firstName("Christopher").lastName("Lloyd").image(christopherLLoydImage).dateOfBirth(LocalDate.of(1938,11,22)).build();
+        // Marty McFly
+        Actor michaelFox = Actor.builder().firstName("Michael").lastName("Fox").image(michaelFoxImage).dateOfBirth(LocalDate.of(1961,6,9)).build();
+        // Biff Tannen
+        Actor thomasWilson = Actor.builder().firstName("Thomas").lastName("Wilson").image(thomasWilsonImage).dateOfBirth(LocalDate.of(1959,4,15)).build();
+        // George McFly
+        Actor crispingGlover = Actor.builder().firstName("Crispin").lastName("Glover").image(crispingGloverImage).dateOfBirth(LocalDate.of(1964,4,20)).build();
+        // Lorraine Baines
+        Actor leaThompson = Actor.builder().firstName("Lea").lastName("Thompson").image(leaThompsonImage).dateOfBirth(LocalDate.of(1961,5,31)).build();
+
+
         Movie backToTheFuture1 = Movie.builder().name("Back To The Future Part 1").time(111L).year(1985).country("USA")
+                .actors(Arrays.asList(christopherLLoyd, michaelFox, thomasWilson, crispingGlover, leaThompson))
                 .description("Marty McFly, a 17-year-old high school student, is accidentally sent thirty years into the past in a time-traveling DeLorean " +
-                "invented by his close friend, the eccentric scientist Doc Brown.").image(backToTheFuture1Image).build();
+                "invented by his close friend, the eccentric scientist Doc Brown.")
+                .image(backToTheFuture1Image).build();
+
         Movie backToTheFuture2 = Movie.builder().name("Back To The Future Part 2").time(108L).year(1989).country("USA")
+                .actors(Arrays.asList(christopherLLoyd, michaelFox, thomasWilson, crispingGlover, leaThompson))
                 .description("After visiting 2015, Marty McFly must repeat his visit to 1955 to prevent disastrous changes to 1985..." +
-                "without interfering with his first trip").image(backToTheFuture2Image).build();
+                "without interfering with his first trip")
+                .image(backToTheFuture2Image).build();
+
         Movie backToTheFuture3 = Movie.builder().name("Back To The Future Part 3").time(119L).year(1990).country("USA")
+                .actors(Arrays.asList(christopherLLoyd, michaelFox, thomasWilson, crispingGlover, leaThompson))
                 .description("Stranded in 1955, Marty McFly learns about the death of Doc Brown in 1885 and must travel back in time to save him." +
-                " With no fuel readily available for the DeLorean, the two must figure how to escape the Old West before Emmett is murdered.").image(backToTheFuture3Image).build();
+                " With no fuel readily available for the DeLorean, the two must figure how to escape the Old West before Emmett is murdered.")
+                .image(backToTheFuture3Image).build();
+
+        christopherLLoyd.getMovies().addAll(Arrays.asList(backToTheFuture1, backToTheFuture2, backToTheFuture3));
+        michaelFox.getMovies().addAll(Arrays.asList(backToTheFuture1, backToTheFuture2, backToTheFuture3));
+        thomasWilson.getMovies().addAll(Arrays.asList(backToTheFuture1, backToTheFuture2, backToTheFuture3));
+        crispingGlover.getMovies().addAll(Arrays.asList(backToTheFuture1, backToTheFuture2, backToTheFuture3));
+        leaThompson.getMovies().addAll(Arrays.asList(backToTheFuture1, backToTheFuture2, backToTheFuture3));
+
 
         // Matrix
-        Byte[] matrixPict = getBytes("src/main/resources/static/images/science-fiction/matrix.jpg");
+        Byte[] keanuReevesImage = getBytes("src/main/resources/static/images/actors/matrix/keanuReeves.jpg");
+        Byte[] lauranceFishburneImage = getBytes("src/main/resources/static/images/actors/matrix/lauranceFishborne.jpg");
+        Byte[] carrieMossImage = getBytes("src/main/resources/static/images/actors/matrix/carrieMoss.jpg");
+        Byte[] hugoWeavingImage = getBytes("src/main/resources/static/images/actors/matrix/hugoWeaving.jpg");
 
-        Movie matrix = Movie.builder().name("Matrix").time(150L).year(1999).country("USA")
+        // Neo
+        Actor keanuReeves = Actor.builder().firstName("Keanu").lastName("Reeves").image(keanuReevesImage).dateOfBirth(LocalDate.of(1964,9,2)).build();
+        // Morpheus
+        Actor lauranceFishburne = Actor.builder().firstName("Laurence").lastName("Fishburne").image(lauranceFishburneImage).dateOfBirth(LocalDate.of(1961,7,3)).build();
+        // Trinity
+        Actor carrieMoss = Actor.builder().firstName("Carrie-Anne").lastName("Moss").image(carrieMossImage).dateOfBirth(LocalDate.of(1967,9,21)).build();
+        // Smith
+        Actor hugoWeaving = Actor.builder().firstName("Hugo").lastName("Weaving").image(hugoWeavingImage).dateOfBirth(LocalDate.of(1960,4,4)).build();
+
+
+        Byte[] matrix1Pict = getBytes("src/main/resources/static/images/science-fiction/matrix/part1.jpg");
+        Byte[] matrix2Pict = getBytes("src/main/resources/static/images/science-fiction/matrix/part2.jpg");
+        Byte[] matrix3Pict = getBytes("src/main/resources/static/images/science-fiction/matrix/part3.jpg");
+
+        Movie matrix = Movie.builder().name("The Matrix").time(150L).year(1999).country("USA")
+                .actors(Arrays.asList(keanuReeves, lauranceFishburne, carrieMoss, hugoWeaving))
                 .description("A computer hacker learns from mysterious rebels about the true nature of his reality and his role in the war against its controllers.")
-                .image(matrixPict).build();
+                .image(matrix1Pict).build();
+
+        Movie matrix2 = Movie.builder().name("The Matrix Reloaded").time(138L).year(2003).country("USA")
+                .actors(Arrays.asList(keanuReeves, lauranceFishburne, carrieMoss, hugoWeaving))
+                .description("Neo and his allies race against time before the machines discover the city of Zion and destroy it. While seeking the truth about the Matrix, Neo must save Trinity from a dark fate within his dreams.")
+                .image(matrix2Pict).build();
+
+        Movie matrix3 = Movie.builder().name("The Matrix Revolutions").time(129L).year(2005).country("USA")
+                .actors(Arrays.asList(keanuReeves, lauranceFishburne, carrieMoss, hugoWeaving))
+                .description("The human city of Zion defends itself against the massive invasion of the machines as Neo fights to end the war at another front while also opposing the rogue Agent Smith.")
+                .image(matrix3Pict).build();
+
+        keanuReeves.getMovies().addAll(Arrays.asList(matrix, matrix2, matrix3));
+        lauranceFishburne.getMovies().addAll(Arrays.asList(matrix, matrix2, matrix3));
+        carrieMoss.getMovies().addAll(Arrays.asList(matrix, matrix2, matrix3));
+        hugoWeaving.getMovies().addAll(Arrays.asList(matrix, matrix2, matrix3));
+
+
 
         // The Fifth Element
+        Byte[] bruceWillisImage = getBytes("src/main/resources/static/images/actors/fifth_element/bruceWillis.jpg");
+        Byte[] garryOldmanImage = getBytes("src/main/resources/static/images/actors/fifth_element/garyOldman.jpg");
+        Byte[] chrisTuckerImage = getBytes("src/main/resources/static/images/actors/fifth_element/chrisTucker.jpg");
+        Byte[] millaJovovichImage = getBytes("src/main/resources/static/images/actors/fifth_element/milla.jpg");
+
+        // Korben Dallas
+        Actor bruceWillis = Actor.builder().firstName("Bruce").lastName("Willis").image(bruceWillisImage).dateOfBirth(LocalDate.of(1955,3,19)).build();
+        // Jean-Baptiste Emanuel Zorg
+        Actor garryOldman = Actor.builder().firstName("Gary").lastName("Oldman").image(garryOldmanImage).dateOfBirth(LocalDate.of(1958,3,21)).build();
+        // Ruby Rhod
+        Actor chrisTucker = Actor.builder().firstName("Chris").lastName("Tucker").image(chrisTuckerImage).dateOfBirth(LocalDate.of(1972,9,29)).build();
+        // Leeloo
+        Actor millaJovovich = Actor.builder().firstName("Milla").lastName("Jovovich").image(millaJovovichImage).dateOfBirth(LocalDate.of(1975,12,17)).build();
+
         Byte[] fifthElementPict = getBytes("src/main/resources/static/images/science-fiction/fifthElement.jpg");
 
         Movie fifthElement = Movie.builder().name("The Fifth Element").time(127L).year(1997).country("France")
+                .actors(Arrays.asList(bruceWillis, garryOldman, chrisTucker, millaJovovich))
                 .description("In the colorful future, a cab driver unwittingly becomes the central figure in the search for a legendary cosmic weapon to keep Evil and Mr. Zorg at bay")
                 .image(fifthElementPict).build();
 
+        bruceWillis.getMovies().add(fifthElement);
+        garryOldman.getMovies().add(fifthElement);
+        chrisTucker.getMovies().add(fifthElement);
+        millaJovovich.getMovies().add(fifthElement);
+
+
         // Interstellar
+        Byte[] matthewMcconaugheyImage = getBytes("src/main/resources/static/images/actors/interstellar/mathew.jpg");
+        Byte[] anneHathawayImage = getBytes("src/main/resources/static/images/actors/interstellar/anneHathaway.jpg");
+        Byte[] jessicaChastainImage = getBytes("src/main/resources/static/images/actors/interstellar/jessicaChastain.jpg");
+        Byte[] billIrwinImage = getBytes("src/main/resources/static/images/actors/interstellar/billIrwin.jpg");
+
+        // Cooper
+        Actor matthewMcconaughey = Actor.builder().firstName("Matthew").lastName("McConaughey").image(matthewMcconaugheyImage).dateOfBirth(LocalDate.of(1969,11,4)).build();
+        // Brand
+        Actor anneHathaway = Actor.builder().firstName("Anne").lastName("Hathaway").image(anneHathawayImage).dateOfBirth(LocalDate.of(1982,11,12)).build();
+        // Murph
+        Actor jessicaChastain = Actor.builder().firstName("Jessica").lastName("Chastain").image(jessicaChastainImage).dateOfBirth(LocalDate.of(1977,3,24)).build();
+        // TARS
+        Actor billIrwin = Actor.builder().firstName("Bill").lastName("Irwin").image(billIrwinImage).dateOfBirth(LocalDate.of(1950,4,11)).build();
+
+
         Byte[] interstellarPict = getBytes("src/main/resources/static/images/science-fiction/interstellar.jpg");
 
         Movie interstellar = Movie.builder().name("Interstellar").time(169L).year(2014).country("USA")
+                .actors(Arrays.asList(matthewMcconaughey, anneHathaway, jessicaChastain, billIrwin))
                 .description("A team of explorers travel through a wormhole in space in an attempt to ensure humanity's survival.")
                 .image(interstellarPict).build();
+
+        matthewMcconaughey.getMovies().add(interstellar);
+        anneHathaway.getMovies().add(interstellar);
+        jessicaChastain.getMovies().add(interstellar);
+        billIrwin.getMovies().add(interstellar);
 
 
         Byte[] scifiImage = getBytes("src/main/resources/static/images/sci-fi.jpg");
 
 
         Category sciFi = Category.builder().name("Sci-Fi").image(scifiImage)
-                .movies(Arrays.asList(startWars1, startWars2, startWars3, startWars4, startWars5, startWars6, backToTheFuture1, backToTheFuture2, backToTheFuture3, fifthElement, matrix, interstellar))
+                .movies(Arrays.asList(startWars1, startWars2, startWars3, startWars4, startWars5, startWars6, backToTheFuture1, backToTheFuture2, backToTheFuture3, matrix, matrix2, matrix3, fifthElement, interstellar))
                 .description("A Sci-Fi film is science-based depictions of phenomena that are not fully accepted by mainstream science, " +
                         "such as extraterrestrial lifeforms, alien worlds or time travel").build();
 
@@ -551,6 +661,8 @@ public class MoviesBootstrap implements ApplicationListener<ContextRefreshedEven
         backToTheFuture3.setCategory(sciFi);
 
         matrix.setCategory(sciFi);
+        matrix2.setCategory(sciFi);
+        matrix3.setCategory(sciFi);
         interstellar.setCategory(sciFi);
         fifthElement.setCategory(sciFi);
 
@@ -564,8 +676,10 @@ public class MoviesBootstrap implements ApplicationListener<ContextRefreshedEven
         movieRepository.save(backToTheFuture1);
         movieRepository.save(backToTheFuture2);
         movieRepository.save(backToTheFuture3);
-        movieRepository.save(interstellar);
         movieRepository.save(matrix);
+        movieRepository.save(matrix2);
+        movieRepository.save(matrix3);
+        movieRepository.save(interstellar);
         movieRepository.save(fifthElement);
 
         actorRepository.save(liamNeeson);
@@ -580,6 +694,23 @@ public class MoviesBootstrap implements ApplicationListener<ContextRefreshedEven
         actorRepository.save(carrieFisher);
         actorRepository.save(anthonyDaniels);
         actorRepository.save(kennyBaker);
+        actorRepository.save(christopherLLoyd);
+        actorRepository.save(michaelFox);
+        actorRepository.save(thomasWilson);
+        actorRepository.save(crispingGlover);
+        actorRepository.save(leaThompson);
+        actorRepository.save(keanuReeves);
+        actorRepository.save(lauranceFishburne);
+        actorRepository.save(carrieMoss);
+        actorRepository.save(hugoWeaving);
+        actorRepository.save(matthewMcconaughey);
+        actorRepository.save(anneHathaway);
+        actorRepository.save(jessicaChastain);
+        actorRepository.save(billIrwin);
+        actorRepository.save(bruceWillis);
+        actorRepository.save(garryOldman);
+        actorRepository.save(chrisTucker);
+        actorRepository.save(millaJovovich);
     }
 
     private Byte[] getBytes(String path) throws IOException {
