@@ -19,9 +19,9 @@ public class AwardDTO extends BaseEntityDTO {
     private String awardCategory;
 
 
-    public AwardDTO(Long id, String name, String description, String imageURL,
+    public AwardDTO(Long id, String name, String description, Byte[] image,
                     LocalDate date, String country, String awardCategory) {
-        super(id, name, description, imageURL);
+        super(id, name, description, image);
         this.date = date;
         this.country = country;
         this.awardCategory = awardCategory;

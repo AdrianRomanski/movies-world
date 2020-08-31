@@ -1,11 +1,14 @@
 package adrianromanski.movies.bootstrap;
 
 import adrianromanski.movies.domain.base_entity.Category;
+import adrianromanski.movies.domain.base_entity.Event;
 import adrianromanski.movies.domain.base_entity.Movie;
 import adrianromanski.movies.domain.person.Actor;
 import adrianromanski.movies.repositories.base_entity.CategoryRepository;
+import adrianromanski.movies.repositories.base_entity.EventRepository;
 import adrianromanski.movies.repositories.base_entity.MovieRepository;
 import adrianromanski.movies.repositories.person.ActorRepository;
+import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -20,22 +23,17 @@ import java.time.LocalDate;
 import java.util.Arrays;
 
 @Component
+@AllArgsConstructor
 public class MoviesBootstrap implements ApplicationListener<ContextRefreshedEvent> {
 
     private final CategoryRepository categoryRepository;
     private final MovieRepository movieRepository;
     private final ActorRepository actorRepository;
+    private final EventRepository eventRepository;
 
-
-    public MoviesBootstrap(CategoryRepository categoryRepository, MovieRepository movieRepository, ActorRepository actorRepository) {
-        this.categoryRepository = categoryRepository;
-        this.movieRepository = movieRepository;
-        this.actorRepository = actorRepository;
-    }
 
     @SneakyThrows
     @Override
-    // Checking build
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
 
         initScienceFiction();
@@ -72,12 +70,20 @@ public class MoviesBootstrap implements ApplicationListener<ContextRefreshedEven
 
 
 
-
         categoryRepository.save(horror);
         categoryRepository.save(action);
 
         categoryRepository.save(thriller);
         categoryRepository.save(historical);
+
+
+        Event testEvent1 = Event.builder().name("1 Event").description("1 Event Description 2 Event Description").build();
+        Event testEvent2 = Event.builder().name("2 Event").description("3 Event Description 2 Event Description").build();
+        Event testEvent3 = Event.builder().name("3 Event").description("2 Event Description 2 Event Description").build();
+        Event testEvent4 = Event.builder().name("4 Event").description("4 Event Description 2 Event Description").build();
+        Event testEvent5 = Event.builder().name("5 Event").description("5 Event Description 2 Event Description").build();
+
+        eventRepository.saveAll(Arrays.asList(testEvent1, testEvent2, testEvent3, testEvent4, testEvent5));
 
     }
 

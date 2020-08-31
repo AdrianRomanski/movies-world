@@ -19,9 +19,9 @@ public class SeriesDTO extends BaseEntityDTO {
      * @see ImmutableList
      */
     @Builder
-    public SeriesDTO(Long id, String name, String description, String imageURL,
+    public SeriesDTO(Long id, String name, String description, Byte[] image,
                      List<EpisodeDTO> episodesDTO) {
-        super(id, name, description, imageURL);
+        super(id, name, description, image);
         this.episodesDTO = Objects.requireNonNullElseGet(episodesDTO, ArrayList::new);
     }
 

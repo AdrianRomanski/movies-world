@@ -15,8 +15,8 @@ import java.time.LocalDate;
 public class MovieReviewDTO extends ReviewDTO {
 
     @Builder
-    public MovieReviewDTO(Long id, String name, String description, String imageURL, LocalDate date, Integer score, Long userID, UserDTO userDTO, MovieDTO movieDTO) {
-        super(id, name, description, imageURL, date, score, userID);
+    public MovieReviewDTO(Long id, String name, String description, Byte[] image, LocalDate date, Integer score, Long userID, UserDTO userDTO, MovieDTO movieDTO) {
+        super(id, name, description, image, date, score, userID);
         this.userDTO = userDTO;
         this.movieDTO = movieDTO;
     }

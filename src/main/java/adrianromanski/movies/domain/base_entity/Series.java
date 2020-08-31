@@ -24,8 +24,8 @@ public class Series extends BaseEntity {
      * @see ImmutableList
      */
     @Builder
-    public Series(Long id, String name, String description, String imageURL, List<Episode> episodes) {
-        super(id, name, description, imageURL);
+    public Series(Long id, String name, String description, Byte[] image, List<Episode> episodes) {
+        super(id, name, description, image);
         this.episodes = Objects.requireNonNullElseGet(episodes, ArrayList::new);
     }
 

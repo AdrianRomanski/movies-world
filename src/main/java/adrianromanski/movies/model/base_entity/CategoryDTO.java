@@ -13,7 +13,7 @@ import java.util.Objects;
 @Setter
 public class CategoryDTO extends BaseEntityDTO{
 
-    Byte[] image;
+
 
     /**
      * I have to use this kind of structure because otherwise i couldn't initialize mutable Collection
@@ -22,9 +22,8 @@ public class CategoryDTO extends BaseEntityDTO{
      * @see ImmutableList
      */
     @Builder
-    public CategoryDTO(Long id,String name, String description, String imageURL, Byte[] image, List<MovieDTO> moviesDTO) {
-        super(id, name, description, imageURL);
-        this.image = image;
+    public CategoryDTO(Long id,String name, String description, Byte[] image, List<MovieDTO> moviesDTO) {
+        super(id, name, description, image);
         this.moviesDTO = Objects.requireNonNullElseGet(moviesDTO, ArrayList::new);
     }
 

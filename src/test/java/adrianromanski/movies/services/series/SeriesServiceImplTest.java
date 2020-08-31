@@ -32,7 +32,6 @@ class SeriesServiceImplTest {
 
     public static final String NAME = "Breaking Bad";
     public static final String DESCRIPTION = "Chemistry Teacher finding new hobby";
-    public static final String URL = "someurl";
     public static final long ID = 1L;
     public static final String NAME1 = "First";
     public static final String NAME2 = "Second";
@@ -74,10 +73,10 @@ class SeriesServiceImplTest {
         episodeList.add(episode1);
         episodeList.add(episode2);
 
-        return Series.builder().name(NAME).description(DESCRIPTION).imageURL(URL).id(ID).episodes(episodeList).build();
+        return Series.builder().name(NAME).description(DESCRIPTION).id(ID).episodes(episodeList).build();
     }
 
-    private SeriesDTO getSeriesDTO() { return SeriesDTO.builder().name(NAME).description(DESCRIPTION).imageURL(URL).id(ID).build(); }
+    private SeriesDTO getSeriesDTO() { return SeriesDTO.builder().name(NAME).description(DESCRIPTION).id(ID).build(); }
     private EpisodeDTO getEpisodeDTO() { return EpisodeDTO.builder().description(EPISODE_DESC).name(EPISODE_NAME).id(ID).build(); }
     private Episode getEpisode() { return Episode.builder().description(EPISODE_DESC).name(EPISODE_NAME).id(ID).build(); }
 
@@ -93,7 +92,6 @@ class SeriesServiceImplTest {
 
         assertEquals(returnDTO.getDescription(), DESCRIPTION);
         assertEquals(returnDTO.getId(), ID);
-        assertEquals(returnDTO.getImageURL(), URL);
         assertEquals(returnDTO.getName(), NAME);
 
         assertEquals(returnDTO.getEpisodesDTO().size(), 2);
@@ -118,7 +116,6 @@ class SeriesServiceImplTest {
 
         assertEquals(returnDTO.getDescription(), DESCRIPTION);
         assertEquals(returnDTO.getId(), ID);
-        assertEquals(returnDTO.getImageURL(), URL);
         assertEquals(returnDTO.getName(), NAME);
 
         verify(seriesRepository, times(1)).save(any(Series.class));
@@ -165,7 +162,6 @@ class SeriesServiceImplTest {
 
         assertEquals(returnDTO.getDescription(), DESCRIPTION);
         assertEquals(returnDTO.getId(), ID);
-        assertEquals(returnDTO.getImageURL(), URL);
         assertEquals(returnDTO.getName(), NAME);
 
         verify(seriesRepository, times(1)).save(any(Series.class));

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Category</title>
+
+    <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet" media="screen"/>
+
+    <script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.4/jquery.min.js"></script>
+
+    <link th:href="@{/css/custom.css}" rel="stylesheet" media="screen"/>
+
+
+</head>
+<body>
+<!--/*@thymesVar id="movie" type="adrianromanski.movies.domain.base_entity.Event"*/-->
+<div class="col-md-12" th:fragment="eventdiv">
+    <div class="home-listing">
+        <div class="row">
+            <a th:href="@{'/event/' + ${event.id}}">
+                <div class="col-lg-12">
+                    <div class="home-listing-title" th:text="${event.name}"></div>
+                    <div class="home-listing-description" th:text="${event.description}"></div>
+                </div>
+            </a>
+        </div>
+
+
+    </div>
+</div>
+
+</body>
+</html>

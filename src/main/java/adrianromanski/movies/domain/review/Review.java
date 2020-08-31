@@ -18,9 +18,9 @@ public class Review extends BaseEntity {
     private Integer score;
     private Long userID;
 
-    public Review(Long id, String name, String description, String imageURL,
+    public Review(Long id, String name, String description, Byte[] image,
                   LocalDate date, Integer score, Long userID) {
-        super(id, name, description, imageURL);
+        super(id, name, description, image);
         this.date = date;
         this.score = score;
         this.userID = userID;

@@ -18,8 +18,6 @@ import java.util.*;
 public class Movie extends BaseEntity {
 
     private Long time;
-    @Lob
-    private Byte[] image;
     private Integer year;
     private String country;
 
@@ -35,9 +33,8 @@ public class Movie extends BaseEntity {
                  Category category, Director director,
                  List<Actor> actors, List<MovieAward> awards, List<MovieReview> reviews,
                  Set<User> userFavourites, Set<User> userWatched) {
-        super(id, name, description, imageURL);
+        super(id, name, description, image);
         this.time = time;
-        this.image = image;
         this.year = year;
         this.country = country;
         this.category = category;

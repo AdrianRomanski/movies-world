@@ -25,8 +25,7 @@ public class BaseEntityDTO {
     @NotEmpty
     @Size(min = 160, max = 255)
     private String description;
-//    @NotEmpty
-    private String imageURL;
+    Byte[] image;
 
 
 }

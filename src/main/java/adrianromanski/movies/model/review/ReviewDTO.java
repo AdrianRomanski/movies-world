@@ -19,9 +19,9 @@ public class ReviewDTO extends BaseEntityDTO {
     private Long userID;
 
 
-    public ReviewDTO(Long id, String name, String description, String imageURL,
+    public ReviewDTO(Long id, String name, String description, Byte[] image,
                   LocalDate date, Integer score, Long userID) {
-        super(id, name, description, imageURL);
+        super(id, name, description, image);
         this.date = date;
         this.score = score;
         this.userID = userID;

@@ -5,13 +5,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
 @Setter
+@Getter
 @NoArgsConstructor
-public class EpisodeDTO extends BaseEntityDTO{
+public class EventDTO extends BaseEntityDTO{
 
     @Builder
-    public EpisodeDTO(Long id, String name,  String description, Byte[] image) {
+    public EventDTO(Long id, String name, String description, Byte[] image) {
         super(id, name, description, image);
     }
 }

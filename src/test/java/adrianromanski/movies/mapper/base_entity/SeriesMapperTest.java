@@ -28,7 +28,7 @@ class SeriesMapperTest {
         Episode episode1 = Episode.builder().name(NAME1).build();
         Episode episode2 =  Episode.builder().name(NAME2).build();
 
-        Series series = Series.builder().name(NAME).description(DESCRIPTION).imageURL(URL).episodes(Arrays.asList(episode1, episode2)).id(ID).build();
+        Series series = Series.builder().name(NAME).description(DESCRIPTION).episodes(Arrays.asList(episode1, episode2)).id(ID).build();
 
         episode1.setSeries(series);
         episode2.setSeries(series);
@@ -37,7 +37,6 @@ class SeriesMapperTest {
 
         assertEquals(seriesDTO.getName(), NAME);
         assertEquals(seriesDTO.getDescription(), DESCRIPTION);
-        assertEquals(seriesDTO.getImageURL(), URL);
         assertEquals(seriesDTO.getId(), ID);
 
         assertEquals(seriesDTO.getEpisodesDTO().get(0).getName(), NAME1);
@@ -54,13 +53,12 @@ class SeriesMapperTest {
         episodeDTOList.add(episode1DTO);
         episodeDTOList.add(episode2DTO);
 
-        SeriesDTO seriesDTO = SeriesDTO.builder().name(NAME).description(DESCRIPTION).imageURL(URL).id(ID).episodesDTO(episodeDTOList).build();
+        SeriesDTO seriesDTO = SeriesDTO.builder().name(NAME).description(DESCRIPTION).id(ID).episodesDTO(episodeDTOList).build();
 
         Series series = mapper.seriesDTOToSeries(seriesDTO);
 
         assertEquals(series.getName(), NAME);
         assertEquals(series.getDescription(), DESCRIPTION);
-        assertEquals(series.getImageURL(), URL);
         assertEquals(series.getId(), ID);
 
         assertEquals(series.getEpisodes().get(0).getName(), NAME1);

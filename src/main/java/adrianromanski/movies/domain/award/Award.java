@@ -16,12 +16,12 @@ public class Award extends BaseEntity {
 
     private LocalDate date;
     private String country;
-    private String awardCategory; // That could be another entity
+    private String awardCategory; // That could be another entity or m
 
 
-    public Award(Long id, String name, String description, String imageURL,
+    public Award(Long id, String name, String description, Byte[] image,
                  LocalDate date, String country, String awardCategory) {
-        super(id, name, description, imageURL);
+        super(id, name, description, image);
         this.date = date;
         this.country = country;
         this.awardCategory = awardCategory;

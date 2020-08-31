@@ -10,7 +10,6 @@ import adrianromanski.movies.model.person.UserDTO;
 import com.google.common.collect.ImmutableList;
 import lombok.*;
 
-import javax.persistence.Lob;
 import java.util.*;
 
 @Setter
@@ -19,8 +18,6 @@ import java.util.*;
 public class MovieDTO extends BaseEntityDTO{
 
     private Long time;
-    @Lob
-    private Byte[] image;
     private Integer year;
     private String country;
 
@@ -31,13 +28,12 @@ public class MovieDTO extends BaseEntityDTO{
      * @see ImmutableList
      */
     @Builder
-    public MovieDTO(Long id,  String name,  String description, String imageURL, Long time, Byte[] image, Integer year, String country,
+    public MovieDTO(Long id,  String name,  String description, Long time, Byte[] image, Integer year, String country,
                     CategoryDTO categoryDTO, DirectorDTO directorDTO,
                     List<ActorDTO> actorsDTO, List<MovieAwardDTO> awardsDTO, List<MovieReview> reviewsDTO,
                     Set<UserDTO> userFavouritesDTO, Set<UserDTO> userWatchedDTO) {
-        super(id, name, description, imageURL);
+        super(id, name, description, image);
         this.time = time;
-        this.image = image;
         this.year = year;
         this.country = country;
         this.categoryDTO = categoryDTO;

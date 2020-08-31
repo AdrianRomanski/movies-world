@@ -21,7 +21,7 @@ class MovieReviewMapperTest {
 
     @Test
     void reviewToReviewDTO() {
-        MovieReview review = MovieReview.builder().date(DATE).description(DESCRIPTION).id(ID).name(NAME).userID(USER_ID).score(SCORE).imageURL(IMAGE_URL).build();
+        MovieReview review = MovieReview.builder().date(DATE).description(DESCRIPTION).id(ID).name(NAME).userID(USER_ID).score(SCORE).build();
 
         MovieReviewDTO reviewDTO = mapper.reviewToReviewDTO(review);
 
@@ -31,12 +31,11 @@ class MovieReviewMapperTest {
         Assertions.assertEquals(reviewDTO.getName(), NAME);
         Assertions.assertEquals(reviewDTO.getUserID(), USER_ID);
         Assertions.assertEquals(reviewDTO.getScore(), SCORE);
-        Assertions.assertEquals(reviewDTO.getImageURL(), IMAGE_URL);
     }
 
     @Test
     void reviewDTOToReview() {
-        MovieReviewDTO reviewDTO = MovieReviewDTO.builder().date(DATE).description(DESCRIPTION).id(ID).name(NAME).userID(USER_ID).score(SCORE).imageURL(IMAGE_URL).build();
+        MovieReviewDTO reviewDTO = MovieReviewDTO.builder().date(DATE).description(DESCRIPTION).id(ID).name(NAME).userID(USER_ID).score(SCORE).build();
 
         MovieReview review = mapper.reviewDTOToReview(reviewDTO);
 
@@ -46,7 +45,6 @@ class MovieReviewMapperTest {
         Assertions.assertEquals(review.getName(), NAME);
         Assertions.assertEquals(review.getUserID(), USER_ID);
         Assertions.assertEquals(review.getScore(), SCORE);
-        Assertions.assertEquals(review.getImageURL(), IMAGE_URL);
     }
 
 }
