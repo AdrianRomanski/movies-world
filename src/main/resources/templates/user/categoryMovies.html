@@ -24,8 +24,8 @@
 
 <ul class="nav nav-pills admin-navbar">
 
-    <li class="active"><a href="#" th:href="@{'/'}" >Main Page</a></li>
-    <li class="dropdown active">
+    <li><a href="#" th:href="@{'/'}" >Main Page</a></li>
+    <li class="dropdown">
         <a data-toggle="dropdown" data-target="#" href="http://www.google.com">
             Categories <span class="caret"></span>
         </a>
@@ -33,7 +33,7 @@
             <li><a href="#" th:href="@{'/categories/page/1'}" type="button">Show All Categories</a></li>
         </ul>
     </li>
-    <li class="dropdown">
+    <li class="dropdown active">
         <a data-toggle="dropdown" data-target="#" href="http://www.google.com">
             Movies <span class="caret"></span>
         </a>

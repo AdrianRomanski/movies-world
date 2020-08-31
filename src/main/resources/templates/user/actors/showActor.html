@@ -177,7 +177,7 @@
         </div>
     </div>
     <div class="col-md-12">
-        <div class="single-movie-infos">
+        <div class="single-movie-infos-secondary">
             <div class="panel-info">
                 <div class="panel-heading">
                     <div class="single-movie-infos-title">
@@ -189,11 +189,13 @@
                         <tr>
                             <td class="category-name">Name</td>
                             <td class="category-name">Category</td>
+                            <td class="category-name">Year</td>
                             <td class="category-name">Description</td>
                         </tr>
                         <tr th:each="movie : ${actorMovies}">
                             <td class="category-info" th:text="${movie.name}"></td>
                             <td class="category-info" th:text="${movie.categoryDTO.name}"></td>
+                            <td class="category-info" th:text="${movie.year}"></td>
                             <td class="category-info" th:text="${movie.description}"></td>
                             <td class="col-md-1">
                                 <a class="btn btn-info" href="#"
@@ -201,6 +203,9 @@
                             </td>
                         </tr>
                     </table>
+                    <div class="col-md-12 single-movie-infos-buttons">
+                        <a class="btn btn-primary btn-lg" href="#" th:href="@{'/actor/' + ${actor.id} +'/movies'}" role="button">Show All</a>
+                    </div>
                 </div>
             </div>
         </div>

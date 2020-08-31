@@ -155,53 +155,68 @@
                </div>
            </div>
            <div class="panel-body">
+               <table class="table table-hover">
+                   <tr>
+                       <td class="category-name">Time(minutes)</td>
+                       <td class="category-name">Name</td>
+                       <td class="category-name">Country</td>
+                       <td class="category-name">Year</td>
+                   </tr>
+                   <tr>
+                       <td class="category-info" th:text="${movie.time}"></td>
+                       <td class="category-info" th:text="${movie.name}"></td>
+                       <td class="category-info" th:text="${movie.country}"></td>
+                       <td class="category-info" th:text="${movie.year}"></td>
+                   </tr>
+               </table>
                <div class="single-movie-infos-description"
                th:text="${movie.description}">
-               </div>
-               <div class="single-movie-infos-additional">
-                   <div class="col-md-4">Minutes</div>
-                   <div class="col-md-4">Country</div>
-                   <div class="col-md-4">Year</div>
-               </div>
-               <div class="single-movie-infos-additional">
-                   <div class="col-md-4" th:text="${movie.time}"></div>
-                   <div class="col-md-4" th:text="${movie.country}"></div>
-                   <div class="col-md-4" th:text="${movie.year}"></div>
                </div>
            </div>
         </div>
 
             <div class="col-md-12 single-movie-infos-buttons">
-                <a class="btn btn-primary btn-lg" href="#" th:href="@{'/movie/' + ${movie.id} +'/actors'}" role="button">Show Actors</a>
+<!--                <a class="btn btn-primary btn-lg" href="#" th:href="@{'/movie/' + ${movie.id} +'/actors'}" role="button">Show Actors</a>-->
                 <a class="btn btn-primary btn-lg" href="#" role="button">Show Director</a>
                 <a class="btn btn-primary btn-lg" href="#" role="button">Show Awards</a>
             </div>
 
-<!--            <div class="col-md-4 single-movie-infos-buttons">-->
-<!--                <a class="btn btn-primary btn-lg" href="#" role="button">Show Director</a>-->
-<!--            </div>-->
-<!--            <div class="col-md-4 single-movie-infos-buttons">-->
-<!--                <a class="btn btn-danger btn-lg" href="#" role="button">Show Awards</a>-->
-<!--            </div>-->
-
-<!--               <div class="single-movie-infos-actors">-->
-<!--               ACTORS-->
-<!--               </div>-->
-<!--               <div class="single-movie-infos-awards">-->
-<!--                   <div class="col-md-4">-->
-<!--                       <a class="btn btn-info btn-lg" href="#" role="button">Show Actors</a>-->
-<!--                   </div>-->
-<!--                   <div class="col-md-4">-->
-<!--                       <a class="btn btn-primary btn-lg" href="#" role="button">Show Director</a>-->
-<!--                   </div>-->
-<!--                   <div class="col-md-4">-->
-<!--                       <a class="btn btn-danger btn-lg" href="#" role="button">Show Awards</a>-->
-<!--                   </div>-->
-<!--               </div>-->
     </div>
 </div>
     <div class="col-md-12">
-        <div class="single-movie-infos">
+        <div class="single-movie-infos-secondary">
+            <div class="panel-info">
+                <div class="panel-heading">
+                    <div class="single-movie-infos-title">
+                        <h4>ACTORS</h4>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <table class="table table-hover">
+                        <tr>
+                            <td class="category-name">First Name</td>
+                            <td class="category-name">Last Name</td>
+                            <td class="category-name">Date Of Birth</td>
+                        </tr>
+                        <tr th:each="actor : ${movie.actorsDTO}">
+                            <td class="category-info" th:text="${actor.firstName}"></td>
+                            <td class="category-info" th:text="${actor.lastName}"></td>
+                            <td class="category-info" th:text="${actor.dateOfBirth}"></td>
+                            <td class="col-md-1">
+                                <a class="btn btn-info" href="#"
+                                   th:href="@{'/actor/' + ${actor.id}}" role="button">Show</a>
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="col-md-12 single-movie-infos-buttons">
+                        <a class="btn btn-primary btn-lg" href="#" th:href="@{'/movie/' + ${movie.id} +'/actors'}" role="button">Show All</a>
+                    </div>
+                </div>
+           </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="single-movie-infos-secondary">
             <div class="panel-info">
                 <div class="panel-heading">
                     <div class="single-movie-infos-title">
@@ -213,7 +228,7 @@
                         COMING SOON
                     </div>
                 </div>
-           </div>
+            </div>
         </div>
     </div>
 </div>
