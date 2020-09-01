@@ -47,6 +47,6 @@ class EventControllerTest {
         mockMvc.perform(get("/event/1"))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("event"))
-                .andExpect(view().name("/user/events/showEvent"));
+                .andExpect(view().name("user/events/showEvent"));
     }
 }
