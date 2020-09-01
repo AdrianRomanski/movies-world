@@ -1,7 +1,7 @@
 package adrianromanski.movies.controllers.user;
 
 import adrianromanski.movies.domain.base_entity.Event;
-import adrianromanski.movies.services.event.EventServiceImpl;
+import adrianromanski.movies.services.event.NewsServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,7 +22,7 @@ class EventControllerTest {
     EventController eventController;
 
     @Mock
-    EventServiceImpl eventService;
+    NewsServiceImpl eventService;
 
     MockMvc mockMvc;
 

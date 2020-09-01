@@ -3,7 +3,7 @@ package adrianromanski.movies.controllers;
 import adrianromanski.movies.controllers.user.HomeController;
 import adrianromanski.movies.model.base_entity.EventDTO;
 import adrianromanski.movies.services.category.CategoryService;
-import adrianromanski.movies.services.event.EventServiceImpl;
+import adrianromanski.movies.services.event.NewsServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -29,7 +29,7 @@ class HomeControllerTest {
     CategoryService categoryService;
 
     @Mock
-    EventServiceImpl eventService;
+    NewsServiceImpl eventService;
 
     MockMvc mockMvc;
 

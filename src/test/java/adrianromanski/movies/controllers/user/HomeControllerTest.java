@@ -1,7 +1,7 @@
 package adrianromanski.movies.controllers.user;
 
 import adrianromanski.movies.model.base_entity.EventDTO;
-import adrianromanski.movies.services.event.EventServiceImpl;
+import adrianromanski.movies.services.event.NewsServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,7 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class HomeControllerTest {
 
     @Mock
-    EventServiceImpl eventService;
+    NewsServiceImpl eventService;
 
     @InjectMocks
     HomeController controller;

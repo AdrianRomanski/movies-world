@@ -37,7 +37,7 @@ class EventServiceImplTest {
     EventMapperImpl eventMapper;
 
     @InjectMocks
-    EventServiceImpl eventService;
+    NewsServiceImpl eventService;
 
     @BeforeEach
     void setUp() {

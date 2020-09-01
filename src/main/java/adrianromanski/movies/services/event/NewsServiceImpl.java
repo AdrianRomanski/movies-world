@@ -18,7 +18,7 @@ import static java.util.stream.Collectors.toList;
 
 @Service
 @AllArgsConstructor
-public class EventServiceImpl implements EventService {
+public class NewsServiceImpl implements NewsService {
 
     EventRepository eventRepository;
     EventPageRepository eventPageRepository;

@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import java.time.LocalDate;
 
@@ -16,9 +17,13 @@ public class Event extends BaseEntity{
 
     LocalDate date;
 
+    @Column(length = 1000)
+    String largeDescription;
+
     @Builder
-    public Event(Long id, String name, String description, Byte[] image, LocalDate date) {
+    public Event(Long id, String name, String description, Byte[] image, LocalDate date, String largeDescription) {
         super(id, name, description, image);
         this.date = date;
+        this.largeDescription = largeDescription;
     }
 }

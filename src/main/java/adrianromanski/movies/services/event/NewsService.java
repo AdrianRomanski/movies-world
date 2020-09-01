@@ -6,7 +6,7 @@ import adrianromanski.movies.model.base_entity.EventDTO;
 import java.util.List;
 
 
-public interface EventService {
+public interface NewsService {
 //
 //    EventDTO addEvent(Event event);
 

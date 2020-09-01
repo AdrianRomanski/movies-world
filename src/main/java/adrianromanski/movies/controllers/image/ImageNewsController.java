@@ -1,6 +1,6 @@
 package adrianromanski.movies.controllers.image;
 
-import adrianromanski.movies.services.actor.ActorServiceImpl;
+import adrianromanski.movies.services.event.NewsServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,19 +15,18 @@ import static org.apache.tomcat.util.http.fileupload.IOUtils.copy;
 
 @Controller
 @AllArgsConstructor
-public class ImageActorController {
+public class ImageNewsController {
 
-    private final ActorServiceImpl actorService;
+    private final NewsServiceImpl newsService;
 
-
-    @GetMapping("actor/{id}/actorImage")
+    @GetMapping("news/{id}/newsImage")
     public void renderImageFromDB(@PathVariable String id, HttpServletResponse response) throws IOException {
-        var actorDTO = actorService.getActorByID(Long.valueOf(id));
-        if (actorDTO.getImage() != null) {
-            byte[] byteArray = new byte[actorDTO.getImage().length];
+        var event = newsService.getEventByID(Long.valueOf(id));
+        if (event.getImage() != null) {
+            byte[] byteArray = new byte[event.getImage().length];
             int i = 0;
 
-            for (Byte wrappedByte : actorDTO.getImage()) {
+            for (Byte wrappedByte : event.getImage()) {
                 byteArray[i++] = wrappedByte;
             }
             response.setContentType("image/jpeg");
@@ -36,4 +35,3 @@ public class ImageActorController {
         }
     }
 }
-
