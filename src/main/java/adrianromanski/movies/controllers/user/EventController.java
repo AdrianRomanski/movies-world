@@ -16,7 +16,7 @@ public class EventController {
 
     @GetMapping("/event/{id}")
     public ModelAndView getEventById(@PathVariable String id) {
-        ModelAndView modelAndView = new ModelAndView("/user/events/showEvent");
+        ModelAndView modelAndView = new ModelAndView("user/events/showEvent");
         modelAndView.addObject("event", eventService.getEventByID(Long.valueOf(id)));
         return modelAndView;
     }
