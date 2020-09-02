@@ -362,7 +362,7 @@ public class MoviesBootstrap implements ApplicationListener<ContextRefreshedEven
 
 
         // Categories Images
-        Byte[] fantasyImage = getBytes("src/main/resources/static/images/fantasy.jpg");
+        Byte[] fantasyImage = getBytes("src/main/resources/static/images/categories/fantasy.jpg");
 
         Category fantasy = Category.builder().name("Fantasy").image(fantasyImage)
                 .description("Fantasy films are films that belong to the fantasy genre with fantastic themes, usually magic, " +
@@ -416,15 +416,15 @@ public class MoviesBootstrap implements ApplicationListener<ContextRefreshedEven
         Byte[] ianMcDiarnidImage = getBytes("src/main/resources/static/images/actors/starwars/ian_mc.jpg");
 
         // Qui-Gon Jinn
-        Actor liamNeeson = Actor.builder().firstName("Liam").lastName("Neeson").image(liamNeesonImage).dateOfBirth(LocalDate.of(1952,6,7)).build();
+        Actor liamNeeson = Actor.builder().firstName("Liam").lastName("Neeson").country("North Ireland").image(liamNeesonImage).dateOfBirth(LocalDate.of(1952,6,7)).build();
         // Obi-Wan Kenobi young
-        Actor ewanMcGregor = Actor.builder().firstName("Ewan").lastName("McGregor").image(ewanMcGregorImage).dateOfBirth(LocalDate.of(1971,3,31)).build();
+        Actor ewanMcGregor = Actor.builder().firstName("Ewan").lastName("McGregor").country("Scotland").image(ewanMcGregorImage).dateOfBirth(LocalDate.of(1971,3,31)).build();
         //Padmé Amidala
-        Actor nataliePortman = Actor.builder().firstName("Natalie").lastName("Portman").image(nataliePortmanImage).dateOfBirth(LocalDate.of(1981,6,9)).build();
+        Actor nataliePortman = Actor.builder().firstName("Natalie").lastName("Portman").country("Israel").image(nataliePortmanImage).dateOfBirth(LocalDate.of(1981,6,9)).build();
         // Anakin Skywalker kid
-        Actor jakeLloyd = Actor.builder().firstName("Jacob").lastName("Lloyd").image(jakeLloydImage).dateOfBirth(LocalDate.of(1989,3,5)).build();
+        Actor jakeLloyd = Actor.builder().firstName("Jacob").lastName("Lloyd").country("USA").image(jakeLloydImage).dateOfBirth(LocalDate.of(1989,3,5)).build();
         // Senator Sheev Palpatine
-        Actor ianMcDiarnid = Actor.builder().firstName("Ian").lastName("McDiarmid").image(ianMcDiarnidImage).dateOfBirth(LocalDate.of(1944,8,11)).build();
+        Actor ianMcDiarnid = Actor.builder().firstName("Ian").lastName("McDiarmid").country("Scotland").image(ianMcDiarnidImage).dateOfBirth(LocalDate.of(1944,8,11)).build();
 
 
         Movie startWars1 = Movie.builder().name("Star Wars: Phantom Menace").time(136L).year(1999).country("USA")
@@ -444,9 +444,9 @@ public class MoviesBootstrap implements ApplicationListener<ContextRefreshedEven
         Byte[] samuelLJacksonImage = getBytes("src/main/resources/static/images/actors/starwars/samuel.jpg");
 
         // Anakin Skywalker
-        Actor haydenChristensen = Actor.builder().firstName("Hayden").lastName("Christensen").image(haydenChristensenImage).dateOfBirth(LocalDate.of(1981,4,19)).build();
+        Actor haydenChristensen = Actor.builder().firstName("Hayden").lastName("Christensen").country("Canada").image(haydenChristensenImage).dateOfBirth(LocalDate.of(1981,4,19)).build();
         // Mace Windu
-        Actor samuelLJackson = Actor.builder().firstName("Samuel").lastName("L. Jackson").image(samuelLJacksonImage).dateOfBirth(LocalDate.of(1948,12,21)).build();
+        Actor samuelLJackson = Actor.builder().firstName("Samuel").lastName("L. Jackson").country("USA").image(samuelLJacksonImage).dateOfBirth(LocalDate.of(1948,12,21)).build();
 
         Movie startWars2 = Movie.builder().name("Star Wars: Attack Of The Clones").time(142L).year(2002).country("USA")
                 .actors(Arrays.asList(ianMcDiarnid, ewanMcGregor, haydenChristensen, samuelLJackson, ianMcDiarnid))
@@ -480,15 +480,15 @@ public class MoviesBootstrap implements ApplicationListener<ContextRefreshedEven
         Byte[] kennyBakerImage = getBytes("src/main/resources/static/images/actors/starwars/r2d2.jpg");
 
         // Luke Skywalker
-        Actor markHamill = Actor.builder().firstName("Mark").lastName("Hamill").image(markHamillImage).dateOfBirth(LocalDate.of(1951,9,25)).build();
+        Actor markHamill = Actor.builder().firstName("Mark").lastName("Hamill").country("USA").image(markHamillImage).dateOfBirth(LocalDate.of(1951,9,25)).build();
         // Han Solo
-        Actor harrisonFord = Actor.builder().firstName("Harrison").lastName("Ford").image(harrisonFordImage).dateOfBirth(LocalDate.of(1942,7,13)).build();
+        Actor harrisonFord = Actor.builder().firstName("Harrison").lastName("Ford").country("USA").image(harrisonFordImage).dateOfBirth(LocalDate.of(1942,7,13)).build();
         // Leya
-        Actor carrieFisher = Actor.builder().firstName("Carrie").lastName("Fisher").image(carrieFisherImage).dateOfBirth(LocalDate.of(1956,10,21)).build();
+        Actor carrieFisher = Actor.builder().firstName("Carrie").lastName("Fisher").country("USA").image(carrieFisherImage).dateOfBirth(LocalDate.of(1956,10,21)).build();
         // C3PO
-        Actor anthonyDaniels = Actor.builder().firstName("Anthony").lastName("Daniels").image(anthonyDanielsImage).dateOfBirth(LocalDate.of(1946,2,21)).build();
+        Actor anthonyDaniels = Actor.builder().firstName("Anthony").lastName("Daniels").country("England").image(anthonyDanielsImage).dateOfBirth(LocalDate.of(1946,2,21)).build();
         // R2D2
-        Actor kennyBaker = Actor.builder().firstName("Kenny").lastName("Baker").image(kennyBakerImage).dateOfBirth(LocalDate.of(1934,9,24)).build();
+        Actor kennyBaker = Actor.builder().firstName("Kenny").lastName("Baker").country("England").image(kennyBakerImage).dateOfBirth(LocalDate.of(1934,9,24)).build();
 
 
         Movie startWars4 = Movie.builder().name("Star Wars: A New Hope").time(125L).year(1977).country("USA")
@@ -541,15 +541,15 @@ public class MoviesBootstrap implements ApplicationListener<ContextRefreshedEven
         Byte[] leaThompsonImage = getBytes("src/main/resources/static/images/actors/back_to_future/leaThompson.jpg");
 
         // Dr Emmett Brown
-        Actor christopherLLoyd = Actor.builder().firstName("Christopher").lastName("Lloyd").image(christopherLLoydImage).dateOfBirth(LocalDate.of(1938,11,22)).build();
+        Actor christopherLLoyd = Actor.builder().firstName("Christopher").lastName("Lloyd").country("USA").image(christopherLLoydImage).dateOfBirth(LocalDate.of(1938,11,22)).build();
         // Marty McFly
-        Actor michaelFox = Actor.builder().firstName("Michael").lastName("Fox").image(michaelFoxImage).dateOfBirth(LocalDate.of(1961,6,9)).build();
+        Actor michaelFox = Actor.builder().firstName("Michael").lastName("Fox").country("Canada").image(michaelFoxImage).dateOfBirth(LocalDate.of(1961,6,9)).build();
         // Biff Tannen
-        Actor thomasWilson = Actor.builder().firstName("Thomas").lastName("Wilson").image(thomasWilsonImage).dateOfBirth(LocalDate.of(1959,4,15)).build();
+        Actor thomasWilson = Actor.builder().firstName("Thomas").lastName("Wilson").country("USA").image(thomasWilsonImage).dateOfBirth(LocalDate.of(1959,4,15)).build();
         // George McFly
-        Actor crispingGlover = Actor.builder().firstName("Crispin").lastName("Glover").image(crispingGloverImage).dateOfBirth(LocalDate.of(1964,4,20)).build();
+        Actor crispingGlover = Actor.builder().firstName("Crispin").lastName("Glover").country("USA").image(crispingGloverImage).dateOfBirth(LocalDate.of(1964,4,20)).build();
         // Lorraine Baines
-        Actor leaThompson = Actor.builder().firstName("Lea").lastName("Thompson").image(leaThompsonImage).dateOfBirth(LocalDate.of(1961,5,31)).build();
+        Actor leaThompson = Actor.builder().firstName("Lea").lastName("Thompson").country("USA").image(leaThompsonImage).dateOfBirth(LocalDate.of(1961,5,31)).build();
 
 
         Movie backToTheFuture1 = Movie.builder().name("Back To The Future Part 1").time(111L).year(1985).country("USA")
@@ -584,13 +584,13 @@ public class MoviesBootstrap implements ApplicationListener<ContextRefreshedEven
         Byte[] hugoWeavingImage = getBytes("src/main/resources/static/images/actors/matrix/hugoWeaving.jpg");
 
         // Neo
-        Actor keanuReeves = Actor.builder().firstName("Keanu").lastName("Reeves").image(keanuReevesImage).dateOfBirth(LocalDate.of(1964,9,2)).build();
+        Actor keanuReeves = Actor.builder().firstName("Keanu").lastName("Reeves").country("Lebanon").image(keanuReevesImage).dateOfBirth(LocalDate.of(1964,9,2)).build();
         // Morpheus
-        Actor lauranceFishburne = Actor.builder().firstName("Laurence").lastName("Fishburne").image(lauranceFishburneImage).dateOfBirth(LocalDate.of(1961,7,3)).build();
+        Actor lauranceFishburne = Actor.builder().firstName("Laurence").lastName("Fishburne").country("USA").image(lauranceFishburneImage).dateOfBirth(LocalDate.of(1961,7,3)).build();
         // Trinity
-        Actor carrieMoss = Actor.builder().firstName("Carrie-Anne").lastName("Moss").image(carrieMossImage).dateOfBirth(LocalDate.of(1967,9,21)).build();
+        Actor carrieMoss = Actor.builder().firstName("Carrie-Anne").lastName("Moss").country("Canada").image(carrieMossImage).dateOfBirth(LocalDate.of(1967,9,21)).build();
         // Smith
-        Actor hugoWeaving = Actor.builder().firstName("Hugo").lastName("Weaving").image(hugoWeavingImage).dateOfBirth(LocalDate.of(1960,4,4)).build();
+        Actor hugoWeaving = Actor.builder().firstName("Hugo").lastName("Weaving").country("Nigeria").image(hugoWeavingImage).dateOfBirth(LocalDate.of(1960,4,4)).build();
 
 
         Byte[] matrix1Pict = getBytes("src/main/resources/static/images/science-fiction/matrix/part1.jpg");
@@ -626,13 +626,13 @@ public class MoviesBootstrap implements ApplicationListener<ContextRefreshedEven
         Byte[] millaJovovichImage = getBytes("src/main/resources/static/images/actors/fifth_element/milla.jpg");
 
         // Korben Dallas
-        Actor bruceWillis = Actor.builder().firstName("Bruce").lastName("Willis").image(bruceWillisImage).dateOfBirth(LocalDate.of(1955,3,19)).build();
+        Actor bruceWillis = Actor.builder().firstName("Bruce").lastName("Willis").country("Germany").image(bruceWillisImage).dateOfBirth(LocalDate.of(1955,3,19)).build();
         // Jean-Baptiste Emanuel Zorg
-        Actor garryOldman = Actor.builder().firstName("Gary").lastName("Oldman").image(garryOldmanImage).dateOfBirth(LocalDate.of(1958,3,21)).build();
+        Actor garryOldman = Actor.builder().firstName("Gary").lastName("Oldman").country("England").image(garryOldmanImage).dateOfBirth(LocalDate.of(1958,3,21)).build();
         // Ruby Rhod
-        Actor chrisTucker = Actor.builder().firstName("Chris").lastName("Tucker").image(chrisTuckerImage).dateOfBirth(LocalDate.of(1972,9,29)).build();
+        Actor chrisTucker = Actor.builder().firstName("Chris").lastName("Tucker").country("USA").image(chrisTuckerImage).dateOfBirth(LocalDate.of(1972,9,29)).build();
         // Leeloo
-        Actor millaJovovich = Actor.builder().firstName("Milla").lastName("Jovovich").image(millaJovovichImage).dateOfBirth(LocalDate.of(1975,12,17)).build();
+        Actor millaJovovich = Actor.builder().firstName("Milla").lastName("Jovovich").country("Ukraine").image(millaJovovichImage).dateOfBirth(LocalDate.of(1975,12,17)).build();
 
         Byte[] fifthElementPict = getBytes("src/main/resources/static/images/science-fiction/fifthElement.jpg");
 
@@ -654,13 +654,13 @@ public class MoviesBootstrap implements ApplicationListener<ContextRefreshedEven
         Byte[] billIrwinImage = getBytes("src/main/resources/static/images/actors/interstellar/billIrwin.jpg");
 
         // Cooper
-        Actor matthewMcconaughey = Actor.builder().firstName("Matthew").lastName("McConaughey").image(matthewMcconaugheyImage).dateOfBirth(LocalDate.of(1969,11,4)).build();
+        Actor matthewMcconaughey = Actor.builder().firstName("Matthew").lastName("McConaughey").country("USA").image(matthewMcconaugheyImage).dateOfBirth(LocalDate.of(1969,11,4)).build();
         // Brand
-        Actor anneHathaway = Actor.builder().firstName("Anne").lastName("Hathaway").image(anneHathawayImage).dateOfBirth(LocalDate.of(1982,11,12)).build();
+        Actor anneHathaway = Actor.builder().firstName("Anne").lastName("Hathaway").country("USA").image(anneHathawayImage).dateOfBirth(LocalDate.of(1982,11,12)).build();
         // Murph
-        Actor jessicaChastain = Actor.builder().firstName("Jessica").lastName("Chastain").image(jessicaChastainImage).dateOfBirth(LocalDate.of(1977,3,24)).build();
+        Actor jessicaChastain = Actor.builder().firstName("Jessica").lastName("Chastain").country("USA").image(jessicaChastainImage).dateOfBirth(LocalDate.of(1977,3,24)).build();
         // TARS
-        Actor billIrwin = Actor.builder().firstName("Bill").lastName("Irwin").image(billIrwinImage).dateOfBirth(LocalDate.of(1950,4,11)).build();
+        Actor billIrwin = Actor.builder().firstName("Bill").lastName("Irwin").country("USA").image(billIrwinImage).dateOfBirth(LocalDate.of(1950,4,11)).build();
 
 
         Byte[] interstellarPict = getBytes("src/main/resources/static/images/science-fiction/interstellar.jpg");
@@ -676,7 +676,7 @@ public class MoviesBootstrap implements ApplicationListener<ContextRefreshedEven
         billIrwin.getMovies().add(interstellar);
 
 
-        Byte[] scifiImage = getBytes("src/main/resources/static/images/sci-fi.jpg");
+        Byte[] scifiImage = getBytes("src/main/resources/static/images/categories/science-fiction.jpg");
 
 
         Category sciFi = Category.builder().name("Sci-Fi").image(scifiImage)

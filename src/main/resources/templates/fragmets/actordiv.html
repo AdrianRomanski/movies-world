@@ -16,7 +16,7 @@
 <!--/*@thymesVar id="actor" type="adrianromanski.movies.domain.person.Actor"*/-->
 <!--/*@thymesVar id="actorDTO" type="adrianromanski.movies.model.person.ActorDTO"*/-->
 <div class="col-md-3" th:fragment="actordiv">
-    <div class="movies-listing">
+    <div class="movies-listing movies-listing-actor">
         <div class="row">
             <a th:href="@{'/actor/' + ${actor.id}}">
                 <div class="col-lg-12">
@@ -31,14 +31,14 @@
             </a>
         </div>
         <div class="movies-listing-extra">
+<!--            <div class="movies-listing-extra-item col-md-4">-->
+<!--                <div class="small movie-price">-->
+<!--                    Awards-->
+<!--                </div>-->
+<!--            </div>-->
             <div class="movies-listing-extra-item col-md-4">
                 <div class="small movie-price">
-                    Awards
-                </div>
-            </div>
-            <div class="movies-listing-extra-item col-md-4">
-                <div class="small movie-price">
-                    Date of Birth
+                    Age
                 </div>
             </div>
             <div class="movies-listing-extra-item col-md-4">
@@ -48,18 +48,16 @@
             </div>
         </div>
         <div class="movies-listing-extra">
+<!--            <div class="movies-listing-extra-item col-md-4">-->
+<!--                <div class="small movie-price">-->
+<!--                    0-->
+<!--                </div>-->
+<!--            </div>-->
             <div class="movies-listing-extra-item col-md-4">
-                <div class="small movie-price">
-                    0
-                </div>
+                <div class="small movie-price" th:text="${actor.age}"></div>
             </div>
             <div class="movies-listing-extra-item col-md-4">
-                <div class="small movie-price" th:text="${actor.dateOfBirth}"></div>
-            </div>
-            <div class="movies-listing-extra-item col-md-4">
-                <div class="small movie-price">
-                    Poland
-                </div>
+                <div class="small movie-price" th:text="${actor.country}"></div>
             </div>
         </div>
 

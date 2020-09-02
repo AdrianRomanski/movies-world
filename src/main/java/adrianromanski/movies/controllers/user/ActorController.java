@@ -40,12 +40,12 @@ public class ActorController {
     }
 
 
-//    @GetMapping("/actor/{id}/movies")
-//    public ModelAndView getActorMovies(@PathVariable String id) {
-//        ModelAndView modelAndView = new ModelAndView("user/actors/showActors");
-//        modelAndView.addObject("movies", actorService.getAllMoviesForActor(Long.valueOf(id)));
-//        return modelAndView;
-//    }
+    @GetMapping("/actor/{id}/movies")
+    public ModelAndView getActorMovies(@PathVariable String id) {
+        ModelAndView modelAndView = new ModelAndView("user/movies/showMovies");
+        modelAndView.addObject("moviesDTOList", actorService.getAllMoviesForActor(Long.valueOf(id)));
+        return modelAndView;
+    }
 
     @GetMapping("/actors/sorted/{sortType}/{sortBy}/page/{page}")
     private ModelAndView showActorsSortedBy(@PathVariable int page,

@@ -8,6 +8,7 @@ import adrianromanski.movies.jms.JmsTextMessageService;
 import adrianromanski.movies.mapper.award.ActorAwardMapper;
 import adrianromanski.movies.mapper.person.ActorMapper;
 import adrianromanski.movies.model.award.ActorAwardDTO;
+import adrianromanski.movies.model.base_entity.MovieDTO;
 import adrianromanski.movies.model.person.ActorDTO;
 import adrianromanski.movies.repositories.award.AwardRepository;
 import adrianromanski.movies.repositories.pages.ActorPageRepository;
@@ -55,16 +56,16 @@ public class ActorServiceImpl implements ActorService {
                 .orElseThrow(() -> new ResourceNotFoundException(id, Actor.class));
     }
 
-//    /**
-//     * @return All Movies For the Actor with matching id
-//     */
-//    @Override
-//    public List<MovieDTO> getAllMoviesForActor(Long id) {
-//        ActorDTO actorDTO = actorRepository.findById(id)
-//                .map(actorMapper::actorToActorDTO)
-//                .orElseThrow(() -> new ResourceNotFoundException(id, Actor.class));
-//        return actorDTO.getMoviesDTO();
-//    }
+    /**
+     * @return All Movies For the Actor with matching id
+     */
+    @Override
+    public List<MovieDTO> getAllMoviesForActor(Long id) {
+        ActorDTO actorDTO = actorRepository.findById(id)
+                .map(actorMapper::actorToActorDTO)
+                .orElseThrow(() -> new ResourceNotFoundException(id, Actor.class));
+        return actorDTO.getMoviesDTO();
+    }
 
     /**
      * @return All Actors Paged

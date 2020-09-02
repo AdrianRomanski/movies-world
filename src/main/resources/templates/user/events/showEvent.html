@@ -130,15 +130,15 @@
 
 <div class="container-fluid" style="margin-top: 50px">
 
-<!--Showing Heroku file-->
-    <div class="col-md-3">
-        <div class="single-movie-listing">
+
+    <div class="col-md-12">
+        <div class="single-news-listing">
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="single-movie-box-image-container">
+                    <div class="single-news-box-image-container">
                         <img role="presentation"
                              th:src="@{'/news/' + ${event.id} + '/newsImage'}"
-                             class="single-movie-box-image">
+                             class="single-news-box-image">
                     </div>
                 </div>
             </div>
@@ -146,31 +146,31 @@
     </div>
 
 
-    <div class="col-md-9">
-        <div class="single-movie-infos">
+    <div class="col-md-12">
+        <div class="single-news-infos">
 
             <div class="panel-primary">
                 <div class="panel-heading">
-                    <div class="single-movie-infos-title">
+                    <div class="single-news-infos-title">
                         <h4 th:text="${event.name}"></h4>
                     </div>
                 </div>
                 <div class="panel-body">
-                    <div class="single-movie-infos-description" th:text="${event.description} + ${event.largeDescription}"></div>
+                    <div class="single-news-infos-description" th:text="${event.description} + ${event.largeDescription}"></div>
                 </div>
             </div>
         </div>
     </div>
     <div class="col-md-12">
-        <div class="single-movie-infos-secondary">
+        <div class="single-news-infos-secondary">
             <div class="panel-info">
                 <div class="panel-heading">
-                    <div class="single-movie-infos-title">
+                    <div class="single-news-infos-title">
                         <h4>User Comments</h4>
                     </div>
                 </div>
                 <div class="panel-body">
-                    <div class="single-movie-infos-description">
+                    <div class="single-news-infos-description">
                         COMING SOON
                     </div>
                 </div>
