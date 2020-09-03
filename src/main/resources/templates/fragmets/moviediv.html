@@ -15,47 +15,47 @@
 <body>
 <!--/*@thymesVar id="movie" type="adrianromanski.movies.domain.base_entity.Movie"*/-->
 <div class="col-md-3" th:fragment="moviediv">
-    <div class="movies-listing">
+    <div class="listing">
         <div class="row">
             <a th:href="@{'/movie/' + ${movie.id}}">
                 <div class="col-lg-12">
-                    <div class="movies-box-image-container">
+                    <div class="box-image-container">
                         <img role="presentation"
                              th:src="@{'/movie/' + ${movie.id} + '/movieImage'}"
-                             class="movies-box-image">
+                             class="box-image">
                     </div>
-                    <div class="movies-listing-title" th:text="${movie.name}"></div>
-                    <div class="movies-listing-description" th:text="${movie.description}"></div>
+                    <div class="listing-title" th:text="${movie.name}"></div>
+                    <div class="listing-description" th:text="${movie.description}"></div>
                 </div>
             </a>
         </div>
-        <div class="movies-listing-extra">
-            <div class="movies-listing-extra-item col-md-4">
-                <div class="small movie-price">
+        <div class="listing-extra">
+            <div class="listing-extra-item col-md-4">
+                <div class="small price">
                 Time
                 </div>
             </div>
-            <div class="movies-listing-extra-item col-md-4">
-                <div class="small movie-price">
+            <div class="listing-extra-item col-md-4">
+                <div class="small price">
                 Year
                 </div>
             </div>
             <div class="movies-listing-extra-item col-md-4">
-                <div class="small movie-price">
+                <div class="small price">
                 Country
                 </div>
             </div>
         </div>
-        <div class="movies-listing-extra">
+        <div class="listing-extra">
             <div class="movies-listing-extra-item col-md-4">
-                <div class="small movie-price" th:text="${movie.time}">
+                <div class="small price" th:text="${movie.time}">
                 </div>
             </div>
             <div class="movies-listing-extra-item col-md-4">
-                <div class="small movie-price" th:text="${movie.year}"></div>
+                <div class="small price" th:text="${movie.year}"></div>
             </div>
             <div class="movies-listing-extra-item col-md-4">
-                <div class="small movie-price" th:text="${movie.country}"></div>
+                <div class="small price" th:text="${movie.country}"></div>
             </div>
         </div>
 
