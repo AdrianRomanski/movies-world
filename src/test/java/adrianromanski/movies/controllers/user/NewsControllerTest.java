@@ -1,7 +1,7 @@
 package adrianromanski.movies.controllers.user;
 
-import adrianromanski.movies.domain.base_entity.Event;
-import adrianromanski.movies.services.event.NewsServiceImpl;
+import adrianromanski.movies.domain.base_entity.News;
+import adrianromanski.movies.services.news.NewsServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,10 +16,10 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-class EventControllerTest {
+class NewsControllerTest {
 
     @InjectMocks
-    EventController eventController;
+    NewsController eventController;
 
     @Mock
     NewsServiceImpl eventService;
@@ -38,15 +38,15 @@ class EventControllerTest {
     @DisplayName("GET, Happy Path, method = getEventByID")
     void getEventById() throws Exception {
         //given
-        Event event = Event.builder().build();
+        News news = News.builder().build();
         //when
 
-        when(eventService.getEventByID(anyLong())).thenReturn(event);
+        when(eventService.getNewsByID(anyLong())).thenReturn(news);
         //then
 
-        mockMvc.perform(get("/event/1"))
+        mockMvc.perform(get("/news/1"))
                 .andExpect(status().isOk())
-                .andExpect(model().attributeExists("event"))
-                .andExpect(view().name("user/events/showEvent"));
+                .andExpect(model().attributeExists("singleNews"))
+                .andExpect(view().name("user/news/showSingleNews"));
     }
 }

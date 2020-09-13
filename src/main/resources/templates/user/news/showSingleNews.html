@@ -15,16 +15,44 @@
             integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
             crossorigin="anonymous" th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
 
-    <link th:href="@{/css/custom.css}" rel="stylesheet" media="screen"/>
+    <link th:href="@{/css/custom.css}" rel="stylesheet" media="screen"/>en"/>
 
-    <title>Movies World Home Page</title>
+    <title>Movies</title>
 </head>
 <div class="jumbotron" th:replace="fragmets/jumbotron :: jumbotron"></div>
 <body>
+<script>
+    $(document).ready(function(){
+        $('.dropdown-submenu a.test').on("click", function(e){
+            $(this).next('ul').toggle();
+            e.stopPropagation();
+            e.preventDefault();
+        });
+    });
+</script>
 
 <ul class="nav nav-pills admin-navbar">
-
-    <li class="active"><a href="#" th:href="@{'/'}" >Main Page</a></li>
+    <li><a href="#" th:href="@{'/'}" >Main Page</a></li>
+    <li class="dropdown active">
+        <a data-toggle="dropdown" data-target="#" href="http://www.google.com">
+            News <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu">
+            <li><a href="#" type="button" th:href="@{'/news/sorted/asc/date/page/1'}" >Show All News</a></li>
+            <li class="dropdown-submenu">
+                <a class="test" tabindex="-1" href="#">Sorted By<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li class="dropdown-submenu">
+                        <a class="test" href="#">Date<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#" th:href="@{'/news/sorted/asc/date/page/1'}">Ascending</a></li>
+                            <li><a href="#" th:href="@{'/news/sorted/desc/date/page/1'}" >Descending</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </li>
     <li class="dropdown">
         <a data-toggle="dropdown" data-target="#" href="http://www.google.com">
             Categories <span class="caret"></span>
@@ -120,35 +148,55 @@
 </ul>
 
 
-<script>
-    $(document).ready(function(){
-        $('.dropdown-submenu a.test').on("click", function(e){
-            $(this).next('ul').toggle();
-            e.stopPropagation();
-            e.preventDefault();
-        });
-    });
-</script>
+<div class="container-fluid" style="margin-top: 50px">
 
-<div class="row">
+
     <div class="col-md-12">
-        <h1 class="section-header">Breaking News</h1>
-    </div>
-</div>
-
-<div class="container" style="margin-top: 25px"></div>
-
-    <div class="container col-md-10 col-md-offset-1 section">
-        <div class="row">
+        <div class="listing listing-single">
             <div class="row">
-                <div th:each="event: ${events}">
-                    <div th:replace="fragmets/eventdiv :: eventdiv">
+                <div class="col-lg-12">
+                    <div class="box-image-container">
+                        <img role="presentation"
+                             th:src="@{'/news/' + ${singleNews.id} + '/newsImage'}"
+                             class="box-image">
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-</body>
 
+    <div class="col-md-12">
+        <div class="listing listing-single-info">
+
+            <div class="panel-primary">
+                <div class="panel-heading">
+                    <div>
+                        <h4 th:text="${singleNews.name}"></h4>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="single-info-description" th:text="${singleNews.description} + ${singleNews.largeDescription}"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="listing single-info-secondary">
+            <div class="panel-info">
+                <div class="panel-heading">
+                    <div >
+                        <h4>User Comments</h4>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="single-info-description">
+                        COMING SOON
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
 </html>

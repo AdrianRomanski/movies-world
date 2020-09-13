@@ -27,6 +27,26 @@
     <li><a href="#" th:href="@{'/'}" >Main Page</a></li>
     <li class="dropdown">
         <a data-toggle="dropdown" data-target="#" href="http://www.google.com">
+            News <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu">
+            <li><a href="#" type="button" th:href="@{'/news/sorted/asc/date/page/1'}" >Show All News</a></li>
+            <li class="dropdown-submenu">
+                <a class="test" tabindex="-1" href="#">Sorted By<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li class="dropdown-submenu">
+                        <a class="test" href="#">Date<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#" th:href="@{'/news/sorted/asc/date/page/1'}">Ascending</a></li>
+                            <li><a href="#" th:href="@{'/news/sorted/desc/date/page/1'}" >Descending</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </li>
+    <li class="dropdown">
+        <a data-toggle="dropdown" data-target="#" href="http://www.google.com">
             Categories <span class="caret"></span>
         </a>
         <ul class="dropdown-menu">

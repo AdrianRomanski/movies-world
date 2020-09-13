@@ -1,6 +1,6 @@
 package adrianromanski.movies.controllers.user;
 
-import adrianromanski.movies.services.event.NewsServiceImpl;
+import adrianromanski.movies.services.news.NewsServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,12 +10,12 @@ import org.springframework.web.servlet.ModelAndView;
 @AllArgsConstructor
 public class HomeController {
 
-    private final NewsServiceImpl eventService;
+    private final NewsServiceImpl newsService;
 
     @GetMapping("/")
     public ModelAndView home() {
         ModelAndView modelAndView = new ModelAndView("user/home");
-        modelAndView.addObject("events", eventService.getLatestEvents());
+        modelAndView.addObject("latestNews", newsService.getLatestNews());
         return modelAndView;
     }
 

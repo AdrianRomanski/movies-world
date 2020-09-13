@@ -13,14 +13,14 @@
 
 </head>
 <body>
-<!--/*@thymesVar id="movie" type="adrianromanski.movies.domain.base_entity.Event"*/-->
-<div class="col-md-12" th:fragment="eventdiv">
+<!--/*@thymesVar id="movie" type="adrianromanski.movies.domain.base_entity.News"*/-->
+<div class="col-md-12" th:fragment="newsdiv">
     <div class="listing listing-home">
         <div class="row">
-            <a th:href="@{'/event/' + ${event.id}}">
+            <a th:href="@{'/news/' + ${news.id}}">
                 <div class="col-lg-12">
-                    <div class="listing-title" th:text="${event.name}"></div>
-                    <div class="listing-description-home" th:text="${event.description}"></div>
+                    <div class="listing-title" th:text="${news.name}"></div>
+                    <div class="listing-description-home" th:text="${news.description}"></div>
                 </div>
             </a>
         </div>

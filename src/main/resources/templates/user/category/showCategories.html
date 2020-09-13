@@ -17,13 +17,14 @@
 
     <link th:href="@{/css/custom.css}" rel="stylesheet" media="screen"/>en"/>
 
-    <title>Movies</title>
+    <title>Movies World Home Page</title>
 </head>
 <div class="jumbotron" th:replace="fragmets/jumbotron :: jumbotron"></div>
 <body>
 
 
 <ul class="nav nav-pills admin-navbar">
+
     <li><a href="#" th:href="@{'/'}" >Main Page</a></li>
     <li class="dropdown">
         <a data-toggle="dropdown" data-target="#" href="http://www.google.com">
@@ -45,7 +46,7 @@
             </li>
         </ul>
     </li>
-    <li class="dropdown">
+    <li class="dropdown active">
         <a data-toggle="dropdown" data-target="#" href="http://www.google.com">
             Categories <span class="caret"></span>
         </a>
@@ -94,7 +95,7 @@
             </li>
         </ul>
     </li>
-    <li class="dropdown active">
+    <li class="dropdown">
         <a data-toggle="dropdown" data-target="#" href="http://www.google.com">
             Actors <span class="caret"></span>
         </a>
@@ -139,6 +140,7 @@
     </li>
 </ul>
 
+
 <script>
     $(document).ready(function(){
         $('.dropdown-submenu a.test').on("click", function(e){
@@ -154,15 +156,15 @@
 
 <div class="row">
     <div class="col-md-12">
-        <h1 class="section-header">Actors</h1>
+        <h1 class="section-header"> Categories</h1>
     </div>
 </div>
 
 <div class="container col-md-10 col-md-offset-1 movies-section" style="margin-top: 25px">
     <div class="row">
         <div class="row">
-            <div th:each="actor: ${actorsList}">
-                <div th:replace="fragmets/actordiv :: actordiv">
+            <div th:each="category: ${categoriesDTOList}">
+                <div th:replace="fragmets/categorydiv :: categorydiv">
                 </div>
             </div>
         </div>
@@ -176,7 +178,7 @@
         <nav aria-label="Pagination">
             <ul class="pagination justify-content-center">
                 <li class="page-item" th:each="pageNumber : ${pageNumbers}" >
-                    <a class="page-link" th:href="@{|/actors/sorted/${sortType}/${sortBy}/page/${pageNumber}|}" th:text=${pageNumber}>1</a>
+                    <a class="page-link" th:href="@{|/categories/page/${pageNumber}|}" th:text=${pageNumber}>1</a>
                 </li>
             </ul>
         </nav>

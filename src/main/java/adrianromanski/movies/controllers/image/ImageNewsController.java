@@ -1,6 +1,6 @@
 package adrianromanski.movies.controllers.image;
 
-import adrianromanski.movies.services.event.NewsServiceImpl;
+import adrianromanski.movies.services.news.NewsServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +21,7 @@ public class ImageNewsController {
 
     @GetMapping("news/{id}/newsImage")
     public void renderImageFromDB(@PathVariable String id, HttpServletResponse response) throws IOException {
-        var event = newsService.getEventByID(Long.valueOf(id));
+        var event = newsService.getNewsByID(Long.valueOf(id));
         if (event.getImage() != null) {
             byte[] byteArray = new byte[event.getImage().length];
             int i = 0;

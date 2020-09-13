@@ -1,7 +1,7 @@
 package adrianromanski.movies.controllers.user;
 
-import adrianromanski.movies.model.base_entity.EventDTO;
-import adrianromanski.movies.services.event.NewsServiceImpl;
+import adrianromanski.movies.model.base_entity.NewsDTO;
+import adrianromanski.movies.services.news.NewsServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -40,9 +40,9 @@ class HomeControllerTest {
     @Test
     @DisplayName("GET, HappyPath, method = getHome")
     void getHomePage() throws Exception {
-        List<EventDTO> eventList = Arrays.asList(new EventDTO(), new EventDTO(), new EventDTO());
+        List<NewsDTO> eventList = Arrays.asList(new NewsDTO(), new NewsDTO(), new NewsDTO());
 
-        when(eventService.getLatestEvents()).thenReturn(eventList);
+        when(eventService.getLatestNews()).thenReturn(eventList);
 
         mockMvc.perform(get("/"))
                 .andExpect(status().isOk())

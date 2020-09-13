@@ -1,11 +1,11 @@
 package adrianromanski.movies.repositories.pages;
 
-import adrianromanski.movies.domain.base_entity.Event;
+import adrianromanski.movies.domain.base_entity.News;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.CrudRepository;
 
-public interface EventPageRepository extends CrudRepository<Event, Long> {
+public interface EventPageRepository extends CrudRepository<News, Long> {
 
-    Page<Event> findAll(Pageable pageable);
+    Page<News> findAll(Pageable pageable);
 }

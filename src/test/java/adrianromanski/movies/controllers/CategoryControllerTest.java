@@ -78,7 +78,7 @@ class CategoryControllerTest {
         mockMvc.perform(get("/categories/page/1"))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("categoriesDTOList"))
-                .andExpect(view().name("user/categories"));
+                .andExpect(view().name("user/category/showCategories"));
     }
 
 
@@ -102,6 +102,6 @@ class CategoryControllerTest {
         mockMvc.perform(get("/category/Sci-fi/page/1"))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("moviesDTOList"))
-                .andExpect(view().name("user/categoryMovies"));
+                .andExpect(view().name("user/category/categoryMovies"));
     }
 }

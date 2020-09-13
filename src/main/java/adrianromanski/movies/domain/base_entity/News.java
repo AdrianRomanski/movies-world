@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @Setter
 @Entity
 @NoArgsConstructor
-public class Event extends BaseEntity{
+public class News extends BaseEntity{
 
     LocalDate date;
 
@@ -21,7 +21,7 @@ public class Event extends BaseEntity{
     String largeDescription;
 
     @Builder
-    public Event(Long id, String name, String description, Byte[] image, LocalDate date, String largeDescription) {
+    public News(Long id, String name, String description, Byte[] image, LocalDate date, String largeDescription) {
         super(id, name, description, image);
         this.date = date;
         this.largeDescription = largeDescription;

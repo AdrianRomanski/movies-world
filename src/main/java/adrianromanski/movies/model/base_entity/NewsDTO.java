@@ -11,7 +11,7 @@ import java.time.LocalDate;
 @Setter
 @Getter
 @NoArgsConstructor
-public class EventDTO extends BaseEntityDTO{
+public class NewsDTO extends BaseEntityDTO{
 
     LocalDate date;
 
@@ -19,7 +19,7 @@ public class EventDTO extends BaseEntityDTO{
     String largeDescription;
 
     @Builder
-    public EventDTO(Long id, String name, String description, Byte[] image, LocalDate date, String largeDescription) {
+    public NewsDTO(Long id, String name, String description, Byte[] image, LocalDate date, String largeDescription) {
         super(id, name, description, image);
         this.date = date;
         this.largeDescription = largeDescription;

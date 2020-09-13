@@ -1,10 +1,11 @@
 package adrianromanski.movies.services.event;
 
-import adrianromanski.movies.domain.base_entity.Event;
+import adrianromanski.movies.domain.base_entity.News;
 import adrianromanski.movies.mapper.base_entity.EventMapperImpl;
-import adrianromanski.movies.model.base_entity.EventDTO;
+import adrianromanski.movies.model.base_entity.NewsDTO;
 import adrianromanski.movies.repositories.base_entity.EventRepository;
 import adrianromanski.movies.repositories.pages.EventPageRepository;
+import adrianromanski.movies.services.news.NewsServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,7 +21,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
-class EventServiceImplTest {
+class NewsServiceImplTest {
 
 
     public static final LocalDate DATE = LocalDate.now();
@@ -48,28 +49,28 @@ class EventServiceImplTest {
     @DisplayName("Happy Path, method = getLatestEvents")
     void getLatestEvents() {
         //given
-        List<Event> events = Arrays.asList(new Event(), new Event(), new Event(), new Event(), new Event());
+        List<News> news = Arrays.asList(new News(), new News(), new News(), new News(), new News());
         //when
 
-        when(eventRepository.findAll()).thenReturn(events);
+        when(eventRepository.findAll()).thenReturn(news);
 
         //then
-        List<EventDTO> returnDTO = eventService.getLatestEvents();
+        List<NewsDTO> returnDTO = eventService.getLatestNews();
 
-        assertEquals(returnDTO.size(), 3);
+        assertEquals(returnDTO.size(), 5);
     }
 
     @Test
     @DisplayName("Happy Path, method = getEventByID")
     void getEventByID() {
         //given
-        Event event = Event.builder().name(NAME).description(DESCRIPTION).date(LocalDate.now()).build();
+        News news = News.builder().name(NAME).description(DESCRIPTION).date(LocalDate.now()).build();
         //when
 
-        when(eventRepository.findById(1L)).thenReturn(Optional.of(event));
+        when(eventRepository.findById(1L)).thenReturn(Optional.of(news));
         //then
 
-        Event returnObj = eventService.getEventByID(1L);
+        News returnObj = eventService.getNewsByID(1L);
 
         assertEquals(returnObj.getName(), NAME);
         assertEquals(returnObj.getDescription(), DESCRIPTION);

@@ -1,7 +1,7 @@
 package adrianromanski.movies.controllers.image;
 
-import adrianromanski.movies.domain.base_entity.Event;
-import adrianromanski.movies.services.event.NewsServiceImpl;
+import adrianromanski.movies.domain.base_entity.News;
+import adrianromanski.movies.services.news.NewsServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -39,8 +39,8 @@ class ImageNewsControllerTest {
     @DisplayName("GET, Happy Path, method = renderImageFromDB")
     void renderImageFromDB() throws Exception {
         //given
-        Event event = new Event();
-        event.setId(2L);
+        News news = new News();
+        news.setId(2L);
 
         String s = "fake image text";
         Byte[] bytesBoxed = new Byte[s.getBytes().length];
@@ -51,10 +51,10 @@ class ImageNewsControllerTest {
             bytesBoxed[i++] = primByte;
         }
 
-        event.setImage(bytesBoxed);
+        news.setImage(bytesBoxed);
 
 
-        when(newsService.getEventByID(anyLong())).thenReturn(event);
+        when(newsService.getNewsByID(anyLong())).thenReturn(news);
 
         //when
         MockHttpServletResponse response = mockMvc.perform(get("/news/2/newsImage"))

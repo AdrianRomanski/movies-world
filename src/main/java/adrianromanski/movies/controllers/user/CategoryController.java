@@ -38,7 +38,7 @@ public class CategoryController {
 
     @GetMapping("/categories/page/{page}")
     public ModelAndView getAllCategoriesPaged(@PathVariable int page) {
-        ModelAndView modelAndView = new ModelAndView("user/categories");
+        ModelAndView modelAndView = new ModelAndView("user/category/showCategories");
         PageRequest pageable = PageRequest.of(page - 1, 8);
         Page<Category> categoryPage = categoryService.getAllCategoriesPaged(pageable);
         Page<CategoryDTO> categoryDTOPage = categoryService.getPageCategoryDTO(categoryPage, pageable);
@@ -54,7 +54,7 @@ public class CategoryController {
 
     @GetMapping(value = "/category/{categoryName}/page/{page}")
     public ModelAndView getAllMoviesForCategoryPaged(@PathVariable int page, @PathVariable String categoryName) {
-        ModelAndView modelAndView = new ModelAndView("user/categoryMovies");
+        ModelAndView modelAndView = new ModelAndView("user/category/categoryMovies");
         PageRequest pageable = PageRequest.of(page - 1, 8);
         Page<Movie> moviePage = movieService.getAllMoviesForCategoryPaged(categoryName, pageable);
         Page<MovieDTO> movieDTOPage = movieService.getPageMovieDTO(moviePage, pageable);

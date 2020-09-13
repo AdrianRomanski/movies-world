@@ -15,16 +15,36 @@
             integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
             crossorigin="anonymous" th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
 
-    <link th:href="@{/css/custom.css}" rel="stylesheet" media="screen"/>
+    <link th:href="@{/css/custom.css}" rel="stylesheet" media="screen"/>en"/>
 
-    <title>Category Page</title>
+    <title>Movies</title>
 </head>
 <div class="jumbotron" th:replace="fragmets/jumbotron :: jumbotron"></div>
 <body>
 
-<ul class="nav nav-pills admin-navbar">
 
+<ul class="nav nav-pills admin-navbar">
     <li><a href="#" th:href="@{'/'}" >Main Page</a></li>
+    <li class="dropdown active">
+        <a data-toggle="dropdown" data-target="#" href="http://www.google.com">
+            News <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu">
+            <li><a href="#" type="button" th:href="@{'/news/sorted/asc/date/page/1'}" >Show All News</a></li>
+            <li class="dropdown-submenu">
+                <a class="test" tabindex="-1" href="#">Sorted By<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li class="dropdown-submenu">
+                        <a class="test" href="#">Date<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#" th:href="@{'/news/sorted/asc/date/page/1'}">Ascending</a></li>
+                            <li><a href="#" th:href="@{'/news/sorted/desc/date/page/1'}" >Descending</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </li>
     <li class="dropdown">
         <a data-toggle="dropdown" data-target="#" href="http://www.google.com">
             Categories <span class="caret"></span>
@@ -33,7 +53,7 @@
             <li><a href="#" th:href="@{'/categories/page/1'}" type="button">Show All Categories</a></li>
         </ul>
     </li>
-    <li class="dropdown active">
+    <li class="dropdown">
         <a data-toggle="dropdown" data-target="#" href="http://www.google.com">
             Movies <span class="caret"></span>
         </a>
@@ -119,7 +139,6 @@
     </li>
 </ul>
 
-
 <script>
     $(document).ready(function(){
         $('.dropdown-submenu a.test').on("click", function(e){
@@ -130,35 +149,40 @@
     });
 </script>
 
+
+
+
 <div class="row">
     <div class="col-md-12">
-        <h1 class="section-header" th:text="${categoryDTO.name}"></h1>
+        <h1 class="section-header">Breaking News</h1>
     </div>
 </div>
 
-<div class="container col-md-10 col-md-offset-1 movies-section" style="margin-top: 25px">
+<div class="container col-md-10 col-md-offset-1 section" style="margin-top: 25px">
     <div class="row">
         <div class="row">
-            <div th:each="movie: ${moviesDTOList}">
-                <div th:replace="fragmets/moviediv :: moviediv">
+            <div th:each="news: ${newsList}">
+                <div th:replace="fragmets/newsdiv :: newsdiv">
                 </div>
             </div>
         </div>
     </div>
-
-    <div class="row" th:fragment="pagination">
-        <div class="col-md-2"></div>
-        <div class="col-md-8">
-            <nav aria-label="Pagination">
-                <ul class="pagination justify-content-center">
-                    <li class="page-item" th:each="pageNumber : ${pageNumbers}" >
-                        <a class="page-link" th:href="@{|/category/${categoryDTO.name}/page/${pageNumber}|}" th:text=${pageNumber}>1</a>
-                    </li>
-                </ul>
-            </nav>
-        </div>
-        <div class="col-md-2"></div>
-    </div>
 </div>
+
+
+<div class="row" th:fragment="pagination">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+        <nav aria-label="Pagination">
+            <ul class="pagination justify-content-center">
+                <li class="page-item" th:each="pageNumber : ${pageNumbers}" >
+                    <a class="page-link" th:href="@{|/news/sorted/${sortType}/${sortBy}/page/${pageNumber}|}" th:text=${pageNumber}>1</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <div class="col-md-2"></div>
+</div>
+
 </body>
 </html>

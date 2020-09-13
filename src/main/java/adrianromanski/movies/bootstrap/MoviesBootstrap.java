@@ -1,7 +1,7 @@
 package adrianromanski.movies.bootstrap;
 
 import adrianromanski.movies.domain.base_entity.Category;
-import adrianromanski.movies.domain.base_entity.Event;
+import adrianromanski.movies.domain.base_entity.News;
 import adrianromanski.movies.domain.base_entity.Movie;
 import adrianromanski.movies.domain.person.Actor;
 import adrianromanski.movies.repositories.base_entity.CategoryRepository;
@@ -81,7 +81,7 @@ public class MoviesBootstrap implements ApplicationListener<ContextRefreshedEven
         Byte[] diaz_img = getBytes("src/main/resources/static/images/news/cameronDiaz.jpg");
 
 
-        Event testEvent1 = Event.builder().name("Chadwick Boseman Died")
+        News testNews1 = News.builder().name("Chadwick Boseman Died")
                 .description("US actor Chadwick Boseman, best known for playing Black Panther in the hit Marvel superhero franchise," +
                 "has died of cancer aged 43. He died at home in Los Angeles with his wife and family by his side, a statement posted on social media said.")
                 .largeDescription("Boseman was diagnosed with colon cancer four years ago but had not made the information public." +
@@ -92,7 +92,7 @@ public class MoviesBootstrap implements ApplicationListener<ContextRefreshedEven
                 .image(chadwick_img)
                 .build();
 
-        Event testEvent2 = Event.builder().name("The Batman 2021")
+        News testNews2 = News.builder().name("The Batman 2021")
                 .description("The Batman finally got its big reveal during this weekend's DC Fandome event, and director Matt Reeves confirmed a bunch of new details. " +
                 "We also got our first look at Robert Pattinson as Bruce Wayne with the first official The Batman trailer.")
                 .largeDescription("The first official trailer for The Batman is everything one would hope; brutal, action-packed, chills-inciting, and revealing. " +
@@ -103,7 +103,7 @@ public class MoviesBootstrap implements ApplicationListener<ContextRefreshedEven
                 .image(pattinson_img)
                 .build();
 
-        Event testEvent3 = Event.builder().name("Cameron Diaz Wine Business")
+        News testNews3 = News.builder().name("Cameron Diaz Wine Business")
                 .description("Unless you’ve been living under a rock, you probably already know that Cameron Diaz is basically retired from acting." +
                 " She’s been enjoying her life at home with new baby Raddix. However, she’s also jumped into some new business endeavors")
                 .largeDescription("the highest being her high-profile new wine brand Avaline. Cute name, but it sounds like things could be going better. Unfortunately, a recent study rated the wine at only a D rating. " +
@@ -113,7 +113,40 @@ public class MoviesBootstrap implements ApplicationListener<ContextRefreshedEven
                 .build();
 
 
-        eventRepository.saveAll(Arrays.asList(testEvent1, testEvent2, testEvent3));
+        // Duplicating Data just for testing purposes
+        News testNews4 = News.builder().name("Chadwick Boseman Died")
+                .description("US actor Chadwick Boseman, best known for playing Black Panther in the hit Marvel superhero franchise," +
+                        "has died of cancer aged 43. He died at home in Los Angeles with his wife and family by his side, a statement posted on social media said.")
+                .largeDescription("Boseman was diagnosed with colon cancer four years ago but had not made the information public." +
+                        "The news has left fans and the film world stunned. Get Out director Jordan Peele said it was a crushing blow." +
+                        "A true fighter, Chadwick persevered through it all, and brought you many of the films you have come to love so much, his family said in the statement." +
+                        "From Marshall to Da 5 Bloods, August Wilson's Ma Rainey's Black Bottom and several more - all were filmed during and between countless surgeries and chemotherapy. " +
+                        "It was the honor of his career to bring King T'Challa to life in Black Panther.")
+                .image(chadwick_img)
+                .build();
+
+        News testNews5 = News.builder().name("The Batman 2021")
+                .description("The Batman finally got its big reveal during this weekend's DC Fandome event, and director Matt Reeves confirmed a bunch of new details. " +
+                        "We also got our first look at Robert Pattinson as Bruce Wayne with the first official The Batman trailer.")
+                .largeDescription("The first official trailer for The Batman is everything one would hope; brutal, action-packed, chills-inciting, and revealing. " +
+                        "We know now exactly what Robert Pattinson looks like as the Caped Crusader, both with and without the mask." +
+                        " We also know the primary antagonist to be Paul Dano's Riddler, and thanks to Reeves, we know not to expect anything similar to Jim Carrey's Riddler." +
+                        "Paul Dano plays a version of the Riddler that no one has ever seen before... what he is doing is going to blow people's minds, said Reeves following the reveal." +
+                        " The director also touches on the interactions between so many different Batman characters coming together for the latest flick")
+                .image(pattinson_img)
+                .build();
+
+        News testNews6 = News.builder().name("Cameron Diaz Wine Business")
+                .description("Unless you’ve been living under a rock, you probably already know that Cameron Diaz is basically retired from acting." +
+                        " She’s been enjoying her life at home with new baby Raddix. However, she’s also jumped into some new business endeavors")
+                .largeDescription("the highest being her high-profile new wine brand Avaline. Cute name, but it sounds like things could be going better. Unfortunately, a recent study rated the wine at only a D rating. " +
+                        "If that wine were a math test it would get a passing grade," +
+                        " but just barely. If that wine were a restaurant, it would already be closed down. But Avaline is neither a math test nor a restaurant, so read into that what you will.")
+                .image(diaz_img)
+                .build();
+
+
+        eventRepository.saveAll(Arrays.asList(testNews1, testNews2, testNews3, testNews4, testNews5, testNews6));
 
     }
 
@@ -366,7 +399,7 @@ public class MoviesBootstrap implements ApplicationListener<ContextRefreshedEven
 
         Category fantasy = Category.builder().name("Fantasy").image(fantasyImage)
                 .description("Fantasy films are films that belong to the fantasy genre with fantastic themes, usually magic, " +
-                        "supernatural events, mythology, folklore, or exotic fantasy worlds")
+                        "supernatural news, mythology, folklore, or exotic fantasy worlds")
                 .movies(Arrays.asList(lordOfTheRings1, lordOfTheRings2, lordOfTheRings3, harryPotter1, harryPotter2, harryPotter3, harryPotter4, harryPotter5, harryPotter6, harryPotter7, harryPotter8)).build();
 
         lordOfTheRings1.setCategory(fantasy);

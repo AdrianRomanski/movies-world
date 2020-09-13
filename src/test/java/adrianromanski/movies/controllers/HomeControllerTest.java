@@ -1,9 +1,9 @@
 package adrianromanski.movies.controllers;
 
 import adrianromanski.movies.controllers.user.HomeController;
-import adrianromanski.movies.model.base_entity.EventDTO;
+import adrianromanski.movies.model.base_entity.NewsDTO;
 import adrianromanski.movies.services.category.CategoryService;
-import adrianromanski.movies.services.event.NewsServiceImpl;
+import adrianromanski.movies.services.news.NewsServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -42,9 +42,9 @@ class HomeControllerTest {
 
     @Test
     void home() throws Exception {
-        List<EventDTO> eventDTOList = Arrays.asList(new EventDTO(), new EventDTO(), new EventDTO());
+        List<NewsDTO> newsDTOList = Arrays.asList(new NewsDTO(), new NewsDTO(), new NewsDTO());
 
-        when(eventService.getLatestEvents()).thenReturn(eventDTOList);
+        when(eventService.getLatestNews()).thenReturn(newsDTOList);
 
         mockMvc.perform(get("/"))
                 .andExpect(status().isOk())
