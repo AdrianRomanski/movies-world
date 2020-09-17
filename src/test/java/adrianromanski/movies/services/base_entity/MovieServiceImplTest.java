@@ -9,7 +9,6 @@ import adrianromanski.movies.domain.person.User;
 import adrianromanski.movies.domain.review.MovieReview;
 import adrianromanski.movies.exceptions.EmptyListException;
 import adrianromanski.movies.exceptions.ResourceNotFoundException;
-import adrianromanski.movies.jms.JmsTextMessageService;
 import adrianromanski.movies.mapper.award.MovieAwardMapper;
 import adrianromanski.movies.mapper.award.MovieAwardMapperImpl;
 import adrianromanski.movies.mapper.base_entity.CategoryMapper;
@@ -70,9 +69,6 @@ class MovieServiceImplTest {
     @Mock
     CategoryRepository categoryRepository;
 
-    @Mock
-    JmsTextMessageService jms;
-
     MovieService movieService;
 
     @BeforeEach
@@ -80,8 +76,8 @@ class MovieServiceImplTest {
         MockitoAnnotations.initMocks(this);
         MovieAwardMapper awardMapper = new MovieAwardMapperImpl();
         CategoryMapper categoryMapper = new CategoryMapperImpl();
-        MovieMapper movieMapper = new MovieMapperImpl(); // I have to do something with this ugly init - That should be singleton!!!!!
-        movieService = new MovieServiceImpl(movieRepository, moviePageRepository, categoryRepository, actorRepository,awardRepository, jms,
+        MovieMapper movieMapper = new MovieMapperImpl();
+        movieService = new MovieServiceImpl(movieRepository, moviePageRepository, categoryRepository, actorRepository,awardRepository,
                                             movieMapper, categoryMapper, awardMapper);
     }
 

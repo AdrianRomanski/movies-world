@@ -1,11 +1,11 @@
 package adrianromanski.movies.services.movie;
 
+import adrianromanski.movies.aspects.first_logs.LogSearching;
 import adrianromanski.movies.domain.award.MovieAward;
 import adrianromanski.movies.domain.base_entity.Category;
 import adrianromanski.movies.domain.base_entity.Movie;
 import adrianromanski.movies.domain.person.Actor;
 import adrianromanski.movies.exceptions.ResourceNotFoundException;
-import adrianromanski.movies.jms.JmsTextMessageService;
 import adrianromanski.movies.mapper.award.MovieAwardMapper;
 import adrianromanski.movies.mapper.base_entity.CategoryMapper;
 import adrianromanski.movies.mapper.base_entity.MovieMapper;
@@ -17,6 +17,8 @@ import adrianromanski.movies.repositories.base_entity.CategoryRepository;
 import adrianromanski.movies.repositories.base_entity.MovieRepository;
 import adrianromanski.movies.repositories.pages.MoviePageRepository;
 import adrianromanski.movies.repositories.person.ActorRepository;
+import lombok.AllArgsConstructor;
+import lombok.extern.java.Log;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -31,7 +33,9 @@ import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toList;
 
+@Log
 @Service
+@AllArgsConstructor
 public class MovieServiceImpl implements MovieService {
 
     private final MovieRepository movieRepository;
@@ -39,32 +43,16 @@ public class MovieServiceImpl implements MovieService {
     private final CategoryRepository categoryRepository;
     private final ActorRepository actorRepository;
     private final AwardRepository awardRepository;
-    private final JmsTextMessageService jmsTextMessageService;
     private final MovieMapper movieMapper;
     private final CategoryMapper categoryMapper;
     private final MovieAwardMapper awardMapper;
 
-
-
-    public MovieServiceImpl(MovieRepository movieRepository, MoviePageRepository moviePageRepository, CategoryRepository categoryRepository, ActorRepository actorRepository, AwardRepository awardRepository,
-                            JmsTextMessageService jmsTextMessageService, MovieMapper movieMapper, CategoryMapper categoryMapper, MovieAwardMapper awardMapper) {
-        this.movieRepository = movieRepository;
-        this.moviePageRepository = moviePageRepository;
-        this.categoryRepository = categoryRepository;
-        this.actorRepository = actorRepository;
-        this.awardRepository = awardRepository;
-        this.jmsTextMessageService = jmsTextMessageService;
-        this.movieMapper = movieMapper;
-        this.categoryMapper = categoryMapper;
-        this.awardMapper = awardMapper;
-    }
 
     /**
      * @return All Movies from database
      */
     @Override
     public List<MovieDTO> getAllMovies() {
-        jmsTextMessageService.sendTextMessage("Listing Movies");
         return movieRepository.findAll()
                 .stream()
                 .map(movieMapper::movieToMovieDTO)
@@ -76,8 +64,8 @@ public class MovieServiceImpl implements MovieService {
      * @return All Movies from database Paged
      */
     @Override
+    @LogSearching
     public Page<Movie> getAllMoviesPaged(Pageable pageable) {
-        jmsTextMessageService.sendTextMessage("Listing Movies Paged");
         return moviePageRepository.findAll(pageable);
     }
 
@@ -90,7 +78,7 @@ public class MovieServiceImpl implements MovieService {
         List<MovieDTO> moviesDTO = moviePage.get()
                 .map(movieMapper::movieToMovieDTO)
                 .collect(Collectors.toList());
-        return  new PageImpl<>(moviesDTO, pageable, moviesDTO.size());
+        return new PageImpl<>(moviesDTO, pageable, moviesDTO.size());
     }
 
 
@@ -111,7 +99,6 @@ public class MovieServiceImpl implements MovieService {
      */
     @Override
     public MovieDTO getMovieByID(Long id) {
-        jmsTextMessageService.sendTextMessage("Finding movie with id: " + id);
         return movieRepository.findById(id)
                 .map(movieMapper::movieToMovieDTO)
                 .orElseThrow(() -> new ResourceNotFoundException(id, Movie.class));
@@ -125,7 +112,6 @@ public class MovieServiceImpl implements MovieService {
      */
     @Override
     public MovieDTO getMovieByName(String name) {
-        jmsTextMessageService.sendTextMessage("Finding movie with name: " + name);
         return movieRepository.findByName(name)
                 .map(movieMapper::movieToMovieDTO)
                 .orElseThrow(() -> new ResourceNotFoundException(name, Movie.class));
@@ -140,10 +126,8 @@ public class MovieServiceImpl implements MovieService {
      */
     @Override
     public List<MovieDTO> findAllMoviesWithActor(Long id) {
-        jmsTextMessageService.sendTextMessage("Finding movies for Actor with id:" + id);
         Actor actor = actorRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(id, Actor.class));
-        jmsTextMessageService.sendTextMessage("Founded " + actor.getMovies().size()  + " movies");
         return actor.getMovies()
                 .stream()
                 .map(movieMapper::movieToMovieDTO)
@@ -231,7 +215,6 @@ public class MovieServiceImpl implements MovieService {
     public MovieDTO createMovie(MovieDTO movieDTO) {
         Movie movie = movieMapper.movieDTOToMovie(movieDTO);
         movieRepository.save(movie);
-        jmsTextMessageService.sendTextMessage("Movie " + movie.getName() + " successfully saved");
         return movieMapper.movieToMovieDTO(movie);
     }
 
@@ -259,7 +242,6 @@ public class MovieServiceImpl implements MovieService {
      */
     @Override
     public MovieAwardDTO addAward(Long id, MovieAwardDTO awardDTO) {
-        jmsTextMessageService.sendTextMessage("Adding award to Movie with id: " + id);
         Movie movie = movieRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(id, Movie.class));
         MovieAward award = awardMapper.awardDTOToAward(awardDTO);
@@ -267,7 +249,6 @@ public class MovieServiceImpl implements MovieService {
         award.setMovie(movie);
         movieRepository.save(movie);
         awardRepository.save(award);
-        jmsTextMessageService.sendTextMessage("Award successfully added to Movie with id: " + id);
         return awardMapper.awardToAwardDTO(award);
     }
 
@@ -286,7 +267,6 @@ public class MovieServiceImpl implements MovieService {
        Movie updatedMovie = movieMapper.movieDTOToMovie(movieDTO);
        updatedMovie.setId(id);
        movieRepository.save(updatedMovie);
-       jmsTextMessageService.sendTextMessage("Movie " + updatedMovie.getName() + " successfully updated");
        return movieMapper.movieToMovieDTO(updatedMovie);
     }
 
@@ -300,7 +280,6 @@ public class MovieServiceImpl implements MovieService {
      */
     @Override
     public MovieAwardDTO updateAward(Long movieID, Long awardID, MovieAwardDTO awardDTO) {
-        jmsTextMessageService.sendTextMessage("Updating Award with id: " + awardID + " of Movie with id: " + movieID);
         Movie movie = movieRepository.findById(movieID)
                 .orElseThrow(() -> new ResourceNotFoundException(movieID, Movie.class));
         MovieAward award = movie.getAwardOptional(awardID)
@@ -310,7 +289,6 @@ public class MovieServiceImpl implements MovieService {
         updatedAward.setId(awardID);
         movie.getAwards().add(updatedAward);
         updatedAward.setMovie(movie);
-        jmsTextMessageService.sendTextMessage("Award with id: " + awardID + " of Movie with id: " + movieID + " successfully updated");
         return awardMapper.awardToAwardDTO(updatedAward);
     }
 
@@ -340,7 +318,6 @@ public class MovieServiceImpl implements MovieService {
      */
     @Override
     public void deleteMovieByID(Long id) {
-        jmsTextMessageService.sendTextMessage("Deleting Movie with id: " + id);
         Movie movie = movieRepository.findById(id)
            .orElseThrow(() -> new ResourceNotFoundException(id, Movie.class));
         movie.getActors()
@@ -349,7 +326,6 @@ public class MovieServiceImpl implements MovieService {
         category.getMovies().remove(movie);
         movieRepository.deleteById(id);
         categoryRepository.save(category);
-        jmsTextMessageService.sendTextMessage("Movie with id: " + id + " successfully deleted");
     }
 
 
@@ -360,7 +336,6 @@ public class MovieServiceImpl implements MovieService {
      */
     @Override
     public void deleteAwardByID(Long movieID, Long awardID) {
-        jmsTextMessageService.sendTextMessage("Deleting Award with id: " + awardID + " of Movie with id: " + movieID);
         Movie movie = movieRepository.findById(movieID)
                 .orElseThrow(() -> new ResourceNotFoundException(movieID, Movie.class));
         MovieAward award = movie.getAwardOptional(awardID)
@@ -368,8 +343,5 @@ public class MovieServiceImpl implements MovieService {
         movie.getAwards().remove(award);
         movieRepository.save(movie);
         awardRepository.deleteById(awardID);
-        jmsTextMessageService.sendTextMessage("Award with id: " + awardID + " successfully deleted");
     }
-
-
 }
