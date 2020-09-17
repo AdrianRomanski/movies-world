@@ -12,6 +12,9 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -38,7 +41,7 @@ class NewsServiceImplTest {
     EventMapperImpl eventMapper;
 
     @InjectMocks
-    NewsServiceImpl eventService;
+    NewsServiceImpl newsService;
 
     @BeforeEach
     void setUp() {
@@ -55,9 +58,27 @@ class NewsServiceImplTest {
         when(eventRepository.findAll()).thenReturn(news);
 
         //then
-        List<NewsDTO> returnDTO = eventService.getLatestNews();
+        List<NewsDTO> returnDTO = newsService.getLatestNews();
 
         assertEquals(returnDTO.size(), 5);
+    }
+
+
+    @DisplayName("Happy Path, method = getNewsPaged")
+    @Test
+    void getAllNewsPaged() {
+        List<News> news = Arrays.asList(new News(), new News(), new News(), new News(), new News());
+
+        PageRequest pageable = PageRequest.of(0, 5);
+
+        Page<News> moviePage = new PageImpl<>(news, pageable, news.size());
+
+        when(eventPageRepository.findAll(pageable)).thenReturn(moviePage);
+
+        Page<News> returnNews = newsService.getNewsPaged(pageable);
+
+        assertEquals(returnNews.getTotalElements(), 5);
+        assertEquals(returnNews.getTotalPages(), 1);
     }
 
     @Test
@@ -70,7 +91,7 @@ class NewsServiceImplTest {
         when(eventRepository.findById(1L)).thenReturn(Optional.of(news));
         //then
 
-        News returnObj = eventService.getNewsByID(1L);
+        News returnObj = newsService.getNewsByID(1L);
 
         assertEquals(returnObj.getName(), NAME);
         assertEquals(returnObj.getDescription(), DESCRIPTION);

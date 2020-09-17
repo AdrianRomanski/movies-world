@@ -14,7 +14,7 @@ public class HomeController {
 
     @GetMapping("/")
     public ModelAndView home() {
-        ModelAndView modelAndView = new ModelAndView("user/home");
+        ModelAndView modelAndView = new ModelAndView("user/home/home");
         modelAndView.addObject("latestNews", newsService.getLatestNews());
         return modelAndView;
     }
