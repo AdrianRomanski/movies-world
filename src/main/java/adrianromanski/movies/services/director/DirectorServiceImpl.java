@@ -1,5 +1,6 @@
 package adrianromanski.movies.services.director;
 
+import adrianromanski.movies.aspects.creation_log.LogCreation;
 import adrianromanski.movies.domain.award.DirectorAward;
 import adrianromanski.movies.domain.person.Director;
 import adrianromanski.movies.exceptions.ResourceNotFoundException;
@@ -53,6 +54,7 @@ public class DirectorServiceImpl implements DirectorService {
      * @return DirectorDTO
      */
     @Override
+    @LogCreation
     public DirectorDTO createNewDirector(DirectorDTO directorDTO) {
         Director director = directorMapper.directorDTOToDirector(directorDTO);
         directorRepository.save(director);

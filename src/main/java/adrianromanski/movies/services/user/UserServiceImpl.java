@@ -1,5 +1,6 @@
 package adrianromanski.movies.services.user;
 
+import adrianromanski.movies.aspects.creation_log.LogCreation;
 import adrianromanski.movies.domain.base_entity.Movie;
 import adrianromanski.movies.domain.person.User;
 import adrianromanski.movies.domain.review.MovieReview;
@@ -50,6 +51,7 @@ public class UserServiceImpl implements UserService{
      * @return User if successfully saved to Database
      */
     @Override
+    @LogCreation
     public UserDTO createUser(UserDTO userDTO) {
         User user = userMapper.userDTOToUser(userDTO);
         userRepository.save(user);

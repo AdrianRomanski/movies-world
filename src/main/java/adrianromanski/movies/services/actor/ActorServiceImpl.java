@@ -1,6 +1,7 @@
 package adrianromanski.movies.services.actor;
 
-import adrianromanski.movies.aspects.first_logs.LogPaging;
+import adrianromanski.movies.aspects.creation_log.LogCreation;
+import adrianromanski.movies.aspects.paging_log.LogPaging;
 import adrianromanski.movies.domain.award.ActorAward;
 import adrianromanski.movies.domain.award.Award;
 import adrianromanski.movies.domain.person.Actor;
@@ -82,6 +83,7 @@ public class ActorServiceImpl implements ActorService {
      * @return Actor if successfully saved
      */
     @Override
+    @LogCreation
     public ActorDTO createActor(ActorDTO actorDTO) {
         Actor actor = actorMapper.actorDTOToActor(actorDTO);
         actorRepository.save(actor);

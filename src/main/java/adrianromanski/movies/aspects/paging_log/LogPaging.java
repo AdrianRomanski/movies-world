@@ -1,4 +1,4 @@
-package adrianromanski.movies.aspects.first_logs;
+package adrianromanski.movies.aspects.paging_log;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

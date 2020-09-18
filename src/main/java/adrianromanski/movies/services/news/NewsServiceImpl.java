@@ -1,6 +1,6 @@
 package adrianromanski.movies.services.news;
 
-import adrianromanski.movies.aspects.first_logs.LogPaging;
+import adrianromanski.movies.aspects.paging_log.LogPaging;
 import adrianromanski.movies.domain.base_entity.News;
 import adrianromanski.movies.exceptions.ResourceNotFoundException;
 import adrianromanski.movies.mapper.base_entity.EventMapper;

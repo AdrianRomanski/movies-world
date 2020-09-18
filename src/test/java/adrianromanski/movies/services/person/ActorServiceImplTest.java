@@ -3,7 +3,6 @@ package adrianromanski.movies.services.person;
 import adrianromanski.movies.domain.award.ActorAward;
 import adrianromanski.movies.domain.person.Actor;
 import adrianromanski.movies.exceptions.ResourceNotFoundException;
-import adrianromanski.movies.jms.JmsTextMessageService;
 import adrianromanski.movies.mapper.award.ActorAwardMapper;
 import adrianromanski.movies.mapper.award.ActorAwardMapperImpl;
 import adrianromanski.movies.mapper.person.ActorMapper;
@@ -51,8 +50,7 @@ class ActorServiceImplTest {
     @Mock
     ActorPageRepository actorPageRepository;
 
-    @Mock
-    JmsTextMessageService jms;
+
 
     ActorService actorService;
 
@@ -71,7 +69,7 @@ class ActorServiceImplTest {
         ActorMapper actorMapper = new ActorMapperImpl();
         ActorAwardMapper awardMapper = new ActorAwardMapperImpl();
 
-        actorService = new ActorServiceImpl(actorRepository, awardRepository, actorPageRepository, actorMapper, awardMapper, jms);
+        actorService = new ActorServiceImpl(actorRepository, awardRepository, actorPageRepository, actorMapper, awardMapper);
     }
 
 

@@ -26,4 +26,7 @@ public class Person {
     private Byte[] image;
     private LocalDate dateOfBirth;
 
+    public String getFullName() {
+        return firstName + " " + lastName;
+    }
 }

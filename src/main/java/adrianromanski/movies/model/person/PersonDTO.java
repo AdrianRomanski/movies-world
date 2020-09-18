@@ -31,4 +31,7 @@ public class PersonDTO {
     private LocalDate dateOfBirth;
     Byte[] image;
 
+    public String getFullName() {
+        return firstName + " " + lastName;
+    }
 }

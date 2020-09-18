@@ -1,6 +1,7 @@
 package adrianromanski.movies.services.movie;
 
-import adrianromanski.movies.aspects.first_logs.LogPaging;
+import adrianromanski.movies.aspects.creation_log.LogCreation;
+import adrianromanski.movies.aspects.paging_log.LogPaging;
 import adrianromanski.movies.domain.award.MovieAward;
 import adrianromanski.movies.domain.base_entity.Category;
 import adrianromanski.movies.domain.base_entity.Movie;
@@ -144,24 +145,6 @@ public class MovieServiceImpl implements MovieService {
         return movieDTO.getActorsDTO();
     }
 
-//
-//    /**
-//     * @param firstName of Actor
-//     * @param lastName of Actor
-//     * @return list of Movies with that Actor
-//     * @throws ResourceNotFoundException if not found
-//     */
-//    @Override
-//    public List<MovieDTO> findAllMoviesWithActor(String firstName, String lastName) {
-//        jmsTextMessageService.sendTextMessage("Finding movies for Actor:" + firstName + " " + lastName);
-//        Actor actor = actorRepository.findByFirstNameAndAndLastName(firstName, lastName)
-//                .orElseThrow(() -> new ResourceNotFoundException(firstName, lastName, Actor.class));
-//        jmsTextMessageService.sendTextMessage("Founded " + actor.getMovies().size()  + " movies");
-//        return actor.getMovies()
-//                .stream()
-//                .map(movieMapper::movieToMovieDTO)
-//                .collect(toList());
-//    }
 
 
     /**
@@ -210,6 +193,7 @@ public class MovieServiceImpl implements MovieService {
      * @return Movie if successfully saved
      */
     @Override
+    @LogCreation
     public MovieDTO createMovie(MovieDTO movieDTO) {
         Movie movie = movieMapper.movieDTOToMovie(movieDTO);
         movieRepository.save(movie);
@@ -342,4 +326,26 @@ public class MovieServiceImpl implements MovieService {
         movieRepository.save(movie);
         awardRepository.deleteById(awardID);
     }
+
+
+
+
+    //
+//    /**
+//     * @param firstName of Actor
+//     * @param lastName of Actor
+//     * @return list of Movies with that Actor
+//     * @throws ResourceNotFoundException if not found
+//     */
+//    @Override
+//    public List<MovieDTO> findAllMoviesWithActor(String firstName, String lastName) {
+//        jmsTextMessageService.sendTextMessage("Finding movies for Actor:" + firstName + " " + lastName);
+//        Actor actor = actorRepository.findByFirstNameAndAndLastName(firstName, lastName)
+//                .orElseThrow(() -> new ResourceNotFoundException(firstName, lastName, Actor.class));
+//        jmsTextMessageService.sendTextMessage("Founded " + actor.getMovies().size()  + " movies");
+//        return actor.getMovies()
+//                .stream()
+//                .map(movieMapper::movieToMovieDTO)
+//                .collect(toList());
+//    }
 }

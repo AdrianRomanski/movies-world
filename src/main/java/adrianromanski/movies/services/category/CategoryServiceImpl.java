@@ -1,6 +1,7 @@
 package adrianromanski.movies.services.category;
 
-import adrianromanski.movies.aspects.first_logs.LogPaging;
+import adrianromanski.movies.aspects.creation_log.LogCreation;
+import adrianromanski.movies.aspects.paging_log.LogPaging;
 import adrianromanski.movies.domain.base_entity.Category;
 import adrianromanski.movies.domain.base_entity.Movie;
 import adrianromanski.movies.exceptions.ResourceNotFoundException;
@@ -123,6 +124,7 @@ public class CategoryServiceImpl implements CategoryService {
      * @return Category if successfully saved to database
      */
     @Override
+    @LogCreation
     public CategoryDTO createCategory(CategoryDTO categoryDTO) {
         Category category = categoryMapper.categoryDTOToCategory(categoryDTO);
         categoryRepository.save(category);

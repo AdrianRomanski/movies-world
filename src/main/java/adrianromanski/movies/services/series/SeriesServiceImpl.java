@@ -1,5 +1,6 @@
 package adrianromanski.movies.services.series;
 
+import adrianromanski.movies.aspects.creation_log.LogCreation;
 import adrianromanski.movies.domain.base_entity.Episode;
 import adrianromanski.movies.domain.base_entity.Series;
 import adrianromanski.movies.exceptions.ResourceNotFoundException;
@@ -39,6 +40,7 @@ public class SeriesServiceImpl implements SeriesService {
      * @return SeriesDTO if successfully saved to database
      */
     @Override
+    @LogCreation
     public SeriesDTO createSeries(SeriesDTO seriesDTO) {
         Series series = seriesMapper.seriesDTOToSeries(seriesDTO);
         seriesRepository.save(series);

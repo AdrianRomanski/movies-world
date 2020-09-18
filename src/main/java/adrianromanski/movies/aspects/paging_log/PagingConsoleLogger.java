@@ -1,7 +1,6 @@
-package adrianromanski.movies.aspects.first_logs;
+package adrianromanski.movies.aspects.paging_log;
 
 import adrianromanski.movies.domain.base_entity.Movie;
-import adrianromanski.movies.model.base_entity.MovieDTO;
 import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
 import org.aspectj.lang.annotation.AfterReturning;
@@ -14,11 +13,11 @@ import org.springframework.stereotype.Component;
 @Aspect
 @Component
 @AllArgsConstructor
-public class SearchingConsoleLogger {
+public class PagingConsoleLogger {
 
 
-    @Pointcut("@annotation(adrianromanski.movies.aspects.first_logs.LogPaging)")
-    public void logSearching() { }
+    @Pointcut("@annotation(adrianromanski.movies.aspects.paging_log.LogPaging)")
+    public void logPaging() {}
 
 
 //    @AfterThrowing(value = "logSearching()", throwing = "exception")
@@ -27,15 +26,9 @@ public class SearchingConsoleLogger {
 //                        " " + exception.getMessage());
 //    }
 
-    @AfterReturning(value = "logSearching()", returning = "movieDTO")
-    public void log(MovieDTO movieDTO) {
-        log.info("Movie: " + movieDTO.getName() + " successfully returned");
-    }
-
-    @AfterReturning(value = "logSearching()", returning = "paged")
+    @AfterReturning(value = "logPaging()", returning = "paged")
     public void log(Page<Movie> paged) {
         log.info(paged.getNumber() + 1 + "# Page of Movies successfully returned");
     }
-
 
 }
