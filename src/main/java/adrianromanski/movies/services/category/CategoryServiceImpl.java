@@ -1,16 +1,16 @@
 package adrianromanski.movies.services.category;
 
+import adrianromanski.movies.aspects.first_logs.LogPaging;
 import adrianromanski.movies.domain.base_entity.Category;
 import adrianromanski.movies.domain.base_entity.Movie;
 import adrianromanski.movies.exceptions.ResourceNotFoundException;
-import adrianromanski.movies.jms.JmsTextMessageService;
 import adrianromanski.movies.mapper.base_entity.CategoryMapper;
 import adrianromanski.movies.mapper.base_entity.MovieMapper;
 import adrianromanski.movies.model.base_entity.CategoryDTO;
 import adrianromanski.movies.model.base_entity.MovieDTO;
 import adrianromanski.movies.repositories.base_entity.CategoryRepository;
 import adrianromanski.movies.repositories.pages.CategoryPageRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -20,23 +20,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@AllArgsConstructor
 public class CategoryServiceImpl implements CategoryService {
 
     private final CategoryRepository categoryRepository;
     private final CategoryPageRepository categoryPage;
-    private final JmsTextMessageService jmsTextMessageService;
     private final CategoryMapper categoryMapper;
     private final MovieMapper movieMapper;
-
-    @Autowired
-    public CategoryServiceImpl(CategoryRepository categoryRepository, CategoryPageRepository categoryPage, JmsTextMessageService jmsTextMessageService,
-                               CategoryMapper categoryMapper, MovieMapper movieMapper) {
-        this.categoryRepository = categoryRepository;
-        this.categoryPage = categoryPage;
-        this.jmsTextMessageService = jmsTextMessageService;
-        this.categoryMapper = categoryMapper;
-        this.movieMapper = movieMapper;
-    }
 
 
     /**
@@ -45,7 +35,6 @@ public class CategoryServiceImpl implements CategoryService {
      */
     @Override
     public List<CategoryDTO> getAllCategories() {
-        jmsTextMessageService.sendTextMessage("Listing Categories");
         return categoryRepository.findAll()
                 .stream()
                 .map(categoryMapper::categoryToCategoryDTO)
@@ -58,8 +47,8 @@ public class CategoryServiceImpl implements CategoryService {
      * @return All Categories Paged
      */
     @Override
+    @LogPaging
     public Page<Category> getAllCategoriesPaged(Pageable pageable) {
-        jmsTextMessageService.sendTextMessage("Listing Categories Paged");
         return categoryPage.findAll(pageable);
     }
 
@@ -84,7 +73,6 @@ public class CategoryServiceImpl implements CategoryService {
      */
     @Override
     public List<MovieDTO> getAllMoviesForCategory(String name) {
-        jmsTextMessageService.sendTextMessage("Listing all Movies for Category: " + name);
         Category category = categoryRepository.findByName(name)
                 .orElseThrow(() -> new ResourceNotFoundException(name, Category.class));
         return category.getMovies()
@@ -102,7 +90,6 @@ public class CategoryServiceImpl implements CategoryService {
      */
     @Override
     public CategoryDTO getCategoryDTOByName(String name) {
-        jmsTextMessageService.sendTextMessage("Finding Category: " + name);
         return categoryRepository.findByName(name)
                 .map(categoryMapper::categoryToCategoryDTO)
                 .orElseThrow(() -> new ResourceNotFoundException(name, Movie.class));
@@ -137,7 +124,6 @@ public class CategoryServiceImpl implements CategoryService {
      */
     @Override
     public CategoryDTO createCategory(CategoryDTO categoryDTO) {
-        jmsTextMessageService.sendTextMessage("Creating new Category: " + categoryDTO.getName());
         Category category = categoryMapper.categoryDTOToCategory(categoryDTO);
         categoryRepository.save(category);
         return categoryMapper.categoryToCategoryDTO(category);

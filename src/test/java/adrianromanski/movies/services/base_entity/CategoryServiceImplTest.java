@@ -3,7 +3,6 @@ package adrianromanski.movies.services.base_entity;
 import adrianromanski.movies.domain.base_entity.Category;
 import adrianromanski.movies.domain.base_entity.Movie;
 import adrianromanski.movies.exceptions.ResourceNotFoundException;
-import adrianromanski.movies.jms.JmsTextMessageService;
 import adrianromanski.movies.mapper.base_entity.CategoryMapper;
 import adrianromanski.movies.mapper.base_entity.CategoryMapperImpl;
 import adrianromanski.movies.mapper.base_entity.MovieMapper;
@@ -42,8 +41,7 @@ class CategoryServiceImplTest {
     @Mock
     CategoryPageRepository categoryPageRepository;
 
-    @Mock
-    JmsTextMessageService jms;
+
 
     CategoryService categoryService;
 
@@ -54,7 +52,7 @@ class CategoryServiceImplTest {
 
         CategoryMapper categoryMapper = new CategoryMapperImpl();
         MovieMapper movieMapper = new MovieMapperImpl();
-        categoryService = new CategoryServiceImpl(categoryRepository, categoryPageRepository, jms, categoryMapper, movieMapper);
+        categoryService = new CategoryServiceImpl(categoryRepository, categoryPageRepository, categoryMapper, movieMapper);
     }
 
     private Category getCategory() {

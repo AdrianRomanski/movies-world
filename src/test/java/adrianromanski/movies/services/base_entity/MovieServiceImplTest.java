@@ -11,8 +11,6 @@ import adrianromanski.movies.exceptions.EmptyListException;
 import adrianromanski.movies.exceptions.ResourceNotFoundException;
 import adrianromanski.movies.mapper.award.MovieAwardMapper;
 import adrianromanski.movies.mapper.award.MovieAwardMapperImpl;
-import adrianromanski.movies.mapper.base_entity.CategoryMapper;
-import adrianromanski.movies.mapper.base_entity.CategoryMapperImpl;
 import adrianromanski.movies.mapper.base_entity.MovieMapper;
 import adrianromanski.movies.mapper.base_entity.MovieMapperImpl;
 import adrianromanski.movies.model.award.MovieAwardDTO;
@@ -75,10 +73,9 @@ class MovieServiceImplTest {
     void setUp() {
         MockitoAnnotations.initMocks(this);
         MovieAwardMapper awardMapper = new MovieAwardMapperImpl();
-        CategoryMapper categoryMapper = new CategoryMapperImpl();
         MovieMapper movieMapper = new MovieMapperImpl();
         movieService = new MovieServiceImpl(movieRepository, moviePageRepository, categoryRepository, actorRepository,awardRepository,
-                                            movieMapper, categoryMapper, awardMapper);
+                                            movieMapper,  awardMapper);
     }
 
     private List<Movie> getMovies() { return Arrays.asList(new Movie(), new Movie(), new Movie()); }

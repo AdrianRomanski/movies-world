@@ -5,7 +5,6 @@ import adrianromanski.movies.domain.person.User;
 import adrianromanski.movies.domain.review.MovieReview;
 import adrianromanski.movies.domain.review.Review;
 import adrianromanski.movies.exceptions.ResourceNotFoundException;
-import adrianromanski.movies.jms.JmsTextMessageService;
 import adrianromanski.movies.mapper.person.UserMapper;
 import adrianromanski.movies.mapper.review.MovieReviewMapper;
 import adrianromanski.movies.model.person.UserDTO;
@@ -13,33 +12,25 @@ import adrianromanski.movies.model.review.MovieReviewDTO;
 import adrianromanski.movies.repositories.base_entity.MovieRepository;
 import adrianromanski.movies.repositories.base_entity.ReviewRepository;
 import adrianromanski.movies.repositories.person.UserRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static java.util.stream.Collectors.*;
+import static java.util.stream.Collectors.toList;
 
 
 @Service
+@AllArgsConstructor
 public class UserServiceImpl implements UserService{
 
     private final UserRepository userRepository;
     private final MovieRepository movieRepository;
     private final ReviewRepository reviewRepository;
-    private final JmsTextMessageService jmsTextMessageService;
     private final UserMapper userMapper;
     private final MovieReviewMapper reviewMapper;
 
 
-    public UserServiceImpl(UserRepository userRepository, MovieRepository movieRepository,
-                           ReviewRepository reviewRepository, JmsTextMessageService jmsTextMessageService, UserMapper userMapper, MovieReviewMapper reviewMapper) {
-        this.userRepository = userRepository;
-        this.movieRepository = movieRepository;
-        this.reviewRepository = reviewRepository;
-        this.jmsTextMessageService = jmsTextMessageService;
-        this.userMapper = userMapper;
-        this.reviewMapper = reviewMapper;
-    }
 
     /**
      * User, Admin, Moderator
@@ -47,7 +38,6 @@ public class UserServiceImpl implements UserService{
      */
     @Override
     public List<UserDTO> getAllUsers() {
-        jmsTextMessageService.sendTextMessage("Listing all Users");
         return userRepository.findAll()
                 .stream()
                 .map(userMapper::userToUserDTO)
@@ -63,7 +53,6 @@ public class UserServiceImpl implements UserService{
     public UserDTO createUser(UserDTO userDTO) {
         User user = userMapper.userDTOToUser(userDTO);
         userRepository.save(user);
-        jmsTextMessageService.sendTextMessage("User with id: " + user.getId() + " successfully saved");
         return userMapper.userToUserDTO(user);
     }
 
@@ -76,7 +65,6 @@ public class UserServiceImpl implements UserService{
      */
     @Override
     public UserDTO addFavouriteMovie(Long userID, Long movieID) {
-        jmsTextMessageService.sendTextMessage("Adding movie with id: " + movieID + " to User with id: " + userID);
         User user = userRepository.findById(userID)
                 .orElseThrow(() -> new ResourceNotFoundException(userID, User.class));
         Movie movie = movieRepository.findById(movieID)
@@ -85,7 +73,6 @@ public class UserServiceImpl implements UserService{
         movie.getUserFavourites().add(user);
         userRepository.save(user);
         movieRepository.save(movie);
-        jmsTextMessageService.sendTextMessage("Movie with id: " + movieID + " successfully added to User with id: " + userID);
         return userMapper.userToUserDTO(user);
     }
 
@@ -98,7 +85,6 @@ public class UserServiceImpl implements UserService{
      */
     @Override
     public UserDTO addWatchedMovie(Long userID, Long movieID) {
-        jmsTextMessageService.sendTextMessage("Adding movie with id: " + movieID + " to User with id: " + userID);
         User user = userRepository.findById(userID)
                 .orElseThrow(() -> new ResourceNotFoundException(userID, User.class));
         Movie movie = movieRepository.findById(movieID)
@@ -107,7 +93,6 @@ public class UserServiceImpl implements UserService{
         movie.getUserWatched().add(user);
         userRepository.save(user);
         movieRepository.save(movie);
-        jmsTextMessageService.sendTextMessage("Movie with id: " + movieID + " successfully added to User with id: " + userID);
         return userMapper.userToUserDTO(user);
     }
 
@@ -122,7 +107,6 @@ public class UserServiceImpl implements UserService{
      */
     @Override
     public MovieReviewDTO addMovieReview(Long userID, Long movieID, MovieReviewDTO reviewDTO) {
-        jmsTextMessageService.sendTextMessage("Adding Review to Movie with id: " + movieID + " from the User with id: " + userID);
         User user = userRepository.findById(userID)
                 .orElseThrow(() -> new ResourceNotFoundException(userID, User.class));
         Movie movie = movieRepository.findById(movieID)
@@ -135,7 +119,6 @@ public class UserServiceImpl implements UserService{
         userRepository.save(user);
         movieRepository.save(movie);
         reviewRepository.save(review);
-        jmsTextMessageService.sendTextMessage("Review to Movie with id: " + movieID + " from the User with id: " + userID + " succesfully added");
         return reviewMapper.reviewToReviewDTO(review);
     }
 
@@ -149,7 +132,6 @@ public class UserServiceImpl implements UserService{
      */
     @Override
     public UserDTO updateUser(Long id, UserDTO userDTO) {
-        jmsTextMessageService.sendTextMessage("Searching User with id:  " + id);
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(id, User.class));
         User updatedUser = userMapper.userDTOToUser(userDTO);
@@ -157,7 +139,6 @@ public class UserServiceImpl implements UserService{
         user.getFavouriteMovies()
                 .forEach(m -> updatedUser.getFavouriteMovies().add(m));
         userRepository.save(updatedUser);
-        jmsTextMessageService.sendTextMessage("User with id:  " + id + " successfully updated");
         return userMapper.userToUserDTO(updatedUser);
     }
 
@@ -171,7 +152,6 @@ public class UserServiceImpl implements UserService{
      */
     @Override
     public MovieReviewDTO updateMovieReview(Long userID, Long reviewID, MovieReviewDTO reviewDTO) {
-        jmsTextMessageService.sendTextMessage("Updating Review with id: " + reviewID + " from User with id: " + userID);
         User user = userRepository.findById(userID)
                 .orElseThrow(() -> new ResourceNotFoundException(userID, User.class));
         MovieReview review = user.getMovieReviewOptional(reviewID)
@@ -187,7 +167,6 @@ public class UserServiceImpl implements UserService{
         userRepository.save(user);
         movieRepository.save(movie);
         reviewRepository.save(updated);
-        jmsTextMessageService.sendTextMessage("Successfully updated Review with id: " + reviewID + " from User with id: " + userID);
         return reviewMapper.reviewToReviewDTO(updated);
     }
 
@@ -199,11 +178,9 @@ public class UserServiceImpl implements UserService{
      */
     @Override
     public void deleteUser(Long id) {
-        jmsTextMessageService.sendTextMessage("Searching User with id:  " + id);
         userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(id, User.class));
         userRepository.deleteById(id);
-        jmsTextMessageService.sendTextMessage("User with id:  " + id + " successfully deleted");
     }
 
 
@@ -214,7 +191,6 @@ public class UserServiceImpl implements UserService{
      */
     @Override
     public void deleteFavouriteMovie(Long userID, Long movieID) {
-        jmsTextMessageService.sendTextMessage("Deleting Favourite Movie with id: " + movieID + " from User with id: " + userID);
         User user = userRepository.findById(userID)
                 .orElseThrow(() -> new ResourceNotFoundException(userID, User.class));
         Movie movie = user.getFavMovieOptional(movieID)
@@ -223,7 +199,6 @@ public class UserServiceImpl implements UserService{
         movie.getUserFavourites().remove(user);
         userRepository.save(user);
         movieRepository.save(movie);
-        jmsTextMessageService.sendTextMessage("Movie with id: " + movieID + " successfully deleted from the User with id: " + userID);
     }
 
 
@@ -234,7 +209,6 @@ public class UserServiceImpl implements UserService{
      */
     @Override
     public void deleteWatchedMovie(Long userID, Long movieID) {
-        jmsTextMessageService.sendTextMessage("Deleting Watched Movie with id: " + movieID + " from User with id: " + userID);
         User user = userRepository.findById(userID)
                 .orElseThrow(() -> new ResourceNotFoundException(userID, User.class));
         Movie movie = user.getWatchedMovieOptional(movieID)
@@ -243,7 +217,6 @@ public class UserServiceImpl implements UserService{
         movie.getUserFavourites().remove(user);
         userRepository.save(user);
         movieRepository.save(movie);
-        jmsTextMessageService.sendTextMessage("Movie with id: " + movieID + " successfully deleted from the User with id: " + userID);
 
     }
 
@@ -255,7 +228,6 @@ public class UserServiceImpl implements UserService{
      */
     @Override
     public void deleteMovieReview(Long userID, Long reviewID) {
-        jmsTextMessageService.sendTextMessage("Deleting Review with id: " + reviewID + " from User with id: " + userID);
         User user = userRepository.findById(userID)
                 .orElseThrow(() -> new ResourceNotFoundException(userID, User.class));
         MovieReview review = user.getMovieReviewOptional(reviewID)
@@ -266,7 +238,6 @@ public class UserServiceImpl implements UserService{
         userRepository.save(user);
         movieRepository.save(movie);
         reviewRepository.deleteById(reviewID);
-        jmsTextMessageService.sendTextMessage("Review with id: " + reviewID + " successfully deleted from the User with id: " + userID);
     }
 }
 

@@ -14,10 +14,10 @@ import org.springframework.stereotype.Component;
 @Aspect
 @Component
 @AllArgsConstructor
-public class SearchingConsoleLogger<T> {
+public class SearchingConsoleLogger {
 
 
-    @Pointcut("@annotation(adrianromanski.movies.aspects.first_logs.LogSearching)")
+    @Pointcut("@annotation(adrianromanski.movies.aspects.first_logs.LogPaging)")
     public void logSearching() { }
 
 

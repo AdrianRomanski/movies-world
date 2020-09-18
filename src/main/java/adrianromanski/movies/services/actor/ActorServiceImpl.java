@@ -1,5 +1,6 @@
 package adrianromanski.movies.services.actor;
 
+import adrianromanski.movies.aspects.first_logs.LogPaging;
 import adrianromanski.movies.domain.award.ActorAward;
 import adrianromanski.movies.domain.award.Award;
 import adrianromanski.movies.domain.person.Actor;
@@ -71,6 +72,7 @@ public class ActorServiceImpl implements ActorService {
      * @return All Actors Paged
      */
     @Override
+    @LogPaging
     public Page<Actor> getActorsPaged(Pageable pageable) {
         return actorPageRepository.findAll(pageable);
     }

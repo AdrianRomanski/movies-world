@@ -1,5 +1,6 @@
 package adrianromanski.movies.services.news;
 
+import adrianromanski.movies.aspects.first_logs.LogPaging;
 import adrianromanski.movies.domain.base_entity.News;
 import adrianromanski.movies.exceptions.ResourceNotFoundException;
 import adrianromanski.movies.mapper.base_entity.EventMapper;
@@ -61,6 +62,7 @@ public class NewsServiceImpl implements NewsService {
 
 
     @Override
+    @LogPaging
     public Page<News> getNewsPaged(Pageable pageable) {
         return eventPageRepository.findAll(pageable);
     }

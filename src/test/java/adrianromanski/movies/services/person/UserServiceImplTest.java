@@ -5,7 +5,6 @@ import adrianromanski.movies.domain.person.User;
 import adrianromanski.movies.domain.review.MovieReview;
 import adrianromanski.movies.domain.review.Review;
 import adrianromanski.movies.exceptions.ResourceNotFoundException;
-import adrianromanski.movies.jms.JmsTextMessageService;
 import adrianromanski.movies.mapper.person.UserMapper;
 import adrianromanski.movies.mapper.person.UserMapperImpl;
 import adrianromanski.movies.mapper.review.MovieReviewMapper;
@@ -46,9 +45,6 @@ class UserServiceImplTest {
     @Mock
     ReviewRepository reviewRepository;
 
-    @Mock
-    JmsTextMessageService jms;
-
     UserService userService;
 
     @BeforeEach
@@ -56,7 +52,7 @@ class UserServiceImplTest {
         MockitoAnnotations.initMocks(this);
         UserMapper userMapper = new UserMapperImpl();
         MovieReviewMapper movieReviewMapper = new MovieReviewMapperImpl();
-        userService = new UserServiceImpl(userRepository, movieRepository, reviewRepository, jms, userMapper, movieReviewMapper);
+        userService = new UserServiceImpl(userRepository, movieRepository, reviewRepository, userMapper, movieReviewMapper);
     }
 
     private User getUser() { return User.builder().firstName("Adrian").lastName("Romanski").build(); }

@@ -3,35 +3,23 @@ package adrianromanski.movies.services.series;
 import adrianromanski.movies.domain.base_entity.Episode;
 import adrianromanski.movies.domain.base_entity.Series;
 import adrianromanski.movies.exceptions.ResourceNotFoundException;
-import adrianromanski.movies.jms.JmsTextMessageService;
 import adrianromanski.movies.mapper.base_entity.EpisodeMapper;
 import adrianromanski.movies.mapper.base_entity.SeriesMapper;
 import adrianromanski.movies.model.base_entity.EpisodeDTO;
 import adrianromanski.movies.model.base_entity.SeriesDTO;
 import adrianromanski.movies.repositories.base_entity.EpisodeRepository;
 import adrianromanski.movies.repositories.base_entity.SeriesRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@AllArgsConstructor
 public class SeriesServiceImpl implements SeriesService {
 
     private final SeriesRepository seriesRepository;
     private final EpisodeRepository episodeRepository;
     private final SeriesMapper seriesMapper;
     private final EpisodeMapper episodeMapper;
-    private final JmsTextMessageService jms;
-
-
-    public SeriesServiceImpl(SeriesRepository seriesRepository, EpisodeRepository episodeRepository,
-                             SeriesMapper seriesMapper, EpisodeMapper episodeMapper,
-                             JmsTextMessageService jms) {
-        this.seriesRepository = seriesRepository;
-        this.episodeRepository = episodeRepository;
-        this.seriesMapper = seriesMapper;
-        this.episodeMapper = episodeMapper;
-        this.jms = jms;
-    }
-
 
     /**
      * @param id of the Series we are looking for
@@ -40,7 +28,6 @@ public class SeriesServiceImpl implements SeriesService {
      */
     @Override
     public SeriesDTO getSeriesByID(Long id) {
-        jms.sendTextMessage("Looking for Series with id: " + id);
         return seriesRepository.findById(id)
                 .map(seriesMapper::seriesToSeriesDTO)
                 .orElseThrow(() -> new ResourceNotFoundException(id, Series.class));
@@ -53,10 +40,8 @@ public class SeriesServiceImpl implements SeriesService {
      */
     @Override
     public SeriesDTO createSeries(SeriesDTO seriesDTO) {
-        jms.sendTextMessage("Creating new Series with name: " + seriesDTO.getName());
         Series series = seriesMapper.seriesDTOToSeries(seriesDTO);
         seriesRepository.save(series);
-        jms.sendTextMessage("Series with name: " + seriesDTO.getName() + " successfully saved to database");
         return seriesMapper.seriesToSeriesDTO(series);
     }
 
@@ -68,7 +53,6 @@ public class SeriesServiceImpl implements SeriesService {
      */
     @Override
     public EpisodeDTO addEpisode(Long id, EpisodeDTO episodeDTO) {
-        jms.sendTextMessage("Adding episode to Series with id: " + id);
         Series series = seriesRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(id, Series.class));
         Episode episode = episodeMapper.episodeDTOToEpisode(episodeDTO);
@@ -76,7 +60,6 @@ public class SeriesServiceImpl implements SeriesService {
         episode.setSeries(series);
         seriesRepository.save(series);
         episodeRepository.save(episode);
-        jms.sendTextMessage("Successfully added episode to Series with id: " + id);
         return episodeMapper.episodeToEpisodeDTO(episode);
     }
 
@@ -89,14 +72,12 @@ public class SeriesServiceImpl implements SeriesService {
      */
     @Override
     public SeriesDTO updateSeries(Long id, SeriesDTO seriesDTO) {
-        jms.sendTextMessage("Updating  Series with id: " + id);
         Series series = seriesRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(id, Series.class));
         Series updatedSeries = seriesMapper.seriesDTOToSeries(seriesDTO);
         series.getEpisodes()
                 .forEach(e -> updatedSeries.getEpisodes().add(e));
         seriesRepository.save(updatedSeries);
-        jms.sendTextMessage("Series with id: " + id + " successfully updated");
         return seriesMapper.seriesToSeriesDTO(updatedSeries);
     }
 
@@ -110,7 +91,6 @@ public class SeriesServiceImpl implements SeriesService {
      */
     @Override
     public EpisodeDTO updateEpisode(Long seriesID, Long episodeID, EpisodeDTO episodeDTO) {
-        jms.sendTextMessage("Updating  Episode with id: " + episodeID);
         Series series = seriesRepository.findById(seriesID)
                 .orElseThrow(() -> new ResourceNotFoundException(seriesID, Series.class));
         Episode episode = series.getEpisodeOptional(episodeID)
@@ -121,7 +101,6 @@ public class SeriesServiceImpl implements SeriesService {
         series.getEpisodes().add(updated);
         seriesRepository.save(series);
         episodeRepository.save(episode);
-        jms.sendTextMessage("Episode with id: " + episodeID + " successfully updated");
         return episodeMapper.episodeToEpisodeDTO(updated);
     }
 
@@ -134,11 +113,9 @@ public class SeriesServiceImpl implements SeriesService {
      */
     @Override
     public void deleteSeries(Long id) {
-        jms.sendTextMessage("Deleting  Series with id: " + id);
         seriesRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(id, Series.class));
         seriesRepository.deleteById(id);
-        jms.sendTextMessage("Successfully deleted Series with id: " + id);
     }
 
 
@@ -149,7 +126,6 @@ public class SeriesServiceImpl implements SeriesService {
      */
     @Override
     public void deleteEpisode(Long seriesID, Long episodeID) {
-        jms.sendTextMessage("Deleting  Episode with id: " + episodeID);
         Series series = seriesRepository.findById(seriesID)
                 .orElseThrow(() -> new ResourceNotFoundException(seriesID, Series.class));
         Episode episode = series.getEpisodeOptional(episodeID)
@@ -157,6 +133,5 @@ public class SeriesServiceImpl implements SeriesService {
         series.getEpisodes().remove(episode);
         seriesRepository.save(series);
         episodeRepository.deleteById(episodeID);
-        jms.sendTextMessage("Episode with id: " + episodeID + "successfully deleted");
     }
 }

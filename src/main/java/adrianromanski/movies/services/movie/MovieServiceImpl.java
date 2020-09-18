@@ -1,13 +1,12 @@
 package adrianromanski.movies.services.movie;
 
-import adrianromanski.movies.aspects.first_logs.LogSearching;
+import adrianromanski.movies.aspects.first_logs.LogPaging;
 import adrianromanski.movies.domain.award.MovieAward;
 import adrianromanski.movies.domain.base_entity.Category;
 import adrianromanski.movies.domain.base_entity.Movie;
 import adrianromanski.movies.domain.person.Actor;
 import adrianromanski.movies.exceptions.ResourceNotFoundException;
 import adrianromanski.movies.mapper.award.MovieAwardMapper;
-import adrianromanski.movies.mapper.base_entity.CategoryMapper;
 import adrianromanski.movies.mapper.base_entity.MovieMapper;
 import adrianromanski.movies.model.award.MovieAwardDTO;
 import adrianromanski.movies.model.base_entity.MovieDTO;
@@ -44,7 +43,6 @@ public class MovieServiceImpl implements MovieService {
     private final ActorRepository actorRepository;
     private final AwardRepository awardRepository;
     private final MovieMapper movieMapper;
-    private final CategoryMapper categoryMapper;
     private final MovieAwardMapper awardMapper;
 
 
@@ -64,14 +62,14 @@ public class MovieServiceImpl implements MovieService {
      * @return All Movies from database Paged
      */
     @Override
-    @LogSearching
+    @LogPaging
     public Page<Movie> getAllMoviesPaged(Pageable pageable) {
         return moviePageRepository.findAll(pageable);
     }
 
 
     /**
-     * Converting All Movie in Page Object to MovieDTO
+     * Converting All Movies in Page Object to MovieDTO
      */
     @Override
     public Page<MovieDTO> getPageMovieDTO(Page<Movie> moviePage, Pageable pageable) {

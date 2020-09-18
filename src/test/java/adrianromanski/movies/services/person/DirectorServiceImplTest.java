@@ -4,7 +4,6 @@ import adrianromanski.movies.domain.award.DirectorAward;
 import adrianromanski.movies.domain.base_entity.Movie;
 import adrianromanski.movies.domain.person.Director;
 import adrianromanski.movies.exceptions.ResourceNotFoundException;
-import adrianromanski.movies.jms.JmsTextMessageService;
 import adrianromanski.movies.mapper.award.DirectorAwardMapper;
 import adrianromanski.movies.mapper.award.DirectorAwardMapperImpl;
 import adrianromanski.movies.mapper.person.DirectorMapper;
@@ -50,8 +49,7 @@ class DirectorServiceImplTest {
     @Mock
     AwardRepository awardRepository;
 
-    @Mock
-    JmsTextMessageService jms;
+
 
     DirectorService directorService;
 
@@ -64,7 +62,7 @@ class DirectorServiceImplTest {
         DirectorAwardMapper awardMapper = new DirectorAwardMapperImpl();
 
         directorService = new DirectorServiceImpl(directorRepository, awardRepository,
-                                                    directorMapper, awardMapper, jms);
+                                                    directorMapper, awardMapper);
     }
 
     private Movie getStarWars() { return Movie.builder().name(STAR_WARS).build();}

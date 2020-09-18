@@ -3,7 +3,6 @@ package adrianromanski.movies.services.series;
 import adrianromanski.movies.domain.base_entity.Episode;
 import adrianromanski.movies.domain.base_entity.Series;
 import adrianromanski.movies.exceptions.ResourceNotFoundException;
-import adrianromanski.movies.jms.JmsTextMessageService;
 import adrianromanski.movies.mapper.base_entity.EpisodeMapper;
 import adrianromanski.movies.mapper.base_entity.EpisodeMapperImpl;
 import adrianromanski.movies.mapper.base_entity.SeriesMapper;
@@ -45,8 +44,7 @@ class SeriesServiceImplTest {
     @Mock
     EpisodeRepository episodeRepository;
 
-    @Mock
-    JmsTextMessageService jms;
+
 
     SeriesService seriesService;
 
@@ -59,7 +57,7 @@ class SeriesServiceImplTest {
         EpisodeMapper episodeMapper = new EpisodeMapperImpl();
 
         seriesService = new SeriesServiceImpl(seriesRepository, episodeRepository,
-                                                seriesMapper, episodeMapper, jms);
+                                                seriesMapper, episodeMapper);
     }
 
     private Series getSeries() {
