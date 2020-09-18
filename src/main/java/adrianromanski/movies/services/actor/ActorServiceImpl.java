@@ -5,7 +5,6 @@ import adrianromanski.movies.domain.award.ActorAward;
 import adrianromanski.movies.domain.award.Award;
 import adrianromanski.movies.domain.person.Actor;
 import adrianromanski.movies.exceptions.ResourceNotFoundException;
-import adrianromanski.movies.jms.JmsTextMessageService;
 import adrianromanski.movies.mapper.award.ActorAwardMapper;
 import adrianromanski.movies.mapper.person.ActorMapper;
 import adrianromanski.movies.model.award.ActorAwardDTO;
@@ -33,7 +32,6 @@ public class ActorServiceImpl implements ActorService {
     private final ActorPageRepository actorPageRepository;
     private final ActorMapper actorMapper;
     private final ActorAwardMapper awardMapper;
-    private final JmsTextMessageService jmsTextMessageService;
 
 
     /**
@@ -87,7 +85,6 @@ public class ActorServiceImpl implements ActorService {
     public ActorDTO createActor(ActorDTO actorDTO) {
         Actor actor = actorMapper.actorDTOToActor(actorDTO);
         actorRepository.save(actor);
-        jmsTextMessageService.sendTextMessage("Actor with id: " + actor.getId() + " successfully saved");
         return actorMapper.actorToActorDTO(actor);
     }
 
@@ -100,7 +97,6 @@ public class ActorServiceImpl implements ActorService {
      */
     @Override
     public ActorAwardDTO addAward(Long actorID, ActorAwardDTO awardDTO) {
-        jmsTextMessageService.sendTextMessage("Adding award to Actor with id: " + actorID);
         Actor actor = actorRepository.findById(actorID)
                 .orElseThrow(() -> new ResourceNotFoundException(actorID, Actor.class));
         ActorAward award = awardMapper.awardDTOToAward(awardDTO);
@@ -108,7 +104,6 @@ public class ActorServiceImpl implements ActorService {
         award.setActor(actor);
         actorRepository.save(actor);
         awardRepository.save(award);
-        jmsTextMessageService.sendTextMessage("Award successfully added to Actor with id: " + actorID);
         return awardMapper.awardToAwardDTO(award);
     }
 
@@ -121,14 +116,12 @@ public class ActorServiceImpl implements ActorService {
      */
     @Override
     public ActorDTO updateActor(Long id, ActorDTO actorDTO) {
-        jmsTextMessageService.sendTextMessage("Updating Actor with id: " + id);
         Actor actor = actorRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(id, Actor.class));
         Actor updatedActor = actorMapper.actorDTOToActor(actorDTO);
         actor.getAwards().forEach(award -> updatedActor.getAwards().add(award));
         updatedActor.setId(id);
         actorRepository.save(updatedActor);
-        jmsTextMessageService.sendTextMessage("Actor with id: " + id + " successfully updated");
         return actorMapper.actorToActorDTO(updatedActor);
     }
 
@@ -142,7 +135,6 @@ public class ActorServiceImpl implements ActorService {
      */
     @Override
     public ActorAwardDTO updateAward(Long actorID, Long awardID, ActorAwardDTO awardDTO) {
-        jmsTextMessageService.sendTextMessage("Updating Award with id: " + awardID + " of Actor with id: " + actorID);
         Actor actor = actorRepository.findById(actorID)
                 .orElseThrow(() -> new ResourceNotFoundException(actorID, Actor.class));
         ActorAward award = actor.getAwardOptional(awardID)
@@ -153,7 +145,6 @@ public class ActorServiceImpl implements ActorService {
         actor.getAwards().add(updatedAward);
         awardRepository.save(updatedAward);
         actorRepository.save(actor);
-        jmsTextMessageService.sendTextMessage("Award with id: " + awardID + " of Actor with id: " + actorID + " successfully updated");
         return awardMapper.awardToAwardDTO(updatedAward);
     }
 
@@ -167,7 +158,6 @@ public class ActorServiceImpl implements ActorService {
         actorRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(id, Actor.class));
         actorRepository.deleteById(id);
-        jmsTextMessageService.sendTextMessage("Actor with id: " + id + " successfully deleted");
     }
 
 
@@ -178,7 +168,6 @@ public class ActorServiceImpl implements ActorService {
      */
     @Override
     public void deleteAward(Long actorID, Long awardID) {
-        jmsTextMessageService.sendTextMessage("Deleting Award with id: " + awardID + " of Actor with id: " + actorID);
         Actor actor = actorRepository.findById(actorID)
                 .orElseThrow(() -> new ResourceNotFoundException(actorID, Actor.class));
         ActorAward award = actor.getAwardOptional(awardID)
@@ -186,6 +175,5 @@ public class ActorServiceImpl implements ActorService {
         actor.getAwards().remove(award);
         actorRepository.save(actor);
         awardRepository.deleteById(awardID);
-        jmsTextMessageService.sendTextMessage("Award with id: " + awardID + " of Actor with id: " + actorID + " successfully deleted");
     }
 }
