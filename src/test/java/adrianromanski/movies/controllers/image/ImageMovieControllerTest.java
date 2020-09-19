@@ -1,6 +1,5 @@
-package adrianromanski.movies.controllers.admin;
+package adrianromanski.movies.controllers.image;
 
-import adrianromanski.movies.controllers.image.ImageMovieController;
 import adrianromanski.movies.model.base_entity.MovieDTO;
 import adrianromanski.movies.services.image.ImageServiceMovie;
 import adrianromanski.movies.services.movie.MovieServiceImpl;

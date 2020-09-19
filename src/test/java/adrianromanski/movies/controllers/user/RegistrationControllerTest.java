@@ -1,4 +1,4 @@
-package adrianromanski.movies.controllers;
+package adrianromanski.movies.controllers.user;
 
 import adrianromanski.movies.controllers.registration.RegistrationController;
 import adrianromanski.movies.model.person.UserDTO;

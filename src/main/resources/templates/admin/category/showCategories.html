@@ -23,45 +23,7 @@
 
 <body>
 
-<ul class="nav nav-pills admin-navbar">
-    <li><a href="#" th:href="@{'/admin/'}">Admin Main Page</a></li>
-    <li class="dropdown active">
-        <a data-toggle="dropdown" data-target="#" href="http://www.google.com">
-            Categories <span class="caret"></span>
-        </a>
-        <ul class="dropdown-menu">
-            <li><a href="#" th:href="@{'/admin/showCategories/page/1'}" type="button">Show All Categories</a></li>
-            <li><a href="#" th:href="@{'/admin/createCategory/'}" type="button" >Create New Category</a></li>
-        </ul>
-    </li>
-    <li class="dropdown">
-        <a data-toggle="dropdown" data-target="#" href="http://www.google.com">
-            Movies <span class="caret"></span>
-        </a>
-        <ul class="dropdown-menu">
-            <li><a href="#" th:href="@{'/admin/showMovies/page/1'}" type="button" >Show All Movies</a></li>
-            <li><a href="#" th:href="@{'/admin/createMovie/'}" type="button">Create New Movie</a></li>
-        </ul>
-    </li>
-    <li class="dropdown">
-        <a data-toggle="dropdown" data-target="#" href="http://www.google.com">
-            Actors <span class="caret"></span>
-        </a>
-        <ul class="dropdown-menu">
-            <li><a href="#">Show All Movies</a></li>
-            <li><a href="#">Create New Movie</a></li>
-        </ul>
-    </li>
-    <li class="dropdown">
-        <a data-toggle="dropdown" data-target="#" href="http://www.google.com">
-            Directors <span class="caret"></span>
-        </a>
-        <ul class="dropdown-menu">
-            <li><a href="#">Show All Movies</a></li>
-            <li><a href="#">Create New Movie</a></li>
-        </ul>
-    </li>
-</ul>
+<ul class="nav nav-pills admin-navbar" th:replace="fragmets/adminNavbar :: adminNavbar"></ul>
 
 <div class="container-fluid" style="margin-top: 75px">
 
@@ -89,17 +51,17 @@
                                     </td>
                                     <td class="col-md-1">
                                         <a class="btn btn-primary" href="#"
-                                           th:href="@{'/admin/updateCategory/' + ${category.id}}" role="button">Update Category</a>
+                                           th:href="@{'/admin/category/updateCategory/' + ${category.id}}" role="button">Update Category</a>
                                     </td>
                                     <td class="col-md-1">
                                         <a class="btn btn-danger" href="#"
-                                           th:href="@{'/admin/deleteCategory/'  + ${category.id}}" role="button">Delete Category</a>
+                                           th:href="@{'/admin/category/deleteCategory/'  + ${category.id}}" role="button">Delete Category</a>
                                     </td>
                                 </tr>
                             </table>
                             <div class="col-md-12">
                                 <a class="btn btn-success" href="#"
-                                   th:href="@{'/admin/createCategory/'}" role="button">New Category</a>
+                                   th:href="@{'/admin/category/createCategory/'}" role="button">New Category</a>
                             </div>
                         </div>
 
@@ -110,7 +72,7 @@
                                 <nav aria-label="Pagination">
                                     <ul class="pagination justify-content-center">
                                         <li class="page-item" th:each="pageNumber : ${pageNumbers}" >
-                                            <a class="page-link" th:href="@{|/admin/showCategories/page/${pageNumber}|}" th:text=${pageNumber}>1</a>
+                                            <a class="page-link" th:href="@{|/admin/category/showCategories/page/${pageNumber}|}" th:text="${pageNumber}"></a>
                                         </li>
                                     </ul>
                                 </nav>

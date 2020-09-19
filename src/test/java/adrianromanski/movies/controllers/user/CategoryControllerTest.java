@@ -1,6 +1,5 @@
-package adrianromanski.movies.controllers;
+package adrianromanski.movies.controllers.user;
 
-import adrianromanski.movies.controllers.user.CategoryController;
 import adrianromanski.movies.domain.base_entity.Category;
 import adrianromanski.movies.domain.base_entity.Movie;
 import adrianromanski.movies.model.base_entity.CategoryDTO;

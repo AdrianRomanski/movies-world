@@ -50,7 +50,7 @@ class AdminCategoryControllerTest {
     @Test
     @DisplayName("Happy Path, method = createCategory")
     void createCategory() throws Exception {
-        mockMvc.perform(get("/admin/createCategory"))
+        mockMvc.perform(get("/admin/category/createCategory"))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("categories"))
                 .andExpect(model().attributeExists("categoryDTO"))
@@ -68,7 +68,7 @@ class AdminCategoryControllerTest {
         when(categoryService.getCategoryDTOById(anyLong())).thenReturn(categoryDTO);
 
         //then
-        mockMvc.perform(get("/admin/updateCategory/1"))
+        mockMvc.perform(get("/admin/category/updateCategory/1"))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("categoryDTO"))
                 .andExpect(view().name(VIEW + "updateCategoryForm"));
@@ -90,7 +90,7 @@ class AdminCategoryControllerTest {
         when(categoryService.getAllCategoriesPaged(pageable)).thenReturn(categoryPage);
         when(categoryService.getPageCategoryDTO(categoryPage, pageable)).thenReturn(categoryPageDTO);
 
-        mockMvc.perform(get("/admin/showCategories/page/1"))
+        mockMvc.perform(get("/admin/category/showCategories/page/1"))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("categoryList"))
                 .andExpect(view().name("admin/category/showCategories"));
@@ -107,7 +107,7 @@ class AdminCategoryControllerTest {
         when(categoryService.createCategory(any())).thenReturn(categoryDTO);
 
         //then
-        mockMvc.perform(post("/admin/createCategory/check")
+        mockMvc.perform(post("/admin/category/createCategory/check")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .param("name", NAME)
                 .param("description", DESCRIPTION)
@@ -128,7 +128,7 @@ class AdminCategoryControllerTest {
         when(categoryService.createCategory(any())).thenReturn(categoryDTO);
 
         //then
-        mockMvc.perform(post("/admin/createCategory/check")
+        mockMvc.perform(post("/admin/category/createCategory/check")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .param("name", "HorrorHorrorHorrorHorrorHorrorvHorrorHorrorHorrorHorrorHorrorHorror")
                 .param("description", "word")
@@ -150,7 +150,7 @@ class AdminCategoryControllerTest {
         when(categoryService.getCategoryDTOById(anyLong())).thenReturn(categoryDTO);
 
         //then
-        mockMvc.perform(post("/admin/updateCategory/check")
+        mockMvc.perform(post("/admin/category/updateCategory/check")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .param("name", "Horror")
                 .param("description", DESCRIPTION)
@@ -174,7 +174,7 @@ class AdminCategoryControllerTest {
         when(categoryService.getCategoryDTOById(anyLong())).thenReturn(categoryDTO);
 
         //then
-        mockMvc.perform(post("/admin/updateCategory/check")
+        mockMvc.perform(post("/admin/category/updateCategory/check")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .param("name", "HorrorHorrorHorrorHorrorHorrorvHorrorHorrorHorrorHorrorHorrorHorror")
                 .param("description", "word")
@@ -192,7 +192,7 @@ class AdminCategoryControllerTest {
         //when
         when(categoryService.getCategoryDTOById(anyLong())).thenReturn(categoryDTO);
 
-        mockMvc.perform(get("/admin/deleteCategory/1"))
+        mockMvc.perform(get("/admin/category/deleteCategory/1"))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("showCategories"))
                 .andExpect(view().name(VIEW + "showCategories"));

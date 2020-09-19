@@ -25,7 +25,7 @@ class AdminHomeControllerTest {
     @Test
     @DisplayName("Happy Path, method = getAdminHome")
     void getAdminHome() throws Exception {
-        mockMvc.perform(get("/admin/"))
+        mockMvc.perform(get("/admin/home"))
                 .andExpect(status().isOk())
                 .andExpect(view().name( "admin/adminHome"));
     }

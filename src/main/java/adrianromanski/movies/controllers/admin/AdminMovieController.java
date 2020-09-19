@@ -5,6 +5,7 @@ import adrianromanski.movies.mapper.base_entity.MovieMapper;
 import adrianromanski.movies.model.base_entity.MovieDTO;
 import adrianromanski.movies.services.category.CategoryService;
 import adrianromanski.movies.services.movie.MovieService;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -21,20 +22,15 @@ import java.util.stream.IntStream;
 
 @Slf4j
 @Controller
+@AllArgsConstructor
 public class AdminMovieController {
 
     private final MovieService movieService;
     private final CategoryService categoryService;
     private final MovieMapper movieMapper;
 
-    public AdminMovieController(MovieService movieService, CategoryService categoryService, MovieMapper movieMapper) {
-        this.movieService = movieService;
-        this.categoryService = categoryService;
-        this.movieMapper = movieMapper;
-    }
 
-
-    @RequestMapping(value = "/admin/showMovies/page/{page}")
+    @RequestMapping(value = "/admin/movie/showMovies/page/{page}")
     public ModelAndView showMoviesPaged(@PathVariable("page") int page) {
         ModelAndView modelAndView = new ModelAndView("admin/movie/showMoviesForm");
         PageRequest pageable = PageRequest.of(page - 1, 5);
@@ -50,13 +46,13 @@ public class AdminMovieController {
         return modelAndView;
     }
 
-    @GetMapping("/admin/createMovie")
+    @GetMapping("/admin/movie/createMovie")
     public String createMovie(Model model) {
         model.addAttribute("movieDTO", new MovieDTO());
         return "admin/movie/createMovieForm";
     }
 
-    @PostMapping("/admin/createMovie/check")
+    @PostMapping("/admin/movie/createMovie/check")
     public String checkMovieCreation(@Valid @ModelAttribute("movieDTO") MovieDTO movieDTO,
                                      BindingResult bindingResult,
                                      Model model) {
@@ -72,7 +68,7 @@ public class AdminMovieController {
     }
 
 
-    @GetMapping("/admin/createMovie-{movieID}/addCategory-{categoryID}")
+    @GetMapping("/admin/movie/createMovie-{movieID}/addCategory-{categoryID}")
     public String addCategoryToMovie(@PathVariable String movieID, @PathVariable String categoryID,
                                      Model model) {
         movieService.addCategoryToMovie(Long.valueOf(movieID), Long.valueOf(categoryID));
@@ -82,14 +78,14 @@ public class AdminMovieController {
     }
 
 
-    @GetMapping("/admin/updateMovie/{id}")
+    @GetMapping("/admin/movie/updateMovie/{id}")
     public String updateMovie(@PathVariable String id, Model model) {
         model.addAttribute("movieDTO", movieService.getMovieByID(Long.valueOf(id)));
         return "admin/movie/updateMovieForm";
     }
 
 
-    @PostMapping("/admin/updateMovie/check")
+    @PostMapping("/admin/movie/updateMovie/check")
     public String checkUpdateMovie(@Valid @ModelAttribute("movieDTO") MovieDTO movieDTO,
                                       BindingResult bindingResult,
                                       Model model)  {
@@ -105,7 +101,7 @@ public class AdminMovieController {
     }
 
 
-    @GetMapping("/admin/deleteMovie/{id}")
+    @GetMapping("/admin/movie/deleteMovie/{id}")
     public String deleteMovie(@PathVariable String id, Model model) {
         movieService.deleteMovieByID(Long.valueOf(id));
         model.addAttribute("movies", movieService.getAllMovies());

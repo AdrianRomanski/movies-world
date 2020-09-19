@@ -3,6 +3,7 @@ package adrianromanski.movies.controllers.admin;
 import adrianromanski.movies.domain.base_entity.Category;
 import adrianromanski.movies.model.base_entity.CategoryDTO;
 import adrianromanski.movies.services.category.CategoryService;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -19,16 +20,12 @@ import java.util.stream.IntStream;
 
 @Slf4j
 @Controller
+@AllArgsConstructor
 public class AdminCategoryController {
 
     private final CategoryService categoryService;
 
-    public AdminCategoryController(CategoryService categoryService) {
-        this.categoryService = categoryService;
-    }
-
-
-    @RequestMapping(value = "/admin/showCategories/page/{page}")
+    @RequestMapping(value = "/admin/category/showCategories/page/{page}")
     public ModelAndView listCategoryPageByPage(@PathVariable("page") int page) {
         ModelAndView modelAndView = new ModelAndView("admin/category/showCategories");
         PageRequest pageable = PageRequest.of(page - 1, 5);
@@ -45,7 +42,7 @@ public class AdminCategoryController {
     }
 
 
-    @GetMapping("admin/createCategory")
+    @GetMapping("admin/category/createCategory")
     public String createCategory(Model model) {
         model.addAttribute("categories", categoryService.getAllCategories());
         model.addAttribute("categoryDTO", new CategoryDTO());
@@ -54,7 +51,7 @@ public class AdminCategoryController {
     }
 
 
-    @PostMapping("admin/createCategory/check")
+    @PostMapping("admin/category/createCategory/check")
     public String checkCategoryCreation(@Valid @ModelAttribute("categoryDTO") CategoryDTO categoryDTO,
                                         BindingResult bindingResult,
                                         Model model)  {
@@ -70,14 +67,14 @@ public class AdminCategoryController {
     }
 
 
-    @GetMapping("admin/updateCategory/{id}")
+    @GetMapping("admin/category/updateCategory/{id}")
     public String updateCategory(Model model, @PathVariable String id) {
         model.addAttribute("categoryDTO", categoryService.getCategoryDTOById(Long.valueOf(id)));
         return "admin/category/updateCategoryForm";
     }
 
 
-    @PostMapping("admin/updateCategory/check")
+    @PostMapping("admin/category/updateCategory/check")
     public String checkCategoryUpdate(@Valid @ModelAttribute("categoryDTO") CategoryDTO categoryDTO,
                                       BindingResult bindingResult,
                                       Model model)  {
@@ -93,7 +90,7 @@ public class AdminCategoryController {
     }
 
 
-    @GetMapping("admin/deleteCategory/{id}")
+    @GetMapping("admin/category/deleteCategory/{id}")
     public String deleteCategory(@PathVariable String id, Model model) {
         categoryService.deleteCategoryByID(Long.valueOf(id));
         model.addAttribute("showCategories", categoryService.getAllCategories());

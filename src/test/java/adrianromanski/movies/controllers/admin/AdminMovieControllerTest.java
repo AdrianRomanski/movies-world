@@ -73,7 +73,7 @@ class AdminMovieControllerTest {
         when(movieService.getPageMovieDTO(moviePage, pageable)).thenReturn(moviePageDTO);
 
         //Then
-        mockMvc.perform(get("/admin/showMovies/page/1"))
+        mockMvc.perform(get("/admin/movie/showMovies/page/1"))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("moviesDTOList"))
                 .andExpect(view().name("admin/movie/showMoviesForm"));
@@ -83,7 +83,7 @@ class AdminMovieControllerTest {
     @Test
     @DisplayName("Happy Path, method = createMovie")
     void createMovie() throws Exception {
-        mockMvc.perform(get("/admin/createMovie"))
+        mockMvc.perform(get("/admin/movie/createMovie"))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("movieDTO"))
                 .andExpect(view().name("admin/movie/createMovieForm"));
@@ -99,7 +99,7 @@ class AdminMovieControllerTest {
         //when
         when(movieService.createMovie(any())).thenReturn(movieDTO);
 
-        mockMvc.perform(post("/admin/createMovie/check")
+        mockMvc.perform(post("/admin/movie/createMovie/check")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .param("name", NAME)
                 .param("description", DESCRIPTION)
@@ -119,7 +119,7 @@ class AdminMovieControllerTest {
         //when
         when(movieService.createMovie(any())).thenReturn(movieDTO);
 
-        mockMvc.perform(post("/admin/createMovie/check")
+        mockMvc.perform(post("/admin/movie/createMovie/check")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .param("name", "n")
                 .param("description", "n")
@@ -133,7 +133,7 @@ class AdminMovieControllerTest {
     @Test
     @DisplayName("Happy Path, method = addCategoryToMovie")
     void addCategoryToMovie() throws Exception {
-        mockMvc.perform(get("/admin/createMovie-1/addCategory-1"))
+        mockMvc.perform(get("/admin/movie/createMovie-1/addCategory-1"))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("movies"))
                 .andExpect(view().name("admin/movie/movieImageUplForm"));
@@ -143,7 +143,7 @@ class AdminMovieControllerTest {
     @Test
     @DisplayName("Happy Path, method = updateMovie")
     void updateMovie() throws Exception {
-        mockMvc.perform(get("/admin/updateMovie/1"))
+        mockMvc.perform(get("/admin/movie/updateMovie/1"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("admin/movie/updateMovieForm"));
     }
@@ -158,7 +158,7 @@ class AdminMovieControllerTest {
         //when
         when(movieService.createMovie(any())).thenReturn(movieDTO);
 
-        mockMvc.perform(post("/admin/updateMovie/check")
+        mockMvc.perform(post("/admin/movie/updateMovie/check")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .param("name", NAME)
                 .param("description", DESCRIPTION)
@@ -178,7 +178,7 @@ class AdminMovieControllerTest {
         //when
         when(movieService.createMovie(any())).thenReturn(movieDTO);
 
-        mockMvc.perform(post("/admin/updateMovie/check")
+        mockMvc.perform(post("/admin/movie/updateMovie/check")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .param("name", "n")
                 .param("description", "n")
@@ -191,7 +191,7 @@ class AdminMovieControllerTest {
     @Test
     @DisplayName("Happy Path, method = deleteMovie")
     void deleteMovie() throws Exception {
-        mockMvc.perform(get("/admin/deleteMovie/1"))
+        mockMvc.perform(get("/admin/movie/deleteMovie/1"))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("movies"))
                 .andExpect(view().name("admin/adminHome"));

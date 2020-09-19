@@ -1,4 +1,4 @@
-package adrianromanski.movies.controllers.admin;
+package adrianromanski.movies.controllers.image;
 
 import adrianromanski.movies.controllers.image.ImageCategoryController;
 import adrianromanski.movies.domain.base_entity.Category;

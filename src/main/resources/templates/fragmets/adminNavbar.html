@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Navbar</title>
+
+    <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet" media="screen"/>
+
+    <script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.4/jquery.min.js"></script>
+
+    <link th:href="@{/css/custom.css}" rel="stylesheet" media="screen"/>
+
+
+</head>
+<body>
+<ul th:fragment="adminNavbar">
+    <ul class="nav nav-pills admin-navbar">
+
+        <li th:class="${#httpServletRequest.requestURI.contains('home')} ? 'active' : ''" >
+        <a href="#" th:href="@{'/admin/home'}">Admin Main Page</a>
+        </li>
+
+        <li class="dropdown" th:class="${#httpServletRequest.requestURI.contains('category')} ? 'dropdown active' : 'dropdown'" >
+            <a data-toggle="dropdown" data-target="#" href="http://www.google.com">
+                Categories <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+                <li><a href="#" th:href="@{'/admin/category/showCategories/page/1'}" type="button">Show All Categories</a></li>
+                <li><a href="#" th:href="@{'/admin/category/createCategory/'}" type="button" >Create New Category</a></li>
+            </ul>
+        </li>
+
+        <li class="dropdown" th:class="${#httpServletRequest.requestURI.contains('movie')} ? 'dropdown active' : 'dropdown'">
+            <a data-toggle="dropdown" data-target="#" href="http://www.google.com">
+                Movies <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+                <li><a href="#" th:href="@{'/admin/movie/showMovies/page/1'}" type="button" >Show All Movies</a></li>
+                <li><a href="#" th:href="@{'/admin/movie/createMovie/'}" type="button">Create New Movie</a></li>
+            </ul>
+        </li>
+
+        <li class="dropdown" th:class="${#httpServletRequest.requestURI.contains('actor')} ? 'dropdown active' : 'dropdown'" >
+            <a data-toggle="dropdown" data-target="#" href="http://www.google.com">
+                Actors <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+                <li><a href="#" th:href="@{'/admin/actor/showActors/page/1'}">Show All Actors</a></li>
+                <li><a href="#">Create New Actor</a></li>
+            </ul>
+        </li>
+
+        <li class="dropdown" th:class="${#httpServletRequest.requestURI.contains('director')} ? 'dropdown active' : 'dropdown'" >
+            <a data-toggle="dropdown" data-target="#" href="http://www.google.com">
+                Directors <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+                <li><a href="#">Show All Directors</a></li>
+                <li><a href="#">Create New Director</a></li>
+            </ul>
+        </li>
+
+    </ul>
+</ul>
+</body>
+</html>

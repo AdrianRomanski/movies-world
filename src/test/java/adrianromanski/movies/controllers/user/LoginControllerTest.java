@@ -1,4 +1,4 @@
-package adrianromanski.movies.controllers;
+package adrianromanski.movies.controllers.user;
 
 import adrianromanski.movies.controllers.registration.LoginController;
 import org.junit.jupiter.api.BeforeEach;

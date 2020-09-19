@@ -24,49 +24,8 @@
 
 <body>
 
-<!--Nav Bar-->
-<ul class="nav nav-pills admin-navbar">
-    <li><a href="#" th:href="@{'/admin/'}">Admin Main Page</a></li>
-    <li class="dropdown">
-        <a data-toggle="dropdown" data-target="#" href="http://www.google.com">
-            Categories <span class="caret"></span>
-        </a>
-        <ul class="dropdown-menu">
-            <li><a href="#" th:href="@{'/admin/showCategories/page/1'}" type="button">Show All Categories</a></li>
-            <li><a href="#" th:href="@{'/admin/createCategory/'}" type="button" >Create New Category</a></li>
-        </ul>
-    </li>
-    <li class="dropdown active">
-        <a data-toggle="dropdown" data-target="#" href="http://www.google.com">
-            Movies <span class="caret"></span>
-        </a>
-        <ul class="dropdown-menu">
-            <li><a href="#" th:href="@{'/admin/showMovies/page/1'}" type="button" >Show All Movies</a></li>
-            <li><a href="#" th:href="@{'/admin/createMovie/'}" type="button">Create New Movie</a></li>
-        </ul>
-    </li>
-    <li class="dropdown">
-        <a data-toggle="dropdown" data-target="#" href="http://www.google.com">
-            Actors <span class="caret"></span>
-        </a>
-        <ul class="dropdown-menu">
-            <li><a href="#">Show All Movies</a></li>
-            <li><a href="#">Create New Movie</a></li>
-        </ul>
-    </li>
-    <li class="dropdown">
-        <a data-toggle="dropdown" data-target="#" href="http://www.google.com">
-            Directors <span class="caret"></span>
-        </a>
-        <ul class="dropdown-menu">
-            <li><a href="#">Show All Movies</a></li>
-            <li><a href="#">Create New Movie</a></li>
-        </ul>
-    </li>
-</ul>
+<ul class="nav nav-pills admin-navbar" th:replace="fragmets/adminNavbar :: adminNavbar"></ul>
 
-
-<!--CONTENT-->
 <div class="container-fluid" style="margin-top: 75px">
     <div class="row">
 
@@ -97,17 +56,17 @@
                                     </td>
                                     <td class="col-md-1">
                                         <a class="btn btn-primary" href="#"
-                                           th:href="@{'/admin/updateMovie/' + ${movieDTO.id}}" role="button">Update Movie</a>
+                                           th:href="@{'/admin/movie/updateMovie/' + ${movieDTO.id}}" role="button">Update Movie</a>
                                     </td>
                                     <td class="col-md-1">
                                         <a class="btn btn-danger" href="#"
-                                           th:href="@{'/admin/deleteMovie/'  + ${movieDTO.id}}" role="button">Delete Movie</a>
+                                           th:href="@{'/admin/movie/deleteMovie/'  + ${movieDTO.id}}" role="button">Delete Movie</a>
                                     </td>
                                 </tr>
                             </table>
                             <div class="row col-md-12">
                                 <a class="btn btn-success" href="#"
-                                   th:href="@{'/admin/createMovie'}" role="button">New Movie</a>
+                                   th:href="@{'/admin/movie/createMovie'}" role="button">New Movie</a>
                             </div>
                         </div>
                         <div class="row" th:fragment="pagination">
@@ -116,7 +75,7 @@
                                 <nav aria-label="Pagination">
                                     <ul class="pagination justify-content-center">
                                         <li class="page-item" th:each="pageNumber : ${pageNumbers}" >
-                                            <a class="page-link" th:href="@{|/admin/showMovies/page/${pageNumber}|}" th:text=${pageNumber}>1</a>
+                                            <a class="page-link" th:href="@{|/admin/movie/showMovies/page/${pageNumber}|}" th:text="${pageNumber}"></a>
                                         </li>
                                     </ul>
                                 </nav>
