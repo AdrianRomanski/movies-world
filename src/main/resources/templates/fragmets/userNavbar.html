@@ -38,7 +38,7 @@
             </ul>
         </li>
 
-        <li class="dropdown">
+        <li class="dropdown" th:class="${#httpServletRequest.requestURI.contains('categories')} ? 'dropdown active' : 'dropdown'" >
             <a data-toggle="dropdown" data-target="#" href="http://www.google.com">
                 Categories <span class="caret"></span>
             </a>

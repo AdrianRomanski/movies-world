@@ -21,7 +21,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -44,18 +43,6 @@ class CategoryControllerTest {
         MockitoAnnotations.initMocks(this);
 
         mockMvc = MockMvcBuilders.standaloneSetup(categoryController).build();
-    }
-
-    @Test
-    @DisplayName("GET, HappyPath, method = getAllMoviesForCategory")
-    void getAllMoviesForCategory() throws Exception {
-        List<MovieDTO> movies = Arrays.asList( new MovieDTO(),  new MovieDTO(), new MovieDTO());
-
-        when(categoryService.getAllMoviesForCategory(anyString())).thenReturn(movies);
-
-        mockMvc.perform(get("/category/fantasy"))
-                .andExpect(status().isOk())
-                .andExpect(model().attributeExists("movies"));
     }
 
 
@@ -98,7 +85,7 @@ class CategoryControllerTest {
         when(movieService.getPageMovieDTO(moviePage, pageable)).thenReturn(moviePageDTO);
 
         //Then
-        mockMvc.perform(get("/category/Sci-fi/page/1"))
+        mockMvc.perform(get("/categories/Sci-fi/page/1"))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("moviesDTOList"))
                 .andExpect(view().name("user/category/categoryMovies"));

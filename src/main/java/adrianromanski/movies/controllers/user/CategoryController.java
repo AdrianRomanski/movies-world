@@ -6,10 +6,10 @@ import adrianromanski.movies.model.base_entity.CategoryDTO;
 import adrianromanski.movies.model.base_entity.MovieDTO;
 import adrianromanski.movies.services.category.CategoryService;
 import adrianromanski.movies.services.movie.MovieService;
+import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.ModelAndView;
@@ -20,21 +20,12 @@ import java.util.stream.IntStream;
 
 
 @Controller
+@AllArgsConstructor
 public class CategoryController {
 
     private final CategoryService categoryService;
     private final MovieService movieService;
 
-    public CategoryController(CategoryService categoryService, MovieService movieService) {
-        this.categoryService = categoryService;
-        this.movieService = movieService;
-    }
-
-    @GetMapping("category/{categoryName}")
-    public String getAllMoviesForCategory(@PathVariable String categoryName, Model model) {
-        model.addAttribute("movies", categoryService.getAllMoviesForCategory(categoryName));
-        return "user/categoryMovies";
-    }
 
     @GetMapping("/categories/page/{page}")
     public ModelAndView getAllCategoriesPaged(@PathVariable int page) {
@@ -52,7 +43,7 @@ public class CategoryController {
         return modelAndView;
     }
 
-    @GetMapping(value = "/category/{categoryName}/page/{page}")
+    @GetMapping(value = "/categories/{categoryName}/page/{page}")
     public ModelAndView getAllMoviesForCategoryPaged(@PathVariable int page, @PathVariable String categoryName) {
         ModelAndView modelAndView = new ModelAndView("user/category/categoryMovies");
         PageRequest pageable = PageRequest.of(page - 1, 8);
