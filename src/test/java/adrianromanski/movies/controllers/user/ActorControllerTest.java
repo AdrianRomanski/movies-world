@@ -85,6 +85,23 @@ class ActorControllerTest {
                 .andExpect(view().name("user/actors/showActors"));
     }
 
+
+    @Test
+    @DisplayName("GET, method = getActorMovies")
+    void getActorMovies() throws Exception {
+        // Given
+        List<MovieDTO> movieList = Arrays.asList(new MovieDTO(), new MovieDTO(), new MovieDTO());
+
+        //When
+        when(actorService.getAllMoviesForActor(anyLong())).thenReturn(movieList);
+
+        //Then
+        mockMvc.perform(get("/actor/1/movies"))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("moviesDTOList"))
+                .andExpect(view().name("user/movies/showMovies"));
+    }
+
     @Test
     @DisplayName("GET, Happy Path, method = showActorsSortedDesc")
     void showActorsSortedDesc() throws Exception {

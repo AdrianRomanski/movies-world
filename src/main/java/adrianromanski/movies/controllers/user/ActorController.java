@@ -64,7 +64,6 @@ public class ActorController {
 
     public ModelAndView getModelAndView(ModelAndView modelAndView, PageRequest pageable) {
         Page<Actor> actorPage = actorService.getActorsPaged(pageable);
-        System.out.println(actorPage.getTotalElements());
 //        Page<MovieDTO> movieDTOPage = movieService.getPageMovieDTO(moviePage, pageable);
         int totalPages = actorPage.getTotalPages();
         if (totalPages > 0) {

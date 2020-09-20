@@ -89,7 +89,7 @@
             </ul>
         </li>
 
-        <li class="dropdown">
+        <li class="dropdown" th:class="${#httpServletRequest.requestURI.contains('actor')} ? 'dropdown active' : 'dropdown'" >
             <a data-toggle="dropdown" data-target="#" href="http://www.google.com">
                 Actors <span class="caret"></span>
             </a>
