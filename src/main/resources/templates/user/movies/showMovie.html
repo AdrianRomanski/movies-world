@@ -21,132 +21,10 @@
 </head>
 <div class="jumbotron" th:replace="fragmets/jumbotron :: jumbotron"></div>
 <body>
-<script>
-    $(document).ready(function(){
-        $('.dropdown-submenu a.test').on("click", function(e){
-            $(this).next('ul').toggle();
-            e.stopPropagation();
-            e.preventDefault();
-        });
-    });
-</script>
 
-<ul class="nav nav-pills admin-navbar">
-    <li><a href="#" th:href="@{'/'}" >Main Page</a></li>
-    <li class="dropdown">
-        <a data-toggle="dropdown" data-target="#" href="http://www.google.com">
-            News <span class="caret"></span>
-        </a>
-        <ul class="dropdown-menu">
-            <li><a href="#" type="button" th:href="@{'/news/sorted/asc/date/page/1'}" >Show All News</a></li>
-            <li class="dropdown-submenu">
-                <a class="test" tabindex="-1" href="#">Sorted By<span class="caret"></span></a>
-                <ul class="dropdown-menu">
-                    <li class="dropdown-submenu">
-                        <a class="test" href="#">Date<span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#" th:href="@{'/news/sorted/asc/date/page/1'}">Ascending</a></li>
-                            <li><a href="#" th:href="@{'/news/sorted/desc/date/page/1'}" >Descending</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </li>
-        </ul>
-    </li>
-    <li class="dropdown">
-        <a data-toggle="dropdown" data-target="#" href="http://www.google.com">
-            Categories <span class="caret"></span>
-        </a>
-        <ul class="dropdown-menu">
-            <li><a href="#" th:href="@{'/categories/page/1'}" type="button">Show All Categories</a></li>
-        </ul>
-    </li>
-    <li class="dropdown active">
-        <a data-toggle="dropdown" data-target="#" href="http://www.google.com">
-            Movies <span class="caret"></span>
-        </a>
-        <ul class="dropdown-menu">
-            <li><a href="#" type="button" th:href="@{'/movies/page/1'}" >Show All Movies</a></li>
-            <li class="dropdown-submenu">
-                <a class="test" tabindex="-1" href="#">Sorted By<span class="caret"></span></a>
-                <ul class="dropdown-menu">
-                    <li class="dropdown-submenu">
-                        <a class="test" href="#">Name<span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#" th:href="@{'/movies/sorted/asc/name/page/1'}">Ascending</a></li>
-                            <li><a href="#" th:href="@{'/movies/sorted/desc/name/page/1'}" >Descending</a></li>
-                        </ul>
-                    </li>
-                    <li class="dropdown-submenu">
-                        <a class="test" href="#">Time<span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#" th:href="@{'/movies/sorted/asc/time/page/1'}">Ascending</a></li>
-                            <li><a href="#" th:href="@{'/movies/sorted/desc/time/page/1'}">Descending</a></li>
-                        </ul>
-                    </li>
-                    <li class="dropdown-submenu">
-                        <a class="test" href="#">Year<span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#" th:href="@{'/movies/sorted/asc/year/page/1'}">Ascending</a></li>
-                            <li><a href="#" th:href="@{'/movies/sorted/desc/year/page/1'}">Descending</a></li>
-                        </ul>
-                    </li>
-                    <li class="dropdown-submenu">
-                        <a class="test" href="#">Country<span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#" th:href="@{'/movies/sorted/asc/country/page/1'}">Ascending</a></li>
-                            <li><a href="#" th:href="@{'/movies/sorted/desc/country/page/1'}">Descending</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </li>
-        </ul>
-    </li>
-    <li class="dropdown">
-        <a data-toggle="dropdown" data-target="#" href="http://www.google.com">
-            Actors <span class="caret"></span>
-        </a>
-        <ul class="dropdown-menu">
-            <li><a href="#" type="button" th:href="@{'/actors/page/1'}" >Show All Actors</a></li>
-            <li class="dropdown-submenu">
-                <a class="test" tabindex="-1" href="#">Sorted By<span class="caret"></span></a>
-                <ul class="dropdown-menu">
-                    <li class="dropdown-submenu">
-                        <a class="test" href="#">Last Name<span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#" th:href="@{'/actors/sorted/asc/lastName/page/1'}">Ascending</a></li>
-                            <li><a href="#" th:href="@{'/actors/sorted/desc/lastName/page/1'}" >Descending</a></li>
-                        </ul>
-                    </li>
-                    <li class="dropdown-submenu">
-                        <a class="test" href="#">Date Of Birth<span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#" th:href="@{'/actors/sorted/asc/dateOfBirth/page/1'}">Ascending</a></li>
-                            <li><a href="#" th:href="@{'/actors/sorted/desc/dateOfBirth/page/1'}">Descending</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </li>
-        </ul>
-    </li>
-    <li class="dropdown">
-        <a data-toggle="dropdown" data-target="#" href="http://www.google.com">
-            Directors <span class="caret"></span>
-        </a>
-        <ul class="dropdown-menu">
-            <li><a href="#">Coming Soon</a></li>
-        </ul>
-    </li>
-    <li class="dropdown">
-        <a data-toggle="dropdown" data-target="#" href="http://www.google.com">
-            Series <span class="caret"></span>
-        </a>
-        <ul class="dropdown-menu">
-            <li><a href="#">Coming Soon</a></li>
-        </ul>
-    </li>
-</ul>
 
+
+<ul class="nav nav-pills admin-navbar" th:replace="fragmets/userNavbar :: userNavbar"></ul>
 
 <div class="container-fluid" style="margin-top: 50px">
 
@@ -252,5 +130,8 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript" th:src="@{/js/custom.js}"></script>
+
 </body>
 </html>
