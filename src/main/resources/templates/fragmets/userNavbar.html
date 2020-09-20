@@ -15,27 +15,8 @@
 <body>
     <ul class="nav nav-pills admin-navbar" th:fragment="userNavbar">
 
-        <li><a href="#" th:href="@{'/'}" >Main Page</a></li>
-
-        <li class="dropdown">
-            <a data-toggle="dropdown" data-target="#" href="http://www.google.com">
-                News <span class="caret"></span>
-            </a>
-            <ul class="dropdown-menu">
-                <li><a href="#" type="button" th:href="@{'/news/sorted/asc/date/page/1'}" >Show All News</a></li>
-                <li class="dropdown-submenu">
-                    <a class="test" tabindex="-1" href="#">Sorted By<span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li class="dropdown-submenu">
-                            <a class="test" href="#">Date<span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="#" th:href="@{'/news/sorted/asc/date/page/1'}">Ascending</a></li>
-                                <li><a href="#" th:href="@{'/news/sorted/desc/date/page/1'}" >Descending</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
+        <li th:class="${#httpServletRequest.requestURI.contains('home')} ? 'active' : ''" >
+            <a href="#" th:href="@{'/home'}" >Main Page</a>
         </li>
 
         <li class="dropdown" th:class="${#httpServletRequest.requestURI.contains('categories')} ? 'dropdown active' : 'dropdown'" >
@@ -46,7 +27,6 @@
                 <li><a href="#" th:href="@{'/categories/page/1'}" type="button">Show All Categories</a></li>
             </ul>
         </li>
-
         <li class="dropdown" th:class="${#httpServletRequest.requestURI.contains('movie')} ? 'dropdown active' : 'dropdown'" >
             <a data-toggle="dropdown" data-target="#" href="http://www.google.com">
                 Movies <span class="caret"></span>
@@ -88,7 +68,6 @@
                 </li>
             </ul>
         </li>
-
         <li class="dropdown" th:class="${#httpServletRequest.requestURI.contains('actor')} ? 'dropdown active' : 'dropdown'" >
             <a data-toggle="dropdown" data-target="#" href="http://www.google.com">
                 Actors <span class="caret"></span>
@@ -116,7 +95,26 @@
                 </li>
             </ul>
         </li>
-
+        <li class="dropdown" th:class="${#httpServletRequest.requestURI.contains('news')} ? 'dropdown active' : 'dropdown'" >
+            <a data-toggle="dropdown" data-target="#" href="http://www.google.com">
+                News <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+                <li><a href="#" type="button" th:href="@{'/news/sorted/asc/date/page/1'}" >Show All News</a></li>
+                <li class="dropdown-submenu">
+                    <a class="test" tabindex="-1" href="#">Sorted By<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li class="dropdown-submenu">
+                            <a class="test" href="#">Date<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#" th:href="@{'/news/sorted/asc/date/page/1'}">Ascending</a></li>
+                                <li><a href="#" th:href="@{'/news/sorted/desc/date/page/1'}" >Descending</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
         <li class="dropdown">
             <a data-toggle="dropdown" data-target="#" href="http://www.google.com">
                 Directors <span class="caret"></span>

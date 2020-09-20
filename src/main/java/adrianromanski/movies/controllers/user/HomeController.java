@@ -12,7 +12,7 @@ public class HomeController {
 
     private final NewsServiceImpl newsService;
 
-    @GetMapping("/")
+    @GetMapping({"/", "home", "movies-world"})
     public ModelAndView home() {
         ModelAndView modelAndView = new ModelAndView("user/home/home");
         modelAndView.addObject("latestNews", newsService.getLatestNews());
