@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotEmpty;
@@ -25,9 +26,9 @@ public class PersonDTO {
     @NotEmpty
     @Size(min = 3, max = 20)
     private String lastName;
-    @NotEmpty
     @Size(min = 3, max = 10)
     private String gender;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dateOfBirth;
     Byte[] image;
 

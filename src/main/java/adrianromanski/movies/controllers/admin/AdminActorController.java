@@ -1,19 +1,24 @@
 package adrianromanski.movies.controllers.admin;
 
 import adrianromanski.movies.domain.person.Actor;
+import adrianromanski.movies.model.person.ActorDTO;
 import adrianromanski.movies.services.actor.ActorService;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+@Slf4j
 @Controller
 @AllArgsConstructor
 public class AdminActorController {
@@ -33,6 +38,25 @@ public class AdminActorController {
         modelAndView.addObject("activeActorsList", true);
         modelAndView.addObject("actorsList", actorPage.getContent());
         return modelAndView;
+    }
+
+    @GetMapping("admin/actor/createActor")
+    public String createActor(Model model) {
+        model.addAttribute("actorDTO", new ActorDTO());
+        return "admin/actor/createActorForm";
+    }
+
+
+    @PostMapping("/admin/actor/createActor/check")
+    public String checkActorCreation(@Valid @ModelAttribute("actorDTO") ActorDTO actorDTO,
+                                     BindingResult bindingResult) {
+        if(bindingResult.hasErrors()) {
+            bindingResult.getAllErrors()
+                    .forEach(objectError -> log.warn(objectError.getDefaultMessage()));
+            return "admin/actor/createActorForm";
+        }
+        actorService.createActor(actorDTO);
+        return "admin/adminHome";
     }
 
 }

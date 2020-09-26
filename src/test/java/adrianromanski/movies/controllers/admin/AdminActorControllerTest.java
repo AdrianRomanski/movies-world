@@ -1,6 +1,7 @@
 package adrianromanski.movies.controllers.admin;
 
 import adrianromanski.movies.domain.person.Actor;
+import adrianromanski.movies.model.person.ActorDTO;
 import adrianromanski.movies.services.actor.ActorService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -11,14 +12,18 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 class AdminActorControllerTest {
@@ -55,5 +60,56 @@ class AdminActorControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("actorsList"))
                 .andExpect(view().name("admin/actor/showActorsForm"));
+    }
+
+
+    @Test
+    @DisplayName("GET, method = createActor")
+    void createActor() throws Exception {
+        mockMvc.perform(get("/admin/actor/createActor"))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("actorDTO"))
+                .andExpect(view().name("admin/actor/createActorForm"));
+    }
+
+
+    @Test
+    @DisplayName("GET, method = checkActorCreation")
+    void checkActorCreationHappyPath() throws Exception {
+        //given
+        ActorDTO actorDTO = new ActorDTO();
+
+        //when
+        when(actorService.createActor(any(ActorDTO.class))).thenReturn(actorDTO);
+
+        mockMvc.perform(post("/admin/actor/createActor/check")
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .param("firstName", "Adrian")
+                .param("lastName", "Romanski")
+                .param("dateOfBirth", String.valueOf(LocalDate.of(1944, 3, 4)))
+        )
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("actorDTO"))
+                .andExpect(view().name("admin/adminHome"));
+    }
+
+    @Test
+    @DisplayName("Unhappy Path, GET, method = checkActorCreation")
+    void checkActorCreationUnHappy() throws Exception {
+        //given
+        ActorDTO actorDTO = new ActorDTO();
+
+        //when
+        when(actorService.createActor(any(ActorDTO.class))).thenReturn(actorDTO);
+
+        mockMvc.perform(post("/admin/actor/createActor/check")
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .param("firstName", "a")
+                .param("lastName", "r")
+                .param("dateOfBirth", "2212-231-21")
+        )
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("actorDTO"))
+                .andExpect(view().name("admin/actor/createActorForm"));
     }
 }
