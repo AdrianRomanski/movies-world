@@ -121,7 +121,10 @@ public class ActorServiceImpl implements ActorService {
         Actor actor = actorRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(id, Actor.class));
         Actor updatedActor = actorMapper.actorDTOToActor(actorDTO);
-        actor.getAwards().forEach(award -> updatedActor.getAwards().add(award));
+        actor.getAwards()
+                .forEach(award -> updatedActor.getAwards().add(award));
+        actor.getMovies()
+                .forEach(movie -> updatedActor.getMovies().add(movie));
         updatedActor.setId(id);
         actorRepository.save(updatedActor);
         return actorMapper.actorToActorDTO(updatedActor);

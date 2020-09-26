@@ -60,4 +60,24 @@ public class AdminActorController {
         return "admin/actor/actorImageUplForm";
     }
 
+
+    @GetMapping("admin/actor/update/{id}")
+    public String updateActor(Model model, @PathVariable String id) {
+        model.addAttribute("actorDTO", actorService.getActorByID(Long.valueOf(id)));
+        return "admin/actor/updateActorForm";
+    }
+
+
+    @PostMapping("admin/actor/update/check")
+    public String checkActorUpdate(@Valid @ModelAttribute("actorDTO") ActorDTO actorDTO,
+                                      BindingResult bindingResult)  {
+        if(bindingResult.hasErrors()){
+            bindingResult.getAllErrors().forEach(objectError -> {
+                log.warn(objectError.getDefaultMessage());
+            });
+            return "admin/actor/updateActorForm";
+        }
+        actorService.updateActor(actorDTO.getId(), actorDTO);
+        return "redirect:/admin/actor/showActors/page/1";
+    }
 }
