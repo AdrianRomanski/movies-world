@@ -49,14 +49,15 @@ public class AdminActorController {
 
     @PostMapping("/admin/actor/createActor/check")
     public String checkActorCreation(@Valid @ModelAttribute("actorDTO") ActorDTO actorDTO,
-                                     BindingResult bindingResult) {
+                                     BindingResult bindingResult, Model model) {
         if(bindingResult.hasErrors()) {
             bindingResult.getAllErrors()
                     .forEach(objectError -> log.warn(objectError.getDefaultMessage()));
             return "admin/actor/createActorForm";
         }
-        actorService.createActor(actorDTO);
-        return "admin/adminHome";
+        ActorDTO savedActor = actorService.createActor(actorDTO);
+        model.addAttribute("actorDTO", savedActor);
+        return "admin/actor/actorImageUplForm";
     }
 
 }
