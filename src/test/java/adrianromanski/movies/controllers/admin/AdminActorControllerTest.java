@@ -176,4 +176,20 @@ class AdminActorControllerTest {
                 .andExpect(model().attributeExists("actorDTO"))
                 .andExpect(view().name("admin/actor/updateActorForm"));
     }
+
+
+    @Test
+    @DisplayName("GET, method = deleteActor")
+    void deleteActor() throws Exception {
+        //given
+        ActorDTO actorDTO = new ActorDTO();
+
+        //when
+        when(actorService.getActorByID(anyLong())).thenReturn(actorDTO);
+
+        //then
+        mockMvc.perform(get("/admin/actor/delete/1"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/admin/actor/showActors/page/1"));
+    }
 }

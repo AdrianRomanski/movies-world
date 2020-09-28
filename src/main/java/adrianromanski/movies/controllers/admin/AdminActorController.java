@@ -80,4 +80,11 @@ public class AdminActorController {
         actorService.updateActor(actorDTO.getId(), actorDTO);
         return "redirect:/admin/actor/showActors/page/1";
     }
+
+
+    @GetMapping("admin/actor/delete/{id}")
+    public String deleteActor(@PathVariable String id) {
+        actorService.deleteActorByID(Long.valueOf(id));
+        return "redirect:/admin/actor/showActors/page/1";
+    }
 }

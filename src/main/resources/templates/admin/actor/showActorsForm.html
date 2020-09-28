@@ -61,7 +61,8 @@
                                            role="button">Update Actor</a>
                                     </td>
                                     <td class="col-md-1">
-                                        <a class="btn btn-danger" href="#" role="button">Delete Actor</a>
+                                        <a class="btn btn-danger" href="#" th:href="@{'/admin/actor/delete/' + ${actor.id}}"
+                                           role="button">Delete Actor</a>
                                     </td>
                                 </tr>
                             </table>
