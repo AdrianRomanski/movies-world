@@ -25,8 +25,23 @@
         <org.projectlombok.version>1.18.12</org.projectlombok.version>
     </properties>
 
-    <dependencies>
 
+    <profiles>
+        <profile>
+            <id>development</id>
+            <dependencies>
+                <dependency>
+                    <groupId>com.h2database</groupId>
+                    <artifactId>h2</artifactId>
+                    <scope>runtime</scope>
+                </dependency>
+            </dependencies>
+        </profile>
+    </profiles>
+
+
+
+    <dependencies>
         <!-- web -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -40,7 +55,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -58,7 +72,6 @@
             <scope>runtime</scope>
             <optional>true</optional>
         </dependency>
-
         <!-- annotation processors-->
         <dependency>
             <groupId>org.mapstruct</groupId>
@@ -71,31 +84,11 @@
             <version>${org.projectlombok.version}</version>
             <scope>provided</scope>
         </dependency>
-
-
         <!--databases-->
-        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <scope>runtime</scope>
-        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
-
-
-        <!--security-->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-starter-security</artifactId>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>org.thymeleaf.extras</groupId>-->
-<!--            <artifactId>thymeleaf-extras-springsecurity5</artifactId>-->
-<!--            <version>3.0.4.RELEASE</version>-->
-<!--        </dependency>-->
-
         <!--testing-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -112,31 +105,41 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
         </dependency>
-    <!--Boostrap-->
-    <dependency>
-        <groupId>org.webjars</groupId>
-        <artifactId>bootstrap</artifactId>
-        <version>3.3.7-1</version>
-    </dependency>
-
-    <!--AOP-->
-    <dependency>
-        <groupId>org.springframework</groupId>
-        <artifactId>spring-aop</artifactId>
-        <scope>compile</scope>
-    </dependency>
-    <dependency>
-        <groupId>org.aspectj</groupId>
-        <artifactId>aspectjweaver</artifactId>
-        <scope>compile</scope>
-    </dependency>
+        <!--Boostrap-->
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>bootstrap</artifactId>
+            <version>3.3.7-1</version>
+        </dependency>
+        <!--AOP-->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-aop</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <scope>compile</scope>
+        </dependency>
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
             <version>28.2-jre</version>
         </dependency>
-
     </dependencies>
+    <!--security-->
+    <!--        <dependency>-->
+    <!--            <groupId>org.springframework.boot</groupId>-->
+    <!--            <artifactId>spring-boot-starter-security</artifactId>-->
+    <!--        </dependency>-->
+    <!--        <dependency>-->
+    <!--            <groupId>org.thymeleaf.extras</groupId>-->
+    <!--            <artifactId>thymeleaf-extras-springsecurity5</artifactId>-->
+    <!--            <version>3.0.4.RELEASE</version>-->
+    <!--        </dependency>-->
+
+
     <build>
         <plugins>
             <plugin>
@@ -148,7 +151,6 @@
                 <groupId>pl.project13.maven</groupId>
                 <artifactId>git-commit-id-plugin</artifactId>
                 <version>4.0.0</version>
-                <!--Trying to satisfy heroku-->
                 <configuration>
                     <failOnNoGitDirectory>false</failOnNoGitDirectory>
                 </configuration>
@@ -181,8 +183,6 @@
                 <version>3.8.0</version>
                 <configuration>
                     <release>11</release>
-<!--                    <source>11</source>-->
-<!--                    <target>11</target>-->
                     <annotationProcessorPaths>
                         <path>
                             <groupId>org.mapstruct</groupId>
