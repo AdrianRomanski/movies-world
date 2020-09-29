@@ -2,6 +2,7 @@ package adrianromanski.movies.services.movie;
 
 import adrianromanski.movies.aspects.creation_log.LogCreation;
 import adrianromanski.movies.aspects.paging_log.LogPaging;
+import adrianromanski.movies.aspects.update_log.LogUpdate;
 import adrianromanski.movies.domain.award.MovieAward;
 import adrianromanski.movies.domain.base_entity.Category;
 import adrianromanski.movies.domain.base_entity.Movie;
@@ -243,6 +244,7 @@ public class MovieServiceImpl implements MovieService {
       * @throws ResourceNotFoundException if not found
       */
      @Override
+     @LogUpdate
        public MovieDTO updateMovie(Long id, MovieDTO movieDTO) {
        movieRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(id, Movie.class));
@@ -284,6 +286,7 @@ public class MovieServiceImpl implements MovieService {
      * @throws ResourceNotFoundException if not found
      */
     @Override
+    @LogUpdate
     public MovieDTO updateMovieFields(Long id, MovieDTO movieDTO) {
         Movie movie = movieRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(id, Movie.class));
@@ -327,25 +330,4 @@ public class MovieServiceImpl implements MovieService {
         awardRepository.deleteById(awardID);
     }
 
-
-
-
-    //
-//    /**
-//     * @param firstName of Actor
-//     * @param lastName of Actor
-//     * @return list of Movies with that Actor
-//     * @throws ResourceNotFoundException if not found
-//     */
-//    @Override
-//    public List<MovieDTO> findAllMoviesWithActor(String firstName, String lastName) {
-//        jmsTextMessageService.sendTextMessage("Finding movies for Actor:" + firstName + " " + lastName);
-//        Actor actor = actorRepository.findByFirstNameAndAndLastName(firstName, lastName)
-//                .orElseThrow(() -> new ResourceNotFoundException(firstName, lastName, Actor.class));
-//        jmsTextMessageService.sendTextMessage("Founded " + actor.getMovies().size()  + " movies");
-//        return actor.getMovies()
-//                .stream()
-//                .map(movieMapper::movieToMovieDTO)
-//                .collect(toList());
-//    }
 }

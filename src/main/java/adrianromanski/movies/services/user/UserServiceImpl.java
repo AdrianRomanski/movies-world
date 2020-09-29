@@ -1,6 +1,7 @@
 package adrianromanski.movies.services.user;
 
 import adrianromanski.movies.aspects.creation_log.LogCreation;
+import adrianromanski.movies.aspects.update_log.LogUpdate;
 import adrianromanski.movies.domain.base_entity.Movie;
 import adrianromanski.movies.domain.person.User;
 import adrianromanski.movies.domain.review.MovieReview;
@@ -133,6 +134,7 @@ public class UserServiceImpl implements UserService{
      * @throws ResourceNotFoundException if not found
      */
     @Override
+    @LogUpdate
     public UserDTO updateUser(Long id, UserDTO userDTO) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(id, User.class));

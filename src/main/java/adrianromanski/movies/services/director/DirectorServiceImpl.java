@@ -1,6 +1,7 @@
 package adrianromanski.movies.services.director;
 
 import adrianromanski.movies.aspects.creation_log.LogCreation;
+import adrianromanski.movies.aspects.update_log.LogUpdate;
 import adrianromanski.movies.domain.award.DirectorAward;
 import adrianromanski.movies.domain.person.Director;
 import adrianromanski.movies.exceptions.ResourceNotFoundException;
@@ -87,6 +88,7 @@ public class DirectorServiceImpl implements DirectorService {
      * @return DirectorDTO
      */
     @Override
+    @LogUpdate
     public DirectorDTO updateDirector(Long id, DirectorDTO directorDTO) {
         Director  director = directorRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(id, Director.class));

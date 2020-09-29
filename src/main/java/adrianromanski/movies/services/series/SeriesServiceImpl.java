@@ -1,6 +1,7 @@
 package adrianromanski.movies.services.series;
 
 import adrianromanski.movies.aspects.creation_log.LogCreation;
+import adrianromanski.movies.aspects.update_log.LogUpdate;
 import adrianromanski.movies.domain.base_entity.Episode;
 import adrianromanski.movies.domain.base_entity.Series;
 import adrianromanski.movies.exceptions.ResourceNotFoundException;
@@ -73,6 +74,7 @@ public class SeriesServiceImpl implements SeriesService {
      * @throws ResourceNotFoundException if not found
      */
     @Override
+    @LogUpdate
     public SeriesDTO updateSeries(Long id, SeriesDTO seriesDTO) {
         Series series = seriesRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(id, Series.class));
@@ -92,6 +94,7 @@ public class SeriesServiceImpl implements SeriesService {
      * @throws ResourceNotFoundException if Series or Episode not found
      */
     @Override
+    @LogUpdate
     public EpisodeDTO updateEpisode(Long seriesID, Long episodeID, EpisodeDTO episodeDTO) {
         Series series = seriesRepository.findById(seriesID)
                 .orElseThrow(() -> new ResourceNotFoundException(seriesID, Series.class));

@@ -2,6 +2,7 @@ package adrianromanski.movies.services.category;
 
 import adrianromanski.movies.aspects.creation_log.LogCreation;
 import adrianromanski.movies.aspects.paging_log.LogPaging;
+import adrianromanski.movies.aspects.update_log.LogUpdate;
 import adrianromanski.movies.domain.base_entity.Category;
 import adrianromanski.movies.domain.base_entity.Movie;
 import adrianromanski.movies.exceptions.ResourceNotFoundException;
@@ -140,6 +141,7 @@ public class CategoryServiceImpl implements CategoryService {
      * @throws ResourceNotFoundException if not found
      */
     @Override
+    @LogUpdate
     public CategoryDTO updateCategory(Long id, CategoryDTO categoryDTO) {
         categoryRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(id, Category.class));

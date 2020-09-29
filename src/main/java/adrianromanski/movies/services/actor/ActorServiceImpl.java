@@ -2,6 +2,7 @@ package adrianromanski.movies.services.actor;
 
 import adrianromanski.movies.aspects.creation_log.LogCreation;
 import adrianromanski.movies.aspects.paging_log.LogPaging;
+import adrianromanski.movies.aspects.update_log.LogUpdate;
 import adrianromanski.movies.domain.award.ActorAward;
 import adrianromanski.movies.domain.award.Award;
 import adrianromanski.movies.domain.person.Actor;
@@ -117,6 +118,7 @@ public class ActorServiceImpl implements ActorService {
      * @throws ResourceNotFoundException if not found
      */
     @Override
+    @LogUpdate
     public ActorDTO updateActor(Long id, ActorDTO actorDTO) {
         Actor actor = actorRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(id, Actor.class));

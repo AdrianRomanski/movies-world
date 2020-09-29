@@ -28,13 +28,6 @@ public class NewsServiceImpl implements NewsService {
     EventMapper eventMapper;
 
 
-//    @Override
-//    public EventDTO addEvent(Event event) {
-//        eventRepository.save(event);
-//        return eventMapper.eventToEventDTO(event);
-//    }
-
-
     /**
      * Returns News with matching id
      */
@@ -43,7 +36,6 @@ public class NewsServiceImpl implements NewsService {
         return eventRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(id, News.class));
     }
-
 
     /**
      * Returns 3 Latest News
