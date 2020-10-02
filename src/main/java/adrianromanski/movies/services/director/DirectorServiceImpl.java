@@ -1,6 +1,7 @@
 package adrianromanski.movies.services.director;
 
 import adrianromanski.movies.aspects.creation_log.LogCreation;
+import adrianromanski.movies.aspects.delete_log.LogDelete;
 import adrianromanski.movies.aspects.update_log.LogUpdate;
 import adrianromanski.movies.domain.award.DirectorAward;
 import adrianromanski.movies.domain.person.Director;
@@ -131,6 +132,7 @@ public class DirectorServiceImpl implements DirectorService {
      * @throws ResourceNotFoundException if not found
      */
     @Override
+    @LogDelete
     public void deleteDirectorByID(Long id) {
         directorRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(id, Director.class));
@@ -144,6 +146,7 @@ public class DirectorServiceImpl implements DirectorService {
      * @throws ResourceNotFoundException if not found
      */
     @Override
+    @LogDelete
     public void deleteAwardByID(Long directorID, Long awardID) {
         Director  director = directorRepository.findById(directorID)
                 .orElseThrow(() -> new ResourceNotFoundException(directorID, Director.class));

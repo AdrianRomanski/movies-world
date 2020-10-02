@@ -1,6 +1,7 @@
 package adrianromanski.movies.services.movie;
 
 import adrianromanski.movies.aspects.creation_log.LogCreation;
+import adrianromanski.movies.aspects.delete_log.LogDelete;
 import adrianromanski.movies.aspects.paging_log.LogPaging;
 import adrianromanski.movies.aspects.update_log.LogUpdate;
 import adrianromanski.movies.domain.award.MovieAward;
@@ -302,6 +303,7 @@ public class MovieServiceImpl implements MovieService {
      * @throws ResourceNotFoundException if not found
      */
     @Override
+    @LogDelete
     public void deleteMovieByID(Long id) {
         Movie movie = movieRepository.findById(id)
            .orElseThrow(() -> new ResourceNotFoundException(id, Movie.class));
@@ -320,6 +322,7 @@ public class MovieServiceImpl implements MovieService {
      * @throws ResourceNotFoundException if either Award or Movie not found
      */
     @Override
+    @LogDelete
     public void deleteAwardByID(Long movieID, Long awardID) {
         Movie movie = movieRepository.findById(movieID)
                 .orElseThrow(() -> new ResourceNotFoundException(movieID, Movie.class));

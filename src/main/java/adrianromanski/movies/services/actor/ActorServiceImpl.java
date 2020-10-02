@@ -1,6 +1,7 @@
 package adrianromanski.movies.services.actor;
 
 import adrianromanski.movies.aspects.creation_log.LogCreation;
+import adrianromanski.movies.aspects.delete_log.LogDelete;
 import adrianromanski.movies.aspects.paging_log.LogPaging;
 import adrianromanski.movies.aspects.update_log.LogUpdate;
 import adrianromanski.movies.domain.award.ActorAward;
@@ -161,6 +162,7 @@ public class ActorServiceImpl implements ActorService {
      * @throws ResourceNotFoundException if not found
      */
     @Override
+    @LogDelete
     public void deleteActorByID(Long id) {
         actorRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(id, Actor.class));
@@ -174,6 +176,7 @@ public class ActorServiceImpl implements ActorService {
      * @throws ResourceNotFoundException if Actor or Award not found
      */
     @Override
+    @LogDelete
     public void deleteAward(Long actorID, Long awardID) {
         Actor actor = actorRepository.findById(actorID)
                 .orElseThrow(() -> new ResourceNotFoundException(actorID, Actor.class));

@@ -1,6 +1,7 @@
 package adrianromanski.movies.services.series;
 
 import adrianromanski.movies.aspects.creation_log.LogCreation;
+import adrianromanski.movies.aspects.delete_log.LogDelete;
 import adrianromanski.movies.aspects.update_log.LogUpdate;
 import adrianromanski.movies.domain.base_entity.Episode;
 import adrianromanski.movies.domain.base_entity.Series;
@@ -117,6 +118,7 @@ public class SeriesServiceImpl implements SeriesService {
      * @param id of the Series we want to delete
      */
     @Override
+    @LogDelete
     public void deleteSeries(Long id) {
         seriesRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(id, Series.class));
@@ -130,6 +132,7 @@ public class SeriesServiceImpl implements SeriesService {
      * @throws ResourceNotFoundException Episode or Series not found
      */
     @Override
+    @LogDelete
     public void deleteEpisode(Long seriesID, Long episodeID) {
         Series series = seriesRepository.findById(seriesID)
                 .orElseThrow(() -> new ResourceNotFoundException(seriesID, Series.class));

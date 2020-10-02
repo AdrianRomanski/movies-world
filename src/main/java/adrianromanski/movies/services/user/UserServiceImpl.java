@@ -1,6 +1,7 @@
 package adrianromanski.movies.services.user;
 
 import adrianromanski.movies.aspects.creation_log.LogCreation;
+import adrianromanski.movies.aspects.delete_log.LogDelete;
 import adrianromanski.movies.aspects.update_log.LogUpdate;
 import adrianromanski.movies.domain.base_entity.Movie;
 import adrianromanski.movies.domain.person.User;
@@ -181,6 +182,7 @@ public class UserServiceImpl implements UserService{
      * @throws ResourceNotFoundException if not found
      */
     @Override
+    @LogDelete
     public void deleteUser(Long id) {
         userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(id, User.class));
@@ -194,6 +196,7 @@ public class UserServiceImpl implements UserService{
      * @throws ResourceNotFoundException if either Move or User not found
      */
     @Override
+    @LogDelete
     public void deleteFavouriteMovie(Long userID, Long movieID) {
         User user = userRepository.findById(userID)
                 .orElseThrow(() -> new ResourceNotFoundException(userID, User.class));
@@ -212,6 +215,7 @@ public class UserServiceImpl implements UserService{
      * @throws ResourceNotFoundException if either Move or User not found
      */
     @Override
+    @LogDelete
     public void deleteWatchedMovie(Long userID, Long movieID) {
         User user = userRepository.findById(userID)
                 .orElseThrow(() -> new ResourceNotFoundException(userID, User.class));
@@ -231,6 +235,7 @@ public class UserServiceImpl implements UserService{
      * @throws ResourceNotFoundException if User or Review not found
      */
     @Override
+    @LogDelete
     public void deleteMovieReview(Long userID, Long reviewID) {
         User user = userRepository.findById(userID)
                 .orElseThrow(() -> new ResourceNotFoundException(userID, User.class));

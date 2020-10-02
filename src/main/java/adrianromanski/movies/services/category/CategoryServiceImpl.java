@@ -1,6 +1,7 @@
 package adrianromanski.movies.services.category;
 
 import adrianromanski.movies.aspects.creation_log.LogCreation;
+import adrianromanski.movies.aspects.delete_log.LogDelete;
 import adrianromanski.movies.aspects.paging_log.LogPaging;
 import adrianromanski.movies.aspects.update_log.LogUpdate;
 import adrianromanski.movies.domain.base_entity.Category;
@@ -158,6 +159,7 @@ public class CategoryServiceImpl implements CategoryService {
      * @throws ResourceNotFoundException if not found
      */
     @Override
+    @LogDelete
     public void deleteCategoryByID(Long id) {
          categoryRepository.findById(id)
                   .orElseThrow(() -> new ResourceNotFoundException(id, Category.class));
