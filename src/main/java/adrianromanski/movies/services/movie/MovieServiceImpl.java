@@ -321,8 +321,8 @@ public class MovieServiceImpl implements MovieService {
      * @param awardID of the Award we want to delete
      * @throws ResourceNotFoundException if either Award or Movie not found
      */
-    @Override
     @LogDelete
+    @Override
     public void deleteAwardByID(Long movieID, Long awardID) {
         Movie movie = movieRepository.findById(movieID)
                 .orElseThrow(() -> new ResourceNotFoundException(movieID, Movie.class));

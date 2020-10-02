@@ -131,8 +131,8 @@ public class SeriesServiceImpl implements SeriesService {
      * @param episodeID ID of the Episode
      * @throws ResourceNotFoundException Episode or Series not found
      */
-    @Override
     @LogDelete
+    @Override
     public void deleteEpisode(Long seriesID, Long episodeID) {
         Series series = seriesRepository.findById(seriesID)
                 .orElseThrow(() -> new ResourceNotFoundException(seriesID, Series.class));

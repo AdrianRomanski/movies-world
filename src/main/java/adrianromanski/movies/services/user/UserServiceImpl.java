@@ -195,8 +195,8 @@ public class UserServiceImpl implements UserService{
      * @param movieID of the Movie we want to delete from the Set
      * @throws ResourceNotFoundException if either Move or User not found
      */
-    @Override
     @LogDelete
+    @Override
     public void deleteFavouriteMovie(Long userID, Long movieID) {
         User user = userRepository.findById(userID)
                 .orElseThrow(() -> new ResourceNotFoundException(userID, User.class));

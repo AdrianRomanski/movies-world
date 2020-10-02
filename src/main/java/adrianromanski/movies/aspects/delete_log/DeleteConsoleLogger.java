@@ -24,9 +24,11 @@ public class DeleteConsoleLogger {
         System.out.println("Successfully Deleted");
     }
 
+
     @AfterThrowing(value = "logDelete()", throwing = "exception")
     public void onException(Exception exception) {
         log.info("Delete exception: " + exception.getClass().getSimpleName());
     }
+
 
 }

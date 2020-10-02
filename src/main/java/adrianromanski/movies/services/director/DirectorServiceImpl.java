@@ -145,8 +145,8 @@ public class DirectorServiceImpl implements DirectorService {
      * @param awardID of the Award we want to delete
      * @throws ResourceNotFoundException if not found
      */
-    @Override
     @LogDelete
+    @Override
     public void deleteAwardByID(Long directorID, Long awardID) {
         Director  director = directorRepository.findById(directorID)
                 .orElseThrow(() -> new ResourceNotFoundException(directorID, Director.class));
