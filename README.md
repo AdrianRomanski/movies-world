@@ -8,10 +8,6 @@
 
 #### Admin 
 - https://movies-world-romanski.herokuapp.com/admin
-- https://movies-world-romanski.herokuapp.com/h2 
-    - JDBC URL: jdbc:h2:mem:school
-    - User Name: stephen
-    - Password: king
 - https://movies-world-romanski.herokuapp.com/actuator/info
 
 ## <div align="left"> Running movies-world locally </div>
