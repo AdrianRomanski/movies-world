@@ -107,7 +107,7 @@
                             <td class="category-info" th:text="${movie.year}"></td>
                             <td class="category-info" th:text="${movie.description}"></td>
                             <td class="col-md-1">
-                                <a class="btn btn-danger" href="#" role="button">Remove</a>
+                                <a class="btn btn-danger" href="#" th:href="@{'/admin/actor/' + ${actorDTO.id} + '/deleteMovie/' + ${movie.id}}" role="button">Remove</a>
                             </td>
                         </tr>
                     </table>

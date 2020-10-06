@@ -6,6 +6,7 @@ import adrianromanski.movies.aspects.paging_log.LogPaging;
 import adrianromanski.movies.aspects.update_log.LogUpdate;
 import adrianromanski.movies.domain.award.ActorAward;
 import adrianromanski.movies.domain.award.Award;
+import adrianromanski.movies.domain.base_entity.Movie;
 import adrianromanski.movies.domain.person.Actor;
 import adrianromanski.movies.exceptions.ResourceNotFoundException;
 import adrianromanski.movies.mapper.award.ActorAwardMapper;
@@ -14,6 +15,7 @@ import adrianromanski.movies.model.award.ActorAwardDTO;
 import adrianromanski.movies.model.base_entity.MovieDTO;
 import adrianromanski.movies.model.person.ActorDTO;
 import adrianromanski.movies.repositories.award.AwardRepository;
+import adrianromanski.movies.repositories.base_entity.MovieRepository;
 import adrianromanski.movies.repositories.pages.ActorPageRepository;
 import adrianromanski.movies.repositories.person.ActorRepository;
 import lombok.AllArgsConstructor;
@@ -31,6 +33,7 @@ import static java.util.stream.Collectors.toList;
 public class ActorServiceImpl implements ActorService {
 
     private final ActorRepository actorRepository;
+    private final MovieRepository movieRepository;
     private final AwardRepository awardRepository;
     private final ActorPageRepository actorPageRepository;
     private final ActorMapper actorMapper;
@@ -167,6 +170,20 @@ public class ActorServiceImpl implements ActorService {
         actorRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(id, Actor.class));
         actorRepository.deleteById(id);
+    }
+
+
+    @Override
+    @LogDelete
+    public void deleteMovie(Long actorID, Long movieID) {
+        Actor actor = actorRepository.findById(actorID)
+                .orElseThrow(() -> new ResourceNotFoundException(actorID, Actor.class));
+        Movie movie = actor.getMovieOptional(movieID)
+                .orElseThrow(() -> new ResourceNotFoundException(movieID, Movie.class));
+        actor.getMovies().remove(movie);
+        movie.getActors().remove(actor);
+        actorRepository.save(actor);
+        movieRepository.save(movie);
     }
 
 

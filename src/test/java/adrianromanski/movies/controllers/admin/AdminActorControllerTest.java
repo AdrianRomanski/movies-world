@@ -213,4 +213,20 @@ class AdminActorControllerTest {
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/admin/actor/showActors/page/1"));
     }
+
+
+    @Test
+    @DisplayName("GET, method = deleteMovie")
+    void deleteMovie() throws Exception {
+        //given
+        ActorDTO actorDTO = new ActorDTO();
+
+        //when
+        when(actorService.getActorByID(anyLong())).thenReturn(actorDTO);
+
+        //then
+        mockMvc.perform(get("/admin/actor/1/deleteMovie/1"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/admin/actor/showActor/1"));
+    }
 }

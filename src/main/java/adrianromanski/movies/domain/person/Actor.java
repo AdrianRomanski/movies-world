@@ -20,7 +20,6 @@ import java.util.Optional;
 @NoArgsConstructor
 public class Actor extends Person {
 
-//    private Double rating;
     private int age;
     private String country;
 
@@ -55,17 +54,15 @@ public class Actor extends Person {
             inverseJoinColumns = @JoinColumn(name = "movie_id"))
     private List<Movie> movies = new ArrayList<>();
 
+    public Optional<Movie> getMovieOptional(Long movieID) {
+        return this.getMovies().stream()
+                .filter(movie -> movie.getId().equals(movieID))
+                .findAny();
+    }
+
     public int getAge() {
         Period diff = Period.between(this.getDateOfBirth(),LocalDate.now());
         return diff.getYears();
     }
 }
-
-    //    public  Double getRating() {
-//        ArrayList<Integer> scores = new ArrayList<>();
-//        this.getMovies()
-//                .forEach(m -> m.getReviews()
-//                        .forEach(r -> scores.add(r.getScore())));
-//        return (double) scores.stream().reduce(0, Integer::sum) / scores.size();
-//    }
 

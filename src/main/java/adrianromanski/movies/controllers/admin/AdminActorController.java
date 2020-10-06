@@ -97,4 +97,14 @@ public class AdminActorController {
         actorService.deleteActorByID(Long.valueOf(id));
         return "redirect:/admin/actor/showActors/page/1";
     }
+
+
+    @GetMapping("admin/actor/{actorID}/deleteMovie/{movieID}")
+    public String deleteMovieFromActor(@PathVariable String actorID, @PathVariable String movieID, Model model) {
+        actorService.deleteMovie(Long.valueOf(actorID), Long.valueOf(movieID));
+        model.addAttribute("actorDTO", actorService.getActorByID(Long.valueOf(actorID)));
+        model.addAttribute("movies", movieService.findAllMoviesWithActor(Long.valueOf(actorID)));
+        return "redirect:/admin/actor/showActor/" + actorID;
+    }
+
 }

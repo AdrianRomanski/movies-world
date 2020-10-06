@@ -35,5 +35,7 @@ public interface ActorService {
     //DELETE
     void deleteActorByID(Long id);
 
+    void deleteMovie(Long actorID, Long movieID);
+
     void deleteAward(Long actorID, Long awardID);
 }

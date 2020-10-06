@@ -1,6 +1,7 @@
 package adrianromanski.movies.services.person;
 
 import adrianromanski.movies.domain.award.ActorAward;
+import adrianromanski.movies.domain.base_entity.Movie;
 import adrianromanski.movies.domain.person.Actor;
 import adrianromanski.movies.exceptions.ResourceNotFoundException;
 import adrianromanski.movies.mapper.award.ActorAwardMapper;
@@ -10,6 +11,7 @@ import adrianromanski.movies.mapper.person.ActorMapperImpl;
 import adrianromanski.movies.model.award.ActorAwardDTO;
 import adrianromanski.movies.model.person.ActorDTO;
 import adrianromanski.movies.repositories.award.AwardRepository;
+import adrianromanski.movies.repositories.base_entity.MovieRepository;
 import adrianromanski.movies.repositories.pages.ActorPageRepository;
 import adrianromanski.movies.repositories.person.ActorRepository;
 import adrianromanski.movies.services.actor.ActorService;
@@ -45,6 +47,9 @@ class ActorServiceImplTest {
     ActorRepository actorRepository;
 
     @Mock
+    MovieRepository movieRepository;
+
+    @Mock
     AwardRepository awardRepository;
 
     @Mock
@@ -69,7 +74,7 @@ class ActorServiceImplTest {
         ActorMapper actorMapper = new ActorMapperImpl();
         ActorAwardMapper awardMapper = new ActorAwardMapperImpl();
 
-        actorService = new ActorServiceImpl(actorRepository, awardRepository, actorPageRepository, actorMapper, awardMapper);
+        actorService = new ActorServiceImpl(actorRepository, movieRepository, awardRepository, actorPageRepository, actorMapper, awardMapper);
     }
 
 
@@ -232,6 +237,21 @@ class ActorServiceImplTest {
         assertThat(ex).isInstanceOf(ResourceNotFoundException.class);
 
         verify(actorRepository, times(0)).deleteById(anyLong());
+    }
+
+
+    @DisplayName("Happy Path, method = deleteMovie")
+    @Test
+    void deleteMovieHappyPath() {
+        Actor actor = getActor();
+        Movie movie = new Movie();
+        movie.setId(1L);
+        actor.getMovies().add(movie);
+        movie.getActors().add(actor);
+
+        when(actorRepository.findById(anyLong())).thenReturn(Optional.of(actor));
+
+        actorService.deleteMovie(1L, 1L);
     }
 
 
