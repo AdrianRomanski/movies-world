@@ -1,8 +1,10 @@
 package adrianromanski.movies.controllers.admin;
 
 import adrianromanski.movies.domain.person.Actor;
+import adrianromanski.movies.model.base_entity.MovieDTO;
 import adrianromanski.movies.model.person.ActorDTO;
 import adrianromanski.movies.services.actor.ActorService;
+import adrianromanski.movies.services.movie.MovieService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -31,6 +33,9 @@ class AdminActorControllerTest {
 
     @Mock
     ActorService actorService;
+
+    @Mock
+    MovieService movieService;
 
     @InjectMocks
     AdminActorController controller;
@@ -71,6 +76,22 @@ class AdminActorControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("actorDTO"))
                 .andExpect(view().name("admin/actor/createActorForm"));
+    }
+
+    @Test
+    @DisplayName("GET, method = showActor")
+    void showActor() throws Exception {
+        ActorDTO actorDTO = new ActorDTO();
+        List<MovieDTO> movieDTOS = Arrays.asList(new MovieDTO(), new MovieDTO());
+
+        when(movieService.findAllMoviesWithActor(anyLong())).thenReturn(movieDTOS);
+        when(actorService.getActorByID(anyLong())).thenReturn(actorDTO);
+
+        mockMvc.perform(get("/admin/actor/showActor/1"))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("actorDTO"))
+                .andExpect(model().attributeExists("movies"))
+                .andExpect(view().name("admin/actor/showActorForm"));
     }
 
 

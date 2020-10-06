@@ -3,6 +3,7 @@ package adrianromanski.movies.controllers.admin;
 import adrianromanski.movies.domain.person.Actor;
 import adrianromanski.movies.model.person.ActorDTO;
 import adrianromanski.movies.services.actor.ActorService;
+import adrianromanski.movies.services.movie.MovieService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -24,6 +25,7 @@ import java.util.stream.IntStream;
 public class AdminActorController {
 
     private final ActorService actorService;
+    private final MovieService movieService;
 
     @RequestMapping(value = "/admin/actor/showActors/page/{page}")
     public ModelAndView showActorsPaged(@PathVariable("page") int page) {
@@ -39,6 +41,14 @@ public class AdminActorController {
         modelAndView.addObject("actorsList", actorPage.getContent());
         return modelAndView;
     }
+
+    @GetMapping("admin/actor/showActor/{id}")
+    public String showActor(Model model, @PathVariable String id) {
+        model.addAttribute("actorDTO", actorService.getActorByID(Long.valueOf(id)));
+        model.addAttribute("movies", movieService.findAllMoviesWithActor(Long.valueOf(id)));
+        return "admin/actor/showActorForm";
+    }
+
 
     @GetMapping("admin/actor/createActor")
     public String createActor(Model model) {

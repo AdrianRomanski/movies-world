@@ -53,7 +53,7 @@ public class ImageActorController {
         var actorDTO = actorService.getActorByID(Long.valueOf(id));
         imageService.saveImageFile(actorDTO, file);
         model.addAttribute("actorDTO", actorDTO);
-        return "admin/adminHome";
+        return "admin/actor/showActorForm";
     }
 }
 

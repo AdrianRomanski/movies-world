@@ -85,7 +85,7 @@ class ImageActorControllerTest {
 
         mockMvc.perform(multipart("/actor/1/image").file(multipartFile))
                 .andExpect(status().is2xxSuccessful())
-                .andExpect(view().name("admin/adminHome"));
+                .andExpect(view().name("admin/actor/showActorForm"));
     }
 
 

@@ -53,11 +53,7 @@
                                     <td th:text="${actor.dateOfBirth}"></td>
                                     <td th:text="${actor.movies.size()}"></td>
                                     <td class="col-md-1">
-                                        <a class="btn btn-info" href="#" th:href="@{'/actor/' + ${actor.id} + '/image'}"
-                                           role="button">Change Image</a>
-                                    </td>
-                                    <td class="col-md-1">
-                                        <a class="btn btn-primary" href="#" th:href="@{'/admin/actor/update/' + ${actor.id}}"
+                                        <a class="btn btn-primary" href="#" th:href="@{'/admin/actor/showActor/' + ${actor.id}}"
                                            role="button">Update Actor</a>
                                     </td>
                                     <td class="col-md-1">
