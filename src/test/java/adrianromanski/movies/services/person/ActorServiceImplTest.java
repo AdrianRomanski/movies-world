@@ -9,6 +9,7 @@ import adrianromanski.movies.mapper.award.ActorAwardMapperImpl;
 import adrianromanski.movies.mapper.person.ActorMapper;
 import adrianromanski.movies.mapper.person.ActorMapperImpl;
 import adrianromanski.movies.model.award.ActorAwardDTO;
+import adrianromanski.movies.model.base_entity.MovieDTO;
 import adrianromanski.movies.model.person.ActorDTO;
 import adrianromanski.movies.repositories.award.AwardRepository;
 import adrianromanski.movies.repositories.base_entity.MovieRepository;
@@ -122,6 +123,20 @@ class ActorServiceImplTest {
     }
 
 
+    @DisplayName("Happy Path, method = getAllMoviesForActor")
+    @Test
+    void getAllMoviesForActor() {
+        Actor actor = Actor.builder().id(1L).build();
+        actor.setMovies(Arrays.asList(new Movie(), new Movie(), new Movie()));
+
+        when(actorRepository.findById(anyLong())).thenReturn(Optional.of(actor));
+
+        List<MovieDTO> returnDTO = actorService.getAllMoviesForActor(1L);
+
+        assertEquals(returnDTO.size(), 3);
+    }
+
+
     @DisplayName("Happy Path, method = createActor")
     @Test
     void createActor() {
@@ -131,6 +146,21 @@ class ActorServiceImplTest {
 
         assertEquals(returnDTO.getFirstName(), FIRST_NAME);
         assertEquals(returnDTO.getLastName(), LAST_NAME);
+    }
+
+
+    @DisplayName("Happy Path, method = addMovie")
+    @Test
+    void addMovieHappyPath() {
+        Actor actor = new Actor();
+        Movie movie = new Movie();
+
+        when(actorRepository.findById(anyLong())).thenReturn(Optional.of(actor));
+        when(movieRepository.findById(anyLong())).thenReturn(Optional.of(movie));
+
+        ActorDTO returnDTO = actorService.addMovie(1L, 1L);
+
+        assertEquals(returnDTO.getMoviesDTO().size(), 1);
     }
 
 

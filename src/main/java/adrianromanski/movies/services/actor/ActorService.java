@@ -25,6 +25,8 @@ public interface ActorService {
     //POST
     ActorDTO createActor(ActorDTO actorDTO);
 
+    ActorDTO addMovie(Long actorID, Long movieID);
+
     ActorAwardDTO addAward(Long actorID, ActorAwardDTO awardDTO);
 
     //PUT

@@ -96,6 +96,20 @@ public class ActorServiceImpl implements ActorService {
     }
 
 
+    @Override
+    public ActorDTO addMovie(Long actorID, Long movieID) {
+        Actor actor = actorRepository.findById(actorID)
+                .orElseThrow(() -> new ResourceNotFoundException(actorID, Actor.class));
+        Movie movie = movieRepository.findById(movieID)
+                .orElseThrow(() -> new ResourceNotFoundException(movieID, Movie.class));
+        actor.getMovies().add(movie);
+        movie.getActors().add(actor);
+        actorRepository.save(actor);
+        movieRepository.save(movie);
+        return actorMapper.actorToActorDTO(actor);
+    }
+
+
     /**
      * @param actorID of the Actor to add Award
      * @param awardDTO object for adding

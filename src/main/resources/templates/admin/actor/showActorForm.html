@@ -112,7 +112,8 @@
                         </tr>
                     </table>
                     <div class="col-md-12 single-infos-buttons">
-                        <a class="btn btn-success btn-lg" href="#" role="button">Add New</a>
+                        <a class="btn btn-success btn-lg" href="#" th:href="@{'/admin/actor/'+ ${actorDTO.id} + '/addMovies/page/1'}"
+                           role="button">Add New</a>
                     </div>
                 </div>
             </div>

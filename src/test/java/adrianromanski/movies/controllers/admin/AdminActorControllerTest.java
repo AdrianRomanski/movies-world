@@ -1,5 +1,6 @@
 package adrianromanski.movies.controllers.admin;
 
+import adrianromanski.movies.domain.base_entity.Movie;
 import adrianromanski.movies.domain.person.Actor;
 import adrianromanski.movies.model.base_entity.MovieDTO;
 import adrianromanski.movies.model.person.ActorDTO;
@@ -174,6 +175,51 @@ class AdminActorControllerTest {
                 .andExpect(status().is3xxRedirection())
                 .andExpect(model().attributeExists("actorDTO"))
                 .andExpect(view().name("redirect:/admin/actor/showActors/page/1"));
+    }
+
+
+    @Test
+    @DisplayName("GET, method = showMovies")
+    void showMovies() throws Exception {
+        // Given
+        ActorDTO actorDTO = new ActorDTO();
+
+        List<Movie> movieList = Arrays.asList(new Movie(), new Movie(), new Movie());
+        PageRequest pageable = PageRequest.of(0, 10);
+        Page<Movie> moviePage = new PageImpl<>(movieList, pageable, movieList.size());
+
+        List<MovieDTO> movieListDTO = Arrays.asList(new MovieDTO(), new MovieDTO(), new MovieDTO());
+        PageRequest pageableDTO = PageRequest.of(0, 10);
+        Page<MovieDTO> moviePageDTO = new PageImpl<>(movieListDTO, pageableDTO, movieListDTO.size());
+
+        //When
+        when(movieService.getAllMoviesPaged(pageable)).thenReturn(moviePage);
+        when(movieService.getPageMovieDTO(moviePage, pageable)).thenReturn(moviePageDTO);
+
+        when(actorService.getActorByID(anyLong())).thenReturn(actorDTO);
+
+        //then
+        mockMvc.perform(get("/admin/actor/1/addMovies/page/1"))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("moviesDTOList"))
+                .andExpect(view().name("admin/actor/addMoviesForm"));
+    }
+
+
+    @Test
+    @DisplayName("GET, method = addMovieToActor")
+    void addMovieToActor() throws Exception {
+        ActorDTO actorDTO = new ActorDTO();
+        MovieDTO movieDTO = new MovieDTO();
+
+        when(actorService.getActorByID(anyLong())).thenReturn(actorDTO);
+        when(movieService.getMovieByID(anyLong())).thenReturn(movieDTO);
+
+        mockMvc.perform(get("/admin/actor/1/movie/1"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(model().attributeExists("actorDTO"))
+                .andExpect(model().attributeExists("movies"))
+                .andExpect(view().name("redirect:/admin/actor/showActor/1"));
     }
 
 

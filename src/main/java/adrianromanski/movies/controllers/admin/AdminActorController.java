@@ -1,6 +1,8 @@
 package adrianromanski.movies.controllers.admin;
 
+import adrianromanski.movies.domain.base_entity.Movie;
 import adrianromanski.movies.domain.person.Actor;
+import adrianromanski.movies.model.base_entity.MovieDTO;
 import adrianromanski.movies.model.person.ActorDTO;
 import adrianromanski.movies.services.actor.ActorService;
 import adrianromanski.movies.services.movie.MovieService;
@@ -89,6 +91,34 @@ public class AdminActorController {
         }
         actorService.updateActor(actorDTO.getId(), actorDTO);
         return "redirect:/admin/actor/showActors/page/1";
+    }
+
+
+    @RequestMapping(value = "/admin/actor/{id}/addMovies/page/{page}")
+    public ModelAndView showMoviesPaged(@PathVariable int page, @PathVariable String id) {
+        ModelAndView modelAndView = new ModelAndView("admin/actor/addMoviesForm");
+        PageRequest pageable = PageRequest.of(page - 1, 10);
+        Page<Movie> moviePage = movieService.getAllMoviesPaged(pageable);
+        Page<MovieDTO> movieDTOPage = movieService.getPageMovieDTO(moviePage, pageable);
+        int totalPages = moviePage.getTotalPages();
+        if(totalPages > 0) {
+            List<Integer> pageNumbers = IntStream.rangeClosed(1,totalPages).boxed().collect(Collectors.toList());
+            modelAndView.addObject("pageNumbers", pageNumbers);
+        }
+        modelAndView.addObject("actorDTO", actorService.getActorByID(Long.valueOf(id)));
+        modelAndView.addObject("activeMovieList", true);
+        modelAndView.addObject("moviesDTOList", movieDTOPage.getContent());
+        return modelAndView;
+    }
+
+
+    @GetMapping("admin/actor/{actorID}/movie/{movieID}")
+    public String addMovieToActor(@PathVariable String actorID, @PathVariable String movieID,
+                            Model model) {
+        actorService.addMovie(Long.valueOf(actorID), Long.valueOf(movieID));
+        model.addAttribute("actorDTO", actorService.getActorByID(Long.valueOf(actorID)));
+        model.addAttribute("movies", movieService.findAllMoviesWithActor(Long.valueOf(movieID)));
+        return "redirect:/admin/actor/showActor/" + actorID;
     }
 
 
