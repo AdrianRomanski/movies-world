@@ -150,6 +150,19 @@ public class ActorServiceImpl implements ActorService {
         return actorMapper.actorToActorDTO(updatedActor);
     }
 
+    @Override
+    @LogUpdate
+    public ActorDTO updateActorFields(Long id, ActorDTO actorDTO) {
+        Actor actor = actorRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(id, Actor.class));
+        actor.setCountry(actorDTO.getCountry());
+        actor.setDateOfBirth(actorDTO.getDateOfBirth());
+        actor.setFirstName(actorDTO.getFirstName());
+        actor.setLastName(actorDTO.getLastName());
+        actorRepository.save(actor);
+        return actorMapper.actorToActorDTO(actor);
+    }
+
 
     /**
      * @param actorID of The Actor we want to update Award
@@ -172,6 +185,8 @@ public class ActorServiceImpl implements ActorService {
         actorRepository.save(actor);
         return awardMapper.awardToAwardDTO(updatedAward);
     }
+
+
 
 
     /**

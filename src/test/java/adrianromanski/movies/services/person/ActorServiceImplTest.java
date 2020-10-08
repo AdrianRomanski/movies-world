@@ -218,6 +218,22 @@ class ActorServiceImplTest {
     }
 
 
+    @DisplayName("Happy Path, method = updateActorFields")
+    @Test
+    void updateActorFieldsHappyPath() {
+        ActorDTO actorDTO = new ActorDTO();
+        actorDTO.setFirstName("Updating");
+        Actor actor = new Actor();
+
+        when(actorRepository.findById(anyLong())).thenReturn(Optional.of(actor));
+
+        ActorDTO returnDTO = actorService.updateActorFields(1L, actorDTO);
+
+        assertEquals(returnDTO.getFirstName(), "Updating");
+    }
+
+
+
     @DisplayName("Happy Path, method = updateAward")
     @Test
     void updateAwardHappyPath() {

@@ -34,6 +34,9 @@ public interface ActorService {
 
     ActorAwardDTO updateAward(Long actorID, Long awardID, ActorAwardDTO awardDTO);
 
+    //PATCH
+    ActorDTO updateActorFields(Long id, ActorDTO actorDTO);
+
     //DELETE
     void deleteActorByID(Long id);
 

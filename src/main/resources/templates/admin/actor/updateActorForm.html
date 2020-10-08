@@ -9,7 +9,7 @@
 
     <link th:href="@{/css/custom.css}" rel="stylesheet" media="screen"/>
 
-    <title>Update Category</title>
+    <title>Update Actor</title>
 </head>
 
 <body>
@@ -17,6 +17,7 @@
 
 
     <div class="col-md-8 col-md-offset-2">
+<!--        th:action="@{'/admin/actor/' + ${actorDTO.id} + '/update/check'}"-->
         <form th:object="${actorDTO}" th:action="@{check}" method="post">
 
             <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
@@ -24,12 +25,12 @@
             </div>
 
             <input type="hidden" th:field="*{id}"/>
-            <input type="hidden" th:field="*{image}"/>
+<!--            <input type="hidden" th:field="*{image}"/>-->
 
             <div class="panel-group">
                 <div class="panel panel-primary">
                     <div class="panel panel-heading">
-                        <h1 class="panel-title">Update Category</h1>
+                        <h1 class="panel-title">Update Actor</h1>
                     </div>
 
                     <div class="panel-body">

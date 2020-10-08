@@ -156,26 +156,6 @@ class AdminActorControllerTest {
     }
 
 
-    @Test
-    @DisplayName("GET, method = checkActorUpdate")
-    void checkActorUpdateHappyPath() throws Exception {
-        //given
-        ActorDTO actorDTO = new ActorDTO();
-
-        //when
-        when(actorService.createActor(any(ActorDTO.class))).thenReturn(actorDTO);
-
-        mockMvc.perform(post("/admin/actor/update/check")
-                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                .param("firstName", "Adrian")
-                .param("lastName", "Romanski")
-                .param("country", "Poland")
-                .param("dateOfBirth", String.valueOf(LocalDate.of(1944, 3, 4)))
-        )
-                .andExpect(status().is3xxRedirection())
-                .andExpect(model().attributeExists("actorDTO"))
-                .andExpect(view().name("redirect:/admin/actor/showActors/page/1"));
-    }
 
 
     @Test
@@ -224,8 +204,8 @@ class AdminActorControllerTest {
 
 
     @Test
-    @DisplayName("Unhappy Path, GET, method = checkActorUpdate")
-    void checkActorUpdateUnHappy() throws Exception {
+    @DisplayName("GET, method = checkActorUpdate")
+    void checkActorUpdateHappyPath() throws Exception {
         //given
         ActorDTO actorDTO = new ActorDTO();
 
@@ -234,10 +214,27 @@ class AdminActorControllerTest {
 
         mockMvc.perform(post("/admin/actor/update/check")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .param("id", "1")
+                .param("firstName", "Adrian")
+                .param("lastName", "Romanski")
+                .param("country", "Poland")
+                .param("dateOfBirth", String.valueOf(LocalDate.of(1944, 3, 4)))
+        )
+                .andExpect(status().is3xxRedirection())
+                .andExpect(model().attributeExists("actorDTO"))
+                .andExpect(view().name("redirect:/admin/actor/showActor/1"));
+    }
+
+
+    @Test
+    @DisplayName("Unhappy Path, GET, method = checkActorUpdate")
+    void checkActorUpdateUnHappy() throws Exception {
+        mockMvc.perform(post("/admin/actor/update/check")
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .param("firstName", "a")
                 .param("lastName", "r")
                 .param("country", "123")
-                .param("dateOfBirth", "2212-231-21")
+
         )
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("actorDTO"))

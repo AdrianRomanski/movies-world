@@ -66,17 +66,15 @@
                         </tr>
                     </table>
                     <div class="col-md-12" style="margin-top: 215px">
-                        <div class="col-md-3 single-infos-buttons">
-                            <a class="btn btn-primary btn-lg" href="#" th:href="@{'/actor/' + ${actorDTO.id} + '/image'}"
+                        <div class="col-md-4 single-infos-buttons">
+                            <a class="btn btn-info btn-lg" href="#" th:href="@{'/actor/' + ${actorDTO.id} + '/image'}"
                                role="button">Change Image</a>
                         </div>
-                        <div class="col-md-3 single-infos-buttons">
-                            <a class="btn btn-primary btn-lg" href="#" role="button">Description</a>
+                        <div class="col-md-4 single-infos-buttons">
+                            <a class="btn btn-primary btn-lg" href="#" th:href="@{'/admin/actor/update/' + ${actorDTO.id}}"
+                               role="button">Update Information's</a>
                         </div>
-                        <div class="col-md-3 single-infos-buttons">
-                            <a class="btn btn-primary btn-lg" href="#" role="button">Information's</a>
-                        </div>
-                        <div class="col-md-3 single-infos-buttons">
+                        <div class="col-md-4 single-infos-buttons">
                             <a class="btn btn-danger btn-lg" href="#" th:href="@{'/admin/actor/delete/' + ${actorDTO.id}}" role="button">Delete Actor</a>
                         </div>
                     </div>
