@@ -50,6 +50,16 @@
             </ul>
         </li>
 
+        <li class="dropdown" th:class="${#httpServletRequest.requestURI.contains('news')} ? 'dropdown active' : 'dropdown'" >
+            <a data-toggle="dropdown" data-target="#" href="http://www.google.com">
+                News <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+                <li><a href="#" th:href="@{'/admin/news/showNews/page/1'}">Show All News</a></li>
+                <li><a href="#">Create News</a></li>
+            </ul>
+        </li>
+
         <li class="dropdown" th:class="${#httpServletRequest.requestURI.contains('director')} ? 'dropdown active' : 'dropdown'" >
             <a data-toggle="dropdown" data-target="#" href="http://www.google.com">
                 Directors <span class="caret"></span>
