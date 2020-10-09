@@ -17,6 +17,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -54,5 +55,22 @@ class AdminNewsControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("newsList"))
                 .andExpect(view().name("admin/news/showNewsForm"));
+    }
+
+
+    @Test
+    @DisplayName("GET, method = getSingleNews")
+    void getSingleNews() throws Exception {
+        //given
+        News news = new News();
+        //when
+
+        when(newsService.getNewsByID(anyLong())).thenReturn(news);
+
+        //Then
+        mockMvc.perform(get("/admin/news/1"))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("news"))
+                .andExpect(view().name("admin/news/showSingleNews"));
     }
 }
