@@ -73,4 +73,20 @@ class AdminNewsControllerTest {
                 .andExpect(model().attributeExists("news"))
                 .andExpect(view().name("admin/news/showSingleNews"));
     }
+
+
+    @Test
+    @DisplayName("GET, method = deleteNews")
+    void deleteNews() throws Exception {
+        //given
+        News news = new News();
+        //when
+
+        when(newsService.getNewsByID(anyLong())).thenReturn(news);
+
+        //Then
+        mockMvc.perform(get("/admin/news/delete/1"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/admin/news/showNews/page/1"));
+    }
 }

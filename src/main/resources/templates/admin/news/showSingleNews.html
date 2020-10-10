@@ -66,9 +66,10 @@
                            role="button">Update Information's</a>
                     </div>
 
-                    <div class="col-md-3 single-infos-buttons">
-                        <a class="btn btn-danger btn-lg" href="#" role="button">Delete</a>
-                    </div>
+                    <td class="col-md-3 single-infos-buttons">
+                        <a class="btn btn-danger btn-lg" href="#"
+                           th:href="@{'/admin/news/delete/'  + ${news.id}}" role="button">Delete</a>
+                    </td>
                 </div>
             </div>
         </div>

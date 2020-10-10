@@ -44,4 +44,10 @@ public class AdminNewsController {
         return "admin/news/showSingleNews";
     }
 
+    @GetMapping("admin/news/delete/{id}")
+    public String deleteNews(@PathVariable String id) {
+        newsService.deleteNews(Long.valueOf(id));
+        return "redirect:/admin/news/showNews/page/1";
+    }
+
 }

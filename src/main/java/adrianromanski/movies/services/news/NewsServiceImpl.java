@@ -1,5 +1,6 @@
 package adrianromanski.movies.services.news;
 
+import adrianromanski.movies.aspects.delete_log.LogDelete;
 import adrianromanski.movies.aspects.paging_log.LogPaging;
 import adrianromanski.movies.domain.base_entity.News;
 import adrianromanski.movies.exceptions.ResourceNotFoundException;
@@ -57,6 +58,15 @@ public class NewsServiceImpl implements NewsService {
     @LogPaging
     public Page<News> getNewsPaged(Pageable pageable) {
         return eventPageRepository.findAll(pageable);
+    }
+
+
+    @Override
+    @LogDelete
+    public void deleteNews(Long id) {
+        News news = eventRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(id, News.class));
+        eventRepository.delete(news);
     }
 }
 

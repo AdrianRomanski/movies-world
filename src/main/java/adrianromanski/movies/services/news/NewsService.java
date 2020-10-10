@@ -16,6 +16,7 @@ public interface NewsService {
 
     List<NewsDTO> getLatestNews();
 
-
     Page<News> getNewsPaged(Pageable pageable);
+
+    void deleteNews(Long id);
 }

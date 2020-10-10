@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class NewsServiceImplTest {
 
@@ -95,7 +95,21 @@ class NewsServiceImplTest {
 
         assertEquals(returnObj.getName(), NAME);
         assertEquals(returnObj.getDescription(), DESCRIPTION);
+    }
 
 
+    @Test
+    @DisplayName("Happy Path, method = deleteNewsByID")
+    void deleteNewsByID() {
+        //given
+        News news = News.builder().name(NAME).description(DESCRIPTION).date(LocalDate.now()).build();
+        //when
+
+        when(eventRepository.findById(1L)).thenReturn(Optional.of(news));
+        //then
+
+        newsService.deleteNews(1L);
+
+        verify(eventRepository, times(1)).delete(news);
     }
 }
